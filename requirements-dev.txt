@@ -28,7 +28,7 @@ typing-extensions==3.10.0.0
 urllib3==1.26.5
 django-markdownify==0.9.1
 celery==5.2.2
-flower==1.0.0
+flower==1.2.0
 xhtml2pdf==0.2.5
 django-password-validators==1.7.0
 
