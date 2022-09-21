@@ -1,12 +1,9 @@
 import uuid
-from typing import Optional
-
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from requests.exceptions import HTTPError
 
 from tools.add_ooi_information import get_info, SEPARATOR
 from tools.validators import phone_validator
@@ -118,12 +115,9 @@ class OOIInformation(models.Model):
         return SEPARATOR.join(self.id.split(SEPARATOR)[1:])
 
     @property
-    def description(self) -> Optional[str]:
+    def description(self):
         if self.data["description"] == "":
-            try:
-                self.get_internet_description()
-            except HTTPError:
-                return None
+            self.get_internet_description()
         return self.data["description"]
 
     def get_internet_description(self):
