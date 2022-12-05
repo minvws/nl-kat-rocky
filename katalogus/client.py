@@ -30,33 +30,7 @@ class Plugin(BaseModel):
     enabled: bool = True
 
 
-class KATalogusClientInterface:
-    def health(self) -> ServiceHealth:
-        raise NotImplementedError()
-
-    def get_boefjes(self) -> List[Plugin]:
-        raise NotImplementedError()
-
-    def get_boefje(self, boefje_id: str) -> Plugin:
-        raise NotImplementedError()
-
-    def enable_boefje(self, boefje_id: str) -> None:
-        raise NotImplementedError()
-
-    def disable_boefje(self, boefje_id: str) -> None:
-        raise NotImplementedError()
-
-    def get_enabled_boefjes(self) -> List[Plugin]:
-        raise NotImplementedError()
-
-    def get_description(self, boefje_id: str) -> str:
-        raise NotImplementedError()
-
-    def get_cover(self, boefje_id: str) -> BytesIO:
-        raise NotImplementedError()
-
-
-class KATalogusClientV1(KATalogusClientInterface):
+class KATalogusClientV1:
     def __init__(self, base_uri: str, organization: str):
         self.base_uri = base_uri
         self.organization_uri = f"{base_uri}/v1/organisations/{organization}"
@@ -179,7 +153,7 @@ def parse_plugin(plugin: Dict) -> Plugin:
     )
 
 
-def get_katalogus(organization: str) -> KATalogusClientInterface:
+def get_katalogus(organization: str) -> KATalogusClientV1:
     return KATalogusClientV1(KATALOGUS_API, organization)
 
 
