@@ -13,7 +13,7 @@ from tools.forms import (
     BLANK_CHOICE,
     LabeledCheckboxInput,
 )
-from tools.models import SCAN_LEVEL
+from tools.enums import SCAN_LEVEL
 
 
 class OOIReportSettingsForm(ObservedAtForm):

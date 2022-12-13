@@ -7,7 +7,8 @@ from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from octopoes.models import OOI
 from requests.exceptions import RequestException
-from katalogus.client import get_enabled_boefjes_for_ooi_class, get_katalogus
+from katalogus.client import get_katalogus
+from katalogus.utils import get_enabled_boefjes_for_ooi_class
 from rocky.views.mixins import OrganizationIndemnificationMixin
 from rocky.views.ooi_detail_related_object import OOIRelatedObjectAddView
 from rocky.views.ooi_view import BaseOOIDetailView

@@ -99,6 +99,8 @@ INSTALLED_APPS = [
     "katalogus",
     "django_password_validators",
     "django_password_validators.password_history",
+    "rest_framework",
+    "tagulous",
 ]
 
 MIDDLEWARE = [
@@ -321,3 +323,19 @@ MARKDOWNIFY = {
         },
     }
 }
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        # This will provide a safe default
+        "rest_framework.permissions.IsAdminUser",
+    ],
+}
+
+
+SERIALIZATION_MODULES = {
+    "xml": "tagulous.serializers.xml_serializer",
+    "json": "tagulous.serializers.json",
+    "python": "tagulous.serializers.python",
+    "yaml": "tagulous.serializers.pyyaml",
+}
+TAGULOUS_SLUG_ALLOW_UNICODE = True

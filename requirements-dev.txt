@@ -29,6 +29,8 @@ django-markdownify==0.9.1
 xhtml2pdf==0.2.8
 django-password-validators==1.7.0
 django-csp==3.7
+djangorestframework==3.14.0
+django-tagulous==1.3.3
 
 # temp fix to pass build, remove later when https://github.com/xhtml2pdf/xhtml2pdf/issues/589 is solved
 reportlab==3.6.12
@@ -44,6 +46,9 @@ robotframework-browser
 robotframework-debuglibrary
 robotframework-otp
 robotframework-postgresqldb
+pytest
+pytest-django
+pytest-mock
 
 # Include formatters and linters
 -r requirements-check.txt
