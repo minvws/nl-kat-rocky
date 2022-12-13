@@ -4,12 +4,12 @@ from django.contrib.auth.models import Group, Permission
 from django.utils.translation import gettext_lazy as _
 from tools.models import (
     Organization,
-    SCAN_LEVEL,
     GROUP_ADMIN,
     GROUP_REDTEAM,
     GROUP_CLIENT,
     OrganizationMember,
 )
+from tools.enums import SCAN_LEVEL
 from tools.forms import BLANK_CHOICE
 from account.forms import OrganizationMemberAddForm
 
