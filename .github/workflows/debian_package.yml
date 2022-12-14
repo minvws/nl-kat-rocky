@@ -24,14 +24,14 @@ jobs:
 
       - name: Get Octopoes from public repo
         run: |
-          sed -i s,git+ssh://git@github.com/minvws/nl-rt-tim-abang-octopoes.*,git+https://github.com/minvws/nl-kat-octopoes@v1.3.0, requirements.txt
+          sed -i s,git+ssh://git@github.com/minvws/nl-kat-octopoes.*,git+https://github.com/minvws/nl-kat-octopoes@v1.3.0, requirements.txt
 
       - name: Run debian package build
         uses: addnab/docker-run-action@v3
         with:
           run: packaging/scripts/build-debian-package.sh
           registry: ghcr.io
-          image: ghcr.io/minvws/nl-rt-tim-abang-kat-${{ matrix.dist }}-build-image:latest
+          image: ghcr.io/minvws/nl-kat-${{ matrix.dist }}-build-image:latest
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           options: -v ${{ github.workspace }}:/app
