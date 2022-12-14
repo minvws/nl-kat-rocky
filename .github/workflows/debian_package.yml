@@ -22,10 +22,6 @@ jobs:
             echo "RELEASE_VERSION=$(python setup.py --version)" >> $GITHUB_ENV
           fi
 
-      - name: Get Octopoes from public repo
-        run: |
-          sed -i s,git+ssh://git@github.com/minvws/nl-rt-tim-abang-octopoes.*,git+https://github.com/minvws/nl-kat-octopoes@v1.3.0, requirements.txt
-
       - name: Run debian package build
         uses: addnab/docker-run-action@v3
         with:
