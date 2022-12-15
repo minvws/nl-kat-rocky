@@ -5,7 +5,7 @@ pylint==2.15.5
 vulture==2.6
 
 # Python formatter
-black==22.10.0
+black==22.12.0
 
 # Robot formatter
 robotframework-tidy==3.3.2
