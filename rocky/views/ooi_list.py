@@ -80,9 +80,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
                 )
 
             messages.add_message(
-                request,
-                messages.SUCCESS,
-                _(f"Successfully set scan profile to {alias} for {len(selected_oois)} oois.")
+                request, messages.SUCCESS, _(f"Successfully set scan profile to {alias} for {len(selected_oois)} oois.")
             )
             return self.get(request, *args, **kwargs)
 

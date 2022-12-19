@@ -51,7 +51,11 @@ class SelectOOIForm(BaseRockyForm):
         label=_("Objects"),
         widget=CheckboxTable(
             column_names=("OOI", _("Type"), _("Clearance Level")),
-            column_templates=("partials/hyperlink_ooi_id.html", "partials/hyperlink_ooi_type.html", "partials/scan_level_indicator.html"),
+            column_templates=(
+                "partials/hyperlink_ooi_id.html",
+                "partials/hyperlink_ooi_type.html",
+                "partials/scan_level_indicator.html",
+            ),
         ),
     )
 
