@@ -13,7 +13,7 @@ class KATalogusSettingsListView(PermissionRequiredMixin, ListView):
 
     template_name = "katalogus_settings.html"
     paginate_by = 10
-    permission_required = "tools.can_scan_organization"
+    permission_required = "organizations.can_scan_organization"
     plugin_type = "boefjes"
 
     def dispatch(self, request, *args, **kwargs):

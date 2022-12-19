@@ -1,7 +1,6 @@
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-
-from tools.view_helpers import StepsMixin
+from rocky.view_helpers import StepsMixin
 
 
 class KatIntroductionStepsMixin(StepsMixin):

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils.translation import gettext_lazy as _
-from tools.ooi_helpers import OOI_TYPES_WITHOUT_FINDINGS
+from oois.ooi_helpers import OOI_TYPES_WITHOUT_FINDINGS
 
 
 translated_blank_choice = _("--- Select an option ----")

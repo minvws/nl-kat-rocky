@@ -69,6 +69,7 @@ SERVER_EMAIL = os.getenv("SERVER_EMAIL")
 EMAIL_SUBJECT_PREFIX = os.getenv("EMAIL_SUBJECT_PREFIX")  # "KAT - "
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False)  # False
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", False)  # False
+# EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False) # False
 EMAIL_SSL_CERTFILE = os.getenv("EMAIL_SSL_CERTFILE", None)  # None
 EMAIL_SSL_KEYFILE = os.getenv("EMAIL_SSL_KEYFILE", None)
 EMAIL_TIMEOUT = 30  # 30 seconds
@@ -90,17 +91,18 @@ INSTALLED_APPS = [
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
     "markdownify.apps.MarkdownifyConfig",
+    "rocky",
     "two_factor",
+    "oois",
+    "findings",
     "account",
-    "tools",
+    "organizations",
     "fmea",
     "crisis_room",
     "onboarding",
     "katalogus",
     "django_password_validators",
     "django_password_validators.password_history",
-    "rest_framework",
-    "tagulous",
 ]
 
 MIDDLEWARE = [
@@ -113,9 +115,7 @@ MIDDLEWARE = [
     "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "rocky.middleware.active_organization_middleware.ActiveOrganizationMiddleware",
-    "rocky.middleware.active_organization_middleware.OctopoesConnectorMiddleware",
-    "rocky.middleware.onboarding.OnboardingMiddleware",
+    "onboarding.middleware.OnboardingMiddleware",
 ]
 
 ROOT_URLCONF = "rocky.urls"
@@ -131,10 +131,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "tools.context_processors.miauw_api",
-                "tools.context_processors.languages",
+                "rocky.context_processors.miauw_api",
+                "rocky.context_processors.languages",
             ],
-            "builtins": ["tools.templatetags.ooi_extra"],
+            "builtins": ["oois.templatetags.ooi_extra"],
         },
     },
 ]
@@ -323,19 +323,3 @@ MARKDOWNIFY = {
         },
     }
 }
-
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        # This will provide a safe default
-        "rest_framework.permissions.IsAdminUser",
-    ],
-}
-
-
-SERIALIZATION_MODULES = {
-    "xml": "tagulous.serializers.xml_serializer",
-    "json": "tagulous.serializers.json",
-    "python": "tagulous.serializers.python",
-    "yaml": "tagulous.serializers.pyyaml",
-}
-TAGULOUS_SLUG_ALLOW_UNICODE = True

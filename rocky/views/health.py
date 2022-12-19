@@ -12,7 +12,7 @@ from rocky.health import ServiceHealth
 from rocky.keiko import keiko_client
 from rocky.version import __version__
 from katalogus.health import get_katalogus_health
-from tools.user_helpers import is_red_team
+from rocky.user_helpers import is_red_team
 from rocky.scheduler import client
 from django.views.generic import TemplateView
 from rocky.bytes_client import get_bytes_client

@@ -1,5 +1,4 @@
 from typing import List, Dict
-
 from django.http import HttpResponse
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
@@ -15,7 +14,7 @@ from fmea.models import (
 )
 from fmea.tools import html_to_pdf
 from fmea.views.view_helpers import FMEABreadcrumbsMixin
-from tools.view_helpers import Breadcrumb
+from rocky.view_helpers import Breadcrumb
 
 
 @class_view_decorator(otp_required)

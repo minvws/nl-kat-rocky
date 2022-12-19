@@ -54,4 +54,17 @@ urlpatterns = [
         PluginSettingsDeleteView.as_view(),
         name="plugin_settings_delete",
     ),
+    path("tasks/", views.BoefjesTaskListView.as_view(), name="task_list"),
+    path("tasks/boefjes", views.BoefjesTaskListView.as_view(), name="boefjes_task_list"),
+    path(
+        "tasks/normalizers",
+        views.NormalizersTaskListView.as_view(),
+        name="normalizers_task_list",
+    ),
+    path(
+        "tasks/<task_id>/download/",
+        views.DownloadTaskDetail.as_view(),
+        name="download_task_meta",
+    ),
+    path("bytes/<boefje_meta_id>/raw", views.BytesRawView.as_view(), name="bytes_raw"),
 ]

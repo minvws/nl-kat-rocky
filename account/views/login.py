@@ -12,7 +12,7 @@ from two_factor.utils import default_device
 from two_factor.views import LoginView, QRGeneratorView, SetupView
 from two_factor.views.utils import class_view_decorator
 from rocky.settings import LOGIN_REDIRECT_URL
-from tools.models import OrganizationMember
+from organizations.models import OrganizationMember
 from account.forms import (
     LoginForm,
     TwoFactorSetupTokenForm,

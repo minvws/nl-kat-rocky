@@ -6,7 +6,7 @@ from fmea.models import (
     FailureModeEffect,
 )
 from fmea.tools import OOI_TYPES, translated_blank_choice, calculate_risk_class
-from tools.forms import CheckboxGroup
+from rocky.forms.base import CheckboxGroup
 
 
 class FailureModeForm(forms.ModelForm):

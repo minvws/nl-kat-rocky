@@ -15,7 +15,7 @@ class PluginSettingsUpdateView(PermissionRequiredMixin, KATalogusMixin, FormView
     """View to update/edit a plugin setting for all plugins in KAT-alogus"""
 
     template_name = "plugin_settings_edit.html"
-    permission_required = "tools.can_scan_organization"
+    permission_required = "organizations.can_scan_organization"
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)

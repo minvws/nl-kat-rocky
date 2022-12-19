@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib import messages
 from octopoes.models.types import type_by_name
-from tools.forms import SelectOOIForm, SelectOOIFilterForm
+from oois.forms import SelectOOIForm, SelectOOIFilterForm
 from katalogus.views.mixins import BoefjeMixin
 
 

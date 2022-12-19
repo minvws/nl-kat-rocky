@@ -1,15 +1,20 @@
 import json
 from io import BytesIO
 from typing import Dict, Type, Set, List
-
 import requests
+from django.urls import reverse_lazy
 from octopoes.models import OOI
 from octopoes.models.types import type_by_name
 from pydantic import BaseModel
-
 from rocky.health import ServiceHealth
 from rocky.settings import KATALOGUS_API
-from tools.enums import SCAN_LEVEL
+from oois.models import SCAN_LEVEL
+from organizations.models import Organization
+from rocky.view_helpers import BreadcrumbsMixin
+
+
+class KATalogusBreadcrumbsMixin(BreadcrumbsMixin):
+    breadcrumbs = [{"text": "KAT-alogus", "url": reverse_lazy("katalogus")}]
 
 
 class Plugin(BaseModel):
@@ -24,19 +29,36 @@ class Plugin(BaseModel):
     enabled: bool = True
 
 
-class KATalogusClientV1:
+class KATalogusClientInterface:
+    def health(self) -> ServiceHealth:
+        raise NotImplementedError()
+
+    def get_boefjes(self) -> List[Plugin]:
+        raise NotImplementedError()
+
+    def get_boefje(self, boefje_id: str) -> Plugin:
+        raise NotImplementedError()
+
+    def enable_boefje(self, boefje_id: str) -> None:
+        raise NotImplementedError()
+
+    def disable_boefje(self, boefje_id: str) -> None:
+        raise NotImplementedError()
+
+    def get_enabled_boefjes(self) -> List[Plugin]:
+        raise NotImplementedError()
+
+    def get_description(self, boefje_id: str) -> str:
+        raise NotImplementedError()
+
+    def get_cover(self, boefje_id: str) -> BytesIO:
+        raise NotImplementedError()
+
+
+class KATalogusClientV1(KATalogusClientInterface):
     def __init__(self, base_uri: str, organization: str):
         self.base_uri = base_uri
-        self.organization = organization
         self.organization_uri = f"{base_uri}/v1/organisations/{organization}"
-
-    def create_organization(self, name: str):
-        response = requests.post(f"{self.base_uri}/v1/organisations/", json={"id": self.organization, "name": name})
-        response.raise_for_status()
-
-    def delete_organization(self):
-        response = requests.delete(f"{self.organization_uri}")
-        response.raise_for_status()
 
     def get_all_plugins(self):
         response = requests.get(f"{self.organization_uri}/plugins")
@@ -156,5 +178,9 @@ def parse_plugin(plugin: Dict) -> Plugin:
     )
 
 
-def get_katalogus(organization: str) -> KATalogusClientV1:
+def get_katalogus(organization: str) -> KATalogusClientInterface:
     return KATalogusClientV1(KATALOGUS_API, organization)
+
+
+def get_enabled_boefjes_for_ooi_class(ooi_class: Type[OOI], organization: Organization) -> List[Plugin]:
+    return [boefje for boefje in get_katalogus(organization.code).get_enabled_boefjes() if ooi_class in boefje.consumes]

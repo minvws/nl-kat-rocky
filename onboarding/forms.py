@@ -2,16 +2,15 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.utils.translation import gettext_lazy as _
-from tools.models import (
-    Organization,
+from organizations.models import Organization, OrganizationMember, ORGANIZATION_CODE_LENGTH
+from oois.models import SCAN_LEVEL
+from account.groups import (
     GROUP_ADMIN,
     GROUP_REDTEAM,
     GROUP_CLIENT,
-    OrganizationMember,
 )
-from tools.enums import SCAN_LEVEL
-from tools.forms import BLANK_CHOICE
-from account.forms import OrganizationMemberAddForm
+from rocky.forms.settings import BLANK_CHOICE
+from organizations.forms import OrganizationMemberAddForm
 
 User = get_user_model()
 
@@ -45,40 +44,6 @@ class OnboardingSetClearanceLevelForm(forms.Form):
             },
         ),
     )
-
-
-class OnboardingCreateOrganizationForm(forms.ModelForm):
-    """
-    Form to create a new organization for admins, red teamers and clients
-    """
-
-    class Meta:
-        model = Organization
-        fields = [
-            "name",
-        ]
-
-        labels = {
-            "name": _("Name"),
-        }
-        help_texts = {
-            "name": _("What is the name of your organization."),
-        }
-        widgets = {
-            "name": forms.TextInput(
-                attrs={
-                    "placeholder": _("The name of the organization this KAT account is for."),
-                    "autocomplete": "off",
-                    "aria-describedby": _("explanation-organization-name"),
-                },
-            ),
-        }
-        error_messages = {
-            "name": {
-                "required": _("Organization name is required to proceed."),
-                "unique": _("Choose another organization."),
-            },
-        }
 
 
 class OnboardingUserForm(OrganizationMemberAddForm):

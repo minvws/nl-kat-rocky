@@ -3,7 +3,7 @@ from typing import Type, List, Dict, Any
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.http import Http404
-from django.shortcuts import HttpResponseRedirect, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
@@ -15,11 +15,11 @@ from octopoes.models import DeclaredScanProfile
 from octopoes.models import OOI
 from octopoes.models.ooi.network import Network
 from octopoes.models.types import type_by_name
-from rocky.views.indemnification_add import IndemnificationAddView
+from organizations.views.indemnification_add import IndemnificationAddView
 from two_factor.views.utils import class_view_decorator
 from django.contrib.auth import get_user_model
+from organizations.forms import OrganizationForm
 from onboarding.forms import (
-    OnboardingCreateOrganizationForm,
     OnboardingCreateUserAdminForm,
     OnboardingCreateUserRedTeamerForm,
     OnboardingCreateUserClientForm,
@@ -30,23 +30,24 @@ from onboarding.view_helpers import (
     KatIntroductionAdminStepsMixin,
 )
 from katalogus.client import get_katalogus
-from rocky.views import BaseOOIFormView
-from rocky.views.ooi_view import SingleOOITreeMixin, BaseOOIDetailView
-from tools.forms import SelectBoefjeForm
-from tools.models import Indemnification, Organization, OrganizationMember
-from tools.ooi_form import OOIForm
-from tools.ooi_helpers import (
+from oois.views import BaseOOIFormView, BaseOOIDetailView
+from oois.mixins import SingleOOITreeMixin
+from katalogus.forms import SelectBoefjeForm
+from organizations.models import Organization, OrganizationMember
+from oois.forms.ooi_form import OOIForm
+from oois.ooi_helpers import (
     get_or_create_ooi,
     create_object_tree_item_from_ref,
     filter_ooi_tree,
 )
-from tools.user_helpers import (
+from rocky.user_helpers import (
     is_admin,
     is_red_team,
 )
 from onboarding.mixins import RedTeamUserRequiredMixin, SuperOrAdminUserRequiredMixin
-from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
-from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
+from rocky.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
+from oois.views import Report, DNSReport, build_findings_list_from_store
+from organizations.mixins import OrganizationsMixin
 
 User = get_user_model()
 
@@ -423,39 +424,11 @@ class OnboardingIntroductionRegistrationView(
     current_step = 1
 
 
-class OrganizationSessionMixin:
-    def get_initial(self):
-        if self.session_exists():
-            self.initial["name"] = self.request.session["organization_name"]
-        return self.initial
-
-    def session_exists(self):
-        if "organization_name" in self.request.session:
-            return True
-
-    def get_organization_id(self):
-        try:
-            organization = self.model.objects.get(name=self.request.session["organization_name"])
-        except:
-            return None
-        return organization.id
-
-    def form_valid(self, form):
-        self.request.session["organization_name"] = form.cleaned_data["name"]
-        self.add_success_notification()
-        return super().form_valid(form)
-
-    def add_success_notification(self):
-        success_message = _("Organization succesfully set.")
-        messages.add_message(self.request, messages.SUCCESS, success_message)
-
-
 @class_view_decorator(otp_required)
 class OnboardingOrganizationSetupView(
     SuperOrAdminUserRequiredMixin,
-    OrganizationSessionMixin,
     KatIntroductionAdminStepsMixin,
-    UpdateView,
+    CreateView,
 ):
     """
     View to update the name of a organization
@@ -463,31 +436,21 @@ class OnboardingOrganizationSetupView(
 
     model = Organization
     template_name = "account/step_2a_organization_setup.html"
-    form_class = OnboardingCreateOrganizationForm
+    form_class = OrganizationForm
     current_step = 2
-    success_url = reverse_lazy("step_indemnification_setup")
 
-    def dispatch(self, request, *args, **kwargs):
-        organization_id = self.get_organization_id()
-        if self.session_exists() and organization_id:
-            return redirect(
-                reverse(
-                    "step_organization_update",
-                    kwargs={"pk": organization_id},
-                )
-            )
-        if is_admin(self.request.user):
-            self.add_message()
-            return redirect("step_indemnification_setup")
-        else:
-            return super().dispatch(request, *args, **kwargs)
+    def get_success_url(self, org_code):
+        return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": org_code})
 
-    def get_object(self):
-        obj = self.model.objects.get(code="_dev")
-        return obj
+    def form_valid(self, form):
+        org_name = form.cleaned_data["name"]
+        org_code = form.cleaned_data["code"]
+        form.save()
+        self.add_success_notification(org_name)
+        return redirect(self.get_success_url(org_code))
 
-    def add_success_notification(self):
-        success_message = _("Organization succesfully created.")
+    def add_success_notification(self, org_name):
+        success_message = _("{org_name} succesfully created.").format(org_name=org_name)
         messages.add_message(self.request, messages.SUCCESS, success_message)
 
     def add_message(self):
@@ -498,7 +461,6 @@ class OnboardingOrganizationSetupView(
 @class_view_decorator(otp_required)
 class OnboardingOrganizationUpdateView(
     SuperOrAdminUserRequiredMixin,
-    OrganizationSessionMixin,
     KatIntroductionAdminStepsMixin,
     UpdateView,
 ):
@@ -508,7 +470,7 @@ class OnboardingOrganizationUpdateView(
 
     model = Organization
     template_name = "account/step_2a_organization_update.html"
-    form_class = OnboardingCreateOrganizationForm
+    form_class = OrganizationForm
     current_step = 2
     success_url = reverse_lazy("step_indemnification_setup")
 

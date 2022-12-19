@@ -12,8 +12,9 @@ from requests import HTTPError
 
 from katalogus.client import get_katalogus
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
-from rocky.views.mixins import OctopoesMixin
-from tools.models import Organization
+from oois.mixins import OctopoesMixin
+from organizations.models import Organization
+from katalogus.client import get_katalogus
 
 logger = getLogger(__name__)
 
@@ -67,8 +68,7 @@ class BoefjeMixin(OctopoesMixin):
             organization=organization.code,
         )
 
-        item = QueuePrioritizedItem(id=boefje_task.id, priority=1, data=boefje_task)
-        logger.info("Item: %s", item.json())
+        item = QueuePrioritizedItem(priority=1, data=boefje_task)
         client.push_task(boefje_queue_name, item)
 
     def run_boefje_for_oois(
