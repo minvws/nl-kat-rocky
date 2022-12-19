@@ -1,11 +1,23 @@
 import json
 import csv
-from django.http import HttpResponse, Http404
+from datetime import datetime, timezone
+from requests import RequestException
+from typing import List
+
+from django.http import HttpResponse, Http404, HttpRequest
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
+from django.contrib import messages
+
+from octopoes.connector import RemoteException
 from octopoes.models.ooi.findings import Finding, FindingType
+from octopoes.models import Reference, DeclaredScanProfile
 from octopoes.models.types import get_collapsed_types, type_by_name
+from octopoes.models.exception import ObjectNotFoundException
+
 from rocky.views import BaseOOIListView
+from tools.forms import SelectOOIForm
+from tools.models import SCAN_LEVEL
 from tools.view_helpers import BreadcrumbsMixin
 
 
@@ -24,8 +36,79 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
 
         context["types_display"] = self.get_ooi_types_display()
         context["object_type_filters"] = self.get_ooi_type_filters()
+        context["select_oois_form"] = SelectOOIForm(context["ooi_list"])
+        context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
 
         return context
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """Perform bulk action on selected oois."""
+
+        # TODO:
+        #  - permissions
+        #  - Styled select field
+
+        selected_oois = request.POST.getlist("ooi")
+
+        if not selected_oois:
+            messages.add_message(request, messages.ERROR, _("No OOIs selected."))
+            return self.get(request, *args, **kwargs)
+
+        action = request.POST.get("action")
+
+        if action == "delete":
+            return self.delete_oois(selected_oois, request, *args, **kwargs)
+
+        if action == "update-scan-profile":
+            return self.set_scan_profiles(selected_oois, request, *args, **kwargs)
+
+        messages.add_message(request, messages.ERROR, _("Unknown action."))
+        return self.get(request, *args, **kwargs)
+
+    def set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        connector = self.get_api_connector()
+        scan_profile = request.POST.get("scan-profile")
+
+        for level, alias in SCAN_LEVEL.choices:
+            if scan_profile != alias:
+                continue
+
+            for ooi in selected_oois:
+                connector.save_scan_profile(
+                    DeclaredScanProfile(reference=ooi, level=level),
+                    valid_time=datetime.now(timezone.utc),
+                )
+
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                _(f"Successfully set scan profile to {alias} for {len(selected_oois)} oois.")
+            )
+            return self.get(request, *args, **kwargs)
+
+        messages.add_message(request, messages.ERROR, _(f"Unknown Scan Profile: {scan_profile}."))
+        return self.get(request, *args, **kwargs)
+
+    def delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        connector = self.get_api_connector()
+
+        for ooi in selected_oois:
+            try:
+                connector.delete(ooi, valid_time=datetime.now(timezone.utc))
+            except (RequestException, RemoteException):
+                messages.add_message(request, messages.ERROR, _(f"An error occurred deleting {ooi}."))
+                return self.get(request, *args, **kwargs)
+            except ObjectNotFoundException:
+                messages.add_message(request, messages.ERROR, _(f"An error occurred deleting {ooi}: object not found"))
+                return self.get(request, *args, **kwargs)
+
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            _(f"Successfully deleted {len(selected_oois)} oois. Note: object can get recreated by Bits automatically."),
+        )
+
+        return self.get(request, *args, **kwargs)
 
 
 class OOIListExportView(OOIListView):

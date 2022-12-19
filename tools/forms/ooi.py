@@ -50,8 +50,8 @@ class SelectOOIForm(BaseRockyForm):
     ooi = forms.MultipleChoiceField(
         label=_("Objects"),
         widget=CheckboxTable(
-            column_names=(_("Type"), "OOI", _("Clearance Level")),
-            column_templates=("partials/hyperlink_ooi_type.html", "partials/hyperlink_ooi_id.html", "partials/scan_level_indicator.html"),
+            column_names=("OOI", _("Type"), _("Clearance Level")),
+            column_templates=("partials/hyperlink_ooi_id.html", "partials/hyperlink_ooi_type.html", "partials/scan_level_indicator.html"),
         ),
     )
 

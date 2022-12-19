@@ -20,41 +20,37 @@
         {% include 'partials/ooi_list_toolbar.html' %}
         {% translate 'Object list' as filter_title %}
         {% include 'partials/ooi_list_filters.html' with title=filter_title %}
-        <div class="horizontal-scroll">
-          <table class="action-buttons nowrap">
-            <caption>{% translate 'Showing ' %}{{ ooi_list|length }} {% translate 'of' %} {{ total_oois }} {% translate 'objects' %}</caption>
-            <thead>
-              <tr>
-                <th>{% translate 'Key' %}</th>
-                <th>{% translate 'Type' %}</th>
-                <th>{% translate 'Clearance level' %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% with 'ooi_type' as ignore_params %}
-                {% for object in ooi_list %}
-                  {% spaceless %}
-                    <tr>
-                      <td>
-                        {% include 'partials/hyperlink_ooi_id.html' with value=object %}
-                      </td>
-                      <td>
-                        {% include 'partials/hyperlink_ooi_type.html' with value=object %}
-                      </td>
-                      <td class="actions">
-                        {% if object.scan_profile %}
-                          {% include 'partials/scan_level_indicator.html' with value=object.scan_profile.level %}
-                        {% else %}
-                          <span class="disabled">{% translate 'N/A' %}</span>
-                        {% endif %}
-                      </td>
-                    </tr>
-                  {% endspaceless %}
+
+        <p>{% translate 'Showing ' %}{{ ooi_list|length }} {% translate 'of' %} {{ total_oois }} {% translate 'objects' %}</p>
+        <form method="post" class="inline">
+          {% csrf_token %}
+          <div class="horizontal-scroll">
+            {% include 'partials/form/form_errors.html' with form=select_oois_form %}
+            {% for field in select_oois_form %}{{ field }}{% endfor %}
+          </div>
+
+          {% if ooi_list %}
+            <div class="horizontal-view">
+              <button type="submit"
+                        class="dropdown-button ghost"
+                        name="action"
+                      value="delete"
+                      >{% translate 'Delete' %}</button>
+              <button type="submit"
+                      class="dropdown-button ghost"
+                      name="action"
+                      value="update-scan-profile"
+              >{% translate 'Set Scan Profile' %}
+              </button>
+              <select id="scan-profiles" name="scan-profile">
+                {% for level in scan_levels %}
+                <option value="{{ level }}">{{ level }}</option>
                 {% endfor %}
-              {% endwith %}
-            </tbody>
-          </table>
-        </div>
+              </select>
+            </div>
+          {% endif %}
+        </form>
+
         {% include 'partials/ooi_list_pagination.html' %}
       </div>
     </section>
