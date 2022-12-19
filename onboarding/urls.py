@@ -1,28 +1,5 @@
 from django.urls import path
-from onboarding.views import (
-    index,
-    OnboardingIntroductionView,
-    OnboardingChooseReportInfoView,
-    OnboardingChooseReportTypeView,
-    OnboardingSetupScanOOIInfoView,
-    OnboardingSetupScanOOIDetailView,
-    OnboardingSetClearanceLevelView,
-    OnboardingSetupScanSelectPluginsView,
-    OnboardingSetupScanOOIAddView,
-    OnboardingReportView,
-    DnsReportView,
-    OnboardingIntroductionRegistrationView,
-    OnboardingOrganizationSetupView,
-    OnboardingOrganizationUpdateView,
-    OnboardingIndemnificationSetupView,
-    OnboardingChooseUserTypeView,
-    make_superuser_redteamer,
-    skip_onboarding,
-    OnboardingAccountSetupIntroView,
-    OnboardingAccountSetupAdminView,
-    OnboardingAccountSetupRedTeamerView,
-    OnboardingAccountSetupClientView,
-)
+from onboarding.views import *
 
 
 urlpatterns = [
@@ -88,7 +65,7 @@ urlpatterns = [
         name="step_organization_setup",
     ),
     path(
-        "step/organization-setup/<pk>/update/",
+        "<organization_code>/step/organization-setup/update/",
         OnboardingOrganizationUpdateView.as_view(),
         name="step_organization_update",
     ),

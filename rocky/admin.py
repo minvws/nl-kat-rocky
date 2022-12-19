@@ -1,10 +1,9 @@
 import json
 from json import JSONDecodeError
-
 from django.contrib import admin
 from django.db.models import JSONField
 from django.forms import widgets
-from organizations.models import Organization, OrganizationMember, Indemnification
+from organizations.models import Indemnification
 from oois.models import OOIInformation
 
 
@@ -42,16 +41,6 @@ class OOIInformationAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 
-class OrganizationAdmin(admin.ModelAdmin):
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
-
-
-class OrganizationMemberAdmin(admin.ModelAdmin):
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
-
-
 class IndemnificationAdmin(admin.ModelAdmin):
     list_display = ("organization", "user")
 
@@ -65,7 +54,5 @@ class IndemnificationAdmin(admin.ModelAdmin):
         return request.user.is_superuser
 
 
-admin.site.register(Organization, OrganizationAdmin)
-admin.site.register(OrganizationMember, OrganizationMemberAdmin)
 admin.site.register(Indemnification, IndemnificationAdmin)
 admin.site.register(OOIInformation, OOIInformationAdmin)

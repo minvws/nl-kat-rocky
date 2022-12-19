@@ -3,12 +3,18 @@ from django.contrib import admin
 from two_factor.urls import urlpatterns as tf_urls
 from django.views.generic.base import TemplateView
 from django.conf.urls.i18n import i18n_patterns
+from rest_framework import routers
+from organizations.viewsets import OrganizationViewSet
 from rocky import views
+
+router = routers.SimpleRouter()
+router.register(r"organization", OrganizationViewSet)
 
 handler404 = "rocky.views.handler404"
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
+    path("api/v1/", include(router.urls)),
 ]
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),

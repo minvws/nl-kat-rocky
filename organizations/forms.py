@@ -98,3 +98,9 @@ class OrganizationForm(forms.ModelForm):
                 "unique": _("Choose another code for your organization."),
             },
         }
+
+
+class OrganizationUpdateForm(OrganizationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["code"].disabled = True

@@ -69,7 +69,6 @@ SERVER_EMAIL = os.getenv("SERVER_EMAIL")
 EMAIL_SUBJECT_PREFIX = os.getenv("EMAIL_SUBJECT_PREFIX")  # "KAT - "
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False)  # False
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", False)  # False
-# EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False) # False
 EMAIL_SSL_CERTFILE = os.getenv("EMAIL_SSL_CERTFILE", None)  # None
 EMAIL_SSL_KEYFILE = os.getenv("EMAIL_SSL_KEYFILE", None)
 EMAIL_TIMEOUT = 30  # 30 seconds
@@ -103,6 +102,8 @@ INSTALLED_APPS = [
     "katalogus",
     "django_password_validators",
     "django_password_validators.password_history",
+    "rest_framework",
+    "tagulous",
 ]
 
 MIDDLEWARE = [
@@ -323,3 +324,19 @@ MARKDOWNIFY = {
         },
     }
 }
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        # This will provide a safe default
+        "rest_framework.permissions.IsAdminUser",
+    ],
+}
+
+
+SERIALIZATION_MODULES = {
+    "xml": "tagulous.serializers.xml_serializer",
+    "json": "tagulous.serializers.json",
+    "python": "tagulous.serializers.python",
+    "yaml": "tagulous.serializers.pyyaml",
+}
+TAGULOUS_SLUG_ALLOW_UNICODE = True

@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.http.request import HttpRequest
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models.types import OOI_TYPES
-
+from organizations.mixins import OrganizationsMixin
 from organizations.models import Organization
 
 
@@ -138,7 +138,7 @@ class Step(TypedDict):
     url: str
 
 
-class StepsMixin:
+class StepsMixin(OrganizationsMixin):
     steps: List[Step] = []
     current_step: int = None
 

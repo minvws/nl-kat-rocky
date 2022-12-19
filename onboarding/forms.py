@@ -1,3 +1,4 @@
+from typing import Dict, Type
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
@@ -11,8 +12,26 @@ from account.groups import (
 )
 from rocky.forms.settings import BLANK_CHOICE
 from organizations.forms import OrganizationMemberAddForm
+from oois.forms.ooi_form import OOIForm
+from octopoes.models import OOI
+from octopoes.connector.octopoes import OctopoesAPIConnector
 
 User = get_user_model()
+
+
+class OnboardingOOIForm(OOIForm):
+    """
+    hidden_fields - key (field name) value (field value) pair that will rendered as hidden field
+    """
+
+    def __init__(
+        self, hidden_fields: Dict[str, str], ooi_class: Type[OOI], connector: OctopoesAPIConnector, *args, **kwargs
+    ):
+        self.hidden_ooi_fields = hidden_fields
+        super().__init__(ooi_class, connector, *args, **kwargs)
+
+    def get_fields(self):
+        return self.generate_form_fields(self.hidden_ooi_fields)
 
 
 class ClearanceLevelSelect(forms.Select):
