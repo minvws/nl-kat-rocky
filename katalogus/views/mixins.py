@@ -2,19 +2,17 @@ from datetime import datetime, timezone
 from logging import getLogger
 from typing import List
 from uuid import uuid4
-
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models import OOI, DeclaredScanProfile
 from requests import HTTPError
-
 from katalogus.client import get_katalogus
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
 from oois.mixins import OctopoesMixin
 from organizations.models import Organization
-from katalogus.client import get_katalogus
+
 
 logger = getLogger(__name__)
 
@@ -68,7 +66,8 @@ class BoefjeMixin(OctopoesMixin):
             organization=organization.code,
         )
 
-        item = QueuePrioritizedItem(priority=1, data=boefje_task)
+        item = QueuePrioritizedItem(id=boefje_task.id, priority=1, data=boefje_task)
+        logger.info("Item: %s", item.json())
         client.push_task(boefje_queue_name, item)
 
     def run_boefje_for_oois(
