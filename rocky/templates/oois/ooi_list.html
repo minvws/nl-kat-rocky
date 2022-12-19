@@ -36,12 +36,10 @@
                   {% spaceless %}
                     <tr>
                       <td>
-                        <a href="{% ooi_url 'ooi_detail' object.primary_key query=mandatory_fields %}"
-                           title="{% blocktranslate trimmed with name=object.human_readable %} Show details for {{ name }} {% endblocktranslate %}">{{ object.human_readable }}</a>
+                        {% include 'partials/hyperlink_ooi_id.html' with value=object %}
                       </td>
                       <td>
-                        <a href="{% url 'ooi_list' %}?ooi_type={{ object.ooi_type }}&{% include 'partials/elements/href_querystring_from_list.html' with list=mandatory_fields %}"
-                           title="{% blocktranslate trimmed with type=object.ooi_type %} Only show objects of type {{ type }} {% endblocktranslate %}">{{ object.ooi_type }}</a>
+                        {% include 'partials/hyperlink_ooi_type.html' with value=object %}
                       </td>
                       <td class="actions">
                         {% if object.scan_profile %}

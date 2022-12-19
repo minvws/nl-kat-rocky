@@ -51,7 +51,7 @@ class SelectOOIForm(BaseRockyForm):
         label=_("Objects"),
         widget=CheckboxTable(
             column_names=(_("Type"), "OOI", _("Clearance Level")),
-            column_templates=(None, None, "partials/scan_level_indicator.html"),
+            column_templates=("partials/hyperlink_ooi_type.html", "partials/hyperlink_ooi_id.html", "partials/scan_level_indicator.html"),
         ),
     )
 
@@ -69,8 +69,8 @@ class SelectOOIForm(BaseRockyForm):
     @staticmethod
     def _to_choice(ooi: OOI) -> Tuple[str, Any]:
         return str(ooi), (
-            ooi.get_ooi_type(),
-            ooi.human_readable,
+            ooi,
+            ooi,
             ooi.scan_profile.level,
         )
 
