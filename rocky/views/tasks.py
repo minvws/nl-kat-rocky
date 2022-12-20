@@ -1,15 +1,16 @@
 import json
-from requests import HTTPError
-from django.http import HttpResponse
+
 from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 from django.views.generic.list import ListView
-from django.http import FileResponse
 from django_otp.decorators import otp_required
+from requests import HTTPError
 from two_factor.views.utils import class_view_decorator
+
 from rocky.scheduler import client
 from tools.models import Organization
 
@@ -54,7 +55,7 @@ class TaskListView(ListView):
     def get_queryset(self):
         if self.task_type:
             try:
-                queryset = client.list_tasks(self.task_type, limit=self.paginate_by)
+                queryset = client.list_tasks(queue_name=self.task_type, limit=self.paginate_by)
                 return queryset.results
             except HTTPError:
                 error_message = _("Fetching tasks failed: no connection with scheduler")

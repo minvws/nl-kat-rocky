@@ -1,9 +1,10 @@
 import datetime
+import json
+import uuid
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Union
 
 import requests
-import uuid
 from pydantic import BaseModel, Field
 
 from rocky.health import ServiceHealth
@@ -115,9 +116,26 @@ class SchedulerClient:
         self.session = requests.Session()
         self._base_uri = base_uri
 
-    def list_tasks(self, queue_name: str, limit: int) -> PaginatedTasksResponse:
-        params = {"limit": limit}
-        res = self.session.get(f"{self._base_uri}/schedulers/{queue_name}/tasks", params=params)
+    def list_tasks(
+        self,
+        queue_name: str,
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        status: Optional[TaskStatus] = None,
+        min_created_at: Optional[datetime.datetime] = None,
+        max_created_at: Optional[datetime.datetime] = None,
+        filters: Optional[List[Dict]] = None,
+    ) -> PaginatedTasksResponse:
+        params = {
+            "scheduler_id": queue_name,
+            "limit": limit,
+            "offset": offset,
+            "status": status,
+            "min_created_at": min_created_at,
+            "max_created_at": max_created_at,
+        }
+
+        res = self.session.get(f"{self._base_uri}/tasks", params=params, json=filters)
         return PaginatedTasksResponse.parse_raw(res.text)
 
     def get_task_details(self, task_id):
