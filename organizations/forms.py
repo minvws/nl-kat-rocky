@@ -17,25 +17,8 @@ class OrganizationMemberAddForm(UserAddForm, forms.ModelForm):
     group = None
 
     def __init__(self, *args, **kwargs):
-        if "organization_name" in kwargs:
-            self.organization = self.get_organization_with_name(kwargs.pop("organization_name"))
-        elif "organization_id" in kwargs:
-            self.organization = self.get_organization_with_id(kwargs.pop("organization_id"))
+        self.organization = Organization.objects.get(code=kwargs.pop("organization_code"))
         return super().__init__(*args, **kwargs)
-
-    def get_organization_with_id(self, id):
-        return Organization.objects.get(pk=id)
-
-    def get_organization_with_name(self, organization_name):
-        return Organization.objects.get(name=organization_name)
-
-    def set_organization_member(self):
-        OrganizationMember.objects.get_or_create(
-            user=self.user,
-            organization=self.organization,
-            verified=True,
-            member_name=self.cleaned_data["name"],
-        )
 
     def save(self, **kwargs):
         if self.group:
@@ -43,8 +26,13 @@ class OrganizationMemberAddForm(UserAddForm, forms.ModelForm):
         else:
             selected_group = Group.objects.get(name=self.cleaned_data["account_type"])
         if self.organization and selected_group:
+
             self.set_user()
-            self.set_organization_member()
+            OrganizationMember.objects.get_or_create(
+                user=self.user,
+                organization=self.organization,
+            )
+
             selected_group.user_set.add(self.user)
             self.user.save()
 

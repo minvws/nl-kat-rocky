@@ -20,7 +20,7 @@ class OnboardingAccountSetupRedTeamerView(
     """
 
     model = User
-    template_name = "account/step_5_account_setup_red_teamer.html"
+    template_name = "account/step_redteamer_add.html"
     form_class = OnboardingCreateUserRedTeamerForm
 
     def get_success_url(self, **kwargs):

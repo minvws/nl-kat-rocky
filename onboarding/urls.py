@@ -75,7 +75,7 @@ urlpatterns = [
         name="step_indemnification_setup",
     ),
     path(
-        "step/choose-user-type/",
+        "<organization_code>/step/choose-user-type/",
         OnboardingChooseUserTypeView.as_view(),
         name="step_choose_user_type",
     ),
@@ -90,22 +90,22 @@ urlpatterns = [
         name="skip_onboarding",
     ),
     path(
-        "step/account-setup/introduction/",
+        "<organization_code>/step/account-setup/introduction/",
         OnboardingAccountSetupIntroView.as_view(),
         name="step_account_setup_intro",
     ),
     path(
-        "step/account-setup/admin/",
+        "<organization_code>/step/account-setup/admin/",
         OnboardingAccountSetupAdminView.as_view(),
         name="step_account_setup_admin",
     ),
     path(
-        "step/account-setup/red-teamer/",
+        "<organization_code>/step/account-setup/red-teamer/",
         OnboardingAccountSetupRedTeamerView.as_view(),
         name="step_account_setup_red_teamer",
     ),
     path(
-        "step/account-setup/client/",
+        "<organization_code>/step/account-setup/client/",
         OnboardingAccountSetupClientView.as_view(),
         name="step_account_setup_client",
     ),

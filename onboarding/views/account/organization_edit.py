@@ -19,7 +19,7 @@ class OnboardingOrganizationUpdateView(
     UpdateView,
 ):
     """
-    View to update an existing organization, can only edit code.
+    View to update an existing organization, can only edit name for now.
     """
 
     model = Organization
@@ -30,8 +30,8 @@ class OnboardingOrganizationUpdateView(
     def get_object(self, queryset=None):
         return self.organization
 
-    def get_success_url(self):
-        return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": self.organization.code})
+    def get_success_url(self) -> str:
+        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]
