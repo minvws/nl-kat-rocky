@@ -4,7 +4,8 @@ from tools.models import Organization
 
 
 @pytest.fixture
-def organization():
+def organization(mocker):
+    mocker.patch("tools.models.get_katalogus")
     organization = Organization.objects.create(name="Test Organization", code="test")
     return organization
 
