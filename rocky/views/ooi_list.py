@@ -1,6 +1,8 @@
 import json
 import csv
 from datetime import datetime, timezone
+from enum import Enum
+
 from requests import RequestException
 from typing import List
 
@@ -21,6 +23,11 @@ from tools.models import SCAN_LEVEL
 from tools.view_helpers import BreadcrumbsMixin
 
 
+class PageActions(Enum):
+    DELETE = "delete"
+    UPDATE_SCAN_PROFILE = "update-scan-profile"
+
+
 class OOIListView(BreadcrumbsMixin, BaseOOIListView):
     breadcrumbs = [{"url": reverse_lazy("ooi_list"), "text": _("Objects")}]
     template_name = "oois/ooi_list.html"
@@ -36,7 +43,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
 
         context["types_display"] = self.get_ooi_types_display()
         context["object_type_filters"] = self.get_ooi_type_filters()
-        context["select_oois_form"] = SelectOOIForm(context["ooi_list"])
+        context["select_oois_form"] = SelectOOIForm(context.get("ooi_list", []))
         context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
 
         return context
@@ -56,16 +63,16 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
 
         action = request.POST.get("action")
 
-        if action == "delete":
-            return self.delete_oois(selected_oois, request, *args, **kwargs)
+        if action == PageActions.DELETE.value:
+            return self._delete_oois(selected_oois, request, *args, **kwargs)
 
-        if action == "update-scan-profile":
-            return self.set_scan_profiles(selected_oois, request, *args, **kwargs)
+        if action == PageActions.UPDATE_SCAN_PROFILE.value:
+            return self._set_scan_profiles(selected_oois, request, *args, **kwargs)
 
         messages.add_message(request, messages.ERROR, _("Unknown action."))
         return self.get(request, *args, **kwargs)
 
-    def set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
         connector = self.get_api_connector()
         scan_profile = request.POST.get("scan-profile")
 
@@ -74,10 +81,21 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
                 continue
 
             for ooi in selected_oois:
-                connector.save_scan_profile(
-                    DeclaredScanProfile(reference=ooi, level=level),
-                    valid_time=datetime.now(timezone.utc),
-                )
+                try:
+                    connector.save_scan_profile(
+                        DeclaredScanProfile(reference=ooi, level=level),
+                        valid_time=datetime.now(timezone.utc),
+                    )
+                except (RequestException, RemoteException):
+                    messages.add_message(
+                        request, messages.ERROR, _(f"An error occurred saving scan profile for {ooi}.")
+                    )
+                    return self.get(request, *args, **kwargs)
+                except ObjectNotFoundException:
+                    messages.add_message(
+                        request, messages.ERROR, _(f"An error occurred saving scan profile for {ooi}: object not found")
+                    )
+                    return self.get(request, *args, **kwargs)
 
             messages.add_message(
                 request, messages.SUCCESS, _(f"Successfully set scan profile to {alias} for {len(selected_oois)} oois.")
@@ -87,7 +105,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
         messages.add_message(request, messages.ERROR, _(f"Unknown Scan Profile: {scan_profile}."))
         return self.get(request, *args, **kwargs)
 
-    def delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    def _delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
         connector = self.get_api_connector()
 
         for ooi in selected_oois:
