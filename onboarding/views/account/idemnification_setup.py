@@ -15,11 +15,6 @@ class OnboardingIndemnificationSetupView(
 ):
     current_step = 3
     template_name = "account/step_indemnification_setup.html"
-    success_url = reverse_lazy("step_account_setup_intro")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context["breadcrumbs"] = []
-
-        return context
+    def get_success_url(self) -> str:
+        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})

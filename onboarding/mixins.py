@@ -53,7 +53,11 @@ class KatIntroductionStepsMixin(StepsMixin):
 class KatIntroductionAdminStepsMixin(StepsMixin):
     def build_steps(self):
         account_url = ""
-        if self.organization.code:
+        idemnification_url = ""
+        if self.organization:
+            idemnification_url = reverse_lazy(
+                "step_indemnification_setup", kwargs={"organization_code": self.organization.code}
+            )
             account_url = reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
 
         steps = [
@@ -65,10 +69,8 @@ class KatIntroductionAdminStepsMixin(StepsMixin):
                 "text": _("2: Organization setup"),
                 "url": reverse_lazy("step_organization_setup"),
             },
+            {"text": _("4: Indemnification"), "url": idemnification_url},
             {"text": _("3: Account setup"), "url": account_url},
-            {
-                "text": _("4: Indemnification"),
-            },
         ]
         return steps
 
@@ -77,17 +79,7 @@ class KatIntroductionAdminStepsMixin(StepsMixin):
 class OnboardingAccountCreationMixin(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, OrganizationsMixin, CreateView
 ):
-    current_step = 4
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["organization_code"] = self.organization.code
         return kwargs
-
-    def form_valid(self, form):
-        self.add_success_notification()
-        return super().form_valid(form)
-
-    def add_success_notification(self):
-        success_message = _("User succesfully created.")
-        messages.add_message(self.request, messages.SUCCESS, success_message)

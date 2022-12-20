@@ -4,11 +4,14 @@ from django.shortcuts import redirect
 from django.urls.base import reverse
 from django.contrib.auth.models import Group
 from django_otp.decorators import otp_required
+from two_factor.views.utils import class_view_decorator
+from django.views import View
 from oois.views import BaseOOIDetailView
 from oois.ooi_helpers import create_object_tree_item_from_ref, filter_ooi_tree
 from onboarding.mixins import RedTeamUserRequiredMixin
 from oois.views import Report, build_findings_list_from_store
 from organizations.models import OrganizationMember
+from organizations.mixins import OrganizationsMixin
 
 
 class BaseReportView(RedTeamUserRequiredMixin, BaseOOIDetailView):
@@ -31,17 +34,17 @@ class BaseReportView(RedTeamUserRequiredMixin, BaseOOIDetailView):
         return context
 
 
-@otp_required
-def make_superuser_redteamer(request):
-    if request.user.is_superuser:
-        redteam_group = Group.objects.get(name="redteam")
-        redteam_group.user_set.add(request.user)
-        return redirect(reverse("step_introduction"))
-
-
-@otp_required
-def skip_onboarding(request):
-    member = OrganizationMember.objects.get(user=request.user)
-    member.onboarded = True
-    member.save()
-    return redirect(reverse("crisis_room"))
+@class_view_decorator(otp_required)
+class CompleteOnboarding(OrganizationsMixin, View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            redteam_group = Group.objects.get(name="redteam")
+            redteam_group.user_set.add(request.user)
+            member, _ = OrganizationMember.objects.get_or_create(user=request.user, organization=self.organization)
+            member.onboarded = True
+            member.save()
+        else:
+            member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
+            member.onboarded = True
+            member.save()
+        return redirect(reverse("crisis_room"))

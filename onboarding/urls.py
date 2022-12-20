@@ -80,14 +80,9 @@ urlpatterns = [
         name="step_choose_user_type",
     ),
     path(
-        "step/choose-user-type/switch",
-        make_superuser_redteamer,
-        name="switch_kat_user",
-    ),
-    path(
-        "step/skip-onboarding",
-        skip_onboarding,
-        name="skip_onboarding",
+        "<organization_code>/step/complete-onboarding/",
+        CompleteOnboarding.as_view(),
+        name="complete_onboarding",
     ),
     path(
         "<organization_code>/step/account-setup/introduction/",

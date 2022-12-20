@@ -31,9 +31,10 @@
          {% endblocktranslate %}
         </p>
         <div class="horizontal-view">
-          <a href="{% url 'step_choose_user_type' organization_code %}"
+          <a href="{% url 'step_choose_user_type' organization.code %}"
              class="button">{% translate 'Create separate accounts' %}</a>
-          <a href="{% url 'switch_kat_user' %}" class="button ">{% translate 'Continue with this account, onboard me!' %}</a>
+          <a href="{% url 'complete_onboarding' organization.code %}"
+             class="button ">{% translate 'Continue with this account, onboard me!' %}</a>
         </div>
       </div>
     </section>

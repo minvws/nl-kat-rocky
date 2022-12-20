@@ -8,7 +8,8 @@
   {% endif %}
   <div class="horizontal-view">
     {% if skip_onboarding == 'yes' %}
-      <a href="{% url 'skip_onboarding' %}" class="button ghost">{% translate 'Skip onboarding' %}</a>
+      <a href="{% url 'complete_onboarding' organization.code %}"
+         class="button ghost">{% translate 'Skip onboarding' %}</a>
     {% endif %}
     <button type="submit"
             class="{{ btn_class }}"

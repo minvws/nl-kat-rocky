@@ -23,7 +23,7 @@ class crisisBreadcrumbsMixin(BreadcrumbsMixin):
 @class_view_decorator(otp_required)
 class CrisisRoomView(crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixin, TemplateView):
     ooi_types = {Finding}
-    template_name = "crisis_room/crisis_room.html"
+    template_name = "crisis_room.html"
     connector_form_class = ObservedAtForm
 
     def sort_finding_list_by_total(self, finding_list) -> List:

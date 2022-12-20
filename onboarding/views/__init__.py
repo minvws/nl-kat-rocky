@@ -1,4 +1,4 @@
-from onboarding.views.base import make_superuser_redteamer, skip_onboarding
+from onboarding.views.base import CompleteOnboarding
 from onboarding.views.introduction import index, OnboardingIntroductionView
 from onboarding.views.choose_report import OnboardingChooseReportInfoView, OnboardingChooseReportTypeView
 from onboarding.views.dns_report import DnsReportView
@@ -22,8 +22,7 @@ from onboarding.views.account.registration_intro import OnboardingIntroductionRe
 
 
 __all__ = [
-    "make_superuser_redteamer",
-    "skip_onboarding",
+    "CompleteOnboarding",
     "index",
     "OnboardingIntroductionView",
     "OnboardingChooseReportInfoView",
