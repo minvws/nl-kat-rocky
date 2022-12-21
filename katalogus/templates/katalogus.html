@@ -20,7 +20,9 @@
           </div>
           {% if perms.tools.can_scan_organization %}
             <div class="horizontal-view toolbar">
-              <a class="button ghost" href={% url 'katalogus_settings' %}>{% translate 'Settings' %}</a>
+              <a class="button ghost"
+                 href
+                 {% url 'katalogus_settings' organization.code %}>{% translate 'Settings' %}</a>
             </div>
           {% endif %}
         </div>

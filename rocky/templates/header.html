@@ -1,6 +1,10 @@
 {% load static %}
 {% load i18n %}
+{% load organization_management %}
 
+{% if request.user.is_authenticated %}
+  {% get_organization_code request.user as organization_code %}
+{% endif %}
 <header>
   {% include 'partials/skip-to-content.html' %}
   {% include 'partials/page-meta.html' %}
@@ -34,7 +38,7 @@
           </li>
         {% endif %}
         <li>
-          <a href="{% url 'katalogus' %}"
+          <a href="{% url 'katalogus' organization_code %}"
              {% if 'kat-alogus' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'KAT-alogus' %}</a>
         </li>
         <li>
@@ -46,7 +50,7 @@
              {% if 'objects' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Objects' %}</a>
         </li>
         <li>
-          <a href="{% url 'task_list' %}"
+          <a href="{% url 'task_list' organization_code %}"
              {% if 'tasks' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Tasks' %}</a>
         </li>
         {% if perms.tools.view_organizationmember and not perms.tools.can_switch_organization %}

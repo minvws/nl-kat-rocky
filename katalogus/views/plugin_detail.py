@@ -9,15 +9,16 @@ from katalogus.client import get_katalogus
 from katalogus.views import PluginSettingsListView
 from katalogus.views.plugin_detail_scan_oois import PluginDetailScanOOI
 from katalogus.views.mixins import KATalogusMixin
+from organizations.mixins import OrganizationsMixin
 
 logger = getLogger(__name__)
 
 
-class PluginCoverImgView(View):
+class PluginCoverImgView(OrganizationsMixin, View):
     """Get the cover image of a plugin."""
 
-    def get(self, request, plugin_id: str):
-        return FileResponse(get_katalogus(request.active_organization.code).get_cover(plugin_id))
+    def get(self, request, *args, **kwargs):
+        return FileResponse(get_katalogus(self.organization.code).get_cover(kwargs["plugin_id"]))
 
 
 @class_view_decorator(otp_required)

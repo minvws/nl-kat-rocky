@@ -5,24 +5,25 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from katalogus.client import get_katalogus
 from katalogus.forms import KATalogusFilter
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class KATalogusView(ListView, FormView):
+class KATalogusView(ListView, OrganizationsMixin, FormView):
     """View of all plugins in KAT-alogus"""
 
     template_name = "katalogus.html"
     form_class = KATalogusFilter
 
     def get(self, request, *args, **kwargs):
-        katalogus_client = get_katalogus(request.user.organizationmember.organization.code)
+        katalogus_client = get_katalogus(self.organization.code)
         self.all_plugins = katalogus_client.get_all_plugins()
         self.set_katalogus_view(kwargs)
         return super().get(request, *args, **kwargs)
 
     def set_katalogus_view(self, kwargs):
         self.view = ""
-        if kwargs:
+        if "view" in kwargs:
             self.view = kwargs["view"]
 
     def get_all_boefjes(self):
@@ -57,7 +58,10 @@ class KATalogusView(ListView, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
         ]
         context["view"] = self.view
         return context

@@ -6,6 +6,7 @@ from django.conf.urls.i18n import i18n_patterns
 from rest_framework import routers
 from organizations.viewsets import OrganizationViewSet
 from rocky import views
+from katalogus.views.plugin_detail import PluginCoverImgView
 
 router = routers.SimpleRouter()
 router.register(r"organization", OrganizationViewSet)
@@ -23,7 +24,7 @@ urlpatterns += i18n_patterns(
     path("", views.LandingPageView.as_view(), name="landing_page"),
     path("account/", include("account.urls"), name="account"),
     path("organizations/", include("organizations.urls"), name="organizations"),
-    path("kat-alogus/", include("katalogus.urls"), name="katalogus"),
+    path("<organization_code>/kat-alogus/", include("katalogus.urls"), name="katalogus"),
     path("findings/", include("findings.urls"), name="findings"),
     path("objects/", include("oois.urls"), name=""),
     path("health/", views.health, name="health"),
