@@ -64,7 +64,7 @@ class PluginDetailScanOOI(BoefjeMixin, OrganizationsMixin, TemplateView):
         """Return a list of selected oois that meets clearance level."""
         oois_with_clearance_level = []
         for ooi in selected_oois:
-            ooi_object = self.get_single_ooi(ooi)
+            ooi_object = self.get_single_ooi(self.organization.code, pk=ooi)
             if ooi_object.scan_profile.level >= self.plugin["scan_level"]:
                 oois_with_clearance_level.append(ooi_object)
         return oois_with_clearance_level
@@ -73,7 +73,7 @@ class PluginDetailScanOOI(BoefjeMixin, OrganizationsMixin, TemplateView):
         """Return a list from selected oois without clearance level for scanning"""
         oois_without_clearance_level = []
         for ooi in selected_oois:
-            ooi_object = self.get_single_ooi(ooi)
+            ooi_object = self.get_single_ooi(self.organization.code, pk=ooi)
             if ooi_object.scan_profile.level < self.plugin["scan_level"]:
                 oois_without_clearance_level.append(ooi_object.primary_key)
         return oois_without_clearance_level

@@ -32,17 +32,17 @@ class OnboardingSetupScanOOIDetailView(
 
     def get(self, request, *args, **kwargs):
         self.api_connector = self.get_api_connector(self.organization.code)
-        self.ooi = self.get_ooi()
+        self.ooi = self.get_ooi(self.organization.code)
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.set_clearance_level()
         self.enable_selected_boefjes()
-        return redirect(get_ooi_url("step_report", self.get_ooi_id()))
+        return redirect(get_ooi_url("step_report", self.get_ooi_id(), organization_code=self.organization.code))
 
     def set_clearance_level(self):
         self.api_connector = self.get_api_connector(self.organization.code)
-        ooi = self.get_ooi()
+        ooi = self.get_ooi(self.organization.code)
         self.api_connector.save_scan_profile(
             DeclaredScanProfile(reference=ooi.reference, level=self.request.session["clearance_level"]),
             valid_time=datetime.now(timezone.utc),

@@ -12,17 +12,17 @@
           {% include 'oois/ooi_past_due_warning.html' with ooi_current=ooi_current %}
         {% endif %}
         {% include 'partials/ooi_head.html' with ooi=ooi view='ooi_detail' %}
-        {% include 'oois/ooi_detail_object.html' with ooi=ooi object_details=object_details %}
+        {% include 'ooi_detail_object.html' with ooi=ooi object_details=object_details %}
       </div>
       <div>
-        {% include 'oois/ooi_detail_origins_declarations.html' %}
-        {% include 'oois/ooi_detail_origins_observations.html' %}
-        {% include 'oois/ooi_detail_origins_inference.html' %}
+        {% include 'ooi_detail_origins_declarations.html' %}
+        {% include 'ooi_detail_origins_observations.html' %}
+        {% include 'ooi_detail_origins_inference.html' %}
         {% include 'partials/ooi_detail_related_object.html' with query=mandatory_fields ooi_past_due=ooi_past_due related=related ooi=ooi %}
       </div>
       <div>
         {% if not ooi|is_finding and not ooi|is_finding_type %}
-          {% include "oois/ooi_detail_findings_overview.html" with severity_summary=findings_severity_summary severity_summary_totals=severity_summary_totals %}
+          {% include "ooi_detail_findings_overview.html" with severity_summary=findings_severity_summary severity_summary_totals=severity_summary_totals %}
         {% endif %}
       </div>
       <div>

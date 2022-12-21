@@ -65,7 +65,7 @@ class OnboardingSetupScanOOIAddView(
 
     def get_success_url(self, ooi: OOI) -> str:
         self.request.session["ooi_id"] = ooi.primary_key
-        return get_ooi_url("step_set_clearance_level", ooi.primary_key)
+        return get_ooi_url("step_set_clearance_level", ooi.primary_key, organization_code=self.organization.code)
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         return super().build_breadcrumbs() + [

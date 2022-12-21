@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class OOIFindingListView(OOIFindingManager, BoefjeMixin, BaseOOIDetailView, OOIBreadcrumbsMixin):
-    template_name = "oois/ooi_findings.html"
+    template_name = "ooi_findings.html"
     connector_form_class = ObservedAtForm
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
@@ -19,7 +19,7 @@ class OOIFindingListView(OOIFindingManager, BoefjeMixin, BaseOOIDetailView, OOIB
 
     def get_last_breadcrumb(self):
         return {
-            "url": get_ooi_url("ooi_findings", self.ooi.primary_key),
+            "url": get_ooi_url("ooi_findings", self.ooi.primary_key, organization_code=self.organization.code),
             "text": _("Object findings"),
         }
 

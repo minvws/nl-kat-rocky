@@ -10,9 +10,9 @@ from rocky.view_helpers import BreadcrumbsMixin
 from organizations.mixins import OrganizationsMixin
 
 
-class OOIListView(BreadcrumbsMixin, BaseOOIListView):
+class OOIListView(BaseOOIListView):
     breadcrumbs = [{"url": reverse_lazy("ooi_list"), "text": _("Objects")}]
-    template_name = "oois/ooi_list.html"
+    template_name = "ooi_list.html"
     ooi_types = get_collapsed_types().difference({Finding, FindingType})
 
     def setup(self, request, *args, **kwargs):

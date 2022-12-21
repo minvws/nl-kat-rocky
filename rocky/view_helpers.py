@@ -46,7 +46,7 @@ def generate_job_id():
 
 def url_with_querystring(path, **kwargs) -> str:
     parsed_route = urlparse(path)
-
+    print(kwargs)
     return str(
         urlunparse(
             (
@@ -63,12 +63,15 @@ def url_with_querystring(path, **kwargs) -> str:
 
 def get_ooi_url(routename: str, ooi_id: str, **kwargs) -> str:
     kwargs["ooi_id"] = ooi_id
+    organization_code = kwargs["organization_code"]
+    # exclude in querystring
+    kwargs = {k: v for k, v in kwargs.items() if k not in "organization_code"}
 
     if "query" in kwargs:
         kwargs.update(kwargs["query"])
         del kwargs["query"]
 
-    return url_with_querystring(reverse(routename), **kwargs)
+    return url_with_querystring(reverse(routename, kwargs={"organization_code": organization_code}), **kwargs)
 
 
 def existing_ooi_type(ooi_type: str):

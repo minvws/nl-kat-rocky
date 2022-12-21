@@ -47,7 +47,13 @@ class OnboardingSetupScanSelectPluginsView(
             if "boefje" in request.POST:
                 data = form.cleaned_data
                 request.session["selected_boefjes"] = data
-            return redirect(get_ooi_url("step_setup_scan_ooi_detail", self.request.GET.get("ooi_id")))
+            return redirect(
+                get_ooi_url(
+                    "step_setup_scan_ooi_detail",
+                    self.request.GET.get("ooi_id"),
+                    organization_code=self.organization.code,
+                )
+            )
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:

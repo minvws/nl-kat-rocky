@@ -34,7 +34,7 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, OrganizationsMixin, 
         context = super().get_context_data(**kwargs)
         observed_at = self.get_observed_at()
         page_number = self.request.GET.get("page")
-        oois = self.get_list(observed_at)
+        oois = self.get_list(self.organization.code, observed_at)
         paginator = Paginator(oois, self.oois_per_page)
 
         try:
@@ -62,7 +62,7 @@ class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMix
         self.api_connector = self.get_api_connector(self.organization.code)
 
     def get(self, request, *args, **kwargs):
-        self.ooi = self.get_ooi()
+        self.ooi = self.get_ooi(self.organization.code)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -80,9 +80,9 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
     ooi_class: Type[OOI] = None
     form_class = OOIForm
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
         self.api_connector = self.get_api_connector(self.organization.code)
+        return super().get(request, *args, **kwargs)
 
     def get_ooi_class(self):
         return self.ooi.__class__ if hasattr(self, "ooi") else None
@@ -131,7 +131,7 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
             return self.form_invalid(form)
 
     def get_success_url(self, ooi) -> str:
-        return get_ooi_url("ooi_detail", ooi.primary_key)
+        return get_ooi_url("ooi_detail", ooi.primary_key, organization_code=self.organization.code)
 
     def get_readonly_fields(self) -> List:
         if not hasattr(self, "ooi"):
@@ -144,9 +144,9 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
 class BaseDeleteOOIView(SingleOOIMixin, OrganizationsMixin, TemplateView):
     success_url = None
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
         self.api_connector = self.get_api_connector(self.organization.code)
+        return super().get(request, *args, **kwargs)
 
     def delete(self, request):
         self.api_connector.delete(self.ooi.reference)

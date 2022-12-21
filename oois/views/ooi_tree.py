@@ -10,6 +10,7 @@ from oois.ooi_helpers import (
 )
 from rocky.view_helpers import get_ooi_url, Breadcrumb
 from oois.mixins import OOIBreadcrumbsMixin
+from organizations.mixins import OrganizationsMixin
 
 
 class OOITreeView(OOIBreadcrumbsMixin, BaseOOIDetailView):
@@ -43,7 +44,7 @@ class OOITreeView(OOIBreadcrumbsMixin, BaseOOIDetailView):
 
     def get_last_breadcrumb(self):
         return {
-            "url": get_ooi_url("ooi_tree", self.ooi.primary_key),
+            "url": get_ooi_url("ooi_tree", self.ooi.primary_key, organization_code=self.organization.code),
             "text": _("Tree Visualisation"),
         }
 
@@ -66,22 +67,22 @@ class OOISummaryView(OOITreeView):
 
     def get_last_breadcrumb(self):
         return {
-            "url": get_ooi_url("ooi_summary", self.ooi.primary_key),
+            "url": get_ooi_url("ooi_summary", self.ooi.primary_key, organization_code=self.organization.code),
             "text": _("Summary"),
         }
 
 
-class OOIGraphView(OOITreeView):
+class OOIGraphView(OOITreeView, OrganizationsMixin):
     template_name = "graph-d3.html"
 
     def get_filtered_tree(self, tree_dict):
         filtered_tree = super().get_filtered_tree(tree_dict)
 
-        return hydrate_tree(filtered_tree)
+        return hydrate_tree(self.organization.code, filtered_tree)
 
     def get_last_breadcrumb(self):
         return {
-            "url": get_ooi_url("ooi_graph", self.ooi.primary_key),
+            "url": get_ooi_url("ooi_graph", self.ooi.primary_key, organization_code=self.organization.code),
             "text": _("Graph Visualisation"),
         }
 
@@ -91,11 +92,11 @@ class OOIGraphView(OOITreeView):
         return context
 
 
-def hydrate_tree(tree):
-    return hydrate_branch(tree)
+def hydrate_tree(organization_code, tree):
+    return hydrate_branch(organization_code, tree)
 
 
-def hydrate_branch(branch):
+def hydrate_branch(organization_code, branch):
     branch["name"] = branch["tree_meta"]["location"] + "-" + branch["ooi_type"]
     branch["overlay_data"] = {"Type": branch["ooi_type"]}
     if branch["ooi_type"] == "Finding":
@@ -107,7 +108,7 @@ def hydrate_branch(branch):
         branch["overlay_data"]["State"] = branch["state"]
 
     branch["display_name"] = branch["human_readable"]
-    branch["graph_url"] = get_ooi_url("ooi_graph", branch["id"])
+    branch["graph_url"] = get_ooi_url("ooi_graph", branch["id"], organization_code=organization_code)
 
     if branch.get("children"):
         branch["children"] = [hydrate_branch(child) for child in branch["children"]]

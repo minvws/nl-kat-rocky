@@ -42,11 +42,11 @@
              {% if 'kat-alogus' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'KAT-alogus' %}</a>
         </li>
         <li>
-          <a href="{% url 'finding_list' %}"
+          <a href="{% url 'finding_list' organization_code %}"
              {% if 'finding' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Findings' %}</a>
         </li>
         <li>
-          <a href="{% url 'ooi_list' %}"
+          <a href="{% url 'ooi_list' organization_code %}"
              {% if 'objects' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Objects' %}</a>
         </li>
         <li>

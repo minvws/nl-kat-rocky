@@ -102,7 +102,7 @@ class FindingAddView(BaseOOIFormView, OrganizationsMixin):
             self.api_connector.save_declaration(Declaration(ooi=finding, valid_time=observed_at))
             self.api_connector.save_declaration(Declaration(ooi=finding_type, valid_time=observed_at))
 
-        return redirect(get_ooi_url("ooi_detail", ooi_id))
+        return redirect(get_ooi_url("ooi_detail", ooi_id, organization_code=self.organization.code))
 
     def get_ooi_options(self) -> List[Dict[str, str]]:
         # Query to render form options

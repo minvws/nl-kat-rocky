@@ -5,4 +5,4 @@
 <p>
   {% translate 'An overview of' %} "{{ ooi.human_readable }}", {% translate 'object type' %} "{{ ooi.get_ooi_type | lower }}". {% translate 'This shows general information and its related objects. It also gives the possibility to add additonal related objects, or to scan for them.' %}
 </p>
-{% include 'oois/ooi_page_tabs.html' with view=view ooi=ooi %}
+{% include 'ooi_page_tabs.html' with view=view ooi=ooi %}

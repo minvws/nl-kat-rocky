@@ -25,7 +25,9 @@ class ScanProfileDetailView(OOIDetailView, FormView):
         breadcrumbs = super().build_breadcrumbs()
         breadcrumbs.append(
             {
-                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key),
+                "url": get_ooi_url(
+                    "scan_profile_detail", self.ooi.primary_key, organization_code=self.organization.code
+                ),
                 "text": _("Scan profile"),
             }
         )
@@ -54,7 +56,9 @@ class ScanProfileDetailView(OOIDetailView, FormView):
                 messages.WARNING,
                 _("Choose a valid level").format(ooi_name=self.ooi.human_readable),
             )
-        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+        return redirect(
+            get_ooi_url("scan_profile_detail", self.ooi.primary_key, organization_code=self.organization.code)
+        )
 
     def get_initial(self):
         initial = super().get_initial()
@@ -78,7 +82,11 @@ class ScanProfileResetView(OOIDetailView):
                     ooi_name=self.ooi.human_readable
                 ),
             )
-            return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+            return redirect(
+                get_ooi_url(
+                    "scan_profile_detail", self.ooi.primary_key, kwargs={"organization_code": self.organization.code}
+                )
+            )
 
         return super().get(request, *args, **kwargs)
 
@@ -88,13 +96,17 @@ class ScanProfileResetView(OOIDetailView):
             EmptyScanProfile(reference=self.ooi.reference),
             valid_time=datetime.now(timezone.utc),
         )
-        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+        return redirect(
+            get_ooi_url("scan_profile_detail", self.ooi.primary_key, organization_code=self.organization.code)
+        )
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         breadcrumbs = super().build_breadcrumbs()
         breadcrumbs.append(
             {
-                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key),
+                "url": get_ooi_url(
+                    "scan_profile_detail", self.ooi.primary_key, organization_code=self.organization.code
+                ),
                 "text": _("Reset"),
             }
         )

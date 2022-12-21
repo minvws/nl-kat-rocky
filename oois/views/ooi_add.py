@@ -12,6 +12,7 @@ from two_factor.views.utils import class_view_decorator
 from oois.views import BaseOOIFormView
 from oois.ooi_helpers import OOI_TYPES_WITHOUT_FINDINGS
 from rocky.view_helpers import existing_ooi_type
+from organizations.mixins import OrganizationsMixin
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +24,17 @@ def ooi_type_input_choices():
 
 
 @class_view_decorator(otp_required)
-class OOIAddTypeSelectView(TemplateView):
-    template_name = "oois/ooi_add_type_select.html"
+class OOIAddTypeSelectView(OrganizationsMixin, TemplateView):
+    template_name = "ooi_add_type_select.html"
 
     def get(self, request, *args, **kwargs):
         if "add_ooi_type" in request.GET and existing_ooi_type(request.GET["add_ooi_type"]):
-            return redirect(reverse("ooi_add", kwargs={"ooi_type": request.GET["add_ooi_type"]}))
+            return redirect(
+                reverse(
+                    "ooi_add",
+                    kwargs={"organization_code": self.organization.code, "ooi_type": request.GET["add_ooi_type"]},
+                )
+            )
 
         return super().get(request, *args, **kwargs)
 
@@ -37,16 +43,19 @@ class OOIAddTypeSelectView(TemplateView):
 
         context["ooi_types"] = ooi_type_input_choices()
         context["breadcrumbs"] = [
-            {"url": reverse("ooi_list"), "text": _("Objects")},
-            {"url": reverse("ooi_add_type_select"), "text": _("Add object")},
+            {"url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}), "text": _("Objects")},
+            {
+                "url": reverse("ooi_add_type_select", kwargs={"organization_code": self.organization.code}),
+                "text": _("Add object"),
+            },
         ]
 
         return context
 
 
 @class_view_decorator(otp_required)
-class OOIAddView(BaseOOIFormView):
-    template_name = "oois/ooi_add.html"
+class OOIAddView(BaseOOIFormView, OrganizationsMixin):
+    template_name = "ooi_add.html"
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -64,10 +73,16 @@ class OOIAddView(BaseOOIFormView):
 
         context["type"] = self.ooi_class.get_ooi_type()
         context["breadcrumbs"] = [
-            {"url": reverse("ooi_list"), "text": _("Objects")},
-            {"url": reverse("ooi_add_type_select"), "text": _("Type select")},
+            {"url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}), "text": _("Objects")},
             {
-                "url": reverse("ooi_add", kwargs={"ooi_type": self.ooi_class.get_ooi_type()}),
+                "url": reverse("ooi_add_type_select", kwargs={"organization_code": self.organization.code}),
+                "text": _("Type select"),
+            },
+            {
+                "url": reverse(
+                    "ooi_add",
+                    kwargs={"organization_code": self.organization.code, "ooi_type": self.ooi_class.get_ooi_type()},
+                ),
                 "text": _("Add %(ooi_type)s") % {"ooi_type": self.ooi_class.get_ooi_type()},
             },
         ]

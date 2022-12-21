@@ -51,4 +51,4 @@ class FindingTypeAddView(OctopoesMixin, OrganizationsMixin, FormView):
 
         self.api_connector.save_declaration(Declaration(ooi=finding_type, valid_time=datetime.now(timezone.utc)))
 
-        return redirect(get_ooi_url("ooi_detail", finding_type.primary_key))
+        return redirect(get_ooi_url("ooi_detail", finding_type.primary_key, organization_code=self.organization.code))

@@ -45,7 +45,7 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
         return redirect(reverse("task_list"))
 
     def get_oois_objects_from_text_oois(self, oois):
-        return [self.get_single_ooi(ooi_id) for ooi_id in oois]
+        return [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in oois]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

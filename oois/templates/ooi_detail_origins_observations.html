@@ -22,7 +22,7 @@
                 {% endif %}
               </td>
               <td>
-                <a href="{% ooi_url 'ooi_detail' observation.origin.source %}">{{ observation.origin.source }}</a>
+                <a href="{% ooi_url 'ooi_detail' observation.origin.source organization_code=organization.code %}">{{ observation.origin.source }}</a>
               </td>
               <td>
                 {% if observation.normalizer.boefje_meta.id %}

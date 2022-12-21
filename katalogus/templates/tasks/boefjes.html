@@ -34,7 +34,7 @@
                 {% for task in object_list %}
                   <tr>
                     <td>
-                      <a href="{% ooi_url 'ooi_detail' task.p_item.data.input_ooi %}">{{ task.p_item.data.input_ooi }}</a>
+                      <a href="{% ooi_url 'ooi_detail' task.p_item.data.input_ooi organization_code=organization.code %}">{{ task.p_item.data.input_ooi }}</a>
                     </td>
                     <td>{{ task.p_item.data.boefje.name }}</td>
                     {% if task.status.value == 'completed' %}

@@ -152,7 +152,9 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
                 request,
                 _("You can't generate a report for an OOI on a date in the future."),
             )
-            return redirect(get_ooi_url("ooi_detail", self.request.GET.get("ooi_id")))
+            return redirect(
+                get_ooi_url("ooi_detail", self.request.GET.get("ooi_id"), organization_code=self.organization.code)
+            )
         return super().dispatch(request, *args, **kwargs)
 
     def setup(self, request, *args, **kwargs):
@@ -164,7 +166,7 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
         findings_list = build_findings_list_from_store(self.tree.store)
         context["breadcrumbs"].append(
             {
-                "url": get_ooi_url("ooi_report", self.ooi.primary_key),
+                "url": get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code),
                 "text": _("Findings report"),
             }
         )
@@ -184,7 +186,7 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixi
 
     def get(self, request, *args, **kwargs):
         self.setup(request, *args, **kwargs)
-        self.ooi = self.get_ooi()
+        self.ooi = self.get_ooi(self.organization.code)
 
         # reuse existing dict structure
         report_data = build_findings_list_from_store(self.tree.store)
@@ -196,11 +198,11 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixi
             report_id = keiko_client.generate_report("bevindingenrapport", report_data, "dutch.hiero.csv")
         except HTTPError as e:
             messages.error(self.request, _("Error generating report: {}").format(e))
-            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
+            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code))
 
         if report_id is None:
             messages.error(self.request, _("Error generating report: Timeout reached"))
-            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
+            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code))
 
         # generate file name
         report_name = "bevindingenrapport"

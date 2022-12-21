@@ -99,12 +99,12 @@ class OOIFindingManager(SingleOOITreeMixin, OrganizationsMixin):
 
 
 @class_view_decorator(otp_required)
-class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, TemplateView):
-    template_name = "oois/ooi_detail_add_related_object.html"
+class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, OrganizationsMixin, TemplateView):
+    template_name = "ooi_detail_add_related_object.html"
 
     def get(self, request, *args, **kwargs):
         if "ooi_id" in request.GET:
-            self.ooi_id = self.get_ooi(pk=request.GET.get("ooi_id"))
+            self.ooi_id = self.get_ooi(self.organization.code, pk=request.GET.get("ooi_id"))
 
         if "add_ooi_type" in request.GET:
             ooi_type_choice = self.split_ooi_type_choice(request.GET["add_ooi_type"])
@@ -127,7 +127,7 @@ class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, Templa
         return the URL to the corresponding add object form with corresponding get parameters
         """
 
-        path = reverse("ooi_add", kwargs={"ooi_type": ooi_type})
+        path = reverse("ooi_add", kwargs={"organization_code": self.organization.code, "ooi_type": ooi_type})
         query_params = {ooi_relation: ooi.primary_key}
 
         if ooi_type == "Finding":

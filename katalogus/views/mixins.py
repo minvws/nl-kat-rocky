@@ -107,7 +107,7 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
             return
 
         ooi_ids = view_args.getlist("ooi")
-        oois = [self.get_single_ooi(ooi_id) for ooi_id in ooi_ids]
+        oois = [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in ooi_ids]
 
         try:
             self.run_boefje_for_oois(boefje, oois, self.request.active_organization, self.api_connector)

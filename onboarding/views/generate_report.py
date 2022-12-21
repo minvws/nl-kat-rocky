@@ -24,7 +24,9 @@ class OnboardingReportView(
 
     def post(self, request, *args, **kwargs):
         self.set_member_onboarded()
-        return redirect(get_ooi_url("dns_report", self.request.GET.get("ooi_id")))
+        return redirect(
+            get_ooi_url("dns_report", self.request.GET.get("ooi_id"), organization_code=self.organization.code)
+        )
 
     def set_member_onboarded(self):
         member = self.request.user.organizationmember

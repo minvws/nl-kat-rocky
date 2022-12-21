@@ -25,8 +25,8 @@ urlpatterns += i18n_patterns(
     path("account/", include("account.urls"), name="account"),
     path("organizations/", include("organizations.urls"), name="organizations"),
     path("<organization_code>/kat-alogus/", include("katalogus.urls"), name="katalogus"),
-    path("findings/", include("findings.urls"), name="findings"),
-    path("objects/", include("oois.urls"), name=""),
+    path("<organization_code>/findings/", include("findings.urls"), name="findings"),
+    path("<organization_code>/objects/", include("oois.urls"), name="ooi_list"),
     path("health/", views.health, name="health"),
     path(
         "health/v1/",

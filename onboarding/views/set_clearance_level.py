@@ -7,6 +7,7 @@ from two_factor.views.utils import class_view_decorator
 from rocky.view_helpers import get_ooi_url
 from onboarding.mixins import RedTeamUserRequiredMixin, KatIntroductionStepsMixin, OnboardingBreadcrumbsMixin
 from onboarding.forms import OnboardingSetClearanceLevelForm
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
@@ -14,6 +15,7 @@ class OnboardingSetClearanceLevelView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
     OnboardingBreadcrumbsMixin,
+    OrganizationsMixin,
     FormView,
 ):
     template_name = "step_set_clearance_level.html"
@@ -27,7 +29,11 @@ class OnboardingSetClearanceLevelView(
         return context
 
     def get_success_url(self, **kwargs):
-        return get_ooi_url("step_setup_scan_select_plugins", self.request.GET.get("ooi_id"))
+        return get_ooi_url(
+            "step_setup_scan_select_plugins",
+            self.request.GET.get("ooi_id"),
+            kwargs={"organization_code": self.organization.code},
+        )
 
     def form_valid(self, form):
         self.request.session["clearance_level"] = form.data["level"]

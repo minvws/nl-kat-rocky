@@ -5,12 +5,12 @@ from rocky.view_helpers import get_ooi_url
 
 
 class OOIEditView(BaseOOIFormView):
-    template_name = "oois/ooi_edit.html"
+    template_name = "ooi_edit.html"
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.ooi = self.get_ooi()
+    def get(self, request, *args, **kwargs):
+        self.ooi = self.get_ooi(self.organization.code)
         self.ooi_class = self.get_ooi_class()
+        return super().get(request, *args, **kwargs)
 
     def get_initial(self):
         initial = super().get_initial()
@@ -29,10 +29,10 @@ class OOIEditView(BaseOOIFormView):
         context = super().get_context_data(**kwargs)
 
         # Construct breadcrumbs
-        breadcrumb_list = self.get_breadcrumb_list()
+        breadcrumb_list = self.get_breadcrumb_list(organization_code=self.organization.code)
         breadcrumb_list.append(
             {
-                "url": get_ooi_url("ooi_edit", self.ooi.primary_key),
+                "url": get_ooi_url("ooi_edit", self.ooi.primary_key, organization_code=self.organization.code),
                 "text": _("Edit"),
             }
         )
