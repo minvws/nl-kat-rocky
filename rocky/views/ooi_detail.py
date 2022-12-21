@@ -1,22 +1,24 @@
 from datetime import datetime, timezone
 from enum import Enum
 from typing import List
+
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from octopoes.models import OOI
 from requests.exceptions import RequestException
+
 from katalogus.client import get_enabled_boefjes_for_ooi_class, get_katalogus
-from rocky.views.mixins import OrganizationIndemnificationMixin
+from katalogus.views.mixins import BoefjeMixin
+from rocky import scheduler
+from rocky.views.mixins import OOIBreadcrumbsMixin, OrganizationIndemnificationMixin
 from rocky.views.ooi_detail_related_object import OOIRelatedObjectAddView
 from rocky.views.ooi_view import BaseOOIDetailView
-from rocky.views.mixins import OOIBreadcrumbsMixin
 from tools.forms import ObservedAtForm
 from tools.forms.ooi import PossibleBoefjesFilterForm
 from tools.ooi_helpers import format_display
 from tools.view_helpers import Breadcrumb
-from katalogus.views.mixins import BoefjeMixin
 
 
 class PageActions(Enum):
@@ -78,6 +80,20 @@ class OOIDetailView(
         breadcrumbs = super().build_breadcrumbs()
         return breadcrumbs
 
+    def get_scan_history(self):
+        # FIXME: hard-coded "boefje"" should be changed
+        scheduler_id = f"boefje-{self.request.active_organization.code}"
+        filters = [
+            {"field": "data__input_ooi", "operator": "eq", "value": self.get_ooi_id()},
+        ]
+
+        scans = scheduler.client.list_tasks(
+            scheduler_id=scheduler_id,
+            filters=filters
+        )
+
+        return scans
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -121,5 +137,7 @@ class OOIDetailView(
 
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = self.get_organization_indemnification
+
+        context["scan_history"] = self.get_scan_history()
 
         return context

@@ -118,7 +118,7 @@ class SchedulerClient:
 
     def list_tasks(
         self,
-        queue_name: str,
+        scheduler_id: str,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         status: Optional[TaskStatus] = None,
@@ -127,7 +127,7 @@ class SchedulerClient:
         filters: Optional[List[Dict]] = None,
     ) -> PaginatedTasksResponse:
         params = {
-            "scheduler_id": queue_name,
+            "scheduler_id": scheduler_id,
             "limit": limit,
             "offset": offset,
             "status": status,
