@@ -36,7 +36,7 @@ class TaskListTestCase(TestCase):
 
         _ = self.task_list(request)
 
-        mock_scheduler_client.list_tasks.assert_has_calls([call("boefje-_dev", limit=TASK_LIMIT)])
+        mock_scheduler_client.list_tasks.assert_has_calls([call(queue_name="boefje-_dev", limit=TASK_LIMIT)])
 
     def test_tasks_view_simple(self, mock_scheduler_client: MagicMock):
         mock_scheduler_client.list_tasks.return_value = PaginatedTasksResponse.parse_raw(
@@ -105,7 +105,7 @@ class TaskListTestCase(TestCase):
         self.assertContains(response, "1b20f85f")
         self.assertContains(response, "Hostname|internet|mispo.es.")
 
-        mock_scheduler_client.list_tasks.assert_has_calls([call("boefje-_dev", limit=TASK_LIMIT)])
+        mock_scheduler_client.list_tasks.assert_has_calls([call(queue_name="boefje-_dev", limit=TASK_LIMIT)])
 
     def test_tasks_view_no_organization(self, _: MagicMock):
         request = self.factory.get(reverse("task_list"))
