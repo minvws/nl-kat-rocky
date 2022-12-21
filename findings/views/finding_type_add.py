@@ -11,10 +11,11 @@ from oois.mixins import OctopoesMixin
 from oois.models import OOIInformation
 from findings.forms import FindingTypeAddForm
 from rocky.view_helpers import get_ooi_url
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class FindingTypeAddView(OctopoesMixin, FormView):
+class FindingTypeAddView(OctopoesMixin, OrganizationsMixin, FormView):
     template_name = "finding_type_add.html"
     form_class = FindingTypeAddForm
 
@@ -29,7 +30,7 @@ class FindingTypeAddView(OctopoesMixin, FormView):
         return context
 
     def form_valid(self, form):
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
         form_data = form.cleaned_data
         # set data
         finding_type = KATFindingType(id=form_data["id"])

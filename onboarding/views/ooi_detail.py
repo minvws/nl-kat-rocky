@@ -10,6 +10,7 @@ from katalogus.client import get_katalogus
 from oois.mixins import SingleOOITreeMixin
 from onboarding.mixins import RedTeamUserRequiredMixin, OnboardingBreadcrumbsMixin
 from rocky.view_helpers import get_ooi_url
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
@@ -18,6 +19,7 @@ class OnboardingSetupScanOOIDetailView(
     SingleOOITreeMixin,
     KatIntroductionStepsMixin,
     OnboardingBreadcrumbsMixin,
+    OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_ooi_detail.html"
@@ -29,7 +31,7 @@ class OnboardingSetupScanOOIDetailView(
         return super().get_ooi_id()
 
     def get(self, request, *args, **kwargs):
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
         self.ooi = self.get_ooi()
         return super().get(request, *args, **kwargs)
 
@@ -39,7 +41,7 @@ class OnboardingSetupScanOOIDetailView(
         return redirect(get_ooi_url("step_report", self.get_ooi_id()))
 
     def set_clearance_level(self):
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
         ooi = self.get_ooi()
         self.api_connector.save_scan_profile(
             DeclaredScanProfile(reference=ooi.reference, level=self.request.session["clearance_level"]),
@@ -49,10 +51,8 @@ class OnboardingSetupScanOOIDetailView(
     def enable_selected_boefjes(self) -> None:
         if not self.request.session.get("selected_boefjes"):
             return
-
-        organization = self.request.user.organizationmember.organization
         for boefje_id in self.request.session["selected_boefjes"]:
-            get_katalogus(organization.code).enable_boefje(boefje_id)
+            get_katalogus(self.organization.code).enable_boefje(boefje_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

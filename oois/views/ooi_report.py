@@ -38,6 +38,7 @@ from oois.ooi_helpers import (
     RiskLevelSeverity,
 )
 from rocky.view_helpers import get_ooi_url, convert_date_to_datetime
+from organizations.mixins import OrganizationsMixin
 
 
 def build_meta(findings: List[Dict]) -> Dict:
@@ -173,12 +174,12 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
 
 
 @class_view_decorator(otp_required)
-class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
+class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixin, View):
     connector_form_class = OOIReportSettingsForm
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
         self.depth = self.get_depth()
 
     def get(self, request, *args, **kwargs):

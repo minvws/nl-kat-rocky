@@ -20,7 +20,7 @@ class OnboardingAccountSetupAdminView(RegistrationBreadcrumbsMixin, OnboardingAc
     model = User
     template_name = "account/step_admin_add.html"
     form_class = OnboardingCreateUserAdminForm
-    current_step = 4
+    current_step = 3
 
     def get_success_url(self) -> str:
         return reverse_lazy("step_account_setup_red_teamer", kwargs={"organization_code": self.organization.code})

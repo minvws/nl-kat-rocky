@@ -12,10 +12,9 @@
         <h2>{% translate 'Indemnification setup' %}</h2>
         {% if indemnification_present %}
           <p>
-            {% translate "Indemnification on the organization is already present. You may now go to the next step to setup accounts." %}
+            {% translate "Indemnification on the organization is already present." %}
           </p>
-          <a class="button"
-             href="{% url 'step_account_setup_intro' organization.code %}">{% translate 'Continue' %}</a>
+          <a class="button" href="{% url 'crisis_room' %}">{% translate 'Continue' %}</a>
         {% else %}
           {% include 'partials/form/indemnification_add_form.html' %}
         {% endif %}

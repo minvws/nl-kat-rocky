@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 from onboarding.forms import OnboardingCreateUserClientForm
 from onboarding.mixins import RegistrationBreadcrumbsMixin, OnboardingAccountCreationMixin
 
-
 User = get_user_model()
 
 
@@ -20,7 +19,7 @@ class OnboardingAccountSetupClientView(RegistrationBreadcrumbsMixin, OnboardingA
     model = User
     template_name = "account/step_client_add.html"
     form_class = OnboardingCreateUserClientForm
-    current_step = 4
+    current_step = 3
 
     def get_success_url(self, **kwargs):
         return reverse_lazy("crisis_room")

@@ -13,7 +13,7 @@ class OnboardingIndemnificationSetupView(
     KatIntroductionAdminStepsMixin,
     IndemnificationAddView,
 ):
-    current_step = 3
+    current_step = 4
     template_name = "account/step_indemnification_setup.html"
 
     def get_success_url(self) -> str:

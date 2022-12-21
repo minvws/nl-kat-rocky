@@ -1,23 +1,24 @@
 from django.views import View
 from organizations.models import Organization, OrganizationMember
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 
 
 class OrganizationsMixin(View):
     organization = None
     organizationmember = None
 
-    def dispatch(self, request, *args, **kwargs):
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect("login")
         if "organization_code" in kwargs:
-            org_code = kwargs["organization_code"]
             try:
-                self.organization = Organization.objects.get(code=org_code)
+                self.organization = Organization.objects.get(code=kwargs["organization_code"])
                 self.organizationmember = OrganizationMember.objects.filter(
                     user=request.user, organization=self.organization
                 )
             except Organization.DoesNotExist:
                 raise Http404()
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

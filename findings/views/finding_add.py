@@ -17,6 +17,7 @@ from octopoes.models.types import OOI_TYPES
 from oois.views import BaseOOIFormView
 from findings.forms import FindingAddForm
 from rocky.view_helpers import get_ooi_url
+from organizations.mixins import OrganizationsMixin
 
 
 def get_finding_type_from_id(
@@ -39,7 +40,7 @@ def get_finding_type_from_id(
     return finding_type
 
 
-class FindingAddView(BaseOOIFormView):
+class FindingAddView(BaseOOIFormView, OrganizationsMixin):
     template_name = "findings/finding_add.html"
     form_class = FindingAddForm
 
@@ -59,7 +60,7 @@ class FindingAddView(BaseOOIFormView):
 
     def get_form_kwargs(self):
         kwargs = {
-            "connector": self.get_api_connector(),
+            "connector": self.get_api_connector(self.organization.code),
             "ooi_list": self.get_ooi_options(),
         }
         kwargs.update(super().get_form_kwargs())

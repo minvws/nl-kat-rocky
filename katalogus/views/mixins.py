@@ -12,12 +12,12 @@ from katalogus.client import get_katalogus
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
 from oois.mixins import OctopoesMixin
 from organizations.models import Organization
-
+from organizations.mixins import OrganizationsMixin
 
 logger = getLogger(__name__)
 
 
-class KATalogusMixin:
+class KATalogusMixin(OrganizationsMixin):
     def setup(self, request, *args, **kwargs):
         """
         Prepare organization info and KAT-alogus API client.
@@ -26,7 +26,6 @@ class KATalogusMixin:
         if request.user.is_anonymous:
             return reverse("login")
         else:
-            self.organization = request.user.organizationmember.organization
             self.katalogus_client = get_katalogus(self.organization.code)
             if "plugin_id" in kwargs:
                 self.plugin_id = kwargs["plugin_id"]
@@ -34,15 +33,15 @@ class KATalogusMixin:
                 self.plugin_schema = self.katalogus_client.get_plugin_schema(self.plugin_id)
 
 
-class BoefjeMixin(OctopoesMixin):
+class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
     """
     When a user wants to scan one or multiple OOI's,
     this mixin provides the methods to construct the boefjes for the OOI's and run them.
     """
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+    def dispatch(self, request, *args, **kwargs):
+        self.api_connector = self.get_api_connector(self.organization.code)
+        return super().dispatch(request, *args, **kwargs)
 
     def run_boefje(self, katalogus_boefje: Boefje, ooi: OOI, organization: Organization) -> None:
 

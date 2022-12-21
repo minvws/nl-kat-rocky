@@ -8,5 +8,5 @@ from organizations.mixins import OrganizationsMixin
 
 @class_view_decorator(otp_required)
 class OnboardingChooseUserTypeView(KatIntroductionAdminStepsMixin, OrganizationsMixin, TemplateView):
-    current_step = 4
+    current_step = 3
     template_name = "account/step_account_user_type.html"

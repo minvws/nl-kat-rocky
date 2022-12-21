@@ -18,6 +18,7 @@ from pydantic import BaseModel
 from rocky.bytes_client import get_bytes_client
 from katalogus.client import Plugin, get_katalogus
 from rocky.forms.base import ObservedAtForm
+from rocky.settings import OCTOPOES_API
 from rocky.forms.settings import DEPTH_MAX, DEPTH_DEFAULT
 from organizations.models import Organization, Indemnification, OrganizationMember
 from oois.ooi_helpers import (
@@ -50,21 +51,11 @@ class OOIAttributeError(AttributeError):
 class OctopoesMixin:
     api_connector: OctopoesAPIConnector = None
 
-    def get_api_connector(self) -> OctopoesAPIConnector:
+    def get_api_connector(self, organization_code) -> OctopoesAPIConnector:
         # needs obvious check, because of execution order
         if not self.request.user.is_verified():
             return None
-
-        if not self.request.active_organization:
-            raise OctopoesAPIImproperlyConfigured("Organization missing")
-
-        if not self.request.active_organization.code:
-            raise OctopoesAPIImproperlyConfigured("Organization missing code")
-
-        if self.request.octopoes_api_connector is None:
-            raise OctopoesAPIImproperlyConfigured("No Octopoes connector set.")
-
-        return self.request.octopoes_api_connector
+        return OctopoesAPIConnector(base_uri=OCTOPOES_API, client=organization_code)
 
     def get_single_ooi(self, pk: str, observed_at: Optional[datetime] = None) -> OOI:
         try:

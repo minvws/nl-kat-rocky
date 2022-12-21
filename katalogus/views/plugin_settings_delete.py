@@ -7,6 +7,7 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from katalogus.views.mixins import KATalogusMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
@@ -24,7 +25,10 @@ class PluginSettingsDeleteView(PermissionRequiredMixin, KATalogusMixin, Template
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
             {
                 "url": reverse(
                     "plugin_detail", kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id}

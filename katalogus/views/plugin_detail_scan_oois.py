@@ -8,10 +8,11 @@ from django.contrib import messages
 from octopoes.models.types import type_by_name
 from oois.forms import SelectOOIForm, SelectOOIFilterForm
 from katalogus.views.mixins import BoefjeMixin
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class PluginDetailScanOOI(BoefjeMixin, TemplateView):
+class PluginDetailScanOOI(BoefjeMixin, OrganizationsMixin, TemplateView):
     limit_ooi_list = 9999
 
     def post(self, request, *args, **kwargs):
@@ -26,7 +27,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
                     boefje=boefje,
                     oois=oois_with_clearance_level,
                     organization=self.organization,
-                    api_connector=self.get_api_connector(),
+                    api_connector=self.get_api_connector(self.organization.code),
                 )
             oois_without_clearance_level = self.get_oois_without_clearance_level(selected_oois)
             if oois_without_clearance_level:
@@ -51,7 +52,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
         """Get all available OOIS that plugin can consume."""
         ooi_types = self.plugin["consumes"]
         ooi_types = {type_by_name(ooi_type) for ooi_type in ooi_types}
-        oois = self.get_api_connector().list(ooi_types, limit=self.limit_ooi_list)
+        oois = self.get_api_connector(self.organization.code).list(ooi_types, limit=self.limit_ooi_list)
         return oois.items
 
     def get_form_filtered_consumable_oois(self):

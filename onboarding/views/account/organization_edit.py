@@ -31,7 +31,7 @@ class OnboardingOrganizationUpdateView(
         return self.organization
 
     def get_success_url(self) -> str:
-        return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": self.organization.code})
+        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]

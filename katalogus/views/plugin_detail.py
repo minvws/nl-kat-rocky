@@ -35,10 +35,18 @@ class PluginDetailView(
         context = super().get_context_data(**kwargs)
         context["plugin"] = self.plugin
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
             {
                 "url": reverse(
-                    "plugin_detail", kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id}
+                    "plugin_detail",
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_type": self.plugin["type"],
+                        "plugin_id": self.plugin_id,
+                    },
                 ),
                 "text": self.plugin["name"],
             },

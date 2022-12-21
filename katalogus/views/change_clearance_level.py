@@ -7,10 +7,11 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from katalogus.views.mixins import BoefjeMixin
 from katalogus.views.mixins import KATalogusMixin
+from organizations.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, TemplateView):
+class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, TemplateView):
     template_name = "change_clearance_level.html"
 
     def setup(self, request, *args, **kwargs):
@@ -34,7 +35,10 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, TemplateView):
         """Start scanning oois at plugin detail page."""
         boefje = self.katalogus_client.get_boefje(self.plugin_id)
         self.run_boefje_for_oois(
-            boefje=boefje, oois=self.oois, organization=self.organization, api_connector=self.get_api_connector()
+            boefje=boefje,
+            oois=self.oois,
+            organization=self.organization,
+            api_connector=self.get_api_connector(self.organization.code),
         )
         messages.add_message(self.request, messages.SUCCESS, _("Scanning successfully scheduled."))
         del request.session["selected_oois"]  # delete session

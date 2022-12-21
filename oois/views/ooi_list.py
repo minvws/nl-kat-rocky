@@ -7,6 +7,7 @@ from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_collapsed_types, type_by_name
 from oois.views import BaseOOIListView
 from rocky.view_helpers import BreadcrumbsMixin
+from organizations.mixins import OrganizationsMixin
 
 
 class OOIListView(BreadcrumbsMixin, BaseOOIListView):
@@ -28,7 +29,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
         return context
 
 
-class OOIListExportView(OOIListView):
+class OOIListExportView(OOIListView, OrganizationsMixin):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
 
@@ -40,7 +41,7 @@ class OOIListExportView(OOIListView):
         if self.filtered_ooi_types:
             ooi_types = {type_by_name(t) for t in self.filtered_ooi_types}
 
-        ooi_list = self.get_api_connector().list(ooi_types, observed_at).items
+        ooi_list = self.get_api_connector(self.organization.code).list(ooi_types, observed_at).items
         exports = [
             {
                 "observed_at": str(observed_at),

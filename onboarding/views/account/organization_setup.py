@@ -26,15 +26,15 @@ class OnboardingOrganizationSetupView(
     template_name = "account/step_organization_setup.html"
     form_class = OrganizationForm
     current_step = 2
+    organization = Organization.objects.first()
 
     def get(self, request, *args, **kwargs):
-        organization = Organization.objects.first()
-        if organization:
-            return redirect(reverse("step_organization_update", kwargs={"organization_code": organization.code}))
+        if self.organization:
+            return redirect(reverse("step_organization_update", kwargs={"organization_code": self.organization.code}))
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self) -> str:
-        return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": self.organization.code})
+        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]

@@ -11,4 +11,4 @@ class OnboardingAccountSetupIntroView(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, OrganizationsMixin, TemplateView
 ):
     template_name = "account/step_account_setup_intro.html"
-    current_step = 4
+    current_step = 3

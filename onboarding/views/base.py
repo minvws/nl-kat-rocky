@@ -43,8 +43,8 @@ class CompleteOnboarding(OrganizationsMixin, View):
             member, _ = OrganizationMember.objects.get_or_create(user=request.user, organization=self.organization)
             member.onboarded = True
             member.save()
-        else:
-            member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
-            member.onboarded = True
-            member.save()
+            return redirect(reverse("step_indemnification_setup", kwargs={"organization_code": self.organization.code}))
+        member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
+        member.onboarded = True
+        member.save()
         return redirect(reverse("crisis_room"))

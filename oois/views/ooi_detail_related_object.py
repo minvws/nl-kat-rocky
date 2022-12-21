@@ -17,12 +17,13 @@ from oois.ooi_helpers import (
     RiskLevelSeverity,
 )
 from rocky.view_helpers import existing_ooi_type, url_with_querystring
+from organizations.mixins import OrganizationsMixin
 
 
-class OOIRelatedObjectManager(SingleOOITreeMixin):
+class OOIRelatedObjectManager(SingleOOITreeMixin, OrganizationsMixin):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
 
     def get_related_objects(self):
         related = []
@@ -37,10 +38,10 @@ class OOIRelatedObjectManager(SingleOOITreeMixin):
         return related
 
 
-class OOIFindingManager(SingleOOITreeMixin):
+class OOIFindingManager(SingleOOITreeMixin, OrganizationsMixin):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
 
     def get_findings(self) -> List[Dict]:
         findings: List[Dict] = []

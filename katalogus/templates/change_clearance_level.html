@@ -49,7 +49,7 @@
         <form class="inline" method="post">
           {% csrf_token %}
           <fieldset>
-            <a href="{% url 'plugin_detail' plugin_type=plugin.type plugin_id=plugin.id %}"
+            <a href="{% url 'plugin_detail' organization_code=organization.code plugin_type=plugin.type plugin_id=plugin.id %}"
                class="button ghost">{% translate 'Cancel' %}</a>
             <button type="submit">{% translate 'Scan' %}</button>
           </fieldset>
