@@ -48,18 +48,17 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
 
         return context
 
+    def get(self, request: HttpRequest, status=200, *args, **kwargs) -> HttpResponse:
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context, status=status)
+
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """Perform bulk action on selected oois."""
-
-        # TODO:
-        #  - permissions
-        #  - Styled select field
-
         selected_oois = request.POST.getlist("ooi")
 
         if not selected_oois:
             messages.add_message(request, messages.ERROR, _("No OOIs selected."))
-            return self.get(request, *args, **kwargs)
+            return self.get(request, status=422, *args, **kwargs)
 
         action = request.POST.get("action")
 
@@ -70,7 +69,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
             return self._set_scan_profiles(selected_oois, request, *args, **kwargs)
 
         messages.add_message(request, messages.ERROR, _("Unknown action."))
-        return self.get(request, *args, **kwargs)
+        return self.get(request, status=404, *args, **kwargs)
 
     def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
         connector = self.get_api_connector()
@@ -90,12 +89,12 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
                     messages.add_message(
                         request, messages.ERROR, _(f"An error occurred saving scan profile for {ooi}.")
                     )
-                    return self.get(request, *args, **kwargs)
+                    return self.get(request, status=500, *args, **kwargs)
                 except ObjectNotFoundException:
                     messages.add_message(
                         request, messages.ERROR, _(f"An error occurred saving scan profile for {ooi}: object not found")
                     )
-                    return self.get(request, *args, **kwargs)
+                    return self.get(request, status=404, *args, **kwargs)
 
             messages.add_message(
                 request, messages.SUCCESS, _(f"Successfully set scan profile to {alias} for {len(selected_oois)} oois.")
@@ -103,7 +102,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
             return self.get(request, *args, **kwargs)
 
         messages.add_message(request, messages.ERROR, _(f"Unknown Scan Profile: {scan_profile}."))
-        return self.get(request, *args, **kwargs)
+        return self.get(request, status=404, *args, **kwargs)
 
     def _delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
         connector = self.get_api_connector()
@@ -113,10 +112,10 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
                 connector.delete(ooi, valid_time=datetime.now(timezone.utc))
             except (RequestException, RemoteException):
                 messages.add_message(request, messages.ERROR, _(f"An error occurred deleting {ooi}."))
-                return self.get(request, *args, **kwargs)
+                return self.get(request, status=500, *args, **kwargs)
             except ObjectNotFoundException:
                 messages.add_message(request, messages.ERROR, _(f"An error occurred deleting {ooi}: object not found"))
-                return self.get(request, *args, **kwargs)
+                return self.get(request, status=404, *args, **kwargs)
 
         messages.add_message(
             request,
