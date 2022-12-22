@@ -24,13 +24,11 @@ class PluginSchemaForm(forms.Form):
         required = False
         help_text = ""
         for field_name, field_props in fields.items():
-            if field_name in required_fields:
-                required = True
             field_type = FIELD_TYPES[field_props["type"]]
             if "description" in field_props:
                 help_text = field_props["description"]
             kwargs = {
-                "required": required,
+                "required": field_name in required_fields,
                 "label": field_props.get("title", field_name),
                 "help_text": _(help_text),
                 "error_messages": self.error_messages,
