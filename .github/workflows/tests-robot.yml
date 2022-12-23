@@ -92,7 +92,7 @@ jobs:
         run: docker-compose exec -T rocky python3 manage.py loaddata OOI_database_seed.json
 
       - name: Create superuser
-        run: docker-compose exec -T rocky python3 manage.py createsuperuser --no-input
+        run: docker-compose exec -T rocky python3 manage.py createsuperuser --noinput
         env:
           DJANGO_SUPERUSER_EMAIL: 'robot@localhost'
           DJANGO_SUPERUSER_PASSWORD: 'robotpassword'
