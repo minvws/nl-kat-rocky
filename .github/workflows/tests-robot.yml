@@ -19,6 +19,9 @@ env:
 jobs:
   Robot:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: nl-kat-rocky
 
     steps:
       - name: Checkout code
