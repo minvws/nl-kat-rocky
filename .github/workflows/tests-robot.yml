@@ -9,9 +9,6 @@ on:
       - "develop"
       - "main"
 
-env:
-  KAT_VERSION: ${{ github.head_ref || github.ref_name }}
-
 jobs:
   Tests:
     runs-on: ubuntu-22.04
@@ -22,9 +19,14 @@ jobs:
         with:
           path: nl-kat-rocky
 
+      - name: Inject slug/short variables for branch names
+        uses: rlespinasse/github-slug-action@v4
+
       - name: Download and run grcr containers
         run: docker-compose -f .ci/docker-compose-robot-coordination.yml up -d
         working-directory: nl-kat-rocky
+        env:
+          KAT_VERSION: ${{ env.GITHUB_REF_NAME_SLUG }}
 
       - name: Seed katalogus boefjes
         run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec katalogus python3 -m boefjes.seed
