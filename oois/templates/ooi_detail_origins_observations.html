@@ -26,7 +26,7 @@
               </td>
               <td>
                 {% if observation.normalizer.boefje_meta.id %}
-                  <a href="{% url 'bytes_raw' observation.normalizer.boefje_meta.id %}">{{ observation.normalizer.boefje_meta.id }}</a>
+                  <a href="{% url 'bytes_raw' organization_code=organization.code boefje_meta_id=observation.normalizer.boefje_meta.id %}">{{ observation.normalizer.boefje_meta.id }}</a>
                 {% endif %}
               </td>
             </tr>

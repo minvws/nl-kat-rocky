@@ -36,6 +36,7 @@ class PluginDetailScanOOI(BoefjeMixin, OrganizationsMixin, TemplateView):
                     reverse(
                         "change_clearance_level",
                         kwargs={
+                            "organization_code": self.organization.code,
                             "plugin_type": self.plugin["type"],
                             "plugin_id": plugin_id,
                             "scan_level": self.plugin["scan_level"],

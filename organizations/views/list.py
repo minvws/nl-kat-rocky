@@ -21,4 +21,10 @@ class OrganizationListView(
         """
         List all organizations of member.
         """
-        return self.request.user.organizationmember.organization
+        organizations = []
+        members = OrganizationMember.objects.filter(user=self.request.user)
+        if members.exists():
+            for member in members:
+                organization = Organization.objects.get(name=member.organization)
+                organizations.append(organization)
+            return organizations

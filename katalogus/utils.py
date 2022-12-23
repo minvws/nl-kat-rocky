@@ -1,7 +1,6 @@
 from typing import Type, List
 from octopoes.models import OOI
 from organizations.models import Organization
-
 from katalogus.client import get_katalogus, Plugin
 
 

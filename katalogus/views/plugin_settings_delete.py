@@ -31,14 +31,24 @@ class PluginSettingsDeleteView(PermissionRequiredMixin, KATalogusMixin, Template
             },
             {
                 "url": reverse(
-                    "plugin_detail", kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id}
+                    "plugin_detail",
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_type": self.plugin["type"],
+                        "plugin_id": self.plugin_id,
+                    },
                 ),
                 "text": self.plugin["name"],
             },
             {
                 "url": reverse(
                     "plugin_settings_delete",
-                    kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id, "name": self.name},
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_type": self.plugin["type"],
+                        "plugin_id": self.plugin_id,
+                        "name": self.name,
+                    },
                 ),
                 "text": _("Delete"),
             },
@@ -53,7 +63,11 @@ class PluginSettingsDeleteView(PermissionRequiredMixin, KATalogusMixin, Template
     def get_success_url(self):
         return reverse(
             "plugin_detail",
-            kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id},
+            kwargs={
+                "organization_code": self.organization.code,
+                "plugin_type": self.plugin["type"],
+                "plugin_id": self.plugin_id,
+            },
         )
 
     def delete(self, request, *args, **kwargs):

@@ -15,27 +15,16 @@ class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
         self.breadcrumb_object = organization
 
     def build_breadcrumbs(self):
-        if self.request.user.has_perm("organizations.can_switch_organization"):
-            breadcrumbs = [
-                {"url": reverse("organization_list"), "text": _("Organizations")},
-                {
-                    "url": reverse("organization_detail", kwargs={"pk": self.breadcrumb_object.pk}),
-                    "text": self.breadcrumb_object.name,
-                },
-            ]
-        else:
-            breadcrumbs = [
-                {
-                    "url": reverse("crisis_room"),
-                    "text": self.breadcrumb_object.name,
-                }
-            ]
-
-        breadcrumbs.append(
+        breadcrumbs = [
+            {"url": reverse("organization_list"), "text": _("Organizations")},
             {
-                "url": reverse("organization_member_list", kwargs={"pk": self.breadcrumb_object.pk}),
+                "url": reverse("organization_detail", kwargs={"organization_code": self.breadcrumb_object.code}),
+                "text": self.breadcrumb_object.name,
+            },
+            {
+                "url": reverse("organization_member_list", kwargs={"organization_code": self.breadcrumb_object.code}),
                 "text": _("Members"),
-            }
-        )
+            },
+        ]
 
         return breadcrumbs

@@ -32,7 +32,7 @@ class OnboardingSetClearanceLevelView(
         return get_ooi_url(
             "step_setup_scan_select_plugins",
             self.request.GET.get("ooi_id"),
-            kwargs={"organization_code": self.organization.code},
+            organization_code=self.organization.code,
         )
 
     def form_valid(self, form):

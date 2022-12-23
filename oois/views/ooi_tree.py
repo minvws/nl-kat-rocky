@@ -14,7 +14,7 @@ from organizations.mixins import OrganizationsMixin
 
 
 class OOITreeView(OOIBreadcrumbsMixin, BaseOOIDetailView):
-    template_name = "oois/ooi_tree.html"
+    template_name = "ooi_tree.html"
     connector_form_class = OoiTreeSettingsForm
 
     def get_tree_dict(self):

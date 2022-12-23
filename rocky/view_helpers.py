@@ -46,7 +46,6 @@ def generate_job_id():
 
 def url_with_querystring(path, **kwargs) -> str:
     parsed_route = urlparse(path)
-    print(kwargs)
     return str(
         urlunparse(
             (

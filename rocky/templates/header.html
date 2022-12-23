@@ -3,7 +3,7 @@
 {% load organization_management %}
 
 {% if request.user.is_authenticated %}
-  {% get_organization_code request.user as organization_code %}
+  {% get_organizations request.user as organizations %}
 {% endif %}
 <header>
   {% include 'partials/skip-to-content.html' %}
@@ -12,7 +12,7 @@
        data-close-label="Sluit menu"
        data-media="(min-width: 56rem)"
        aria-label="Hoofdnavigatie">
-    <a href="{% url 'crisis_room' %}"
+    <a href="{% url 'landing_page' %}"
        class="logo"
        title="KAT"
        aria-label="{% translate 'KAT logo, go to the homepage of KAT' %}">
@@ -21,36 +21,48 @@
     </a>
     <!-- Adjust breakpoint as needed -->
     <ul>
-      <li>
-        {% if request.user.is_authenticated %}
+      {% if request.user.is_authenticated %}
+        <li>
           <a href="{% url 'crisis_room' %}"
              {% if 'crisis-room' in request.path|urlencode %} aria-current="page"{% endif %}>{{ request.active_organization }}</a>
-        {% else %}
+        </li>
+      {% else %}
+        <li>
           <a href="{% url 'landing_page' %}"
              {% if 'landing-page' in request.path|urlencode %} aria-current="page"{% endif %}>KAT</a>
-        {% endif %}
-      </li>
-      {% if request.user.is_authenticated and not view_type == "onboarding" %}
-        {% if perms.tools.can_scan_organization and not request.user.is_superuser %}
-          <li>
-            <a href="{% url 'indemnification_add' %}"
-               {% if 'indemnifications' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Indemnifications' %}</a>
-          </li>
-        {% endif %}
+        </li>
+      {% endif %}
+      {% if request.user.is_authenticated and perms.tools.can_scan_organization and not request.user.is_superuser and not view_type == "onboarding" %}
         <li>
-          <a href="{% url 'katalogus' organization_code %}"
+          <a href="{% url 'indemnification_add' %}"
+             {% if 'indemnifications' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Indemnifications' %}</a>
+        </li>
+      {% endif %}
+      {% if request.user.is_authenticated and organization.code %}
+        <li>
+          <select id="select-organization" name="select-organization">
+            {% for orga in organizations %}
+              <option {% if orga.code == organization.code %}selected="{{ organization.code }}"{% endif %}
+                      value="{{ orga.code }}">
+                {{ orga.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </li>
+        <li>
+          <a href="{% url 'katalogus' organization.code %}"
              {% if 'kat-alogus' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'KAT-alogus' %}</a>
         </li>
         <li>
-          <a href="{% url 'finding_list' organization_code %}"
+          <a href="{% url 'finding_list' organization.code %}"
              {% if 'finding' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Findings' %}</a>
         </li>
         <li>
-          <a href="{% url 'ooi_list' organization_code %}"
+          <a href="{% url 'ooi_list' organization.code %}"
              {% if 'objects' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Objects' %}</a>
         </li>
         <li>
-          <a href="{% url 'task_list' organization_code %}"
+          <a href="{% url 'task_list' organization.code %}"
              {% if 'tasks' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Tasks' %}</a>
         </li>
         {% if perms.tools.view_organizationmember and not perms.tools.can_switch_organization %}
@@ -84,3 +96,6 @@
   {% endif %}
 </header>
 {% include 'partials/notifications/confirmation.html' %}
+{% block html_at_end_body %}
+  <script src="{% static '/js/selectOrganization.js' %}" nonce="{{ request.csp_nonce }}"></script>
+{% endblock %}

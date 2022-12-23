@@ -2,25 +2,26 @@ import json
 import logging
 import zipfile
 from io import BytesIO
-
 from django.contrib import messages
 from django.http import Http404, FileResponse
 from django.shortcuts import redirect
 from django.views import View
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-
 from rocky.bytes_client import get_bytes_client
+from organizations.mixins import OrganizationsMixin
 
 logger = logging.getLogger(__name__)
 
 
 @class_view_decorator(otp_required)
 class BytesRawView(View):
-    def get(self, request, boefje_meta_id: str):
+    def get(self, request, **kwargs):
         try:
             client = get_bytes_client()
             client.login()
+            boefje_meta_id = kwargs["boefje_meta_id"]
+            print(boefje_meta_id)
             raw = client.get_raw(boefje_meta_id)
             boefje_meta = client.get_raw_meta(boefje_meta_id)
 

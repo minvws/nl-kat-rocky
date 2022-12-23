@@ -1,6 +1,7 @@
 from django.views import View
 from organizations.models import Organization, OrganizationMember
 from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render
 
 
 class OrganizationsMixin(View):
@@ -17,6 +18,8 @@ class OrganizationsMixin(View):
                 self.organizationmember = OrganizationMember.objects.filter(
                     user=request.user, organization=self.organization
                 )
+                if not self.organizationmember:
+                    raise Http404()
             except Organization.DoesNotExist:
                 raise Http404()
 

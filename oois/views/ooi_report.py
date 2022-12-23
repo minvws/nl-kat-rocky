@@ -143,7 +143,7 @@ def build_findings_list_from_store(ooi_store: Dict, finding_filter: Optional[Lis
 
 @class_view_decorator(otp_required)
 class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
-    template_name = "oois/ooi_report.html"
+    template_name = "ooi_report.html"
     connector_form_class = OOIReportSettingsForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -206,7 +206,7 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixi
 
         # generate file name
         report_name = "bevindingenrapport"
-        org_code = self.request.active_organization.code
+        org_code = self.organization.code
         ooi_id = self.ooi.primary_key
         valid_time = self.get_observed_at().isoformat()
         current_time = datetime.now(timezone.utc).isoformat()

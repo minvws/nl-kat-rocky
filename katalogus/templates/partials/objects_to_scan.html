@@ -36,7 +36,7 @@
       {% endif %}
       <p>
         {% for ooi in plugin.consumes %}
-          <a href="{% url 'ooi_add' ooi %}">{{ ooi }}</a>
+          <a href="{% url 'ooi_add' organization_code=organization.code ooi_type=ooi %}">{{ ooi }}</a>
           {% if ooi != plugin.consumes|last %}-{% endif %}
         {% endfor %}
       </p>

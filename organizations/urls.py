@@ -14,7 +14,7 @@ urlpatterns = [
         name="organization_edit",
     ),
     path(
-        "<path:pk>/members/add/",
+        "<organization_code>/members/add/",
         views.OrganizationMemberAddView.as_view(),
         name="organization_member_add",
     ),

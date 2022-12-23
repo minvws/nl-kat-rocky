@@ -79,7 +79,7 @@
               </p>
             {% else %}
               <p>
-                {% translate 'There are no boefjes available within the current clearance level of' %} "{{ ooi.human_readable }}". {% translate 'See' %} <a href="{% url 'katalogus' %}">KAT-alogus</a> {% translate 'to find and enable boefjes that can scan within the current level.' %}
+                {% translate 'There are no boefjes available within the current clearance level of' %} "{{ ooi.human_readable }}". {% translate 'See' %} <a href="{% url 'katalogus' organization.code %}">KAT-alogus</a> {% translate 'to find and enable boefjes that can scan within the current level.' %}
               </p>
               <p>
                 {% translate 'Or if you have the authorization, upgrade the clearance level of' %} "{{ ooi.human_readable }}".

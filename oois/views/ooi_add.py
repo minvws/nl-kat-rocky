@@ -54,7 +54,7 @@ class OOIAddTypeSelectView(OrganizationsMixin, TemplateView):
 
 
 @class_view_decorator(otp_required)
-class OOIAddView(BaseOOIFormView, OrganizationsMixin):
+class OOIAddView(BaseOOIFormView):
     template_name = "ooi_add.html"
 
     def setup(self, request, *args, **kwargs):

@@ -26,7 +26,11 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
             return redirect(
                 reverse(
                     "plugin_detail",
-                    kwargs={"plugin_id": kwargs["plugin_id"], "plugin_type": kwargs["plugin_type"]},
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_id": kwargs["plugin_id"],
+                        "plugin_type": kwargs["plugin_type"],
+                    },
                 )
             )
         return super().get(request, *args, **kwargs)
@@ -42,7 +46,7 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
         )
         messages.add_message(self.request, messages.SUCCESS, _("Scanning successfully scheduled."))
         del request.session["selected_oois"]  # delete session
-        return redirect(reverse("task_list"))
+        return redirect(reverse("task_list", kwargs={"organization_code": self.organization.code}))
 
     def get_oois_objects_from_text_oois(self, oois):
         return [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in oois]
@@ -52,10 +56,18 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
         context["plugin"] = self.plugin
         context["oois"] = self.oois
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
             {
                 "url": reverse(
-                    "plugin_detail", kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id}
+                    "plugin_detail",
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_type": self.plugin["type"],
+                        "plugin_id": self.plugin_id,
+                    },
                 ),
                 "text": self.plugin["name"],
             },
@@ -63,6 +75,7 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
                 "url": reverse(
                     "change_clearance_level",
                     kwargs={
+                        "organization_code": self.organization.code,
                         "plugin_type": self.plugin["type"],
                         "plugin_id": self.plugin_id,
                         "scan_level": self.plugin["scan_level"],

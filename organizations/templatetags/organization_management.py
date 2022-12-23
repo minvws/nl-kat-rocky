@@ -6,8 +6,11 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_organization_code(user):
-    member = OrganizationMember.objects.filter(user=user)
-    if member.exists():
-        organization = Organization.objects.get(name=member.first().organization)
-        return organization.code
+def get_organizations(user):
+    organizations = []
+    members = OrganizationMember.objects.filter(user=user)
+    if members.exists():
+        for member in members:
+            organization = Organization.objects.get(name=member.organization)
+            organizations.append(organization)
+        return organizations
