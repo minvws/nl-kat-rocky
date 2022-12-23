@@ -1,0 +1,39 @@
+name: Run the Robot Framework tests
+
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - "develop"
+      - "main"
+
+env:
+  KAT_VERSION: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  Tests:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: nl-kat-rocky
+
+      - name: Download and run grcr containers
+        run: docker-compose -f .ci/docker-compose-robot-coordination.yml up -d
+        working-directory: nl-kat-rocky
+
+      - name: Seed katalogus boefjes
+        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec katalogus python3 -m boefjes.seed
+
+      - name: Seed rocky
+        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec rocky python3 manage.py loaddata OOI_database_seed.json
+
+      - name: Create superuser
+        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec rocky python3 manage.py createsuperuser
+
+      - name: Setup dev account
+        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec rocky python3 manage.py setup_dev_account

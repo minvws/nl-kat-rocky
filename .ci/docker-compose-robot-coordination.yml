@@ -1,0 +1,153 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    restart: on-failure
+    image: "rabbitmq:3.9-management"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      retries: 10
+    env_file:
+      - .env.robot-coordination
+
+  crux:
+    image: "juxt/xtdb-standalone-rocksdb:1.21.0"
+    restart: on-failure
+
+  octopoes_api:
+    restart: on-failure
+    depends_on:
+      - crux
+    image: "ghcr.io/minvws/nl-kat-octopoes:${KAT_VERSION}"
+    command: web
+    env_file:
+      - .env.robot-coordination
+
+  octopoes_api_worker:
+    restart: on-failure
+    depends_on:
+      - crux
+      - rabbitmq
+    image: "ghcr.io/minvws/nl-kat-octopoes:${KAT_VERSION}"
+    command: worker-beat
+    env_file:
+      - .env.robot-coordination
+
+  boefje:
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+      - bytes
+    image: "ghcr.io/minvws/nl-kat-boefjes:${KAT_VERSION}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      replicas: 1
+    command: boefje
+    env_file:
+      - .env.robot-coordination
+
+  normalizer:
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+      - bytes
+    image: "ghcr.io/minvws/nl-kat-boefjes:${KAT_VERSION}"
+    deploy:
+      replicas: 1
+    command: normalizer
+    env_file:
+      - .env.robot-coordination
+
+  rocky-db:
+    restart: on-failure
+    image: postgres:12.8
+    volumes:
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    env_file:
+      - .env.robot-coordination
+    environment:
+      - APP_DB=ROCKY_DB
+      - APP_DB_USER=ROCKY_DB_USER
+      - APP_DB_PASSWORD=ROCKY_DB_PASSWORD
+
+  bytes-db:
+    restart: on-failure
+    image: postgres:12.8
+    volumes:
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    env_file:
+      - .env.robot-coordination
+    environment:
+      - APP_DB=BYTES_DB
+      - APP_DB_USER=BYTES_DB_USER
+      - APP_DB_PASSWORD=BYTES_DB_PASSWORD
+
+  rocky:
+    restart: on-failure
+    depends_on:
+      - octopoes_api_worker
+      - octopoes_api
+      - rocky-db
+      - boefje
+      - normalizer
+      - katalogus
+      - scheduler
+    ports:
+      - "127.0.0.1:8000:8000"
+    image: "ghcr.io/minvws/nl-kat-rocky:${KAT_VERSION}"
+    env_file:
+      - .env.robot-coordination
+    environment:
+      - DATABASE_MIGRATION=true
+
+  bytes:
+    restart: on-failure
+    depends_on:
+      - bytes-db
+    image: "ghcr.io/minvws/nl-kat-bytes:${KAT_VERSION}"
+    env_file:
+      - .env.robot-coordination
+    environment:
+      - BYTES_DATA_DIR=/data
+
+  katalogus:
+    restart: on-failure
+    depends_on:
+      - katalogus-db
+    image: "ghcr.io/minvws/nl-kat-boefjes:${KAT_VERSION}"
+    command: katalogus
+    env_file:
+      - .env.robot-coordination
+    environment:
+      - DATABASE_MIGRATION=true
+
+  katalogus-db:
+    restart: on-failure
+    image: postgres:12.8
+    volumes:
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    env_file:
+      - .env.robot-coordination
+    environment:
+      - APP_DB=KATALOGUS_DB
+      - APP_DB_USER=KATALOGUS_DB_USER
+      - APP_DB_PASSWORD=KATALOGUS_DB_PASSWORD
+
+  scheduler:
+    restart: on-failure
+    image: "ghcr.io/minvws/nl-kat-mula:${KAT_VERSION}"
+    env_file:
+      - .env.robot-coordination
+    depends_on:
+      - boefje
+      - normalizer
+      - octopoes_api
+      - katalogus
+
+  keiko:
+    restart: on-failure
+    image: "ghcr.io/minvws/nl-kat-keiko:${KAT_VERSION}"
+    env_file:
+      - .env.robot-coordination
