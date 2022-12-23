@@ -19,7 +19,7 @@ env:
   COMPOSE_FILE: '.ci/docker-compose-robot-coordination.yml'
 
 jobs:
-  Robot:
+  End-to-End:
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -92,9 +92,8 @@ jobs:
         run: docker-compose exec -T rocky python3 manage.py loaddata OOI_database_seed.json
 
       - name: Create superuser
-        run: docker-compose exec -T rocky python3 manage.py createsuperuser --noinput
+        run: docker-compose exec -T rocky python3 manage.py createsuperuser --email robot@localhost --noinput
         env:
-          DJANGO_SUPERUSER_EMAIL: 'robot@localhost'
           DJANGO_SUPERUSER_PASSWORD: 'robotpassword'
 
       - name: Setup dev account
