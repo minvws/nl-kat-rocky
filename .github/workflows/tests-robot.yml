@@ -86,7 +86,6 @@ jobs:
 
       - name: Download and run ghcr containers
         run: docker-compose -f .ci/docker-compose-robot-coordination.yml up -d
-        working-directory: nl-kat-rocky
         env:
           ROCKY_TAG: ${{ env.GITHUB_REF_NAME_SLUG }}
 
@@ -111,7 +110,7 @@ jobs:
           cache: pip
 
       - name: Install Robot Framework
-        run: pip3 install -r requirements-dev.txt
+        run: pip3 install robotframework robotframework-browser robotframework-debuglibrary robotframework-otp robotframework-postgresqldb
 
       - name: Initialize rfbrowser
         run: rfbrowser init
@@ -124,4 +123,4 @@ jobs:
         if: always()
         with:
           name: rf-results-complete-onboarding
-          path: tests/robot/results-complete_onboarding
+          path: tests/robot/results-complete_onboarding/
