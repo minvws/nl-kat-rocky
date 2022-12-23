@@ -19,7 +19,7 @@ services:
     restart: on-failure
     depends_on:
       - crux
-    image: "ghcr.io/minvws/nl-kat-octopoes:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-octopoes:${OCTOPOES_TAG}"
     command: web
     env_file:
       - .env.robot-coordination
@@ -29,7 +29,7 @@ services:
     depends_on:
       - crux
       - rabbitmq
-    image: "ghcr.io/minvws/nl-kat-octopoes:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-octopoes:${OCTOPOES_TAG}"
     command: worker-beat
     env_file:
       - .env.robot-coordination
@@ -39,7 +39,7 @@ services:
     depends_on:
       - rabbitmq
       - bytes
-    image: "ghcr.io/minvws/nl-kat-boefjes:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-boefjes:${BOEFJES_TAG}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
@@ -53,7 +53,7 @@ services:
     depends_on:
       - rabbitmq
       - bytes
-    image: "ghcr.io/minvws/nl-kat-boefjes:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-boefjes:${BOEFJES_TAG}"
     deploy:
       replicas: 1
     command: normalizer
@@ -96,7 +96,7 @@ services:
       - scheduler
     ports:
       - "127.0.0.1:8000:8000"
-    image: "ghcr.io/minvws/nl-kat-rocky:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-rocky:${ROCKY_TAG}"
     env_file:
       - .env.robot-coordination
     environment:
@@ -106,7 +106,7 @@ services:
     restart: on-failure
     depends_on:
       - bytes-db
-    image: "ghcr.io/minvws/nl-kat-bytes:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-bytes:${BYTES_TAG}"
     env_file:
       - .env.robot-coordination
     environment:
@@ -116,7 +116,7 @@ services:
     restart: on-failure
     depends_on:
       - katalogus-db
-    image: "ghcr.io/minvws/nl-kat-boefjes:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-boefjes:${BOEFJES_TAG}"
     command: katalogus
     env_file:
       - .env.robot-coordination
@@ -137,7 +137,7 @@ services:
 
   scheduler:
     restart: on-failure
-    image: "ghcr.io/minvws/nl-kat-mula:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-mula:${MULA_TAG}"
     env_file:
       - .env.robot-coordination
     depends_on:
@@ -148,6 +148,6 @@ services:
 
   keiko:
     restart: on-failure
-    image: "ghcr.io/minvws/nl-kat-keiko:${KAT_VERSION}"
+    image: "ghcr.io/minvws/nl-kat-keiko:${KEIKO_TAG}"
     env_file:
       - .env.robot-coordination

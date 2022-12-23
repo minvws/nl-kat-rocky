@@ -9,6 +9,13 @@ on:
       - "develop"
       - "main"
 
+env:
+  OCTOPOES_TAG: 'main'
+  KEIKO_TAG: 'main'
+  MULA_TAG: 'main'
+  BYTES_TAG: 'main'
+  BOEFJES_TAG: 'main'
+
 jobs:
   Tests:
     runs-on: ubuntu-22.04
@@ -22,11 +29,46 @@ jobs:
       - name: Inject slug/short variables for branch names
         uses: rlespinasse/github-slug-action@v4
 
-      - name: Download and run grcr containers
+      - name: Check if Octopoes has matching branch
+        run: docker inspect ghcr.io/minvws/nl-kat-octopoes:${{ env.GITHUB_REF_NAME_SLUG }}
+
+      - name: Set branch tag if Octopoes has matching tag
+        if: success()
+        run: echo "OCTOPOES_TAG=${{ env.GITHUB_REF_NAME_SLUG }}" >> $GITHUB_ENV
+
+      - name: Check if Keiko has matching branch
+        run: docker inspect ghcr.io/minvws/nl-kat-keiko:${{ env.GITHUB_REF_NAME_SLUG }}
+
+      - name: Set branch tag if Keiko has matching tag
+        if: success()
+        run: echo "KEIKO_TAG=${{ env.GITHUB_REF_NAME_SLUG }}" >> $GITHUB_ENV
+
+      - name: Check if Mula has matching branch
+        run: docker inspect ghcr.io/minvws/nl-kat-mula:${{ env.GITHUB_REF_NAME_SLUG }}
+
+      - name: Set branch tag if Mula has matching tag
+        if: success()
+        run: echo "MULA_TAG=${{ env.GITHUB_REF_NAME_SLUG }}" >> $GITHUB_ENV
+
+      - name: Check if Bytes has matching branch
+        run: docker inspect ghcr.io/minvws/nl-kat-bytes:${{ env.GITHUB_REF_NAME_SLUG }}
+
+      - name: Set branch tag if Bytes has matching tag
+        if: success()
+        run: echo "BYTES_TAG=${{ env.GITHUB_REF_NAME_SLUG }}" >> $GITHUB_ENV
+
+      - name: Check if Boefjes has matching branch
+        run: docker inspect ghcr.io/minvws/nl-kat-boefjes:${{ env.GITHUB_REF_NAME_SLUG }}
+
+      - name: Set branch tag if Boefjes has matching tag
+        if: success()
+        run: echo "BOEFJES_TAG=${{ env.GITHUB_REF_NAME_SLUG }}" >> $GITHUB_ENV
+
+      - name: Download and run ghcr containers
         run: docker-compose -f .ci/docker-compose-robot-coordination.yml up -d
         working-directory: nl-kat-rocky
         env:
-          KAT_VERSION: ${{ env.GITHUB_REF_NAME_SLUG }}
+          ROCKY_TAG: ${{ env.GITHUB_REF_NAME_SLUG }}
 
       - name: Seed katalogus boefjes
         run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec katalogus python3 -m boefjes.seed
