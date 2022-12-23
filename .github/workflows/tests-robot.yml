@@ -17,8 +17,9 @@ env:
   BOEFJES_TAG: 'main'
 
 jobs:
-  Tests:
+  Robot:
     runs-on: ubuntu-22.04
+    continue-on-error: true
 
     steps:
       - name: Checkout code
