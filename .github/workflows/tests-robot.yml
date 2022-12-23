@@ -106,12 +106,13 @@ jobs:
           cache: pip
 
       - name: Install Robot Framework
-        run: pip3 install robotframework
+        run: pip3 install -r requirements-dev.txt
 
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
       - uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: rf-results-complete-onboarding
           path: tests/robot/results-complete_onboarding
