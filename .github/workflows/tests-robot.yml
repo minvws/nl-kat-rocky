@@ -1,6 +1,14 @@
 name: Run the Robot Framework tests
 
 on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - "develop"
+      - "main"
+
   workflow_run:
     workflows: [Create container image]
     types:
