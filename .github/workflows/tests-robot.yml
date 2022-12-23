@@ -86,13 +86,13 @@ jobs:
           ROCKY_TAG: ${{ env.GITHUB_REF_NAME_SLUG }}
 
       - name: Seed katalogus boefjes
-        run: docker-compose exec katalogus python3 -m boefjes.seed
+        run: docker-compose exec -T katalogus python3 -m boefjes.seed
 
       - name: Seed rocky
-        run: docker-compose exec rocky python3 manage.py loaddata OOI_database_seed.json
+        run: docker-compose exec -T rocky python3 manage.py loaddata OOI_database_seed.json
 
       - name: Create superuser
-        run: docker-compose exec rocky python3 manage.py createsuperuser
+        run: docker-compose exec -T rocky python3 manage.py createsuperuser
 
       - name: Setup dev account
-        run: docker-compose exec rocky python3 manage.py setup_dev_account
+        run: docker-compose exec -T rocky python3 manage.py setup_dev_account
