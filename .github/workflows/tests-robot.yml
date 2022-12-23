@@ -115,8 +115,14 @@ jobs:
       - name: Initialize rfbrowser
         run: rfbrowser init
 
+      - name: DEBUG
+        run: pwd && ls -lah
+
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
+
+      - name: DEBUG
+        run: pwd && ls -lah
 
       - uses: actions/upload-artifact@v3
         name: Upload Robot Framework reports
