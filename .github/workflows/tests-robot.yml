@@ -19,7 +19,6 @@ env:
 jobs:
   Robot:
     runs-on: ubuntu-22.04
-    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -32,6 +31,7 @@ jobs:
 
       - name: Check if Octopoes has matching branch
         run: docker inspect ghcr.io/minvws/nl-kat-octopoes:${{ env.GITHUB_REF_NAME_SLUG }}
+        continue-on-error: true
 
       - name: Set branch tag if Octopoes has matching tag
         if: success()
@@ -39,6 +39,7 @@ jobs:
 
       - name: Check if Keiko has matching branch
         run: docker inspect ghcr.io/minvws/nl-kat-keiko:${{ env.GITHUB_REF_NAME_SLUG }}
+        continue-on-error: true
 
       - name: Set branch tag if Keiko has matching tag
         if: success()
@@ -46,6 +47,7 @@ jobs:
 
       - name: Check if Mula has matching branch
         run: docker inspect ghcr.io/minvws/nl-kat-mula:${{ env.GITHUB_REF_NAME_SLUG }}
+        continue-on-error: true
 
       - name: Set branch tag if Mula has matching tag
         if: success()
@@ -53,6 +55,7 @@ jobs:
 
       - name: Check if Bytes has matching branch
         run: docker inspect ghcr.io/minvws/nl-kat-bytes:${{ env.GITHUB_REF_NAME_SLUG }}
+        continue-on-error: true
 
       - name: Set branch tag if Bytes has matching tag
         if: success()
@@ -60,6 +63,7 @@ jobs:
 
       - name: Check if Boefjes has matching branch
         run: docker inspect ghcr.io/minvws/nl-kat-boefjes:${{ env.GITHUB_REF_NAME_SLUG }}
+        continue-on-error: true
 
       - name: Set branch tag if Boefjes has matching tag
         if: success()
