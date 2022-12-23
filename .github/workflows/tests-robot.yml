@@ -98,3 +98,20 @@ jobs:
 
       - name: Setup dev account
         run: docker-compose exec -T rocky python3 manage.py setup_dev_account
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+          cache: pip
+
+      - name: Install Robot Framework
+        run: pip3 install robotframework
+
+      - name: Run Robot Full Onboarding Flow
+        run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rf-results-complete-onboarding
+          path: tests/robot/results-complete_onboarding
