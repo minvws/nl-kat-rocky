@@ -1,13 +1,10 @@
 name: Run the Robot Framework tests
 
 on:
-  pull_request:
-    branches:
-      - "**"
-  push:
-    branches:
-      - "develop"
-      - "main"
+  workflow_run:
+    workflows: [Create container image]
+    types:
+      - completed
 
 env:
   OCTOPOES_TAG: 'main'
@@ -108,10 +105,14 @@ jobs:
       - name: Install Robot Framework
         run: pip3 install -r requirements-dev.txt
 
+      - name: Initialize rfbrowser
+        run: rfbrowser init
+
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
       - uses: actions/upload-artifact@v3
+        name: Upload Robot Framework reports
         if: always()
         with:
           name: rf-results-complete-onboarding
