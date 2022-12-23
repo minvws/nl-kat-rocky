@@ -103,26 +103,28 @@ jobs:
       - name: Setup dev account
         run: docker-compose exec -T rocky python3 manage.py setup_dev_account
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.10
           cache: pip
 
       - name: Install Robot Framework
-        run: pip3 install robotframework robotframework-browser robotframework-debuglibrary robotframework-otp robotframework-postgresqldb
+        run: pip3 install robotframework robotframework-browser robotframework-debuglibrary robotframework-otp robotframework-postgresqldb pyotp
 
       - name: Initialize rfbrowser
         run: rfbrowser init
 
       - name: DEBUG
-        run: pwd && ls -lah
+        if: always()
+        run: pwd && ls -lah tests/robot
 
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
       - name: DEBUG
-        run: pwd && ls -lah
+        if: always()
+        run: pwd && ls -lah tests/robot
 
       - uses: actions/upload-artifact@v3
         name: Upload Robot Framework reports
