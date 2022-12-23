@@ -15,6 +15,8 @@ env:
   MULA_TAG: 'main'
   BYTES_TAG: 'main'
   BOEFJES_TAG: 'main'
+  COMPOSE_INTERACTIVE_NO_CLI: 1
+  COMPOSE_FILE: '.ci/docker-compose-robot-coordination.yml'
 
 jobs:
   Robot:
@@ -84,13 +86,13 @@ jobs:
           ROCKY_TAG: ${{ env.GITHUB_REF_NAME_SLUG }}
 
       - name: Seed katalogus boefjes
-        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec katalogus python3 -m boefjes.seed
+        run: docker-compose exec katalogus python3 -m boefjes.seed
 
       - name: Seed rocky
-        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec rocky python3 manage.py loaddata OOI_database_seed.json
+        run: docker-compose exec rocky python3 manage.py loaddata OOI_database_seed.json
 
       - name: Create superuser
-        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec rocky python3 manage.py createsuperuser
+        run: docker-compose exec rocky python3 manage.py createsuperuser
 
       - name: Setup dev account
-        run: docker-compose -f .ci/docker-compose-robot-coordination.yml exec rocky python3 manage.py setup_dev_account
+        run: docker-compose exec rocky python3 manage.py setup_dev_account
