@@ -23,10 +23,16 @@ from tools.forms.upload_csv import (
 )
 
 CSV_CRITERIAS = [
-    _("Do not add column titles and only 1 column is required. Each value on a new line."),
-    _("For URL object type, a column with URL values is required, starting with http:// or https://"),
-    _("For Hostname object type, a column with hostnames values is required."),
-    _("For IPAddressV4 and IPAddressV6 object types, a column of ip addresses is required."),
+    _("Add column titles. Followed by each object on a new line."),
+    _(
+        "For URL object type, a column 'raw' with URL values is required, starting with http:// or https://, optionally a second column 'network' is supported "
+    ),
+    _(
+        "For Hostname object type, a column with 'name' values is required, optionally a second column 'network' is supported "
+    ),
+    _(
+        "For IPAddressV4 and IPAddressV6 object types, a column of 'address' is required, optionally a second column 'network' is supported "
+    ),
 ]
 
 
@@ -36,16 +42,13 @@ class UploadCSV(PermissionRequiredMixin, FormView):
     form_class = UploadCSVForm
     permission_required = "tools.can_scan_organization"
     success_url = reverse_lazy("ooi_list")
-    network = Network(name="internet")
+    networks = {"internet": Network(name="internet")}
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         self.organization_code = request.user.organizationmember.organization.code
         if not self.organization_code:
             self.add_error_notification(CSV_ERRORS["no_org"])
-        else:
-            # First create the Network object itself
-            self._save_ooi(ooi=self.network, organization=self.organization_code)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,17 +59,24 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         context["criterias"] = CSV_CRITERIAS
         return context
 
-    def get_ooi_from_csv(self, ooi_type: str, value: str):
-        ooi = None
+    def get_network(self, network: str):
+        if "network" in self.networks:
+            return self.networks[network]
+        network = Network(name=values["network"])
+        self.networks[network] = network
+        return network
+
+    def get_ooi_from_csv(self, ooi_type: str, values: dict[str, str]):
+        network = self.get_network(values["network"] if "network" in values.keys() else "internet")
+        self._save_ooi(ooi=network, organization=self.organization_code)
         if ooi_type == "Hostname":
-            ooi = Hostname(name=value, network=self.network.reference)
+            return Hostname(name=values["name"], network=network.reference)
         if ooi_type == "URL":
-            ooi = URL(raw=value, network=self.network.reference)
+            return URL(raw=values["raw"], network=network.reference)
         if ooi_type == "IPAddressV4":
-            ooi = IPAddressV4(address=value, network=self.network.reference)
+            return IPAddressV4(address=values["address"], network=network.reference)
         if ooi_type == "IPAddressV6":
-            ooi = IPAddressV6(address=value, network=self.network.reference)
-        return ooi
+            return IPAddressV6(address=values["address"], network=network.reference)
 
     def _save_ooi(self, ooi, organization) -> None:
         connector = OctopoesAPIConnector(OCTOPOES_API, organization)
@@ -91,21 +101,18 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         csv_data = io.StringIO(csv_file.read().decode("UTF-8"))
         rows_with_error = []
         try:
-            for rownumber, row in enumerate(csv.reader(csv_data, delimiter=",", quotechar='"')):
-                rownumber += 1  # start at 1 and not 0
-                if len(row) == 1:
-                    object_type_value = row[0]
+            for rownumber, row in enumerate(csv.DictReader(csv_data, delimiter=",", quotechar='"')):
+                if len(row) > 0:  # skip empty lines
                     try:
-                        ooi = self.get_ooi_from_csv(object_type, object_type_value)
+                        ooi = self.get_ooi_from_csv(object_type, row)
                         self._save_ooi(ooi=ooi, organization=self.organization_code)
                     except ValidationError:
-                        rows_with_error.append(str(rownumber))
-                else:
-                    return self.add_error_notification(CSV_ERRORS["bad_columns"])
+                        rows_with_error.append(rownumber + 1)
             if rows_with_error:
-                message = _("Object(s) could not be created for line number(s): ") + ", ".join(rows_with_error)
+                message = _("Object(s) could not be created for line number(s): ") + ", ".join(
+                    map(str, rows_with_error)
+                )
                 return self.add_error_notification(message)
-            else:
-                self.add_success_notification(_("Object(s) successfully added."))
+            self.add_success_notification(_("Object(s) successfully added."))
         except (csv.Error, IndexError):
             return self.add_error_notification(CSV_ERRORS["csv_error"])
