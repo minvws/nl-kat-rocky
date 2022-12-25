@@ -56,7 +56,7 @@
             For the onboarding we will suggest to set the clearance level to L2.
           {% endblocktranslate %}
         </p>
-        <form novalidate action="" method="post" class="horizontal-view help">
+        <form novalidate action="#main-content" method="post" class="horizontal-view help">
           {% csrf_token %}
           {% translate 'Set clearance level' as fieldset_legend %}
           {% include 'partials/form/fieldset.html' with legend=fieldset_legend fields=form %}

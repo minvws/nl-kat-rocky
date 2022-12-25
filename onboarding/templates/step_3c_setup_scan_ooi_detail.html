@@ -48,7 +48,7 @@
             <dd>{{ ooi.network }}</dd>
           </div>
         </dl>
-        <form method="post" class="inline">
+        <form method="post" action="#main-content" class="inline">
           {% csrf_token %}
           <div class="horizontal-view">
             <a href="{% url 'skip_onboarding' %}" class="button ghost">{% translate 'Skip onboarding' %}</a>
