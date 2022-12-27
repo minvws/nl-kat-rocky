@@ -60,11 +60,11 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         return context
 
     def get_or_create_network(self, network: str) -> Network:
-        if "network" in self.networks:
+        if network in self.networks:
             return self.networks[network]
-        network = Network(name=values["network"])
-        self.networks[network] = network
-        return network
+        networkOOI = Network(name=network)
+        self.networks[network] = networkOOI
+        return networkOOI
 
     def get_ooi_from_csv(self, ooi_type: str, values: dict[str, str]):
         network = self.get_or_create_network(values.get("network", "internet"))
