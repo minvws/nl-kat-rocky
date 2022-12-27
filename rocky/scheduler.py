@@ -123,7 +123,7 @@ class SchedulerClient:
         type: Optional[str] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        status: Optional[TaskStatus] = None,
+        status: Optional[str] = None,
         min_created_at: Optional[datetime.datetime] = None,
         max_created_at: Optional[datetime.datetime] = None,
         filters: Optional[List[Dict]] = None,
