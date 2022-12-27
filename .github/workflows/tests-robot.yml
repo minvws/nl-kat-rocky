@@ -119,6 +119,10 @@ jobs:
         if: always()
         run: pwd && ls -lah tests/robot
 
+      - name: DEBUG website output
+        if: always()
+        run: curl http://localhost:8000
+
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
