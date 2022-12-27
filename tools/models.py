@@ -25,11 +25,13 @@ GROUP_CLIENT = "clients"
 
 logger = logging.getLogger(__name__)
 
+ORGANIZATION_CODE_LENGTH = 32
+
 
 class Organization(models.Model):
     name = models.CharField(max_length=126, unique=True, help_text=_("The name of the organisation"))
     code = LowerCaseSlugField(
-        max_length=32,
+        max_length=ORGANIZATION_CODE_LENGTH,
         unique=True,
         allow_unicode=True,
         help_text=_(
@@ -95,16 +97,6 @@ class OrganizationMember(models.Model):
     authorized = models.BooleanField(default=False)
     status = models.CharField(choices=STATUSES.choices, max_length=64, default=STATUSES.NEW)
     member_name = models.CharField(max_length=126)
-    member_role = models.CharField(max_length=126)
-    goal = models.CharField(max_length=256)
-    signal_username = models.CharField(
-        validators=[phone_validator],
-        max_length=126,
-        unique=True,
-        default=None,
-        blank=True,
-        null=True,
-    )
     onboarded = models.BooleanField(default=False)
     trusted_clearance_level = models.IntegerField(
         default=-1, validators=[MinValueValidator(-1), MaxValueValidator(max(scan_levels))]

@@ -113,8 +113,6 @@ MIDDLEWARE = [
     "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "rocky.middleware.active_organization_middleware.ActiveOrganizationMiddleware",
-    "rocky.middleware.active_organization_middleware.OctopoesConnectorMiddleware",
     "rocky.middleware.onboarding.OnboardingMiddleware",
 ]
 

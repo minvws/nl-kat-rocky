@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.http.request import HttpRequest
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models.types import OOI_TYPES
-
+from account.mixins import OrganizationsMixin
 from tools.models import Organization
 
 
@@ -71,7 +71,7 @@ def get_ooi_url(routename: str, ooi_id: str, **kwargs) -> str:
         kwargs.update(kwargs["query"])
         del kwargs["query"]
 
-    return url_with_querystring(reverse(routename, kwargs={"organization_code": organization_code}), **kwargs))
+    return url_with_querystring(reverse(routename, kwargs={"organization_code": organization_code}), **kwargs)
 
 
 def existing_ooi_type(ooi_type: str):
@@ -141,7 +141,7 @@ class Step(TypedDict):
     url: str
 
 
-class StepsMixin:
+class StepsMixin(OrganizationsMixin):
     steps: List[Step] = []
     current_step: int = None
 

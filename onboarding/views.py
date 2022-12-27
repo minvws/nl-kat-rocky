@@ -48,6 +48,7 @@ from onboarding.mixins import RedTeamUserRequiredMixin, SuperOrAdminUserRequired
 from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
 from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
 from account.mixins import OrganizationsMixin
+from account.forms import OrganizationForm, OrganizationUpdateForm
 
 User = get_user_model()
 
@@ -442,6 +443,7 @@ class OnboardingIntroductionRegistrationView(
 class OnboardingOrganizationSetupView(
     SuperOrAdminUserRequiredMixin,
     KatIntroductionAdminStepsMixin,
+    OrganizationsMixin,
     UpdateView,
 ):
     """
@@ -449,12 +451,16 @@ class OnboardingOrganizationSetupView(
     """
 
     model = Organization
+    pk_url_kwarg = "organization_code"
     template_name = "account/step_2a_organization_setup.html"
     form_class = OrganizationForm
     current_step = 2
-    organization = Organization.objects.first()
+
+    def get_queryset(self):
+        return self.model.objects.first()
 
     def get(self, request, *args, **kwargs):
+        self.organization = self.get_queryset()
         if self.organization:
             return redirect(reverse("step_organization_update", kwargs={"organization_code": self.organization.code}))
         return super().get(request, *args, **kwargs)
