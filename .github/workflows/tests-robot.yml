@@ -128,11 +128,11 @@ jobs:
 
       - name: DEBUG
         if: always()
-        run: pwd && ls -lah tests/robot/results-complete_onboarding
+        run: pwd && ls -lah /home/runner/work/nl-kat-rocky/nl-kat-rocky/nl-kat-rocky/tests/robot/results-complete_onboarding/
 
       - uses: actions/upload-artifact@v3
         name: Upload Robot Framework reports
         if: always()
         with:
           name: rf-results-complete-onboarding
-          path: tests/robot/results-complete_onboarding/
+          path: /home/runner/work/nl-kat-rocky/nl-kat-rocky/nl-kat-rocky/tests/robot/results-complete_onboarding/
