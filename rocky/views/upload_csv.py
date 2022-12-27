@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 import csv
 import io
+from typing import Dict
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic.edit import FormView
 from django.utils.translation import gettext as _
@@ -66,7 +67,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         self.networks[network] = networkOOI
         return networkOOI
 
-    def get_ooi_from_csv(self, ooi_type: str, values: dict[str, str]):
+    def get_ooi_from_csv(self, ooi_type: str, values: Dict[str, str]):
         network = self.get_or_create_network(values.get("network", "internet"))
         self._save_ooi(ooi=network, organization=self.organization_code)
         if ooi_type == "Hostname":
