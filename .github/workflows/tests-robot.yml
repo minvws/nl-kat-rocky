@@ -121,7 +121,7 @@ jobs:
 
       - name: DEBUG website output
         if: always()
-        run: curl http://localhost:8000
+        run: curl http://localhost:8000/account/login/
 
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
