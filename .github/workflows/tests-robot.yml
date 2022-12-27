@@ -116,6 +116,10 @@ jobs:
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
+      - name: Save Docker Compose logs
+        if: always()
+        run: docker-compose logs > tests/robot/results-docker-compose-logs.txt
+
       - uses: actions/upload-artifact@v3
         name: Upload Robot Framework reports
         if: always()
