@@ -11,7 +11,7 @@ from pydantic import AnyUrl
 from pydantic.fields import ModelField, SHAPE_LIST
 
 from tools.forms import BaseRockyForm, CheckboxGroup
-from tools.models import SCAN_LEVEL
+from tools.enums import SCAN_LEVEL
 
 
 class OOIForm(BaseRockyForm):
