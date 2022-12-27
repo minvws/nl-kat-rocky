@@ -98,7 +98,7 @@ jobs:
       - name: Create superuser
         run: docker-compose exec -T rocky python3 manage.py createsuperuser --email robot@localhost --noinput
         env:
-          DJANGO_SUPERUSER_PASSWORD: 'robotpassword'
+          DJANGO_SUPERUSER_PASSWORD: robotpassword
 
       - name: Setup dev account
         run: docker-compose exec -T rocky python3 manage.py setup_dev_account
@@ -128,7 +128,7 @@ jobs:
 
       - name: DEBUG
         if: always()
-        run: pwd && ls -lah tests/robot
+        run: pwd && ls -lah tests/robot/results-complete_onboarding
 
       - uses: actions/upload-artifact@v3
         name: Upload Robot Framework reports
