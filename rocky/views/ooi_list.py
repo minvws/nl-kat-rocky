@@ -85,23 +85,27 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
                         DeclaredScanProfile(reference=ooi, level=level),
                         valid_time=datetime.now(timezone.utc),
                     )
-                except (RequestException, RemoteException):
+                except (RequestException, RemoteException, ConnectionError):
                     messages.add_message(
-                        request, messages.ERROR, _(f"An error occurred saving scan profile for {ooi}.")
+                        request, messages.ERROR, _("An error occurred while saving clearance level for %s.") % ooi
                     )
                     return self.get(request, status=500, *args, **kwargs)
                 except ObjectNotFoundException:
                     messages.add_message(
-                        request, messages.ERROR, _(f"An error occurred saving scan profile for {ooi}: object not found")
+                        request,
+                        messages.ERROR,
+                        _("An error occurred while saving clearance level for %s.") % ooi + _("OOI doesn't exist"),
                     )
                     return self.get(request, status=404, *args, **kwargs)
 
             messages.add_message(
-                request, messages.SUCCESS, _(f"Successfully set scan profile to {alias} for {len(selected_oois)} oois.")
+                request,
+                messages.SUCCESS,
+                _("Successfully set scan profile to %s for %d oois.") % (alias, len(selected_oois)),
             )
             return self.get(request, *args, **kwargs)
 
-        messages.add_message(request, messages.ERROR, _(f"Unknown Scan Profile: {scan_profile}."))
+        messages.add_message(request, messages.ERROR, _("Unknown Scan Profile: %s.") % scan_profile)
         return self.get(request, status=404, *args, **kwargs)
 
     def _delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -110,17 +114,19 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
         for ooi in selected_oois:
             try:
                 connector.delete(ooi, valid_time=datetime.now(timezone.utc))
-            except (RequestException, RemoteException):
-                messages.add_message(request, messages.ERROR, _(f"An error occurred deleting {ooi}."))
+            except (RequestException, RemoteException, ConnectionError):
+                messages.add_message(request, messages.ERROR, _("An error occurred deleting %s.") % ooi)
                 return self.get(request, status=500, *args, **kwargs)
             except ObjectNotFoundException:
-                messages.add_message(request, messages.ERROR, _(f"An error occurred deleting {ooi}: object not found"))
+                messages.add_message(
+                    request, messages.ERROR, _("An error occurred deleting %s.") % ooi + _("OOI doesn't exist")
+                )
                 return self.get(request, status=404, *args, **kwargs)
 
         messages.add_message(
             request,
             messages.SUCCESS,
-            _(f"Successfully deleted {len(selected_oois)} oois. Note: object can get recreated by Bits automatically."),
+            _("Successfully deleted %d ooi(s). Note: Bits can recreate objects automatically.") % len(selected_oois),
         )
 
         return self.get(request, *args, **kwargs)
