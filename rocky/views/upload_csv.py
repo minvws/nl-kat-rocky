@@ -59,7 +59,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         context["criterias"] = CSV_CRITERIAS
         return context
 
-    def get_network(self, network: str):
+    def get_or_create_network(self, network: str) -> Network:
         if "network" in self.networks:
             return self.networks[network]
         network = Network(name=values["network"])
@@ -67,7 +67,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         return network
 
     def get_ooi_from_csv(self, ooi_type: str, values: dict[str, str]):
-        network = self.get_network(values["network"] if "network" in values.keys() else "internet")
+        network = self.get_or_create_network(values.get("network", "internet"))
         self._save_ooi(ooi=network, organization=self.organization_code)
         if ooi_type == "Hostname":
             return Hostname(name=values["name"], network=network.reference)
@@ -102,12 +102,13 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         rows_with_error = []
         try:
             for rownumber, row in enumerate(csv.DictReader(csv_data, delimiter=",", quotechar='"')):
-                if len(row) > 0:  # skip empty lines
-                    try:
-                        ooi = self.get_ooi_from_csv(object_type, row)
-                        self._save_ooi(ooi=ooi, organization=self.organization_code)
-                    except ValidationError:
-                        rows_with_error.append(rownumber + 1)
+                if not row:
+                    continue  # skip empty lines
+                try:
+                    ooi = self.get_ooi_from_csv(object_type, row)
+                    self._save_ooi(ooi=ooi, organization=self.organization_code)
+                except ValidationError:
+                    rows_with_error.append(rownumber + 1)
             if rows_with_error:
                 message = _("Object(s) could not be created for line number(s): ") + ", ".join(
                     map(str, rows_with_error)
