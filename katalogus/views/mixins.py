@@ -2,23 +2,22 @@ from datetime import datetime, timezone
 from logging import getLogger
 from typing import List
 from uuid import uuid4
-
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models import OOI, DeclaredScanProfile
 from requests import HTTPError
-
 from katalogus.client import get_katalogus
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
 from rocky.views.mixins import OctopoesMixin
 from tools.models import Organization
+from account.mixins import OrganizationsMixin
 
 logger = getLogger(__name__)
 
 
-class KATalogusMixin:
+class KATalogusMixin(OrganizationsMixin):
     def setup(self, request, *args, **kwargs):
         """
         Prepare organization info and KAT-alogus API client.
@@ -27,7 +26,6 @@ class KATalogusMixin:
         if request.user.is_anonymous:
             return reverse("login")
         else:
-            self.organization = request.user.organizationmember.organization
             self.katalogus_client = get_katalogus(self.organization.code)
             if "plugin_id" in kwargs:
                 self.plugin_id = kwargs["plugin_id"]
@@ -35,15 +33,15 @@ class KATalogusMixin:
                 self.plugin_schema = self.katalogus_client.get_plugin_schema(self.plugin_id)
 
 
-class BoefjeMixin(OctopoesMixin):
+class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
     """
     When a user wants to scan one or multiple OOI's,
     this mixin provides the methods to construct the boefjes for the OOI's and run them.
     """
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+    def dispatch(self, request, *args, **kwargs):
+        self.api_connector = self.get_api_connector(self.organization.code)
+        return super().dispatch(request, *args, **kwargs)
 
     def run_boefje(self, katalogus_boefje: Boefje, ooi: OOI, organization: Organization) -> None:
 
@@ -109,7 +107,7 @@ class BoefjeMixin(OctopoesMixin):
             return
 
         ooi_ids = view_args.getlist("ooi")
-        oois = [self.get_single_ooi(ooi_id) for ooi_id in ooi_ids]
+        oois = [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in ooi_ids]
 
         try:
             self.run_boefje_for_oois(boefje, oois, self.request.active_organization, self.api_connector)

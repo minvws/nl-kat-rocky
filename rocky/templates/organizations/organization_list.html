@@ -8,7 +8,6 @@
     <section>
       <div>
         <h1>{% translate 'Organizations' %}</h1>
-        <p>{% translate 'You are using KAT as ' %}{{ active_organization.name }}</p>
         <div class="horizontal-scroll">
           <table>
             <caption>{% translate 'Organization overview:' %}</caption>
@@ -20,16 +19,13 @@
               </tr>
             </thead>
             <tbody>
-              {% for organization in object_list %}
-                <tr {% if organization == active_organization %}aria-current="true"{% endif %}>
+              {% for organization in organizations %}
+                <tr>
                   <td>
-                    <a href="{% url 'organization_detail' organization.id %}">{{ organization.name }}</a>
-                    {% if organization == active_organization %}
-                      ({% translate 'active' %})
-                    {% endif %}
+                    <a href="{% url 'organization_detail' organization_code=organization.code %}">{{ organization.name }}</a>
                   </td>
                   <td>{{ organization.code }}</td>
-                  <td>{{ organization.members.count }}</td>
+                  <td>{{ organization.members }}</td>
                 </tr>
               {% endfor %}
             </tbody>

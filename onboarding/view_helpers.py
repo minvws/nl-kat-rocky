@@ -20,21 +20,25 @@ class KatIntroductionStepsMixin(StepsMixin):
 
 
 class KatIntroductionAdminStepsMixin(StepsMixin):
-    steps = [
-        {
-            "text": _("1: Introduction"),
-            "url": reverse_lazy("step_introduction_registration"),
-        },
-        {
-            "text": _("2: Organization setup"),
-            "url": reverse_lazy("step_organization_setup"),
-        },
-        {
-            "text": _("3: Indemnification"),
-            "url": reverse_lazy("step_indemnification_setup"),
-        },
-        {
-            "text": _("4: Account setup"),
-            "url": reverse_lazy("step_account_setup_intro"),
-        },
-    ]
+    def build_steps(self):
+        account_url = ""
+        idemnification_url = ""
+        if self.organization:
+            idemnification_url = reverse_lazy(
+                "step_indemnification_setup", kwargs={"organization_code": self.organization.code}
+            )
+            account_url = reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
+
+        steps = [
+            {
+                "text": _("1: Introduction"),
+                "url": reverse_lazy("step_introduction_registration"),
+            },
+            {
+                "text": _("2: Organization setup"),
+                "url": reverse_lazy("step_organization_setup"),
+            },
+            {"text": _("3: Account setup"), "url": account_url},
+            {"text": _("4: Indemnification"), "url": idemnification_url},
+        ]
+        return steps

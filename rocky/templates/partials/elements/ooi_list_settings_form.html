@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form action="{% url request.resolver_match.url_name %}"
+<form action="{% if organization.code %}{% url request.resolver_match.url_name organization.code %}{% else %}{% url request.resolver_match.url_name %}{% endif %}"
       method="get"
       class="help">
   {% if ooi_id %}<input type="hidden" name="ooi_id" value="{{ ooi_id }}"/>{% endif %}

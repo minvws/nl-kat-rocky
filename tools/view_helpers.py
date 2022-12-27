@@ -63,12 +63,15 @@ def url_with_querystring(path, **kwargs) -> str:
 
 def get_ooi_url(routename: str, ooi_id: str, **kwargs) -> str:
     kwargs["ooi_id"] = ooi_id
+    organization_code = kwargs["organization_code"]
+    # exclude in querystring
+    kwargs = {k: v for k, v in kwargs.items() if k not in "organization_code"}
 
     if "query" in kwargs:
         kwargs.update(kwargs["query"])
         del kwargs["query"]
 
-    return url_with_querystring(reverse(routename), **kwargs)
+    return url_with_querystring(reverse(routename, kwargs={"organization_code": organization_code}), **kwargs))
 
 
 def existing_ooi_type(ooi_type: str):
@@ -172,28 +175,17 @@ class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
         self.breadcrumb_object = organization
 
     def build_breadcrumbs(self):
-        if self.request.user.has_perm("tools.can_switch_organization"):
-            breadcrumbs = [
-                {"url": reverse("organization_list"), "text": _("Organizations")},
-                {
-                    "url": reverse("organization_detail", kwargs={"pk": self.breadcrumb_object.pk}),
-                    "text": self.breadcrumb_object.name,
-                },
-            ]
-        else:
-            breadcrumbs = [
-                {
-                    "url": reverse("crisis_room"),
-                    "text": self.breadcrumb_object.name,
-                }
-            ]
-
-        breadcrumbs.append(
+        breadcrumbs = [
+            {"url": reverse("organization_list"), "text": _("Organizations")},
             {
-                "url": reverse("organization_member_list", kwargs={"pk": self.breadcrumb_object.pk}),
+                "url": reverse("organization_detail", kwargs={"organization_code": self.breadcrumb_object.code}),
+                "text": self.breadcrumb_object.name,
+            },
+            {
+                "url": reverse("organization_member_list", kwargs={"organization_code": self.breadcrumb_object.code}),
                 "text": _("Members"),
-            }
-        )
+            },
+        ]
 
         return breadcrumbs
 

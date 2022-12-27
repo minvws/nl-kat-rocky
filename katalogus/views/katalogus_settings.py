@@ -5,33 +5,36 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from katalogus.client import get_katalogus
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class KATalogusSettingsListView(PermissionRequiredMixin, ListView):
+class KATalogusSettingsListView(PermissionRequiredMixin, OrganizationsMixin, ListView):
     """View that gives an overview of all plugins settings"""
 
     template_name = "katalogus_settings.html"
     paginate_by = 10
-    permission_required = "tools.can_scan_organization"
+    permission_required = "organizations.can_scan_organization"
     plugin_type = "boefjes"
-
-    def dispatch(self, request, *args, **kwargs):
-        self.organization_code = request.user.organizationmember.organization.code
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
-            {"url": reverse("katalogus_settings"), "text": _("Settings")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
+            {
+                "url": reverse("katalogus_settings", kwargs={"organization_code": self.organization.code}),
+                "text": _("Settings"),
+            },
         ]
         context["plugin_type"] = self.plugin_type
         return context
 
     def get_queryset(self):
         all_plugins_settings = []
-        katalogus_client = get_katalogus(self.organization_code)
+        katalogus_client = get_katalogus(self.organization.code)
         boefjes = katalogus_client.get_boefjes()
         for boefje in boefjes:
             plugin_settings = {}

@@ -18,10 +18,11 @@ logger = logging.getLogger(__name__)
 
 @class_view_decorator(otp_required)
 class BytesRawView(View):
-    def get(self, request, boefje_meta_id: str):
+    def get(self, request, **kwargs):
         try:
             client = get_bytes_client()
             client.login()
+            boefje_meta_id = kwargs["boefje_meta_id"]
             raw_metas = client.get_raw_metas(boefje_meta_id)
 
             raws = {raw_meta["id"]: client.get_raw(boefje_meta_id, raw_meta["id"]) for raw_meta in raw_metas}

@@ -2,7 +2,7 @@ from django.views.generic import ListView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from tools.models import Organization
+from tools.models import Organization, OrganizationMember
 from tools.view_helpers import OrganizationBreadcrumbsMixin
 
 
@@ -14,16 +14,17 @@ class OrganizationListView(
 ):
     model = Organization
     template_name = "organizations/organization_list.html"
-    permission_required = "tools.view_organization"
+    permission_required = "organizations.view_organization"
+    context_object_name = "organizations"
 
     def get_queryset(self):
         """
-        List organization that only belongs to user that requests the list.
+        List all organizations of member.
         """
-        object = self.model.objects.filter(code=self.request.user.organizationmember.organization.code)
-        return object
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["active_organization"] = self.model.objects.get(pk=self.request.session["active_organization_id"])
-        return context
+        organizations = []
+        members = OrganizationMember.objects.filter(user=self.request.user)
+        if members.exists():
+            for member in members:
+                organization = Organization.objects.get(name=member.organization)
+                organizations.append(organization)
+            return organizations

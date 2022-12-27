@@ -128,6 +128,7 @@ class UserAddForm(forms.Form):
 
     def set_user(self):
         self.user = User.objects.create_user(
+            full_name=self.cleaned_data["name"],
             email=self.cleaned_data["email"],
             password=self.cleaned_data["password"],
         )

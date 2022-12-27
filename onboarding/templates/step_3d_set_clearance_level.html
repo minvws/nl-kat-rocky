@@ -52,7 +52,7 @@
         <p>
           {% blocktranslate trimmed %}
             After creating a new object KAT will ask you to set a clearance level.
-            On the object detail page you can always change the clearance level.
+            On the object detail page you can always change the clearance level. 
             For the onboarding we will suggest to set the clearance level to L2.
           {% endblocktranslate %}
         </p>
@@ -63,7 +63,7 @@
           <button type="submit">{% translate 'Set clearance level' %}</button>
         </form>
         <p>
-          <a href="{% url 'skip_onboarding' %}" class="button ghost">{% translate 'Skip onboarding' %}</a>
+          <a href="{% url 'complete_onboarding' %}" class="button ghost">{% translate 'Skip onboarding' %}</a>
         </p>
       </div>
     </section>

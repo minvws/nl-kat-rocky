@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from typing import List, Dict
-
 from django.shortcuts import redirect
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
@@ -15,10 +14,10 @@ from octopoes.models.ooi.findings import (
     FindingType,
 )
 from octopoes.models.types import OOI_TYPES
-
-from rocky.views.ooi_view import BaseOOIFormView
+from rocky.views import BaseOOIFormView
 from tools.forms import FindingAddForm
 from tools.view_helpers import get_ooi_url
+from account.mixins import OrganizationsMixin
 
 
 def get_finding_type_from_id(
@@ -41,7 +40,7 @@ def get_finding_type_from_id(
     return finding_type
 
 
-class FindingAddView(BaseOOIFormView):
+class FindingAddView(BaseOOIFormView, OrganizationsMixin):
     template_name = "findings/finding_add.html"
     form_class = FindingAddForm
 
@@ -61,7 +60,7 @@ class FindingAddView(BaseOOIFormView):
 
     def get_form_kwargs(self):
         kwargs = {
-            "connector": self.get_api_connector(),
+            "connector": self.get_api_connector(self.organization.code),
             "ooi_list": self.get_ooi_options(),
         }
         kwargs.update(super().get_form_kwargs())
@@ -103,7 +102,7 @@ class FindingAddView(BaseOOIFormView):
             self.api_connector.save_declaration(Declaration(ooi=finding, valid_time=observed_at))
             self.api_connector.save_declaration(Declaration(ooi=finding_type, valid_time=observed_at))
 
-        return redirect(get_ooi_url("ooi_detail", ooi_id))
+        return redirect(get_ooi_url("ooi_detail", ooi_id, organization_code=self.organization.code))
 
     def get_ooi_options(self) -> List[Dict[str, str]]:
         # Query to render form options

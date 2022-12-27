@@ -15,7 +15,7 @@ class PluginSettingsAddView(PermissionRequiredMixin, KATalogusMixin, FormView):
     """View to add a general setting for all plugins in KAT-alogus"""
 
     template_name = "plugin_settings_add.html"
-    permission_required = "tools.can_scan_organization"
+    permission_required = "organizations.can_scan_organization"
 
     def get_form(self):
         if self.plugin_schema:
@@ -35,10 +35,18 @@ class PluginSettingsAddView(PermissionRequiredMixin, KATalogusMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
             {
                 "url": reverse(
-                    "plugin_detail", kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id}
+                    "plugin_detail",
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_type": self.plugin["type"],
+                        "plugin_id": self.plugin_id,
+                    },
                 ),
                 "text": self.plugin["name"],
             },
@@ -46,6 +54,7 @@ class PluginSettingsAddView(PermissionRequiredMixin, KATalogusMixin, FormView):
                 "url": reverse(
                     "plugin_settings_add",
                     kwargs={
+                        "organization_code": self.organization.code,
                         "plugin_type": self.plugin["type"],
                         "plugin_id": self.plugin_id,
                     },
@@ -65,7 +74,11 @@ class PluginSettingsAddView(PermissionRequiredMixin, KATalogusMixin, FormView):
     def get_success_url(self):
         return reverse(
             "plugin_detail",
-            kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id},
+            kwargs={
+                "organization_code": self.organization.code,
+                "plugin_type": self.plugin["type"],
+                "plugin_id": self.plugin_id,
+            },
         )
 
     def add_success_notification(self):
@@ -81,7 +94,7 @@ class PluginSingleSettingAddView(PluginSettingsAddView):
     """View to add one specific setting."""
 
     template_name = "plugin_settings_add.html"
-    permission_required = "tools.can_scan_organization"
+    permission_required = "organizations.can_scan_organization"
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)

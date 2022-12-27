@@ -89,7 +89,7 @@ class OrganizationMember(models.Model):
 
     scan_levels = [scan_level.value for scan_level in SCAN_LEVEL]
 
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, related_name="members")
     verified = models.BooleanField(default=False)
     authorized = models.BooleanField(default=False)

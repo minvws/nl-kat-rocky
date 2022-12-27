@@ -1,7 +1,6 @@
 import re
 from datetime import datetime
 from typing import Dict, List, Set, Type, Optional
-
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -24,13 +23,10 @@ from octopoes.models.ooi.findings import (
 )
 from requests import HTTPError
 from two_factor.views.utils import class_view_decorator
-
 from katalogus.client import get_katalogus
 from rocky.keiko import keiko_client
-from rocky.views.ooi_view import (
-    BaseOOIDetailView,
-    ConnectorFormMixin,
-)
+from rocky.views import BaseOOIDetailView
+from rocky.views.mixins import ConnectorFormMixin
 from rocky.views.mixins import OOIBreadcrumbsMixin, SingleOOITreeMixin
 from tools.forms import OOIReportSettingsForm
 from tools.models import Organization
@@ -42,6 +38,7 @@ from tools.ooi_helpers import (
     RiskLevelSeverity,
 )
 from tools.view_helpers import get_ooi_url, convert_date_to_datetime
+from account.mixins import OrganizationsMixin
 
 
 def build_meta(findings: List[Dict]) -> Dict:
@@ -155,7 +152,9 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
                 request,
                 _("You can't generate a report for an OOI on a date in the future."),
             )
-            return redirect(get_ooi_url("ooi_detail", self.request.GET.get("ooi_id")))
+            return redirect(
+                get_ooi_url("ooi_detail", self.request.GET.get("ooi_id"), organization_code=self.organization.code)
+            )
         return super().dispatch(request, *args, **kwargs)
 
     def setup(self, request, *args, **kwargs):
@@ -167,7 +166,7 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
         findings_list = build_findings_list_from_store(self.tree.store)
         context["breadcrumbs"].append(
             {
-                "url": get_ooi_url("ooi_report", self.ooi.primary_key),
+                "url": get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code),
                 "text": _("Findings report"),
             }
         )
@@ -177,17 +176,17 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
 
 
 @class_view_decorator(otp_required)
-class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
+class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixin, View):
     connector_form_class = OOIReportSettingsForm
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
         self.depth = self.get_depth()
 
     def get(self, request, *args, **kwargs):
         self.setup(request, *args, **kwargs)
-        self.ooi = self.get_ooi()
+        self.ooi = self.get_ooi(self.organization.code)
 
         # reuse existing dict structure
         report_data = build_findings_list_from_store(self.tree.store)
@@ -199,15 +198,15 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
             report_id = keiko_client.generate_report("bevindingenrapport", report_data, "dutch.hiero.csv")
         except HTTPError as e:
             messages.error(self.request, _("Error generating report: {}").format(e))
-            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
+            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code))
 
         if report_id is None:
             messages.error(self.request, _("Error generating report: Timeout reached"))
-            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
+            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code))
 
         # generate file name
         report_name = "bevindingenrapport"
-        org_code = self.request.active_organization.code
+        org_code = self.organization.code
         ooi_id = self.ooi.primary_key
         valid_time = self.get_observed_at().isoformat()
         current_time = datetime.now(timezone.utc).isoformat()
