@@ -101,10 +101,10 @@ jobs:
       - name: Setup dev account
         run: docker-compose exec -T rocky python3 manage.py setup_dev_account
 
-      - name: Set up Python 3.10
+      - name: Set up Python 3.8
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.8'
           cache: pip
 
       - name: Install Robot Framework
