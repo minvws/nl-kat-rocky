@@ -1,0 +1,74 @@
+{% load i18n %}
+
+<div class="horizontal-scroll">
+    <h2>{% translate 'Scans' %}</h2>
+
+    <div class="filter">
+
+        <div>
+            <p>{% translate 'Filter' %}</p>
+            <button aria-expanded="false"
+                    data-hide-filters-label="{% translate 'Hide filters' %}">
+              {% translate 'Show filters' %}
+            </button>
+        </div>
+
+        <! -- TODO -->
+        <form novalidate method="get" class="help">
+            {% csrf_token %}
+
+            <fieldset>
+                <label for="from">{% translate 'From' %}</label>
+                <input type="date" name="from">
+            </fieldset>
+
+            <fieldset>
+                <label for="to">{% translate 'To' %}</label>
+                <input type="date" name="from">
+            </fieldset>
+
+            <fieldset>
+                <button type="submit">{% translate 'Submit' %}</button>
+            </fieldset>
+        </form>
+
+    </div>
+
+    <table rf-selector="table-boefjes">
+        <thead>
+            <tr>
+                <th scope="col">{% translate 'Object' %}</th>
+                <th scope="col">{% translate 'Status' %}</th>
+                <th scope="col">{% translate 'Created date' %}</th>
+                <th scope="col">{% translate 'Scan Details' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for scan in scan_history %}
+            <tr>
+                <td>
+                    {% if scan.type == 'boefje' %}
+                        <a href="{% ooi_url 'ooi_detail' scan.p_item.data.input_ooi %}">{{ scan.p_item.data.input_ooi }}</a>
+                    {% elif scan.type == 'normalizer' %}
+                      <a href="{% ooi_url 'ooi_detail' scan.p_item.data.raw_data.boefje_meta.input_ooi %}">{{ scan.p_item.data.raw_data.boefje_meta.input_ooi }}</a>
+                    {% else %}
+                      {{ scan.id }}
+                    {% endif %}
+                </td>
+
+                {% if scan.status.value == 'completed' %}
+                  <td class="confirmation">{{ scan.status.value|capfirst }}</td>
+                {% elif scan.status.value == 'failed' %}
+                  <td class="warning">{{ scan.status.value|capfirst }}</td>
+                {% else %}
+                  <td>{{ scan.status.value|capfirst }}</td>
+                {% endif %}
+
+                <td>{{ scan.created_at }}</td>
+
+                <td><a href="">{% translate 'View Details' %}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

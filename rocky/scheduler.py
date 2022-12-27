@@ -95,6 +95,7 @@ class TaskStatus(Enum):
 class Task(BaseModel):
     id: str
     scheduler_id: str
+    type: str
     p_item: QueuePrioritizedItem
     status: TaskStatus
     created_at: datetime.datetime
@@ -119,6 +120,7 @@ class SchedulerClient:
     def list_tasks(
         self,
         scheduler_id: str,
+        type: Optional[str] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         status: Optional[TaskStatus] = None,
@@ -128,6 +130,7 @@ class SchedulerClient:
     ) -> PaginatedTasksResponse:
         params = {
             "scheduler_id": scheduler_id,
+            "type": type,
             "limit": limit,
             "offset": offset,
             "status": status,

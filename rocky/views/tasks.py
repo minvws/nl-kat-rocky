@@ -42,6 +42,7 @@ class DownloadTaskDetail(View):
 
 @class_view_decorator(otp_required)
 class TaskListView(ListView):
+
     def setup(self, request, *args, **kwargs):
         self.scheduler_id = None
         self.org: Organization = request.active_organization
@@ -59,6 +60,7 @@ class TaskListView(ListView):
             return []
 
         scheduler_id = self.request.GET.get("scheduler_id", self.scheduler_id)
+        type = self.request.GET.get("type", self.plugin_type)
         limit = self.request.GET.get("limit", TASK_LIMIT)
         offset = self.request.GET.get("offset", 0)
         status = self.request.GET.get("status", None)
@@ -68,6 +70,7 @@ class TaskListView(ListView):
         try:
             queryset = client.list_tasks(
                 scheduler_id=scheduler_id,
+                type=type,
                 limit=limit,
                 offset=offset,
                 status=status,
