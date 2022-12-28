@@ -16,7 +16,6 @@ from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
 
-
 User = get_user_model()
 
 GROUP_ADMIN = "admin"

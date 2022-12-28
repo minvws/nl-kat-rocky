@@ -19,7 +19,6 @@ from rocky.views.indemnification_add import IndemnificationAddView
 from two_factor.views.utils import class_view_decorator
 from django.contrib.auth import get_user_model
 from onboarding.forms import (
-    OnboardingCreateOrganizationForm,
     OnboardingCreateUserAdminForm,
     OnboardingCreateUserRedTeamerForm,
     OnboardingCreateUserClientForm,
@@ -30,8 +29,7 @@ from onboarding.view_helpers import (
     KatIntroductionAdminStepsMixin,
 )
 from katalogus.client import get_katalogus
-from rocky.views import BaseOOIFormView
-from rocky.views.ooi_view import SingleOOITreeMixin, BaseOOIDetailView
+from rocky.views.ooi_view import BaseOOIFormView, SingleOOITreeMixin, BaseOOIDetailView
 from tools.forms import SelectBoefjeForm
 from tools.models import Organization, OrganizationMember
 from tools.ooi_form import OOIForm
