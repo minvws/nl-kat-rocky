@@ -3,6 +3,7 @@ from enum import Enum
 from typing import List
 
 from django.contrib import messages
+from django.core.paginator import EmptyPage, Paginator
 from django.http import Http404
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
@@ -34,6 +35,7 @@ class OOIDetailView(
 ):
     template_name = "oois/ooi_detail.html"
     connector_form_class = ObservedAtForm
+    scan_history_limit = 10
 
     def post(self, request, *args, **kwargs):
         if "action" not in self.request.POST:
@@ -80,19 +82,46 @@ class OOIDetailView(
         breadcrumbs = super().build_breadcrumbs()
         return breadcrumbs
 
-    def get_scan_history(self):
+    def get_scan_history(self) -> scheduler.PaginatedTasksResponse:
         # FIXME: hard-coded "boefje"" should be changed
         scheduler_id = f"boefje-{self.request.active_organization.code}"
+
         filters = [
             {"field": "data__input_ooi", "operator": "eq", "value": self.get_ooi_id()},
         ]
 
-        scans = scheduler.client.list_tasks(
+        # FIXME: in context of ooi detail is doesn't make sense to search
+        # for an object name
+        if self.request.GET.get("scan_history_search"):
+            filters.append({
+                "field": "data__input_ooi",
+                "operator": "eq",
+                "value": self.request.GET.get("scan_history_search"),
+            })
+
+        offset = (int(self.request.GET.get("scan_history_page", 0)) - 1) * self.scan_history_limit
+
+        status = self.request.GET.get("scan_history_status")
+
+        max_created_at = None
+        if self.request.GET.get("scan_history_to"):
+            max_created_at = datetime.strptime(self.request.GET.get("scan_history_to"), "%Y-%m-%d")
+
+        min_created_at = None
+        if self.request.GET.get("scan_history_from"):
+            min_created_at = datetime.strptime(self.request.GET.get("scan_history_from"), "%Y-%m-%d")
+
+        scan_history = scheduler.client.list_tasks(
             scheduler_id=scheduler_id,
-            filters=filters
+            limit=self.scan_history_limit,
+            offset=offset,
+            status=status,
+            min_created_at=min_created_at,
+            max_created_at=max_created_at,
+            filters=filters,
         )
 
-        return scans.results
+        return scan_history
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -138,6 +167,17 @@ class OOIDetailView(
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = self.get_organization_indemnification
 
-        context["scan_history"] = self.get_scan_history()
+        scan_history = self.get_scan_history()
+        context["scan_history"] = scan_history
+
+        context["scan_history_pages"] = list(range(1, scan_history.count // self.scan_history_limit + 1))
+        context["scan_history_page"] = int(self.request.GET.get("scan_history_page", 1))
+
+        # FIXME: perhaps a form?
+        context["scan_history_form_fields"] = [
+            "scan_history_from", "scan_history_to", "scan_history_status",
+            "scan_history_search", "scan_history_page",
+        ]
+        # context["scan_history_form"] = ScanHistoryForm(self.request.GET)
 
         return context

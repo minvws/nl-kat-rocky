@@ -92,52 +92,54 @@
     </table>
 
     {# TODO #}
-    {# {% if scan_history_paginator.num_page > 1 %} #}
+    {# {% if scan_history_pages|length > 1 %} #}
     <nav role="navigation"
          class="pagination"
         aria-label="{% translate 'Pagination' %}">
         <ul>
-            {% if scan_history_paginator.has_previous %}
+            {% if scan_history_page|add:'-1' > 0  %}
                 <li>
                   <a aria-label="{% translate 'Previous Page' %}"
-                     href="">
+                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'-1'%}">
                     <span>{% translate 'Previous' %}</span>
                   </a>
                 </li>
             {% endif %}
 
-            {% if scan_history_paginator.number|add:'-4' > 1 %}
+            {% if scan_history_page|add:'-4' > 1 %}
                 <li>
                   <a aria-label="{% translate 'Five Pages Back' %}"
-                     href="">
+                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'-5'%}">
                     &hellip;
+                  </a>
                 </li>
             {% endif %}
 
-            {% for i in pages %}
-                {% if i|add:'-4' <= scan_history_current_page <= i|add:'4' %}
+            {% for i in scan_history_pages %}
+                {% if i|add:'-4' <= scan_history_page <= i|add:'4' %}
                     <li>
-                        <a aria-label="{% translate 'Page' %} {{ page }}"
-                           href="{{ request.get_full_path }}&scan_history_page={{ page }}"
-                           {% if i == scan_history_current_page %}aria-current="true"{% endif %}>
-                            {{ page }}
+                        <a aria-label="{% translate 'Page' %} {{ i }}"
+                           href="{{ request.path }}?{% url_replace 'scan_history_page' i %}"
+                           {% if i == scan_history_page %}aria-current="true"{% endif %}>
+                            {{ i }}
                         </a>
                     </li>
                 {% endif %}
             {% endfor %}
 
-            {% if scan_history_paginator.number|add:'4' < scan_history_paginator.num_pages %}
+            {% if scan_history_page|add:'4' < scan_history_pages|length %}
                 <li>
                   <a aria-label="{% translate 'Five Pages Forward' %}"
-                     href="">
+                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'5'%}">
                     &hellip;
+                  </a>
                 </li>
             {% endif %}
 
-            {% if scan_history_paginator.has_next %}
+            {% if scan_history_page|add:'1' < scan_history_pages|length %}
                 <li>
                   <a aria-label="{% translate 'Next Page' %}"
-                     href="">
+                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'1'%}">
                     <span>{% translate 'Next' %}</span>
                   </a>
                 </li>
