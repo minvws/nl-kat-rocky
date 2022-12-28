@@ -72,8 +72,6 @@ class PluginSettingAddEditForm(forms.Form):
                 "initial": initial,
             }
             if field["type"] == "string":
-                kwargs["max_length"] = min(
-                    MAX_SETTINGS_VALUE_LENGTH, field.get("maxLength", MAX_SETTINGS_VALUE_LENGTH)
-                )
+                kwargs["max_length"] = min(MAX_SETTINGS_VALUE_LENGTH, field.get("maxLength", MAX_SETTINGS_VALUE_LENGTH))
 
             self.fields[self.setting_name] = field_type(**kwargs)
