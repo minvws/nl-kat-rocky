@@ -26,13 +26,16 @@ from tools.forms.upload_csv import (
 CSV_CRITERIAS = [
     _("Add column titles. Followed by each object on a new line."),
     _(
-        "For URL object type, a column 'raw' with URL values is required, starting with http:// or https://, optionally a second column 'network' is supported "
+        "For URL object type, a column 'raw' with URL values is required, starting with http:// or https://, "
+        "optionally a second column 'network' is supported "
     ),
     _(
-        "For Hostname object type, a column with 'name' values is required, optionally a second column 'network' is supported "
+        "For Hostname object type, a column with 'name' values is required, optionally a second column 'network' "
+        "is supported "
     ),
     _(
-        "For IPAddressV4 and IPAddressV6 object types, a column of 'address' is required, optionally a second column 'network' is supported "
+        "For IPAddressV4 and IPAddressV6 object types, a column of 'address' is required, optionally a second column "
+        "'network' is supported "
     ),
 ]
 
