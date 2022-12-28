@@ -47,7 +47,7 @@ class PluginDetailScanOOI(BoefjeMixin, OrganizationsMixin, TemplateView):
             messages.add_message(self.request, messages.ERROR, _("Scanning has failed to start."))
             return self.get(request, *args, **kwargs)
         messages.add_message(self.request, messages.SUCCESS, _("Scanning successfully scheduled."))
-        return redirect(reverse("task_list"))
+        return redirect(reverse("task_list", kwargs={"organization_code": self.organization.code}))
 
     def get_form_consumable_oois(self):
         """Get all available OOIS that plugin can consume."""

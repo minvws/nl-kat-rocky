@@ -1,13 +1,10 @@
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.contrib.auth import get_user_model
-from tools.models import Organization
 from account.forms import OrganizationMemberToGroupAddForm
 from tools.view_helpers import OrganizationMemberBreadcrumbsMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -17,15 +14,17 @@ User = get_user_model()
 
 
 @class_view_decorator(otp_required)
-class OrganizationMemberAddView(PermissionRequiredMixin, CreateView, OrganizationsMixin):
+class OrganizationMemberAddView(
+    PermissionRequiredMixin, OrganizationMemberBreadcrumbsMixin, CreateView, OrganizationsMixin
+):
     """
-    View to create a new organization
+    View to create a new member for a specific organization.
     """
 
     model = User
     template_name = "organizations/organization_member_add.html"
     form_class = OrganizationMemberToGroupAddForm
-    permission_required = "organizations.add_organizationmember"
+    permission_required = "tools.add_organizationmember"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -33,7 +32,7 @@ class OrganizationMemberAddView(PermissionRequiredMixin, CreateView, Organizatio
         return kwargs
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy("organization_member_list", kwargs={"organization_code": self.organization.code})
+        return reverse_lazy("organization_detail", kwargs={"organization_code": self.organization.code})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -24,7 +24,7 @@
               of objects that inherit from this clearance level will also be recalculated.
             {% endblocktranslate %}
           </p>
-          {% if user.organizationmember.acknowledged_clearance_level > 0 and organization_indemnification %}
+          {% if user.acknowledged_clearance_level > 0 and organization_indemnification %}
             <div class="horizontal-view">
               <a href="{% ooi_url 'scan_profile_reset' ooi.reference organization_code=organization.code %}&{% include 'partials/elements/href_querystring_from_list.html' with list=mandatory_fields %}"
                  class="button">{% translate 'Set clearance level to inherit' %}</a>
@@ -42,7 +42,7 @@
         {% elif ooi.scan_profile.scan_profile_type == 'inherited' %}
           <h2>{% translate 'Inherited' %}</h2>
         {% endif %}
-        {% if user.organizationmember.acknowledged_clearance_level > 0 and organization_indemnification %}
+        {% if user.acknowledged_clearance_level > 0 and organization_indemnification %}
           <form novalidate
                 action="{% ooi_url 'scan_profile_detail' ooi.primary_key organization_code=organization.code %}"
                 method="post"

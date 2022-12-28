@@ -14,9 +14,7 @@ class OrganizationsMixin(View):
         if "organization_code" in kwargs:
             try:
                 self.organization = Organization.objects.get(code=kwargs["organization_code"])
-                self.organizationmember = OrganizationMember.objects.filter(
-                    user=request.user, organization=self.organization
-                )
+                self.organizationmember = OrganizationMember.objects.filter(organization=self.organization)
                 if not self.organizationmember and not request.user.is_superuser:
                     raise Http404()
             except Organization.DoesNotExist:

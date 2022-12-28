@@ -15,6 +15,7 @@ router.register(r"organization", OrganizationViewSet)
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("api/v1/", include(router.urls)),
+    path("<organization_code>/health/", Health.as_view(), name="health"),
 ]
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
@@ -47,14 +48,9 @@ urlpatterns += i18n_patterns(
         name="organization_edit",
     ),
     path(
-        "organizations/<path:pk>/members/add/",
+        "<organization_code>/members/add/",
         OrganizationMemberAddView.as_view(),
         name="organization_member_add",
-    ),
-    path(
-        "organizations/<path:pk>/members/",
-        OrganizationMemberListView.as_view(),
-        name="organization_member_list",
     ),
     path(
         "<organization_code>/",
@@ -66,9 +62,8 @@ urlpatterns += i18n_patterns(
         OrganizationMemberEditView.as_view(),
         name="organization_member_edit",
     ),
-    path("health/", health, name="health"),
     path(
-        "health/v1/",
+        "<organization_code>/health/v1/",
         HealthChecks.as_view(),
         name="health_beautified",
     ),

@@ -67,6 +67,8 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 
 class OrganizationMemberAdmin(admin.ModelAdmin):
+    list_display = ("user", "organization")
+
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
 

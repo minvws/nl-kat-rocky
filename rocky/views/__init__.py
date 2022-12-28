@@ -16,16 +16,17 @@ from rocky.views.ooi_tree import OOITreeView, OOISummaryView, OOIGraphView
 from rocky.views.ooi_findings import OOIFindingListView
 from rocky.views.organization_list import OrganizationListView
 from rocky.views.organization_add import OrganizationAddView
+from rocky.views.organization_member_list import OrganizationMemberListView
 from rocky.views.organization_detail import OrganizationDetailView
 from rocky.views.organization_edit import OrganizationEditView
-from rocky.views.organization_member_list import OrganizationMemberListView
+
 from rocky.views.organization_member_edit import OrganizationMemberEditView
 from rocky.views.organization_member_add import OrganizationMemberAddView
 from rocky.views.scans import ScanListView
 from rocky.views.signal import SignalQRView
 from rocky.views.scan_profile import ScanProfileDetailView, ScanProfileResetView
 from rocky.views.upload_csv import UploadCSV
-from rocky.views.health import health, HealthChecks
+from rocky.views.health import Health, HealthChecks
 from rocky.views.tasks import DownloadTaskDetail, BoefjesTaskListView, NormalizersTaskListView
 from rocky.views.privacy_statement import PrivacyStatementView
 from rocky.views.handler404 import handler404
@@ -72,7 +73,7 @@ __all__ = [
     "ScanProfileDetailView",
     "ScanProfileResetView",
     "UploadCSV",
-    "health",
+    "Health",
     "HealthChecks",
     "DownloadTaskDetail",
     "BoefjesTaskListView",

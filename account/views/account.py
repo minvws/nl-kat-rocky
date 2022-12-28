@@ -6,11 +6,8 @@ from django.views.generic.detail import DetailView
 from django_otp.decorators import otp_required
 from requests.exceptions import RequestException
 from two_factor.views.utils import class_view_decorator
-from tools.models import Organization, OrganizationMember
-<<<<<<< HEAD
+from tools.models import OrganizationMember
 from account.mixins import OrganizationsMixin
-=======
->>>>>>> create-and-tag-organisation
 
 
 class PageActions(Enum):

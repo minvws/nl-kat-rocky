@@ -300,11 +300,3 @@ class SingleOOITreeMixin(SingleOOIMixin):
         self.tree = self.get_ooi_tree(organization_code, pk, self.depth, observed_at)
 
         return self.tree.store[str(self.tree.root.reference)]
-
-
-class OrganizationIndemnificationMixin:
-    def get_organization_indemnification(self):
-        user = self.request.user
-        organizationmember = OrganizationMember.objects.get(user=user)
-
-        return Indemnification.objects.filter(organization=organizationmember.organization).exists()

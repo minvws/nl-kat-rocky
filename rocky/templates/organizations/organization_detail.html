@@ -7,29 +7,10 @@
   <main id="main-content">
     <section>
       <div>
-        <div class="column-2">
-          <h1>{% translate 'Organization' %} {{ organization.name }}</h1>
-        </div>
-        <div class="horizontal-view toolbar">
-          <a class="button"
-             href="{% url 'organization_member_add' organization.code %}">{% translate 'Add new member' %}</a>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>{% translate 'Member' %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for member in members %}
-              <tr>
-                <td>{{ member }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <h1>{% translate 'Organization' %} {{ organization.name }}</h1>
       </div>
     </section>
+    {% include 'organizations/organization_member_list.html' %}
   </main>
 {% endblock %}
 

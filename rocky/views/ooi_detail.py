@@ -9,11 +9,12 @@ from octopoes.models import OOI
 from requests.exceptions import RequestException
 from katalogus.client import get_katalogus
 from katalogus.utils import get_enabled_boefjes_for_ooi_class
-from rocky.views.mixins import OrganizationIndemnificationMixin, OOIBreadcrumbsMixin
+from rocky.views.mixins import OOIBreadcrumbsMixin
 from rocky.views import BaseOOIDetailView, OOIRelatedObjectAddView
 from tools.forms import ObservedAtForm, PossibleBoefjesFilterForm
 from tools.ooi_helpers import format_display
 from tools.view_helpers import Breadcrumb
+from tools.models import Indemnification
 from katalogus.views.mixins import BoefjeMixin
 from account.mixins import OrganizationsMixin
 
@@ -24,7 +25,6 @@ class PageActions(Enum):
 
 class OOIDetailView(
     BoefjeMixin,
-    OrganizationIndemnificationMixin,
     OOIRelatedObjectAddView,
     BaseOOIDetailView,
     OrganizationsMixin,
@@ -119,6 +119,8 @@ class OOIDetailView(
         # context["breadcrumbs"] = self.build_breadcrumbs()
 
         context["possible_boefjes_filter_form"] = filter_form
-        context["organization_indemnification"] = self.get_organization_indemnification
+        context["organization_indemnification"] = Indemnification.objects.filter(
+            organization=self.organization
+        ).exists()
 
         return context
