@@ -5185,6 +5185,10 @@ msgstr "Datum toegevoegd"
 msgid "Download task details"
 msgstr "Download taakdetails"
 
+#: templates/tasks/boefjes.html:41 templates/tasks/normalizers.html:42
+msgid "No input OOI"
+msgstr "Geen input object"
+
 #: templates/tasks/boefjes.html:49 templates/tasks/normalizers.html:51
 msgid "Download"
 msgstr "Download"

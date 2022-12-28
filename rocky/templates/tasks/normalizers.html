@@ -39,7 +39,7 @@
                           <a href="{% ooi_url 'ooi_detail' task.p_item.data.raw_data.boefje_meta.input_ooi %}">{{ task.p_item.data.raw_data.boefje_meta.input_ooi }}</a>
                       </td>
                     {% else %}
-                      <td>No Input OOI</td>
+                      <td>{% translate 'No input OOI' %}</td>
                     {% endif %}
                     <td>{{ task.p_item.data.raw_data.boefje_meta.boefje.id }}</td>
                     <td>{{ task.p_item.data.normalizer.id }}</td>

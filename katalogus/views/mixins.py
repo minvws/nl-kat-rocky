@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from logging import getLogger
-from typing import List
+from typing import List, Optional
 from uuid import uuid4
 
 from django.contrib import messages
@@ -45,7 +45,7 @@ class BoefjeMixin(OctopoesMixin):
         super().setup(request, *args, **kwargs)
         self.api_connector = self.get_api_connector()
 
-    def run_boefje(self, katalogus_boefje: Boefje, ooi: OOI, organization: Organization) -> None:
+    def run_boefje(self, katalogus_boefje: Boefje, ooi: Optional[OOI], organization: Organization) -> None:
 
         boefje_queue_name = f"boefje-{organization.code}"
 
@@ -63,7 +63,7 @@ class BoefjeMixin(OctopoesMixin):
         boefje_task = BoefjeTask(
             id=uuid4().hex,
             boefje=boefje,
-            input_ooi=ooi.reference,
+            input_ooi=ooi.reference if ooi else None,
             organization=organization.code,
         )
 
@@ -74,12 +74,16 @@ class BoefjeMixin(OctopoesMixin):
     def run_boefje_for_oois(
         self,
         boefje: Boefje,
-        oois: List[OOI],
+        oois: List[Optional[OOI]],
         organization: Organization,
         api_connector: OctopoesAPIConnector,
     ) -> None:
 
         for ooi in oois:
+            if not ooi:
+                self.run_boefje(boefje, None, organization)
+                continue
+
             if ooi.scan_profile.level < boefje.scan_level:
                 api_connector.save_scan_profile(
                     DeclaredScanProfile(
