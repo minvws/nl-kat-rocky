@@ -11,14 +11,6 @@
         <dl>
           <div>
             <dt>
-              {% translate 'Username' %}
-            </dt>
-            <dd>
-              {{ user }}
-            </dd>
-          </div>
-          <div>
-            <dt>
               {% translate 'Full name' %}
             </dt>
             <dd>
@@ -38,13 +30,7 @@
               {% translate 'Organization' %}
             </dt>
             <dd>
-              {% spaceless %}
-                {% if user.organizationmember.organization %}
-                  {{ user.organizationmember.organization }}
-                {% else %}
-                  -
-                {% endif %}
-              {% endspaceless %}
+              {{ organization.name }}
             </dd>
           </div>
           {% if user.organizationmember.trusted_clearance_level > 0 %}

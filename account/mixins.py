@@ -17,7 +17,7 @@ class OrganizationsMixin(View):
                 self.organizationmember = OrganizationMember.objects.filter(
                     user=request.user, organization=self.organization
                 )
-                if not self.organizationmember:
+                if not self.organizationmember and not request.user.is_superuser:
                     raise Http404()
             except Organization.DoesNotExist:
                 raise Http404()
@@ -26,4 +26,6 @@ class OrganizationsMixin(View):
         context = super().get_context_data(**kwargs)
         if self.organization:
             context["organization"] = self.organization
+        if self.organizationmember:
+            context["members"] = self.organizationmember
         return context

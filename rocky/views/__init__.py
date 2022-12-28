@@ -8,8 +8,8 @@ from rocky.views.landing_page import LandingPageView
 from rocky.views.ooi_add import ooi_type_input_choices, OOIAddTypeSelectView, OOIAddView
 from rocky.views.ooi_edit import OOIEditView
 from rocky.views.ooi_delete import OOIDeleteView
-from rocky.views.ooi_detail import OOIDetailView
 from rocky.views.ooi_detail_related_object import OOIRelatedObjectManager, OOIFindingManager, OOIRelatedObjectAddView
+from rocky.views.ooi_detail import OOIDetailView
 from rocky.views.ooi_list import OOIListView, OOIListExportView
 from rocky.views.ooi_report import OOIReportView, OOIReportPDFView, DNSReport
 from rocky.views.ooi_tree import OOITreeView, OOISummaryView, OOIGraphView

@@ -6,8 +6,8 @@ from tools.view_helpers import BreadcrumbsMixin
 from account.mixins import OrganizationsMixin
 
 
-class FindingListView(BreadcrumbsMixin, OrganizationsMixin, BaseOOIListView):
-    template_name = "finding_list.html"
+class FindingListView(BreadcrumbsMixin, BaseOOIListView, OrganizationsMixin):
+    template_name = "findings/finding_list.html"
     ooi_types = {Finding}
 
     def build_breadcrumbs(self):

@@ -52,8 +52,11 @@ class FindingAddView(BaseOOIFormView, OrganizationsMixin):
         context = super().get_context_data(**kwargs)
 
         context["breadcrumbs"] = [
-            {"url": reverse("finding_list"), "text": "Findings"},
-            {"url": reverse("finding_add"), "text": _("Add Finding")},
+            {"url": reverse("finding_list", kwargs={"organization_code": self.organization.code}), "text": "Findings"},
+            {
+                "url": reverse("finding_add", kwargs={"organization_code": self.organization.code}),
+                "text": _("Add Finding"),
+            },
         ]
 
         return context

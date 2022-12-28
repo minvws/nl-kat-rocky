@@ -5,6 +5,7 @@ from django.views.generic.base import TemplateView
 from rest_framework import routers
 from rocky.views import *
 from tools.viewsets import OrganizationViewSet
+from django.conf.urls.i18n import i18n_patterns
 
 handler404 = "rocky.views.handler404"
 
@@ -13,8 +14,12 @@ router.register(r"organization", OrganizationViewSet)
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
+    path("api/v1/", include(router.urls)),
+]
+urlpatterns += i18n_patterns(
+    path("admin/", admin.site.urls),
     path("", LandingPageView.as_view(), name="landing_page"),
-    path("account/", include("account.urls"), name="account"),
+    path("", include("account.urls"), name="account"),
     path("", include(tf_urls)),
     path(
         "indemnifications/",
@@ -52,7 +57,7 @@ urlpatterns = [
         name="organization_member_list",
     ),
     path(
-        "organizations/<path:pk>/",
+        "<organization_code>/",
         OrganizationDetailView.as_view(),
         name="organization_detail",
     ),
@@ -80,19 +85,18 @@ urlpatterns = [
     path("<organization_code>/objects/detail/", OOIDetailView.as_view(), name="ooi_detail"),
     path("<organization_code>/objects/export", OOIListExportView.as_view(), name="ooi_list_export"),
     path(
-        "objects/indemnification/reset/",
+        "<organization_code>/objects/indemnification/reset/",
         ScanProfileResetView.as_view(),
         name="scan_profile_reset",
     ),
     path(
-        "objects/scan-profile/",
+        "<organization_code>/objects/scan-profile/",
         ScanProfileDetailView.as_view(),
         name="scan_profile_detail",
     ),
-    path("scans/", ScanListView.as_view(), name="scan_list"),
-    path("admin/", admin.site.urls),
+    path("<organization_code>/scans/", ScanListView.as_view(), name="scan_list"),
     path(
-        "upload/csv/",
+        "<organization_code>/upload/csv/",
         UploadCSV.as_view(),
         name="upload_csv",
     ),
@@ -123,5 +127,4 @@ urlpatterns = [
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
-    path("api/v1/", include(router.urls)),
-]
+)

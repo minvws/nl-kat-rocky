@@ -443,30 +443,26 @@ class OnboardingIntroductionRegistrationView(
 class OnboardingOrganizationSetupView(
     SuperOrAdminUserRequiredMixin,
     KatIntroductionAdminStepsMixin,
-    OrganizationsMixin,
-    UpdateView,
+    CreateView,
 ):
     """
     View to update the name of a organization
     """
 
     model = Organization
-    pk_url_kwarg = "organization_code"
     template_name = "account/step_2a_organization_setup.html"
     form_class = OrganizationForm
     current_step = 2
 
-    def get_queryset(self):
-        return self.model.objects.first()
-
     def get(self, request, *args, **kwargs):
-        self.organization = self.get_queryset()
-        if self.organization:
-            return redirect(reverse("step_organization_update", kwargs={"organization_code": self.organization.code}))
+        organization = Organization.objects.first()
+        if organization:
+            return redirect(reverse("step_organization_update", kwargs={"organization_code": organization.code}))
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self) -> str:
-        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
+        organization = Organization.objects.first()
+        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]

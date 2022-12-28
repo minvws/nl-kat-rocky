@@ -14,7 +14,7 @@ class OrganizationListView(
 ):
     model = Organization
     template_name = "organizations/organization_list.html"
-    permission_required = "organizations.view_organization"
+    permission_required = "tools.view_organization"
     context_object_name = "organizations"
 
     def get_queryset(self):
@@ -22,9 +22,14 @@ class OrganizationListView(
         List all organizations of member.
         """
         organizations = []
-        members = OrganizationMember.objects.filter(user=self.request.user)
-        if members.exists():
-            for member in members:
+        self.members = OrganizationMember.objects.filter(user=self.request.user)
+        if self.members.exists():
+            for member in self.members:
                 organization = Organization.objects.get(name=member.organization)
                 organizations.append(organization)
             return organizations
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["members"] = self.members
+        return context

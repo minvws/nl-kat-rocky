@@ -6,10 +6,10 @@ from django.urls import reverse_lazy
 from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_collapsed_types, type_by_name
 from rocky.views import BaseOOIListView
-from tools.view_helpers import BreadcrumbsMixin
+from tools.view_helpers import ObjectsBreadcrumbsMixin
 
 
-class OOIListView(BreadcrumbsMixin, BaseOOIListView):
+class OOIListView(BaseOOIListView):
     breadcrumbs = [{"url": reverse_lazy("ooi_list"), "text": _("Objects")}]
     template_name = "oois/ooi_list.html"
     ooi_types = get_collapsed_types().difference({Finding, FindingType})

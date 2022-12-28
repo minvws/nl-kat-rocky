@@ -25,7 +25,7 @@
                     <a href="{% url 'organization_detail' organization_code=organization.code %}">{{ organization.name }}</a>
                   </td>
                   <td>{{ organization.code }}</td>
-                  <td>{{ organization.members }}</td>
+                  <td>{{ members.count }}</td>
                 </tr>
               {% endfor %}
             </tbody>

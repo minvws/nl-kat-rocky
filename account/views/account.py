@@ -7,6 +7,7 @@ from django_otp.decorators import otp_required
 from requests.exceptions import RequestException
 from two_factor.views.utils import class_view_decorator
 from tools.models import Organization, OrganizationMember
+from account.mixins import OrganizationsMixin
 
 
 class PageActions(Enum):
@@ -15,7 +16,7 @@ class PageActions(Enum):
 
 
 @class_view_decorator(otp_required)
-class AccountView(DetailView):
+class AccountView(OrganizationsMixin, DetailView):
     template_name = "account_detail.html"
 
     def get_object(self):
@@ -30,12 +31,11 @@ class AccountView(DetailView):
         self.object = self.get_object()
         self.handle_page_action(request.POST["action"])
 
-        return redirect(reverse("account_detail"))
+        return redirect(reverse("account_detail", organization_code=self.organization.code))
 
     def handle_page_action(self, action: str):
         try:
-            member_id = self.request.POST.get("member_id")
-            organizationmember = OrganizationMember.objects.get(id=member_id)
+            organizationmember = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
             if action == PageActions.ACCEPT_CLEARANCE.value:
                 organizationmember.acknowledged_clearance_level = organizationmember.trusted_clearance_level
             elif action == PageActions.WITHDRAW_ACCEPTANCE.value:

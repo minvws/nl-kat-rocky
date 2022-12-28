@@ -21,6 +21,7 @@ from tools.forms.upload_csv import (
     UploadCSVForm,
     CSV_ERRORS,
 )
+from account.mixins import OrganizationsMixin
 
 CSV_CRITERIAS = [
     _("Do not add column titles and only 1 column is required. Each value on a new line."),
@@ -31,7 +32,7 @@ CSV_CRITERIAS = [
 
 
 @class_view_decorator(otp_required)
-class UploadCSV(PermissionRequiredMixin, FormView):
+class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
     template_name = "upload_csv.html"
     form_class = UploadCSVForm
     permission_required = "tools.can_scan_organization"
@@ -40,18 +41,20 @@ class UploadCSV(PermissionRequiredMixin, FormView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.organization_code = request.user.organizationmember.organization.code
-        if not self.organization_code:
+        if not self.organization.code:
             self.add_error_notification(CSV_ERRORS["no_org"])
         else:
             # First create the Network object itself
-            self._save_ooi(ooi=self.network, organization=self.organization_code)
+            self._save_ooi(ooi=self.network, organization=self.organization.code)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("ooi_list"), "text": _("Objects")},
-            {"url": reverse("upload_csv"), "text": _("Upload CSV")},
+            {"url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}), "text": _("Objects")},
+            {
+                "url": reverse("upload_csv", kwargs={"organization_code": self.organization.code}),
+                "text": _("Upload CSV"),
+            },
         ]
         context["criterias"] = CSV_CRITERIAS
         return context
@@ -74,7 +77,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
 
     def form_valid(self, form):
         if not self.proccess_csv(form):
-            return redirect("upload_csv")
+            return redirect("upload_csv", organization_code=self.organization.code)
         return super().form_valid(form)
 
     def add_error_notification(self, error_message):
@@ -97,7 +100,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
                     object_type_value = row[0]
                     try:
                         ooi = self.get_ooi_from_csv(object_type, object_type_value)
-                        self._save_ooi(ooi=ooi, organization=self.organization_code)
+                        self._save_ooi(ooi=ooi, organization=self.organization.code)
                     except ValidationError:
                         rows_with_error.append(str(rownumber))
                 else:

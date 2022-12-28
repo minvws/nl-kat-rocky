@@ -30,7 +30,7 @@ def get_allowed_actions(organization) -> Dict[str, bool]:
 class OrganizationDetailView(PermissionRequiredMixin, OrganizationBreadcrumbsMixin, ListView, OrganizationsMixin):
     model = Organization
     template_name = "organizations/organization_detail.html"
-    permission_required = "organizations.view_organization"
+    permission_required = "tools.view_organization"
     context_object_name = "organization"
 
     def get_members(self):

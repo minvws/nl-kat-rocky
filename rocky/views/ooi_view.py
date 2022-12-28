@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 from time import sleep
 from typing import Type, List
-
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponseRedirect
@@ -13,7 +12,6 @@ from octopoes.api.models import Declaration
 from octopoes.models import OOI
 from pydantic import ValidationError
 from two_factor.views.utils import class_view_decorator
-
 from rocky.views.mixins import (
     SingleOOIMixin,
     SingleOOITreeMixin,
@@ -24,10 +22,11 @@ from rocky.views.mixins import (
 from tools.forms import BaseRockyForm, ObservedAtForm
 from tools.ooi_form import OOIForm
 from tools.view_helpers import get_ooi_url, get_mandatory_fields
+from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, TemplateView):
+class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, OrganizationsMixin, TemplateView):
     connector_form_class = ObservedAtForm
     oois_per_page = 150
 
@@ -35,7 +34,7 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         observed_at = self.get_observed_at()
         page_number = self.request.GET.get("page")
-        oois = self.get_list(observed_at)
+        oois = self.get_list(self.organization.code, observed_at)
         paginator = Paginator(oois, self.oois_per_page)
 
         try:
@@ -57,13 +56,13 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, TemplateView):
 
 
 @class_view_decorator(otp_required)
-class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, TemplateView):
+class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixin, TemplateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
 
     def get(self, request, *args, **kwargs):
-        self.ooi = self.get_ooi()
+        self.ooi = self.get_ooi(self.organization.code)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -77,13 +76,13 @@ class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, TemplateView):
 
 
 @class_view_decorator(otp_required)
-class BaseOOIFormView(SingleOOIMixin, FormView):
+class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
     ooi_class: Type[OOI] = None
     form_class = OOIForm
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+    def get(self, request, *args, **kwargs):
+        self.api_connector = self.get_api_connector(self.organization.code)
+        return super().get(request, *args, **kwargs)
 
     def get_ooi_class(self):
         return self.ooi.__class__ if hasattr(self, "ooi") else None
@@ -105,14 +104,14 @@ class BaseOOIFormView(SingleOOIMixin, FormView):
     def get_form_kwargs(self):
         kwargs = {
             "ooi_class": self.get_ooi_class(),
-            "connector": self.get_api_connector(),
+            "connector": self.get_api_connector(self.organization.code),
         }
         kwargs.update(super().get_form_kwargs())
 
         return kwargs
 
     def save_ooi(self, data) -> OOI:
-        api_connector = self.get_api_connector()
+        api_connector = self.get_api_connector(self.organization.code)
         new_ooi = self.ooi_class.parse_obj(data)
         api_connector.save_declaration(Declaration(ooi=new_ooi, valid_time=datetime.now(timezone.utc)))
         return new_ooi
@@ -132,7 +131,7 @@ class BaseOOIFormView(SingleOOIMixin, FormView):
             return self.form_invalid(form)
 
     def get_success_url(self, ooi) -> str:
-        return get_ooi_url("ooi_detail", ooi.primary_key)
+        return get_ooi_url("ooi_detail", ooi.primary_key, organization_code=self.organization.code)
 
     def get_readonly_fields(self) -> List:
         if not hasattr(self, "ooi"):
@@ -142,12 +141,12 @@ class BaseOOIFormView(SingleOOIMixin, FormView):
 
 
 @class_view_decorator(otp_required)
-class BaseDeleteOOIView(SingleOOIMixin, TemplateView):
+class BaseDeleteOOIView(SingleOOIMixin, OrganizationsMixin, TemplateView):
     success_url = None
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+    def get(self, request, *args, **kwargs):
+        self.api_connector = self.get_api_connector(self.organization.code)
+        return super().get(request, *args, **kwargs)
 
     def delete(self, request):
         self.api_connector.delete(self.ooi.reference)

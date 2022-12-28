@@ -15,7 +15,7 @@ from katalogus.client import get_katalogus
 from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
-from tools.validators import phone_validator
+
 
 User = get_user_model()
 
@@ -104,6 +104,9 @@ class OrganizationMember(models.Model):
     acknowledged_clearance_level = models.IntegerField(
         default=-1, validators=[MinValueValidator(-1), MaxValueValidator(max(scan_levels))]
     )
+
+    class Meta:
+        unique_together = ["user", "organization"]
 
     def __str__(self):
         return str(self.user)

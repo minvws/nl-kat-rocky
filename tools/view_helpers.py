@@ -86,7 +86,7 @@ class Breadcrumb(TypedDict):
     url: str
 
 
-class BreadcrumbsMixin:
+class BreadcrumbsMixin(OrganizationsMixin):
     breadcrumbs: List[Breadcrumb] = []
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
@@ -191,4 +191,10 @@ class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
 
 
 class ObjectsBreadcrumbsMixin(BreadcrumbsMixin):
-    breadcrumbs = [{"url": reverse_lazy("ooi_list"), "text": _("Objects")}]
+    def build_breadcrumbs(self):
+        return [
+            {
+                "url": reverse_lazy("ooi_list", kwargs={"organization_code": self.organization.code}),
+                "text": _("Objects"),
+            }
+        ]

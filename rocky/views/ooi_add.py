@@ -25,7 +25,7 @@ def ooi_type_input_choices():
 
 @class_view_decorator(otp_required)
 class OOIAddTypeSelectView(OrganizationsMixin, TemplateView):
-    template_name = "ooi_add_type_select.html"
+    template_name = "oois/ooi_add_type_select.html"
 
     def get(self, request, *args, **kwargs):
         if "add_ooi_type" in request.GET and existing_ooi_type(request.GET["add_ooi_type"]):
@@ -55,7 +55,7 @@ class OOIAddTypeSelectView(OrganizationsMixin, TemplateView):
 
 @class_view_decorator(otp_required)
 class OOIAddView(BaseOOIFormView):
-    template_name = "ooi_add.html"
+    template_name = "oois/ooi_add.html"
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
