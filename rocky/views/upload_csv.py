@@ -78,9 +78,10 @@ class UploadCSV(PermissionRequiredMixin, FormView):
     def get_or_create_reference(self, ooi_type_name: str, value: str):
         ooi_type_name = next(filter(lambda x: x.casefold() == ooi_type_name.casefold(), self.ooi_types.keys()))
 
-        self.reference_cache.setdefault(ooi_type_name, {})
-        if value in self.reference_cache[ooi_type_name]:
-            return self.reference_cache[ooi_type_name][value]
+        # get from cache
+        cache = self.reference_cache.setdefault(ooi_type_name, {})
+        if value in cache:
+            return cache[value]
 
         ooi_type = self.ooi_types[ooi_type_name]["type"]
 
@@ -91,7 +92,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         # create the ooi
         kwargs = {self.ooi_types[ooi_type_name]["argument"]: value}
         ooi = ooi_type(**kwargs)
-        self.reference_cache[ooi_type_name][value] = ooi
+        cache[value] = ooi
 
         return ooi
 
@@ -102,13 +103,14 @@ class UploadCSV(PermissionRequiredMixin, FormView):
             for field, model_field in ooi_type.__fields__.items()
             if field not in self.skip_properties
         ]
-        ooi_dict = {}
+
+        kwargs = {}
         for field, is_reference, required in ooi_fields:
             if is_reference and required:
                 try:
-                    referenced_ooi = self.get_or_create_reference2(field, values[field])
+                    referenced_ooi = self.get_or_create_reference(field, values[field])
                     self._save_ooi(ooi=referenced_ooi, organization=self.organization_code)
-                    ooi_dict[field] = referenced_ooi.reference
+                    kwargs[field] = referenced_ooi.reference
                 except IndexError:
                     if required:
                         raise IndexError(
@@ -116,10 +118,11 @@ class UploadCSV(PermissionRequiredMixin, FormView):
                             % (field, ooi_type_name)
                         )
                     else:
-                        ooi_dict[field] = None
+                        kwargs[field] = None
             else:
-                ooi_dict[field] = values.get(field)
-        return ooi_type(**ooi_dict)
+                kwargs[field] = values.get(field)
+
+        return ooi_type(**kwargs)
 
     def _save_ooi(self, ooi, organization) -> None:
         connector = OctopoesAPIConnector(OCTOPOES_API, organization)
