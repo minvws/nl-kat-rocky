@@ -43,7 +43,15 @@ class UploadCSV(PermissionRequiredMixin, FormView):
     form_class = UploadCSVForm
     permission_required = "tools.can_scan_organization"
     success_url = reverse_lazy("ooi_list")
-    networks = {"internet": Network(name="internet")}
+    reference_cache = {"network": {"internet": Network(name="internet")}}
+    ooi_types = {
+        "hostname": {"type": Hostname},
+        "url": {"type": URL},
+        "network": {"type": Network, "defaultvalue": "internet", "createargument": "name"},
+        "ipaddressv4": {"type": IPAddressV4},
+        "ipaddressv6": {"type": IPAddressV6},
+    }
+    skip_properties = ("object_type", "scan_profile", "primary_key")
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -60,24 +68,44 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         context["criterias"] = CSV_CRITERIAS
         return context
 
-    def get_or_create_network(self, network: str) -> Network:
-        if network in self.networks:
-            return self.networks[network]
-        networkOOI = Network(name=network)
-        self.networks[network] = networkOOI
-        return networkOOI
+    def get_or_create_reference(self, ooi_type_name: str, primary_key: str):
+        if ooi_type_name not in self.cache:
+            self.cache[ooi_type_name] = {}
+        if self.cache[ooi_type_name][primary_key]:
+            return self.cache[ooi_type_name][primary_key]
+        ooi_type = self.ooi_types[ooi_type_name]["type"]
+        createarguments = {self.ooi_types[ooi_type_name]["createargument"]: primary_key}
+        referenced_ooi = ooi_type(**createarguments)
+        self.cache[ooi_type_name][primary_key] = referenced_ooi
+        return referenced_ooi
 
-    def get_ooi_from_csv(self, ooi_type: str, values: Dict[str, str]):
-        network = self.get_or_create_network(values.get("network", "internet"))
-        self._save_ooi(ooi=network, organization=self.organization_code)
-        if ooi_type == "Hostname":
-            return Hostname(name=values["name"], network=network.reference)
-        if ooi_type == "URL":
-            return URL(raw=values["raw"], network=network.reference)
-        if ooi_type == "IPAddressV4":
-            return IPAddressV4(address=values["address"], network=network.reference)
-        if ooi_type == "IPAddressV6":
-            return IPAddressV6(address=values["address"], network=network.reference)
+    def get_ooi_from_csv(self, ooi_type_name: str, values: Dict[str, str]):
+        ooi_type = self.ooi_types[ooi_type_name].lower()
+        ooi_fields = (
+            (field, URL.__fields__[field].type_ == Reference, URL.__fields__[field].required)
+            for field in URL.__fields__
+            if field not in self.skip_properties
+        )
+        ooi_dict = {}
+        for fieldname, reference, required in ooi_fields:
+            if reference:
+                try:
+                    referenced_ooi = self.get_or_create_reference(
+                        values.get(fieldname, self.ooi_types[ooi_type_name]["defaultvalue"])
+                    )
+                    self._save_ooi(ooi=referenced_ooi, organization=self.organization_code)
+                    ooi_dict[fieldname] = referenced_ooi.reference
+                except IndexError:
+                    if required:
+                        raise IndexError(
+                            "Required referenced primary-key field '%s' not set and no default present for Type '%s'."
+                            % (fieldname, ooi_type_name)
+                        )
+                    else:
+                        ooi_dict[fieldname] = None
+            else:
+                ooi_dict[fieldname] = values[fieldname]
+        return ooi_type(**ooi_dict)
 
     def _save_ooi(self, ooi, organization) -> None:
         connector = OctopoesAPIConnector(OCTOPOES_API, organization)
