@@ -8,9 +8,9 @@ from tools.view_helpers import OrganizationBreadcrumbsMixin
 
 @class_view_decorator(otp_required)
 class OrganizationListView(
-    PermissionRequiredMixin,
     OrganizationBreadcrumbsMixin,
     ListView,
+    PermissionRequiredMixin,
 ):
     model = Organization
     template_name = "organizations/organization_list.html"

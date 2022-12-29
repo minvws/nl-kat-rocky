@@ -38,9 +38,8 @@ class CrisisRoomView(crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixi
         return finding_list
 
     def get_organizations_with_code(self) -> List:
-        if not self.request.user.is_superuser:
-            members = OrganizationMember.objects.filter(user=self.request.user)
-            return [member.organization for member in members]
+        members = OrganizationMember.objects.filter(user=self.request.user)
+        return [member.organization for member in members]
 
     def get_list_for_org(self, organization: Organization) -> Union[List, None]:
         try:
@@ -56,7 +55,6 @@ class CrisisRoomView(crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixi
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         organizations = self.get_organizations_with_code()
-
         findings_per_org = []
         for org in organizations:
             findings = self.get_list_for_org(org)
