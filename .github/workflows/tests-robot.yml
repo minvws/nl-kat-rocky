@@ -119,6 +119,12 @@ jobs:
       - name: Initialize rfbrowser
         run: rfbrowser init
 
+      - name: Log memory stats
+        run: free -h
+
+      - name: Log docker stats
+        run: docker stats --no-stream
+
       - name: Run Robot Full Onboarding Flow
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
