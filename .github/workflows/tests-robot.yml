@@ -95,6 +95,10 @@ jobs:
       - name: Log docker stats
         run: docker stats --no-stream
 
+      - name: Inspect docker network
+        if: always()
+        run: docker network ls
+
       - name: Seed katalogus boefjes
         run: docker-compose exec -T katalogus python3 -m boefjes.seed
 
