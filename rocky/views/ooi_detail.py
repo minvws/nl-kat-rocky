@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, Paginator
 from django.http import Http404
 from django.shortcuts import redirect
-from django.utils.translation import gettext_lazy as _
 from octopoes.models import OOI
 from requests.exceptions import RequestException
 
