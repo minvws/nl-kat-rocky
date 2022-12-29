@@ -99,6 +99,10 @@ jobs:
         if: always()
         run: docker network ls
 
+      - name: Inspect ci network
+        if: always()
+        run: docker network inspect ci_default
+
       - name: Seed katalogus boefjes
         run: docker-compose exec -T katalogus python3 -m boefjes.seed
 
