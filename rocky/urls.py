@@ -20,6 +20,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
     path("", LandingPageView.as_view(), name="landing_page"),
+    path("onboarding/", include("onboarding.urls"), name="onboarding"),
+    path("crisis-room/", include("crisis_room.urls"), name="crisis_room"),
     path("", include("account.urls"), name="account"),
     path("", include(tf_urls)),
     path(
@@ -101,8 +103,6 @@ urlpatterns += i18n_patterns(
         PrivacyStatementView.as_view(),
         name="privacy_statement",
     ),
-    path("onboarding/", include("onboarding.urls"), name="onboarding"),
-    path("crisis-room/", include("crisis_room.urls"), name="crisis_room"),
     path("<organization_code>/tasks/", BoefjesTaskListView.as_view(), name="task_list"),
     path("<organization_code>/tasks/boefjes", BoefjesTaskListView.as_view(), name="boefjes_task_list"),
     path(

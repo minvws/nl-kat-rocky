@@ -21,7 +21,7 @@
             <tr>
               <td>
                 {% if perms.tools.view_organization or request.user.is_superuser %}
-                  <a href="{{ findings.organization.get_absolute_url }}">{{ findings.organization.name }}</a>
+                  <a href="{% url 'organization_detail' findings.organization.code %}">{{ findings.organization.name }}</a>
                 {% else %}
                   {{ findings.organization.name }}
                 {% endif %}

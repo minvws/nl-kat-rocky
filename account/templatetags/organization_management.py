@@ -7,6 +7,8 @@ register = template.Library()
 
 @register.simple_tag
 def get_organizations(user):
+    if user.is_superuser:
+        return Organization.objects.all()
     organizations = []
     members = OrganizationMember.objects.filter(user=user)
     if members.exists():

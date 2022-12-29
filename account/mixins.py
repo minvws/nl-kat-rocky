@@ -5,7 +5,7 @@ from django.http import Http404, HttpResponseRedirect
 
 class OrganizationsMixin(View):
     organization = None
-    organizationmember = None
+    organizationmembers = None
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -14,8 +14,13 @@ class OrganizationsMixin(View):
         if "organization_code" in kwargs:
             try:
                 self.organization = Organization.objects.get(code=kwargs["organization_code"])
-                self.organizationmember = OrganizationMember.objects.filter(organization=self.organization)
-                if not self.organizationmember and not request.user.is_superuser:
+                if request.user.is_superuser:
+                    self.organizationmembers = OrganizationMember.objects.filter(organization=self.organization)
+                else:
+                    self.organizationmembers = OrganizationMember.objects.filter(
+                        user=self.request.user, organization=self.organization
+                    )
+                if not self.organizationmembers and not request.user.is_superuser:
                     raise Http404()
             except Organization.DoesNotExist:
                 raise Http404()
@@ -24,6 +29,6 @@ class OrganizationsMixin(View):
         context = super().get_context_data(**kwargs)
         if self.organization:
             context["organization"] = self.organization
-        if self.organizationmember:
-            context["members"] = self.organizationmember
+        if self.organizationmembers:
+            context["members"] = self.organizationmembers
         return context

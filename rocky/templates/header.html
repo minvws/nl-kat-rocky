@@ -21,55 +21,48 @@
     </a>
     <!-- Adjust breakpoint as needed -->
     <ul>
-      {% if request.user.is_authenticated %}
-        <li>
-          <a href="{% url 'crisis_room' %}"
-             {% if 'crisis-room' in request.path|urlencode %} aria-current="page"{% endif %}>{{ request.active_organization }}</a>
-        </li>
-      {% else %}
-        <li>
-          <a href="{% url 'landing_page' %}"
-             {% if 'landing-page' in request.path|urlencode %} aria-current="page"{% endif %}>KAT</a>
-        </li>
-      {% endif %}
-      {% if request.user.is_authenticated and perms.tools.can_scan_organization and not request.user.is_superuser and not view_type == "onboarding" %}
-        <li>
-          <a href="{% url 'indemnification_add' %}"
-             {% if 'indemnifications' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Indemnifications' %}</a>
-        </li>
-      {% endif %}
-      {% if request.user.is_authenticated and organization.code %}
-        <li>
-          <select id="select-organization" name="select-organization">
-            {% for orga in organizations %}
-              <option {% if orga.code == organization.code %}selected="{{ organization.code }}"{% endif %}
-                      value="{{ orga.code }}">
-                {{ orga.name }}
-              </option>
-            {% endfor %}
-          </select>
-        </li>
-        <li>
-          <a href="{% url 'katalogus' organization.code %}"
-             {% if 'kat-alogus' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'KAT-alogus' %}</a>
-        </li>
-        <li>
-          <a href="{% url 'finding_list' organization.code %}"
-             {% if 'finding' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Findings' %}</a>
-        </li>
-        <li>
-          <a href="{% url 'ooi_list' organization.code %}"
-             {% if 'objects' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Objects' %}</a>
-        </li>
-        <li>
-          <a href="{% url 'task_list' organization.code %}"
-             {% if 'tasks' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Tasks' %}</a>
-        </li>
-        {% if perms.tools.view_organizationmember and not perms.tools.can_switch_organization %}
+      {% if not view_type == "onboarding" %}
+        {% if request.user.is_authenticated and organization.code %}
           <li>
-            <a href="{% url 'organization_member_list' request.user.organizationmember.organization_id %}"
-               {% if 'organizations' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Members' %}</a>
+            <select id="select-organization" name="select-organization">
+              {% for orga in organizations %}
+                <option {% if orga.code == organization.code %}selected="{{ organization.code }}"{% endif %}
+                        value="{{ orga.code }}">
+                  {{ orga.name }}
+                </option>
+              {% endfor %}
+            </select>
           </li>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+          <li>
+            <a href="{% url 'crisis_room' %}"
+               {% if 'crisis-room' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Crisis room' %}</a>
+          </li>
+        {% endif %}
+        {% if request.user.is_authenticated and organization.code %}
+          <li>
+            <a href="{% url 'katalogus' organization.code %}"
+               {% if 'kat-alogus' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'KAT-alogus' %}</a>
+          </li>
+          <li>
+            <a href="{% url 'finding_list' organization.code %}"
+               {% if 'finding' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Findings' %}</a>
+          </li>
+          <li>
+            <a href="{% url 'ooi_list' organization.code %}"
+               {% if 'objects' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Objects' %}</a>
+          </li>
+          <li>
+            <a href="{% url 'task_list' organization.code %}"
+               {% if 'tasks' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Tasks' %}</a>
+          </li>
+          {% if perms.tools.view_organizationmember and not perms.tools.can_switch_organization %}
+            <li>
+              <a href="{% url 'organization_member_list' request.user.organizationmember.organization_id %}"
+                 {% if 'organizations' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Members' %}</a>
+            </li>
+          {% endif %}
         {% endif %}
       {% endif %}
       <li class="secondary-menu">{% include 'partials/secondary-menu.html' %}</li>

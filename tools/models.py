@@ -15,6 +15,7 @@ from katalogus.client import get_katalogus
 from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
+from rocky.settings import OCTOPOES_API
 
 User = get_user_model()
 
@@ -59,7 +60,7 @@ class Organization(models.Model):
         # FIXME: Handle exceptions
         katalogus_client.delete_organization()
 
-        octopoes_client = OctopoesAPIConnector(settings.OCTOPOES_API, client=self.code)
+        octopoes_client = OctopoesAPIConnector(OCTOPOES_API, client=self.code)
         # FIXME: Handle exceptions
         octopoes_client.delete_node()
 
@@ -74,7 +75,7 @@ class Organization(models.Model):
         # FIXME: Handle exceptions
         katalogus_client.create_organization(instance.name)
 
-        octopoes_client = OctopoesAPIConnector(settings.OCTOPOES_API, client=instance.code)
+        octopoes_client = OctopoesAPIConnector(OCTOPOES_API, client=instance.code)
         # FIXME: Handle exceptions
         octopoes_client.create_node()
 

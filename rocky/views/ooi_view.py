@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
+from django.urls.base import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django_otp.decorators import otp_required
@@ -142,17 +143,17 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
 
 @class_view_decorator(otp_required)
 class BaseDeleteOOIView(SingleOOIMixin, OrganizationsMixin, TemplateView):
-    success_url = None
-
-    def get(self, request, *args, **kwargs):
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
         self.api_connector = self.get_api_connector(self.organization.code)
-        return super().get(request, *args, **kwargs)
 
     def delete(self, request):
         self.api_connector.delete(self.ooi.reference)
-
-        return HttpResponseRedirect(self.success_url)
+        return HttpResponseRedirect(self.get_success_url())
 
     # Add support for browsers which only accept GET and POST for now.
-    def post(self, request):
+    def post(self, request, **kwargs):
         return self.delete(request)
+
+    def get_success_url(self):
+        return reverse_lazy("ooi_list", kwargs={"organization_code": self.organization.code})
