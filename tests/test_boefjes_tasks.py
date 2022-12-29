@@ -36,7 +36,7 @@ class TaskListTestCase(TestCase):
 
         _ = self.task_list(request)
 
-        mock_scheduler_client.list_tasks.assert_has_calls([call(scheduler_id="boefje-_dev", limit=TASK_LIMIT)])
+        mock_scheduler_client.list_tasks.assert_has_calls([call(scheduler_id="boefje-_dev", type="boefje", limit=TASK_LIMIT, offset=0, status=None, min_created_at=None, max_created_at=None)])
 
     def test_tasks_view_simple(self, mock_scheduler_client: MagicMock):
         mock_scheduler_client.list_tasks.return_value = PaginatedTasksResponse.parse_raw(
