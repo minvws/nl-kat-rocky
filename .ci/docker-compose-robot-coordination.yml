@@ -25,7 +25,7 @@ services:
           limits:
             memory: 1024M
           reservations:
-            memory: 512
+            memory: 512M
 
   octopoes_api:
     restart: on-failure
