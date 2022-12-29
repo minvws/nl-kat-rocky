@@ -8,7 +8,7 @@ Library     OperatingSystem
 *** Keywords ***
 Browser Setup
     Set Suite Variable    ${ROOT_URL}    localhost:8000
-    New Browser    chromium    headless=${headless}    downloadsPath=/tmp
+    New Browser    firefox    headless=${headless}    downloadsPath=/tmp
     New Context    acceptDownloads=True    viewport={'width': 1920, 'height': 1080}
     New Page    ${ROOT_URL}
 

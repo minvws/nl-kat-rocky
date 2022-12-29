@@ -23,9 +23,9 @@ services:
     deploy:
       resources:
           limits:
-            memory: 512M
+            memory: 1024M
           reservations:
-            memory: 128M
+            memory: 512
 
   octopoes_api:
     restart: on-failure
