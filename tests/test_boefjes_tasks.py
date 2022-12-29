@@ -50,6 +50,7 @@ class TaskListTestCase(TestCase):
                     "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
                     "hash": "19ed51514b37d42f79c5e95469956b05",
                     "scheduler_id": "boefje-_dev",
+                    "type": "boefje",
                     "p_item": {
                         "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
                         "hash": "19ed51514b37d42f79c5e95469956b05",
@@ -105,7 +106,7 @@ class TaskListTestCase(TestCase):
         self.assertContains(response, "1b20f85f")
         self.assertContains(response, "Hostname|internet|mispo.es.")
 
-        mock_scheduler_client.list_tasks.assert_has_calls([call(scheduler_id="boefje-_dev", limit=TASK_LIMIT)])
+        mock_scheduler_client.list_tasks.assert_has_calls([call(scheduler_id="boefje-_dev", type="boefje", limit=TASK_LIMIT, offset=0, status=None, min_created_at=None, max_created_at=None)])
 
     def test_tasks_view_no_organization(self, _: MagicMock):
         request = self.factory.get(reverse("task_list"))
