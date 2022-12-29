@@ -23,7 +23,19 @@ def test_boefjes_tasks(rf, user, organization, mocker):
 
     assert response.status_code == 200
 
-    mock_scheduler_client.list_tasks.assert_has_calls([call(scheduler_id="boefje-_dev", type="boefje", limit=TASK_LIMIT, offset=0, status=None, min_created_at=None, max_created_at=None)])
+    mock_scheduler_client.list_tasks.assert_has_calls(
+        [
+            call(
+                scheduler_id="boefje-_dev",
+                type="boefje",
+                limit=TASK_LIMIT,
+                offset=0,
+                status=None,
+                min_created_at=None,
+                max_created_at=None,
+            )
+        ]
+    )
 
 
 def test_tasks_view_simple(rf, user, organization, mocker):
@@ -94,7 +106,19 @@ def test_tasks_view_simple(rf, user, organization, mocker):
     assertContains(response, "1b20f85f")
     assertContains(response, "Hostname|internet|mispo.es.")
 
-    mock_scheduler_client.list_tasks.assert_has_calls([call(scheduler_id="boefje-_dev", type="boefje", limit=TASK_LIMIT, offset=0, status=None, min_created_at=None, max_created_at=None)])
+    mock_scheduler_client.list_tasks.assert_has_calls(
+        [
+            call(
+                scheduler_id="boefje-_dev",
+                type="boefje",
+                limit=TASK_LIMIT,
+                offset=0,
+                status=None,
+                min_created_at=None,
+                max_created_at=None,
+            )
+        ]
+    )
 
 
 def test_tasks_view_no_organization(rf, user):

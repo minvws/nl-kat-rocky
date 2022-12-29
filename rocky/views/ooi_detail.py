@@ -91,11 +91,13 @@ class OOIDetailView(
         # FIXME: in context of ooi detail is doesn't make sense to search
         # for an object name
         if self.request.GET.get("scan_history_search"):
-            filters.append({
-                "field": "data__input_ooi",
-                "operator": "eq",
-                "value": self.request.GET.get("scan_history_search"),
-            })
+            filters.append(
+                {
+                    "field": "data__input_ooi",
+                    "operator": "eq",
+                    "value": self.request.GET.get("scan_history_search"),
+                }
+            )
 
         offset = (int(self.request.GET.get("scan_history_page", 1)) - 1) * self.scan_history_limit
 
@@ -171,8 +173,11 @@ class OOIDetailView(
         context["scan_history_page"] = int(self.request.GET.get("scan_history_page", 1))
 
         context["scan_history_form_fields"] = [
-            "scan_history_from", "scan_history_to", "scan_history_status",
-            "scan_history_search", "scan_history_page",
+            "scan_history_from",
+            "scan_history_to",
+            "scan_history_status",
+            "scan_history_search",
+            "scan_history_page",
         ]
 
         return context

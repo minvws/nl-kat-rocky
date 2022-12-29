@@ -37,18 +37,22 @@ class PluginDetailView(
     def get_scan_history(self) -> scheduler.PaginatedTasksResponse:
         scheduler_id = f"{self.plugin['type']}-{self.request.active_organization.code}"
 
-        filters = [{
-            "field": f"data__{self.plugin['type']}__id",
-            "operator": "eq",
-            "value": self.plugin_id,
-        }]
+        filters = [
+            {
+                "field": f"data__{self.plugin['type']}__id",
+                "operator": "eq",
+                "value": self.plugin_id,
+            }
+        ]
 
         if self.request.GET.get("scan_history_search"):
-            filters.append({
-                "field": "data__input_ooi",
-                "operator": "eq",
-                "value": self.request.GET.get("scan_history_search"),
-            })
+            filters.append(
+                {
+                    "field": "data__input_ooi",
+                    "operator": "eq",
+                    "value": self.request.GET.get("scan_history_search"),
+                }
+            )
 
         offset = (int(self.request.GET.get("scan_history_page", 1)) - 1) * self.scan_history_limit
 
@@ -92,8 +96,11 @@ class PluginDetailView(
         context["scan_history_pages"] = list(range(1, scan_history.count // self.scan_history_limit + 1))
         context["scan_history_page"] = int(self.request.GET.get("scan_history_page", 1))
         context["scan_history_form_fields"] = [
-            "scan_history_from", "scan_history_to", "scan_history_status",
-            "scan_history_search", "scan_history_page",
+            "scan_history_from",
+            "scan_history_to",
+            "scan_history_status",
+            "scan_history_search",
+            "scan_history_page",
         ]
 
         return context

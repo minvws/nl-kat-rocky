@@ -42,7 +42,6 @@ class DownloadTaskDetail(View):
 
 @class_view_decorator(otp_required)
 class TaskListView(ListView):
-
     def setup(self, request, *args, **kwargs):
         self.scheduler_id = None
         self.org: Organization = request.active_organization
