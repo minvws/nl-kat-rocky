@@ -147,17 +147,19 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         csv_data = io.StringIO(csv_file.read().decode("UTF-8"))
         rows_with_error = []
         try:
-            for rownumber, row in enumerate(csv.DictReader(csv_data, delimiter=",", quotechar='"')):
+            for row_number, row in enumerate(csv.DictReader(csv_data, delimiter=",", quotechar='"'), start=1):
                 if not row:
                     continue  # skip empty lines
                 try:
                     ooi = self.get_ooi_from_csv(object_type, row)
                     self._save_ooi(ooi=ooi, organization=self.organization_code)
                 except ValidationError:
-                    rows_with_error.append(rownumber + 1)
+                    rows_with_error.append(row_number)
+
             if rows_with_error:
                 message = _("Object(s) could not be created for row number(s): ") + ", ".join(map(str, rows_with_error))
                 return self.add_error_notification(message)
+
             self.add_success_notification(_("Object(s) successfully added."))
         except (csv.Error, IndexError):
             return self.add_error_notification(CSV_ERRORS["csv_error"])
