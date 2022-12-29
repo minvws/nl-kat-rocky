@@ -89,6 +89,12 @@ jobs:
         env:
           ROCKY_TAG: ${{ env.GITHUB_REF_NAME_SLUG }}
 
+      - name: Log memory stats
+        run: free -h
+
+      - name: Log docker stats
+        run: docker stats --no-stream
+
       - name: Seed katalogus boefjes
         run: docker-compose exec -T katalogus python3 -m boefjes.seed
 

@@ -7,10 +7,8 @@ services:
     deploy:
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
@@ -25,10 +23,8 @@ services:
     deploy:
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
 
   octopoes_api:
@@ -39,10 +35,8 @@ services:
     deploy:
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     command: web
     env_file:
@@ -57,10 +51,8 @@ services:
     deploy:
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     command: worker-beat
     env_file:
@@ -78,10 +70,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     command: boefje
     env_file:
@@ -97,10 +87,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     command: normalizer
     env_file:
@@ -113,10 +101,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     volumes:
       - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
@@ -134,10 +120,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     volumes:
       - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
@@ -165,10 +149,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     env_file:
       - .env.robot-coordination
@@ -184,10 +166,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     env_file:
       - .env.robot-coordination
@@ -203,10 +183,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     command: katalogus
     env_file:
@@ -221,10 +199,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     volumes:
       - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
@@ -242,10 +218,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus: '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     env_file:
       - .env.robot-coordination
@@ -262,10 +236,8 @@ services:
       replicas: 1
       resources:
           limits:
-            cpus:  '0.50'
             memory: 512M
           reservations:
-            cpus: '0.25'
             memory: 128M
     env_file:
       - .env.robot-coordination
