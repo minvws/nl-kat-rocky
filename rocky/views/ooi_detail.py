@@ -3,7 +3,6 @@ from enum import Enum
 from typing import List
 
 from django.contrib import messages
-from django.core.paginator import EmptyPage, Paginator
 from django.http import Http404
 from django.shortcuts import redirect
 from octopoes.models import OOI
