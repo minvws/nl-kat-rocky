@@ -81,9 +81,9 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
     ooi_class: Type[OOI] = None
     form_class = OOIForm
 
-    def get(self, request, *args, **kwargs):
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
         self.api_connector = self.get_api_connector(self.organization.code)
-        return super().get(request, *args, **kwargs)
 
     def get_ooi_class(self):
         return self.ooi.__class__ if hasattr(self, "ooi") else None

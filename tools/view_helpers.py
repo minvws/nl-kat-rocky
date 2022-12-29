@@ -6,13 +6,13 @@ from datetime import date, datetime, timezone
 from enum import Enum
 from typing import Optional, List, TypedDict, Dict, Any
 from urllib.parse import urlparse, urlunparse, urlencode
-
 from django.contrib import messages
 from django.http.request import HttpRequest
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models.types import OOI_TYPES
 from account.mixins import OrganizationsMixin
 from tools.models import Organization
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class RockyHttpRequest(HttpRequest):
@@ -170,13 +170,17 @@ class OrganizationBreadcrumbsMixin(BreadcrumbsMixin):
 
 class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
     def build_breadcrumbs(self):
+
         breadcrumbs = [
-            {"url": reverse("organization_list"), "text": _("Organizations")},
             {
                 "url": reverse("organization_detail", kwargs={"organization_code": self.organization.code}),
                 "text": self.organization.name,
             },
         ]
+        permission = self.request.user.has_perm("tools.view_organization")
+        if permission:
+            organization_url = {"url": reverse("organization_list"), "text": _("Organizations")}
+            breadcrumbs.insert(0, organization_url)
 
         return breadcrumbs
 

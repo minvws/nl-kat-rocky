@@ -7,10 +7,28 @@
   <main id="main-content">
     <section>
       <div>
-        <h1>{% translate 'Organization' %} {{ organization.name }}</h1>
+        <h1>{% translate 'Organization details' %}</h1>
+        <div class="horizontal-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>{% translate 'Name' %}</th>
+                <th>{% translate 'Code' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ organization.name }}</td>
+                <td>{{ organization.code }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
-    {% include 'organizations/organization_member_list.html' %}
+    {% if perms.tools.view_organization or request.user.is_superuser %}
+      {% include 'organizations/organization_member_list.html' %}
+    {% endif %}
   </main>
 {% endblock %}
 

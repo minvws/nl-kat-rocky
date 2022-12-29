@@ -11,7 +11,7 @@ from rocky.settings import OCTOPOES_API
 from rocky.views.ooi_report import build_findings_list_from_store
 from rocky.views.ooi_view import MultipleOOIMixin, ConnectorFormMixin
 from tools.forms import ObservedAtForm
-from tools.models import Organization
+from tools.models import Organization, OrganizationMember
 
 
 class crisisBreadcrumbsMixin(BreadcrumbsMixin):
@@ -39,10 +39,8 @@ class CrisisRoomView(crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixi
 
     def get_organizations_with_code(self) -> List:
         if not self.request.user.is_superuser:
-            organization = self.request.active_organization
-            return [self.request.active_organization] if organization.code else []
-
-        return Organization.objects.exclude(code__isnull=True)
+            members = OrganizationMember.objects.filter(user=self.request.user)
+            return [member.organization for member in members]
 
     def get_list_for_org(self, organization: Organization) -> Union[List, None]:
         try:

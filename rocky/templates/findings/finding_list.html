@@ -16,6 +16,7 @@
         Click a finding for additional information.
       {% endblocktranslate %}
         </p>
+        {{ object_type_filters }}
         {% include 'partials/findings_list_toolbar.html' %}
         {% translate 'Object list' as filter_title %}
         {% include 'partials/ooi_list_filters.html' with title=filter_title %}

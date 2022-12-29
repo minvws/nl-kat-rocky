@@ -26,7 +26,11 @@ def OnboardingMiddleware(get_response):
                     if request.user.is_superuser:
                         return redirect(reverse("step_introduction_registration"))
                     if is_red_team(request.user):
-                        return redirect(reverse("step_introduction"))
+                        # a redteamer can be in many organization, but we onboard the first one.
+                        member = OrganizationMember.objects.filter(user=request.user)
+                        return redirect(
+                            reverse("step_introduction", kwargs={"organization_code": member.first().organization.code})
+                        )
         return response
 
     return middleware

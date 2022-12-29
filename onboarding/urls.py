@@ -3,24 +3,24 @@ from onboarding import views
 
 
 urlpatterns = [
-    path("", views.index, name="onboarding_index"),
+    path("<organization_code>/", views.OnboardingStart.as_view(), name="onboarding_index"),
     path(
-        "step/introduction/",
+        "<organization_code>/step/introduction/",
         views.OnboardingIntroductionView.as_view(),
         name="step_introduction",
     ),
     path(
-        "step/choose-report-info/",
+        "<organization_code>/step/choose-report-info/",
         views.OnboardingChooseReportInfoView.as_view(),
         name="step_choose_report_info",
     ),
     path(
-        "step/choose-report-type/",
+        "<organization_code>/step/choose-report-type/",
         views.OnboardingChooseReportTypeView.as_view(),
         name="step_choose_report_type",
     ),
     path(
-        "step/setup-scan/ooi/info/",
+        "<organization_code>/step/setup-scan/ooi/info/",
         views.OnboardingSetupScanOOIInfoView.as_view(),
         name="step_setup_scan_ooi_info",
     ),
@@ -30,17 +30,17 @@ urlpatterns = [
         name="step_setup_scan_ooi_detail",
     ),
     path(
-        "step/set-clearance-level/",
+        "<organization_code>/step/set-clearance-level/",
         views.OnboardingSetClearanceLevelView.as_view(),
         name="step_set_clearance_level",
     ),
     path(
-        "step/setup-scan/select-plugins/",
+        "<organization_code>/step/setup-scan/select-plugins/",
         views.OnboardingSetupScanSelectPluginsView.as_view(),
         name="step_setup_scan_select_plugins",
     ),
     path(
-        "step/setup-scan/<ooi_type>/",
+        "<organization_code>/step/setup-scan/<ooi_type>/",
         views.OnboardingSetupScanOOIAddView.as_view(),
         name="step_setup_scan_ooi_add",
     ),

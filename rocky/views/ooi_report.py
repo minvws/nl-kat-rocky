@@ -247,7 +247,7 @@ allowed_finding_types - Set of finding types that are interesting for this repor
 """
 
 
-class Report:
+class Report(OrganizationsMixin):
     boefjes_required: Set = None  # type: ignore
     boefjes_optional: Set = None  # type: ignore
     start_ooi: OOI = None  # type: ignore
@@ -267,7 +267,7 @@ class Report:
     def get_boefjes(cls, organization: Organization):
         cls.boefjes = []
 
-        katalogus_boefjes = get_katalogus(organization.code).get_boefjes()
+        katalogus_boefjes = get_katalogus(organization).get_boefjes()
         for boefje in katalogus_boefjes:
             if boefje.id in cls.boefjes_required:
                 cls.add_boefje(boefje, True)

@@ -52,24 +52,30 @@ User = get_user_model()
 
 
 class OnboardingBreadcrumbsMixin(BreadcrumbsMixin):
-    breadcrumbs = [
-        {"url": reverse_lazy("step_introduction"), "text": _("KAT introduction")},
-    ]
+    def build_breadcrumbs(self):
+
+        return [
+            {
+                "url": reverse_lazy("step_introduction", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT introduction"),
+            },
+        ]
 
 
-def index(request):
-    if request.user.is_superuser:
-        return redirect("step_introduction_registration")
-    if is_red_team(request.user):
-        return redirect("step_introduction")
-    return redirect("crisis_room")
+class OnboardingStart(OrganizationsMixin):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return redirect("step_introduction_registration")
+        if is_red_team(request.user):
+            return redirect("step_introduction", kwargs={"organization_code": self.organization.code})
+        return redirect("crisis_room")
 
 
 @class_view_decorator(otp_required)
 class OnboardingIntroductionView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
+    # OnboardingBreadcrumbsMixin,
     TemplateView,
 ):
     template_name = "step_1_introduction.html"
@@ -92,6 +98,7 @@ class OnboardingChooseReportTypeView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
     OnboardingBreadcrumbsMixin,
+    OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_2b_choose_report_type.html"
@@ -111,8 +118,9 @@ class OnboardingSetupScanSelectPluginsView(
     report: Type[Report] = DNSReport
 
     def get_form(self):
-        boefjes = self.report.get_boefjes(self.organization.code)
+        boefjes = self.report.get_boefjes(self.organization)
         kwargs = {
+            "organization_code": self.organization.code,
             "boefjes": [
                 boefje
                 for boefje in boefjes
@@ -142,6 +150,7 @@ class OnboardingSetupScanSelectPluginsView(
                     organization_code=self.organization.code,
                 )
             )
+        print("hier")
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -227,12 +236,12 @@ class OnboardingSetupScanOOIAddView(
 
     def get_success_url(self, ooi: OOI) -> str:
         self.request.session["ooi_id"] = ooi.primary_key
-        return get_ooi_url("step_set_clearance_level", ooi.primary_key)
+        return get_ooi_url("step_set_clearance_level", ooi.primary_key, organization_code=self.organization.code)
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         return super().build_breadcrumbs() + [
             {
-                "url": reverse("ooi_add_type_select"),
+                "url": reverse("ooi_add_type_select", kwargs={"organization_code": self.organization.code}),
                 "text": _("Creating an object"),
             },
         ]
@@ -325,7 +334,7 @@ class OnboardingSetClearanceLevelView(
         messages.add_message(self.request, messages.SUCCESS, success_message)
 
     def get_boefje_cover_img(self, boefje_id):
-        return reverse("plugin_cover", kwargs={"plugin_id": boefje_id})
+        return reverse("plugin_cover", kwargs={"plugin_id": boefje_id, "organization_code": self.organization.code})
 
     def get_boefjes_tiles(self):
         tiles = [

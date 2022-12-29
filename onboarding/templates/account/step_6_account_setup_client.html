@@ -23,12 +23,14 @@
           {% include 'partials/form/fieldset.html' with legend=fieldset_legend fields=form %}
           <button type="submit">{% translate 'Submit' %}</button>
         </form>
-        <p>
-          <a href="{% url 'step_account_setup_red_teamer' organization.code %}"
-             class="button ghost">{% translate 'Go back to previous step' %}</a>
-          <a href="{% url 'complete_onboarding' organization.code %}"
-             class="button">{% translate 'Finish organization setup' %}</a>
-        </p>
+        {% if organization %}
+          <p>
+            <a href="{% url 'step_account_setup_red_teamer' organization.code %}"
+               class="button ghost">{% translate 'Go back to previous step' %}</a>
+            <a href="{% url 'complete_onboarding' organization.code %}"
+               class="button">{% translate 'Finish organization setup' %}</a>
+          </p>
+        {% endif %}
       </div>
     </section>
   </main>

@@ -5,18 +5,26 @@ from tools.view_helpers import StepsMixin
 
 
 class KatIntroductionStepsMixin(StepsMixin):
-    steps = [
-        {"text": _("1: Introduction"), "url": reverse_lazy("step_introduction")},
-        {
-            "text": _("2: Choose a report"),
-            "url": reverse_lazy("step_choose_report_info"),
-        },
-        {
-            "text": _("3: Setup scan"),
-            "url": reverse_lazy("step_setup_scan_ooi_info"),
-        },
-        {"text": _("4: Open report"), "url": reverse_lazy("step_report")},
-    ]
+    def build_steps(self):
+        steps = [
+            {
+                "text": _("1: Introduction"),
+                "url": reverse_lazy("step_introduction", kwargs={"organization_code": self.organization.code}),
+            },
+            {
+                "text": _("2: Choose a report"),
+                "url": reverse_lazy("step_choose_report_info", kwargs={"organization_code": self.organization.code}),
+            },
+            {
+                "text": _("3: Setup scan"),
+                "url": reverse_lazy("step_setup_scan_ooi_info", kwargs={"organization_code": self.organization.code}),
+            },
+            {
+                "text": _("4: Open report"),
+                "url": reverse_lazy("step_report", kwargs={"organization_code": self.organization.code}),
+            },
+        ]
+        return steps
 
 
 class KatIntroductionAdminStepsMixin(StepsMixin):

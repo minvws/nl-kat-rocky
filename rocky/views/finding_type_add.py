@@ -23,8 +23,14 @@ class FindingTypeAddView(OctopoesMixin, OrganizationsMixin, FormView):
         context = super().get_context_data(**kwargs)
 
         context["breadcrumbs"] = [
-            {"url": reverse("finding_list"), "text": _("Findings")},
-            {"url": reverse("finding_type_add"), "text": _("Add finding type")},
+            {
+                "url": reverse("finding_list", kwargs={"organization_code": self.organization.code}),
+                "text": _("Findings"),
+            },
+            {
+                "url": reverse("finding_type_add", kwargs={"organization_code": self.organization.code}),
+                "text": _("Add finding type"),
+            },
         ]
 
         return context

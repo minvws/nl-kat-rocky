@@ -29,11 +29,13 @@ class SelectBoefjeForm(BaseRockyForm):
     def __init__(
         self,
         boefjes: List[Plugin],
+        organization_code: str,
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
         self.boefjes = boefjes
+        kwargs["organization_code"] = organization_code
         self._build_form()
 
     def clean(self):
@@ -58,7 +60,3 @@ class SelectBoefjeForm(BaseRockyForm):
 
     def _choice_from_boefje(self, boefje: Plugin) -> Choice:
         return boefje.id, boefje.name
-
-
-def boefje_resource_choices() -> Choices:
-    return [(boefje.id, boefje.name) for boefje in get_katalogus().get_boefjes()]
