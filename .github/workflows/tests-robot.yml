@@ -129,9 +129,11 @@ jobs:
         run: robot -d tests/robot/results-complete_onboarding -v headless:true tests/robot/complete_onboarding
 
       - name: Log memory stats
+        if: always()
         run: free -h
 
       - name: Log docker stats
+        if: always()
         run: docker stats --no-stream
 
       - name: Save Docker Compose logs
