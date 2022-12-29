@@ -83,7 +83,6 @@ class OOIDetailView(
         return breadcrumbs
 
     def get_scan_history(self) -> scheduler.PaginatedTasksResponse:
-        # FIXME: hard-coded "boefje"" should be changed
         scheduler_id = f"boefje-{self.request.active_organization.code}"
 
         filters = [
@@ -99,17 +98,17 @@ class OOIDetailView(
                 "value": self.request.GET.get("scan_history_search"),
             })
 
-        offset = (int(self.request.GET.get("scan_history_page", 0)) - 1) * self.scan_history_limit
+        offset = (int(self.request.GET.get("scan_history_page", 1)) - 1) * self.scan_history_limit
 
         status = self.request.GET.get("scan_history_status")
-
-        max_created_at = None
-        if self.request.GET.get("scan_history_to"):
-            max_created_at = datetime.strptime(self.request.GET.get("scan_history_to"), "%Y-%m-%d")
 
         min_created_at = None
         if self.request.GET.get("scan_history_from"):
             min_created_at = datetime.strptime(self.request.GET.get("scan_history_from"), "%Y-%m-%d")
+
+        max_created_at = None
+        if self.request.GET.get("scan_history_to"):
+            max_created_at = datetime.strptime(self.request.GET.get("scan_history_to"), "%Y-%m-%d")
 
         scan_history = scheduler.client.list_tasks(
             scheduler_id=scheduler_id,
@@ -169,15 +168,12 @@ class OOIDetailView(
 
         scan_history = self.get_scan_history()
         context["scan_history"] = scan_history
-
         context["scan_history_pages"] = list(range(1, scan_history.count // self.scan_history_limit + 1))
         context["scan_history_page"] = int(self.request.GET.get("scan_history_page", 1))
 
-        # FIXME: perhaps a form?
         context["scan_history_form_fields"] = [
             "scan_history_from", "scan_history_to", "scan_history_status",
             "scan_history_search", "scan_history_page",
         ]
-        # context["scan_history_form"] = ScanHistoryForm(self.request.GET)
 
         return context
