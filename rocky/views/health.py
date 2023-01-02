@@ -32,7 +32,7 @@ class Health(OctopoesMixin, OrganizationsMixin, View):
 
 def get_bytes_health() -> ServiceHealth:
     try:
-        bytes_health = get_bytes_client().health()
+        bytes_health = get_bytes_client("").health()  # For the health endpoint the organization has no effect
     except RequestException as ex:
         logger.exception(ex)
         bytes_health = ServiceHealth(

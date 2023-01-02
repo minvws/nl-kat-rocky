@@ -16,14 +16,14 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("api/v1/", include(router.urls)),
     path("<organization_code>/health/", Health.as_view(), name="health"),
+    path("", include(tf_urls)),
+    path("", include("account.urls"), name="account"),
 ]
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
     path("", LandingPageView.as_view(), name="landing_page"),
     path("onboarding/", include("onboarding.urls"), name="onboarding"),
     path("crisis-room/", include("crisis_room.urls"), name="crisis_room"),
-    path("", include("account.urls"), name="account"),
-    path("", include(tf_urls)),
     path(
         "indemnifications/",
         IndemnificationAddView.as_view(),

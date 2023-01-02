@@ -91,7 +91,7 @@ class OctopoesMixin:
                     continue
 
                 try:
-                    client = get_bytes_client()
+                    client = get_bytes_client(organization.code)
                     client.login()
 
                     normalizer_data = client.get_normalizer_meta(origin.origin.task_id)
