@@ -18,6 +18,10 @@ urlpatterns = [
     path("<organization_code>/health/", Health.as_view(), name="health"),
     path("", include(tf_urls)),
     path("", include("account.urls"), name="account"),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
 ]
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
@@ -116,8 +120,5 @@ urlpatterns += i18n_patterns(
     ),
     path("<organization_code>/bytes/<boefje_meta_id>/raw", BytesRawView.as_view(), name="bytes_raw"),
     path("<organization_code>/kat-alogus/", include("katalogus.urls"), name="katalogus"),
-    path(
-        "robots.txt",
-        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
-    ),
+    
 )
