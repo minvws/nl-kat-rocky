@@ -35,7 +35,7 @@ class ScanProfileDetailView(OOIDetailView, FormView):
     def get_context_data(self, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["mandatory_fields"] = get_mandatory_fields(self.request)
-        context["user"] = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
+        context["user"] = OrganizationMember.objects.filter(user=self.request.user, organization=self.organization)
         context["organization_indemnification"] = Indemnification.objects.filter(
             organization=self.organization
         ).exists()

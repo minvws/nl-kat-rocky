@@ -7,7 +7,9 @@
 {% else %}
   <div class="dropdown">
     <button class="dropdown-button">
-      <li>{{ organization.name }}</li>
+      <li>
+        <a href="{% url 'organization_detail' organization.code %}">{{ organization.name }}</a>
+      </li>
       <span class="icon ti-chevron-down"></span>
     </button>
     <ul class="dropdown-list">

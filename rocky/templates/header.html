@@ -22,12 +22,14 @@
     <!-- Adjust breakpoint as needed -->
     <ul>
       {% if request.user.is_authenticated %}
+        {% if organization.code and not view_type == "onboarding" %}
+          {% include 'partials/organizations_menu_dropdown.html' %}
+        {% endif %}
         <li>
           <a href="{% url 'crisis_room' %}"
              {% if 'crisis-room' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'Crisis room' %}</a>
         </li>
         {% if organization.code and not view_type == "onboarding" %}
-          {% include 'partials/organizations_menu_dropdown.html' %}
           <li>
             <a href="{% url 'katalogus' organization.code %}"
                {% if 'kat-alogus' in request.path|urlencode %} aria-current="page"{% endif %}>{% translate 'KAT-alogus' %}</a>

@@ -18,24 +18,19 @@ class PageActions(Enum):
 @class_view_decorator(otp_required)
 class AccountView(OrganizationsMixin, DetailView):
     template_name = "account_detail.html"
+    context_object_name = "member"
 
     def get_object(self):
-        if "pk" not in self.kwargs:
-            return self.request.user
-        return super().get_object()
+        return OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
 
     def post(self, request, *args, **kwargs):
-        if "action" not in self.request.POST:
-            return self.get(request, *args, **kwargs)
-
-        self.object = self.get_object()
-        self.handle_page_action(request.POST["action"])
-
-        return redirect(reverse("account_detail", organization_code=self.organization.code))
+        if "action" in self.request.POST:
+            self.handle_page_action(request.POST["action"])
+        return self.get(request, *args, **kwargs)
 
     def handle_page_action(self, action: str):
         try:
-            organizationmember = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
+            organizationmember = self.get_object()
             if action == PageActions.ACCEPT_CLEARANCE.value:
                 organizationmember.acknowledged_clearance_level = organizationmember.trusted_clearance_level
             elif action == PageActions.WITHDRAW_ACCEPTANCE.value:
@@ -51,5 +46,4 @@ class AccountView(OrganizationsMixin, DetailView):
         context["breadcrumbs"] = [
             {"url": "", "text": "Account details"},
         ]
-
         return context

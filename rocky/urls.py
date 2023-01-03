@@ -115,7 +115,6 @@ urlpatterns += i18n_patterns(
         name="download_task_meta",
     ),
     path("<organization_code>/bytes/<boefje_meta_id>/raw", BytesRawView.as_view(), name="bytes_raw"),
-    path("onboarding/", include("onboarding.urls"), name="onboarding"),
     path("<organization_code>/kat-alogus/", include("katalogus.urls"), name="katalogus"),
     path(
         "robots.txt",

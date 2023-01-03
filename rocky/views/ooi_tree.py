@@ -112,6 +112,6 @@ def hydrate_branch(branch, organization_code):
     branch["graph_url"] = get_ooi_url("ooi_graph", branch["id"], organization_code=organization_code)
 
     if branch.get("children"):
-        branch["children"] = [hydrate_branch(child) for child in branch["children"]]
+        branch["children"] = [hydrate_branch(child, organization_code) for child in branch["children"]]
 
     return branch
