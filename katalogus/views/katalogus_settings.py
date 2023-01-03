@@ -14,7 +14,7 @@ class KATalogusSettingsListView(PermissionRequiredMixin, OrganizationsMixin, Lis
 
     template_name = "katalogus_settings.html"
     paginate_by = 10
-    permission_required = "organizations.can_scan_organization"
+    permission_required = "tools.can_scan_organization"
     plugin_type = "boefjes"
 
     def get_context_data(self, **kwargs):

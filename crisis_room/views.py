@@ -37,7 +37,7 @@ class CrisisRoomView(crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixi
         finding_list.sort(key=lambda x: x["meta"]["total_by_severity"]["critical"], reverse=is_desc)
         return finding_list
 
-    def get_organizations_with_code(self) -> List:
+    def get_user_organizations(self) -> List:
         members = OrganizationMember.objects.filter(user=self.request.user)
         return [member.organization for member in members]
 
@@ -54,7 +54,10 @@ class CrisisRoomView(crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixi
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        organizations = self.get_organizations_with_code()
+        if self.request.user.is_superuser:
+            organizations = Organization.objects.all()
+        else:
+            organizations = self.get_user_organizations()
         findings_per_org = []
         for org in organizations:
             findings = self.get_list_for_org(org)

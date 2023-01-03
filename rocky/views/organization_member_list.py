@@ -26,6 +26,10 @@ class OrganizationMemberListView(
 ):
     model = OrganizationMember
     filters_active: List[str] = []
+    context_object_name = "members"
+
+    def get_queryset(self):
+        return self.model.objects.filter(organization=self.organization)
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)

@@ -13,7 +13,7 @@ from account.mixins import OrganizationsMixin
 @class_view_decorator(otp_required)
 class PluginSettingsDeleteView(PermissionRequiredMixin, KATalogusMixin, TemplateView, OrganizationsMixin):
     template_name = "plugin_settings_delete.html"
-    permission_required = "organizations.can_scan_organization"
+    permission_required = "tools.can_scan_organization"
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)

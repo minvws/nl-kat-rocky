@@ -1,7 +1,9 @@
 {% load i18n %}
 
 {% if organizations_dropdown_list|length == 1 %}
-  <li>{{ organization.name }}</li>
+  <li>
+    <a href="{% url 'organization_detail' organization.code %}">{{ organization.name }}</a>
+  </li>
 {% else %}
   <div class="dropdown">
     <button class="dropdown-button">

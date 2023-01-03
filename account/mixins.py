@@ -29,6 +29,4 @@ class OrganizationsMixin(View):
         context = super().get_context_data(**kwargs)
         if self.organization:
             context["organization"] = self.organization
-        if self.organizationmembers:
-            context["members"] = self.organizationmembers
         return context

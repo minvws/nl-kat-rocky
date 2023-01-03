@@ -153,8 +153,7 @@ class OrganizationMemberAddForm(UserAddForm, forms.ModelForm):
 
             self.set_user()
             OrganizationMember.objects.get_or_create(
-                user=self.user,
-                organization=self.organization,
+                user=self.user, organization=self.organization, member_name=self.cleaned_data["name"]
             )
 
             selected_group.user_set.add(self.user)

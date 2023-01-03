@@ -1,6 +1,5 @@
 {% load i18n %}
 
-
 <ul>
   {% if request.user.is_authenticated %}
     {% if request.user.is_superuser or perms.tools.view_organization  %}

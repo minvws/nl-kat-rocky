@@ -25,6 +25,11 @@ urlpatterns += i18n_patterns(
     path("onboarding/", include("onboarding.urls"), name="onboarding"),
     path("crisis-room/", include("crisis_room.urls"), name="crisis_room"),
     path(
+        "privacy-statement/",
+        PrivacyStatementView.as_view(),
+        name="privacy_statement",
+    ),
+    path(
         "indemnifications/",
         IndemnificationAddView.as_view(),
         name="indemnification_add",
@@ -96,12 +101,6 @@ urlpatterns += i18n_patterns(
         "<organization_code>/upload/csv/",
         UploadCSV.as_view(),
         name="upload_csv",
-    ),
-    path("signal_qr/", SignalQRView.as_view(), name="signal_qr"),
-    path(
-        "privacy-statement/",
-        PrivacyStatementView.as_view(),
-        name="privacy_statement",
     ),
     path("<organization_code>/tasks/", BoefjesTaskListView.as_view(), name="task_list"),
     path("<organization_code>/tasks/boefjes", BoefjesTaskListView.as_view(), name="boefjes_task_list"),
