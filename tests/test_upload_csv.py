@@ -38,6 +38,7 @@ def my_user(user, organization):
 
 CSV_EXAMPLES = [
     b"name,network\nexample.com,internet",
+    b"name\nexample.net",
     b"""address,network
 1.1.1.1,internet
 2.2.2.2,internet
@@ -46,8 +47,8 @@ CSV_EXAMPLES = [
 FE80:CD00:0000:0CDE:1257:0000:211E:729C,internet
 FE80:CD00:0000:0CDE:1257:0000:211E:729D,darknet""",
 ]
-INPUT_TYPES = ["Hostname", "IPAddressV4", "IPAddressV6"]
-EXPECTED_OOIS = [2, 6, 4]
+INPUT_TYPES = ["Hostname", "Hostname", "IPAddressV4", "IPAddressV6"]
+EXPECTED_OOIS = [2, 2, 6, 4]
 
 
 def test_upload_csv_page(rf, client, my_user, organization):

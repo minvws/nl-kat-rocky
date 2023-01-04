@@ -113,7 +113,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
         for field, is_reference, required in ooi_fields:
             if is_reference and required:
                 try:
-                    referenced_ooi = self.get_or_create_reference(field, values[field])
+                    referenced_ooi = self.get_or_create_reference(field, values.get(field))
                     save_ooi(ooi=referenced_ooi, organization=self.organization_code)
                     kwargs[field] = referenced_ooi.reference
                 except IndexError:
