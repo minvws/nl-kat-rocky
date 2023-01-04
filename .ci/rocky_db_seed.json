@@ -20,7 +20,7 @@
     "pk": 1,
     "fields": {
       "name": "test-organization",
-      "code": "_dev",
+      "code": "_dev"
     }
   },
   {
