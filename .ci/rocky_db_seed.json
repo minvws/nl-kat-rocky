@@ -21,8 +21,6 @@
     "fields": {
       "name": "test-organization",
       "code": "_dev",
-      "signal_username": null,
-      "signal_group_id": null
     }
   },
   {
