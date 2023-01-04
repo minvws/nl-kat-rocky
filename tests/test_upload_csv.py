@@ -82,7 +82,9 @@ def test_upload_csv_simple(rf, client, my_user, organization):
     assert response.status_code == 200
 
 
-def test_upload_bad_input(rf, client, my_user, organization):
+def test_upload_bad_input(rf, client, my_user, organization, mocker):
+    mocker.patch("rocky.views.upload_csv.save_ooi")
+
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
 
