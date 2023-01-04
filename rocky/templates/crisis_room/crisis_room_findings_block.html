@@ -42,15 +42,25 @@
                 <table>
                   <thead>
                     <th>{% translate 'Severity' %}</th>
-                    <th>{% translate 'Occurences' %}</th>
+                    <th>{% translate 'Occurrences' %}</th>
                   </thead>
                   <tbody>
                     {% for key, value in findings.meta.total_by_severity.items %}
                       <tr>
                         <td>
-                          <span class="{{ key }}">{{ key|title }}</span>
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}"><span class="{{ key }}">{{ key|title }}</span></a>
+                          {% else %}
+                            <span class="{{ key }}">{{ key|title }}</span>
+                          {% endif %}
                         </td>
-                        <td class="number">{{ value }}</td>
+                        <td class="number">
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}">{{ value }}</a>
+                          {% else %}
+                            {{ value }}
+                          {% endif %}
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -107,9 +117,19 @@
                     {% for key, value in findings.meta.total_by_severity.items %}
                       <tr>
                         <td>
-                          <span class="{{ key }}">{{ key|title }}</span>
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}"><span class="{{ key }}">{{ key|title }}</span></a>
+                          {% else %}
+                            <span class="{{ key }}">{{ key|title }}</span>
+                          {% endif %}
                         </td>
-                        <td class="number">{{ value }}</td>
+                        <td class="number">
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}">{{ value }}</a>
+                          {% else %}
+                            {{ value }}
+                          {% endif %}
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>

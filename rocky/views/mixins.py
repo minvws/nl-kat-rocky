@@ -165,13 +165,14 @@ class OOIList:
 
     def __getitem__(self, key) -> List[OOI]:
         if isinstance(key, slice):
-            return self.octopoes_connector.list(self.ooi_types, self.valid_time, key.start, key.stop - key.start).items
+            return self.octopoes_connector.list(
+                self.ooi_types, self.valid_time, key.start or 0, key.stop - (key.start or 0)
+            ).items
         elif isinstance(key, int):
             return self.octopoes_connector.list(self.ooi_types, self.valid_time, key, 1).items
 
 
 class MultipleOOIMixin(OctopoesMixin):
-    allow_empty = False
     ooi_types: Set[Type[OOI]] = None
     ooi_type_filters: List = []
     filtered_ooi_types: List[str] = []
