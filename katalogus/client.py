@@ -31,7 +31,7 @@ class KATalogusClientV1:
         self.organization_uri = f"{base_uri}/v1/organisations/{organization}"
 
     def create_organization(self, name: str):
-        response = requests.post(f"{self.base_uri}/v1/organisations/", json={"id": self.organization, "name": name})
+        response = requests.post(f"{self.base_uri}/v1/organisations", json={"id": self.organization, "name": name})
         response.raise_for_status()
 
     def delete_organization(self):
