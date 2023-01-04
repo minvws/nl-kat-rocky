@@ -36,6 +36,20 @@ def my_user(user, organization):
     return user
 
 
+CSV_EXAMPLES = [
+    b"name,network\nexample.com,internet",
+    b"""address,network
+1.1.1.1,internet
+2.2.2.2,internet
+3.3.3.3,darknet""",
+    b"""address,network
+FE80:CD00:0000:0CDE:1257:0000:211E:729C,internet
+FE80:CD00:0000:0CDE:1257:0000:211E:729D,darknet""",
+]
+INPUT_TYPES = ["Hostname", "IPAddressV4", "IPAddressV6"]
+EXPECTED_OOIS = [2, 6, 4]
+
+
 def test_upload_csv_page(rf, client, my_user, organization):
     request = rf.get(reverse("upload_csv"))
     request.user = my_user
@@ -78,13 +92,14 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
     mock_save_ooi.assert_not_called()
 
 
-def test_upload_hostnames_csv(rf, client, my_user, organization, mocker):
+@pytest.mark.parametrize("example_input, input_type, expected_oois", zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOIS))
+def test_upload_csv(rf, client, my_user, organization, mocker, example_input, input_type, expected_oois):
     mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")
 
-    example_file = BytesIO(b"name,network\nexample.com,internet")
-    example_file.name = "networks.csv"
+    example_file = BytesIO(example_input)
+    example_file.name = f"{input_type}.csv"
 
-    request = rf.post(reverse("upload_csv"), {"object_type": "Hostname", "csv_file": example_file})
+    request = rf.post(reverse("upload_csv"), {"object_type": input_type, "csv_file": example_file})
     request.user = my_user
     request.active_organization = organization
 
@@ -95,4 +110,4 @@ def test_upload_hostnames_csv(rf, client, my_user, organization, mocker):
     response = UploadCSV.as_view()(request)
 
     assert response.status_code == 302
-    assert mock_save_ooi.call_count == 2
+    assert mock_save_ooi.call_count == expected_oois
