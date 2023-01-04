@@ -57,7 +57,7 @@ class UploadCSV(PermissionRequiredMixin, FormView):
     reference_cache: Dict[str, Any] = {"Network": {"internet": Network(name="internet")}}
     ooi_types: ClassVar[Dict[str, Any]] = {
         "Hostname": {"type": Hostname},
-        "Url": {"type": URL},
+        "URL": {"type": URL},
         "Network": {"type": Network, "default": "internet", "argument": "name"},
         "IPAddressV4": {"type": IPAddressV4},
         "IPAddressV6": {"type": IPAddressV6},

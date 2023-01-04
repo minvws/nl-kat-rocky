@@ -23,9 +23,8 @@ def my_user(user, organization):
         trusted_clearance_level=4,
         acknowledged_clearance_level=4,
     )
-    content_type = ContentType.objects.get_by_natural_key("tools", "organizationmember")
     permission, _ = Permission.objects.get_or_create(
-        content_type=content_type,
+        content_type=ContentType.objects.get_by_natural_key("tools", "organizationmember"),
         codename="can_scan_organization",
     )
     user.user_permissions.add(permission)
@@ -37,18 +36,28 @@ def my_user(user, organization):
 
 
 CSV_EXAMPLES = [
+    # hostname
     b"name,network\nexample.com,internet",
+    # hostname without network
     b"name\nexample.net",
+    # ipv4s
     b"""address,network
 1.1.1.1,internet
 2.2.2.2,internet
 3.3.3.3,darknet""",
+    # ipv6s
     b"""address,network
 FE80:CD00:0000:0CDE:1257:0000:211E:729C,internet
 FE80:CD00:0000:0CDE:1257:0000:211E:729D,darknet""",
+    # urls
+    b"""network,raw
+internet,https://example.com/
+darknet,https://openkat.nl/""",
+    # url withouth network
+    b"raw\nhttps://example.com/",
 ]
-INPUT_TYPES = ["Hostname", "Hostname", "IPAddressV4", "IPAddressV6"]
-EXPECTED_OOIS = [2, 2, 6, 4]
+INPUT_TYPES = ["Hostname", "Hostname", "IPAddressV4", "IPAddressV6", "URL", "URL"]
+EXPECTED_OOI_COUNTS = [2, 2, 6, 4, 4, 2]
 
 
 def test_upload_csv_page(rf, client, my_user, organization):
@@ -93,8 +102,10 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
     mock_save_ooi.assert_not_called()
 
 
-@pytest.mark.parametrize("example_input, input_type, expected_oois", zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOIS))
-def test_upload_csv(rf, client, my_user, organization, mocker, example_input, input_type, expected_oois):
+@pytest.mark.parametrize(
+    "example_input, input_type, expected_ooi_counts", zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS)
+)
+def test_upload_csv(rf, client, my_user, organization, mocker, example_input, input_type, expected_ooi_counts):
     mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")
 
     example_file = BytesIO(example_input)
@@ -111,4 +122,4 @@ def test_upload_csv(rf, client, my_user, organization, mocker, example_input, in
     response = UploadCSV.as_view()(request)
 
     assert response.status_code == 302
-    assert mock_save_ooi.call_count == expected_oois
+    assert mock_save_ooi.call_count == expected_ooi_counts
