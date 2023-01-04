@@ -82,10 +82,8 @@ def test_upload_csv_simple(rf, client, my_user, organization):
     assert response.status_code == 200
 
 
-def test_upload_bad_input(rf, client, my_user, organization, mocker):
-    mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")
-
-    example_file = BytesIO(b"invalid-csv-format")
+def test_upload_bad_input(rf, client, my_user, organization):
+    example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
 
     request = rf.post(reverse("upload_csv"), {"object_type": "Hostname", "csv_file": example_file})
@@ -99,7 +97,9 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
     response = UploadCSV.as_view()(request)
 
     assert response.status_code == 302
-    mock_save_ooi.assert_not_called()
+
+    messages = list(request._messages)
+    assert "could not be created for row number" in messages[0].message
 
 
 @pytest.mark.parametrize(
@@ -123,3 +123,6 @@ def test_upload_csv(rf, client, my_user, organization, mocker, example_input, in
 
     assert response.status_code == 302
     assert mock_save_ooi.call_count == expected_ooi_counts
+
+    messages = list(request._messages)
+    assert "successfully added" in messages[0].message
