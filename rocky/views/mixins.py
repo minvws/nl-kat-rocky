@@ -167,7 +167,7 @@ class OOIList:
 
     @cached_property
     def count(self) -> int:
-        return self.octopoes_connector.list(self.ooi_types, self.valid_time, limit=0).count
+        return self.octopoes_connector.list(self.ooi_types, self.valid_time, limit=0, scan_level=self.scan_level).count
 
     def __len__(self):
         return self.count
