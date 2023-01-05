@@ -81,7 +81,7 @@ class TestOrganizationViewSet(ViewSetTest, AsUser("admin_user")):
             expected = data
             assert_model_attrs(organization, expected)
 
-        def test_it_returns_key_value(self, json):
+        def test_it_returns_organization(self, json):
             organization = Organization.objects.get(pk=json["id"])
 
             expected = express_organization(organization)
