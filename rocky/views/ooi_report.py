@@ -100,6 +100,9 @@ def build_finding_dict(
     finding_dict["ooi"] = get_ooi_dict(ooi_store[str(finding_ooi.ooi)]) if str(finding_ooi.ooi) in ooi_store else None
     finding_dict["finding_type"] = finding_type_dict
 
+    if finding_dict["description"] is None:
+        finding_dict["description"] = finding_type_dict["description"]
+
     return finding_dict
 
 
@@ -201,10 +204,6 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
             messages.error(self.request, _("Error generating report: {}").format(e))
             return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
 
-        if report_id is None:
-            messages.error(self.request, _("Error generating report: Timeout reached"))
-            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
-
         # generate file name
         report_name = "bevindingenrapport"
         org_code = self.request.active_organization.code
@@ -227,12 +226,16 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
         report_file_name = f"{report_file_name}.pdf"
 
         # open pdf as attachment
-        response = HttpResponse(
-            keiko_client.get_report(report_id),
-            content_type="application/pdf",
-        )
-        response["Content-Disposition"] = f'attachment; filename="{report_file_name}"'
-        return response
+        try:
+            response = HttpResponse(
+                keiko_client.get_report(report_id),
+                content_type="application/pdf",
+            )
+            response["Content-Disposition"] = f'attachment; filename="{report_file_name}"'
+            return response
+        except HTTPError:
+            messages.error(self.request, _("Error generating report: Timeout reached"))
+            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
 
 
 """
