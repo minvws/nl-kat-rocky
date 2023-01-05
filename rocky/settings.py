@@ -325,12 +325,12 @@ MARKDOWNIFY = {
     }
 }
 
-DEFAULT_RENDERER_CLASSES = ['rest_framework.renderers.JSONRenderer']
+DEFAULT_RENDERER_CLASSES = ["rest_framework.renderers.JSONRenderer"]
 
 BROWSABLE_API = os.getenv("BROWSABLE_API", "False") == "True"
 
 if BROWSABLE_API or DEBUG:
-    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + ['rest_framework.renderers.BrowsableAPIRenderer']
+    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + ["rest_framework.renderers.BrowsableAPIRenderer"]
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -338,7 +338,7 @@ REST_FRAMEWORK = {
         # need to be able to use the API in the future..
         "rest_framework.permissions.IsAdminUser",
     ],
-    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES,
+    "DEFAULT_RENDERER_CLASSES": DEFAULT_RENDERER_CLASSES,
 }
 
 
