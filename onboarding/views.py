@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from typing import Type, List, Dict, Any
-from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import redirect
@@ -38,10 +37,7 @@ from tools.ooi_helpers import (
     create_object_tree_item_from_ref,
     filter_ooi_tree,
 )
-from tools.user_helpers import (
-    is_admin,
-    is_red_team,
-)
+from tools.user_helpers import is_red_team
 from onboarding.mixins import RedTeamUserRequiredMixin, SuperOrAdminUserRequiredMixin
 from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
 from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
@@ -640,8 +636,7 @@ class CompleteOnboarding(OrganizationsMixin, View):
     """
 
     def get(self, request, *args, **kwargs):
-        redteam_group = Group.objects.get(name="redteam")
-        if redteam_group in request.user.groups.all():
+        if request.user.is_superuser:
             member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
             member.onboarded = True
             member.save()

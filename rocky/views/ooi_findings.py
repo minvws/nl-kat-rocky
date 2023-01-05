@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List
 from katalogus.views.mixins import BoefjeMixin
 from rocky.views import BaseOOIDetailView, OOIFindingManager
 from rocky.views.mixins import OOIBreadcrumbsMixin

@@ -47,6 +47,7 @@ robotframework-debuglibrary
 robotframework-otp
 robotframework-postgresqldb
 pytest
+pytest-cov
 pytest-django
 pytest-mock
 

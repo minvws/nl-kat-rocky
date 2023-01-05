@@ -1,7 +1,5 @@
 from enum import Enum
 from django.contrib import messages
-from django.shortcuts import redirect
-from django.urls.base import reverse
 from django.views.generic.detail import DetailView
 from django_otp.decorators import otp_required
 from requests.exceptions import RequestException
