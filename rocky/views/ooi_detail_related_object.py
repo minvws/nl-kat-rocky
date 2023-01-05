@@ -100,7 +100,7 @@ class OOIFindingManager(SingleOOITreeMixin, OrganizationsMixin):
 
 @class_view_decorator(otp_required)
 class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, OrganizationsMixin, TemplateView):
-    template_name = "ooi_detail_add_related_object.html"
+    template_name = "oois/ooi_detail_add_related_object.html"
 
     def get(self, request, *args, **kwargs):
         if "ooi_id" in request.GET:

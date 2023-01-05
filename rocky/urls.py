@@ -5,13 +5,13 @@ from django.views.generic.base import TemplateView
 from rest_framework import routers
 from tools.viewsets import OrganizationViewSet
 from django.conf.urls.i18n import i18n_patterns
+from rocky import views
 
 handler404 = "rocky.views.handler404"
 
 router = routers.SimpleRouter()
 router.register(r"organization", OrganizationViewSet)
 
-from rocky import views
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),

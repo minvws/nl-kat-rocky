@@ -71,10 +71,6 @@ class OOIDetailView(
         except Http404:
             return None
 
-    def build_breadcrumbs(self) -> List[Breadcrumb]:
-        breadcrumbs = super().build_breadcrumbs()
-        return breadcrumbs
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -114,8 +110,6 @@ class OOIDetailView(
         context["ooi_current"] = self.get_current_ooi()
         context["findings_severity_summary"] = self.findings_severity_summary()
         context["severity_summary_totals"] = self.get_findings_severity_totals()
-        # context["breadcrumbs"] = self.build_breadcrumbs()
-
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = Indemnification.objects.filter(
             organization=self.organization

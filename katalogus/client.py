@@ -92,15 +92,13 @@ class KATalogusClientV1:
         response = requests.get(f"{self.organization_uri}/plugins")
         response.raise_for_status()
 
-        return [
-            parse_plugin(boefje, self.organization.code) for boefje in response.json() if boefje["type"] == "boefje"
-        ]
+        return [parse_plugin(boefje, self.organization) for boefje in response.json() if boefje["type"] == "boefje"]
 
     def get_boefje(self, boefje_id: str) -> Plugin:
         response = requests.get(f"{self.organization_uri}/plugins/{boefje_id}")
         response.raise_for_status()
 
-        return parse_plugin(response.json(), self.organization.code)
+        return parse_plugin(response.json(), self.organization)
 
     def enable_boefje(self, boefje_id: str) -> None:
         self._patch_boefje_state(boefje_id, True)
