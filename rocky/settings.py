@@ -327,9 +327,10 @@ MARKDOWNIFY = {
 
 DEFAULT_RENDERER_CLASSES = ["rest_framework.renderers.JSONRenderer"]
 
-BROWSABLE_API = os.getenv("BROWSABLE_API", "False") == "True"
+# Turn on the browsable API by default if DEBUG is True, but disable by default in production
+BROWSABLE_API = os.getenv("BROWSABLE_API", "True" if DEBUG else "False") == "True"
 
-if BROWSABLE_API or DEBUG:
+if BROWSABLE_API:
     DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + ["rest_framework.renderers.BrowsableAPIRenderer"]
 
 REST_FRAMEWORK = {
