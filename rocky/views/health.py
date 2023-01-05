@@ -1,7 +1,6 @@
 import logging
 from typing import List
-from django.contrib.auth.decorators import user_passes_test
-from django.http import JsonResponse, HttpResponse, HttpRequest
+from django.http import JsonResponse
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
 from django_otp.decorators import otp_required
@@ -12,7 +11,6 @@ from rocky.health import ServiceHealth
 from rocky.keiko import keiko_client
 from rocky.version import __version__
 from katalogus.health import get_katalogus_health
-from tools.user_helpers import is_red_team
 from rocky.scheduler import client
 from django.views.generic import TemplateView, View
 from rocky.bytes_client import get_bytes_client

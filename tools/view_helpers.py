@@ -12,7 +12,6 @@ from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models.types import OOI_TYPES
 from account.mixins import OrganizationsMixin
 from tools.models import Organization
-from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class RockyHttpRequest(HttpRequest):

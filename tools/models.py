@@ -1,6 +1,5 @@
 import logging
 import uuid
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -9,7 +8,6 @@ from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from tagulous.models import TagField
-
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from katalogus.client import get_katalogus
 from tools.add_ooi_information import get_info, SEPARATOR

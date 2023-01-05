@@ -8,7 +8,6 @@ from octopoes.models import OOI
 from requests.exceptions import RequestException
 from katalogus.client import get_katalogus
 from katalogus.utils import get_enabled_boefjes_for_ooi_class
-from rocky.views.mixins import OOIBreadcrumbsMixin
 from rocky.views import BaseOOIDetailView, OOIRelatedObjectAddView
 from tools.forms import ObservedAtForm, PossibleBoefjesFilterForm
 from tools.ooi_helpers import format_display

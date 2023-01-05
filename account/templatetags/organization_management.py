@@ -1,5 +1,4 @@
 from django import template
-from django.utils.translation import gettext_lazy as _
 from tools.models import Organization, OrganizationMember
 
 register = template.Library()

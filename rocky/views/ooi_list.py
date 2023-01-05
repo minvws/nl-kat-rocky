@@ -6,7 +6,6 @@ from django.urls import reverse_lazy
 from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_collapsed_types, type_by_name
 from rocky.views import BaseOOIListView
-from tools.view_helpers import ObjectsBreadcrumbsMixin
 
 
 class OOIListView(BaseOOIListView):

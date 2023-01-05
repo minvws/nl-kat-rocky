@@ -20,7 +20,7 @@ from katalogus.client import Plugin, get_katalogus
 from tools.forms import ObservedAtForm
 from rocky.settings import OCTOPOES_API
 from tools.forms import DEPTH_MAX, DEPTH_DEFAULT
-from tools.models import Organization, Indemnification, OrganizationMember
+from tools.models import Organization
 from tools.ooi_helpers import (
     get_knowledge_base_data_for_ooi_store,
 )
