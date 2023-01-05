@@ -51,7 +51,7 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        if not self.organization.code:
+        if not self.organization:
             self.add_error_notification(CSV_ERRORS["no_org"])
 
     def get_context_data(self, **kwargs):
@@ -75,7 +75,7 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
 
     def get_ooi_from_csv(self, ooi_type: str, values: Dict[str, str]):
         network = self.get_or_create_network(values.get("network", "internet"))
-        self._save_ooi(ooi=network, organization=self.organization_code)
+        self._save_ooi(ooi=network, organization=self.organization.code)
         if ooi_type == "Hostname":
             return Hostname(name=values["name"], network=network.reference)
         if ooi_type == "URL":
@@ -112,8 +112,9 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
                 if not row:
                     continue  # skip empty lines
                 try:
+                    print(row)
                     ooi = self.get_ooi_from_csv(object_type, row)
-                    self._save_ooi(ooi=ooi, organization=self.organization_code)
+                    self._save_ooi(ooi=ooi, organization=self.organization.code)
                 except ValidationError:
                     rows_with_error.append(rownumber + 1)
             if rows_with_error:
