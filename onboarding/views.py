@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from typing import Type, List, Dict, Any
+from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import redirect
@@ -546,7 +547,7 @@ class OnboardingChooseUserTypeView(KatIntroductionAdminStepsMixin, TemplateView)
     Step 1: Introduction about how to create multiple user accounts
     """
 
-    current_step = 4
+    current_step = 3
     template_name = "account/step_3_account_user_type.html"
 
 
@@ -632,15 +633,15 @@ class OnboardingAccountSetupClientView(RegistrationBreadcrumbsMixin, OnboardingA
 @class_view_decorator(otp_required)
 class CompleteOnboarding(OrganizationsMixin, View):
     """
-    Complete onboarding of users and admins.
+    Complete onboarding for redteamers and superusers.
     """
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_superuser:
-            member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
-            member.onboarded = True
-            member.save()
-            return redirect("step_indemnification_setup", organization_code=self.organization.code)
         member, _ = OrganizationMember.objects.get_or_create(user=request.user, organization=self.organization)
+        redteam_group = Group.objects.get(name="redteam")
+        if self.request.user.is_superuser and redteam_group not in self.request.user.groups.all():
+            redteam_group.user_set.add(self.request.user)
+            return redirect(reverse("step_indemnification_setup", kwargs={"organization_code": self.organization.code}))
+        member.onboarded = True
         member.save()
-        return redirect("crisis_room")
+        return redirect(reverse("crisis_room"))

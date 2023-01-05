@@ -2,7 +2,8 @@
 
 {% if organizations_dropdown_list|length == 1 %}
   <li>
-    <a href="{% url 'organization_detail' organization.code %}">{{ organization.name }}</a>
+    <a {% if request.resolver_match.view_name == 'organization_detail' %}aria-current="page"{% endif %}
+       href="{% url 'organization_detail' organization.code %}">{{ organization.name }}</a>
   </li>
 {% else %}
   <div class="dropdown">

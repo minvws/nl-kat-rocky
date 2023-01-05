@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import redirect
 from django.views.generic import FormView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
@@ -19,7 +20,7 @@ class IndemnificationAddView(FormView, OrganizationsMixin):
             organization=self.organization,
         )
         self.add_success_notification()
-        return super().get(request, *args, **kwargs)
+        return redirect("crisis_room")
 
     def add_success_notification(self):
         success_message = _("Indemnification successfully set.")
