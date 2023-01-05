@@ -71,11 +71,11 @@ class OnboardingStart(OrganizationsMixin):
         return redirect("crisis_room")
 
 
+# REDTEAMER FLOW
 @class_view_decorator(otp_required)
 class OnboardingIntroductionView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    # OnboardingBreadcrumbsMixin,
     TemplateView,
 ):
     template_name = "step_1_introduction.html"
@@ -86,7 +86,6 @@ class OnboardingIntroductionView(
 class OnboardingChooseReportInfoView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
     TemplateView,
 ):
     template_name = "step_2a_choose_report_info.html"
@@ -97,7 +96,6 @@ class OnboardingChooseReportInfoView(
 class OnboardingChooseReportTypeView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
     OrganizationsMixin,
     TemplateView,
 ):
@@ -109,7 +107,6 @@ class OnboardingChooseReportTypeView(
 class OnboardingSetupScanSelectPluginsView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
     OrganizationsMixin,
     TemplateView,
 ):
@@ -128,6 +125,7 @@ class OnboardingSetupScanSelectPluginsView(
             ],
             "initial": {"boefje": [item["id"] for item in boefjes if item.get("required", False)]},
         }
+
         if self.request.method in ("POST", "PUT"):
             kwargs.update(
                 {
@@ -150,12 +148,10 @@ class OnboardingSetupScanSelectPluginsView(
                     organization_code=self.organization.code,
                 )
             )
-        print("hier")
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        # context["xxxboefjes"] = self.report.get_boefjes()
         context["select_boefjes_form"] = self.get_form()
         return context
 
@@ -164,7 +160,6 @@ class OnboardingSetupScanSelectPluginsView(
 class OnboardingSetupScanOOIInfoView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
     TemplateView,
 ):
     template_name = "step_3a_setup_scan_ooi_info.html"
@@ -190,7 +185,6 @@ class OnboardingOOIForm(OOIForm):
 class OnboardingSetupScanOOIAddView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
     BaseOOIFormView,
 ):
     template_name = "step_3b_setup_scan_ooi_add.html"
@@ -291,7 +285,7 @@ class OnboardingSetupScanOOIDetailView(
         if not self.request.session.get("selected_boefjes"):
             return
         for boefje_id in self.request.session["selected_boefjes"]:
-            get_katalogus(self.organization.code).enable_boefje(boefje_id)
+            get_katalogus(self.organization).enable_boefje(boefje_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -358,16 +352,11 @@ class OnboardingSetClearanceLevelView(
 class OnboardingReportView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OnboardingBreadcrumbsMixin,
     OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_4_report.html"
     current_step = 4
-
-    def get(self, request, *args, **kwargs):
-        self.set_current_stepper_url(get_ooi_url("step_report", self.request.GET.get("ooi_id")))
-        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.set_member_onboarded()
@@ -376,7 +365,7 @@ class OnboardingReportView(
         )
 
     def set_member_onboarded(self):
-        member = self.request.user.organizationmember
+        member = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
         member.onboarded = True
         member.save()
 
@@ -439,7 +428,7 @@ class OnboardingIntroductionRegistrationView(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView
 ):
     """
-    Registration introduction
+    Step: 1 - Registration introduction
     """
 
     template_name = "account/step_1_registration_intro.html"
@@ -453,7 +442,7 @@ class OnboardingOrganizationSetupView(
     CreateView,
 ):
     """
-    View to update the name of a organization
+    Step 2: Create a new organization
     """
 
     model = Organization
@@ -489,7 +478,7 @@ class OnboardingOrganizationUpdateView(
     UpdateView,
 ):
     """
-    View to update an existing organization.
+    Step 2: Update an existing organization (only name not code)
     """
 
     model = Organization
@@ -514,11 +503,25 @@ class OnboardingOrganizationUpdateView(
 
 
 @class_view_decorator(otp_required)
+class OnboardingAccountSetupIntroView(SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView):
+    """
+    Step 3: Split flow to or continue with single account or continue to multiple account creation
+    """
+
+    template_name = "account/step_2c_account_setup_intro.html"
+    current_step = 3
+
+
+@class_view_decorator(otp_required)
 class OnboardingIndemnificationSetupView(
     SuperOrAdminUserRequiredMixin,
     KatIntroductionAdminStepsMixin,
     IndemnificationAddView,
 ):
+    """
+    Step 4: Agree to idemnification to scan oois
+    """
+
     current_step = 4
     template_name = "account/step_2b_indemnification_setup.html"
 
@@ -527,41 +530,28 @@ class OnboardingIndemnificationSetupView(
 
 
 @class_view_decorator(otp_required)
-class OnboardingAccountSetupIntroView(SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView):
-    template_name = "account/step_2c_account_setup_intro.html"
-    current_step = 4
-
-
-@class_view_decorator(otp_required)
-class OnboardingChooseUserTypeView(KatIntroductionAdminStepsMixin, TemplateView):
-    current_step = 4
-    template_name = "account/step_3_account_user_type.html"
-
-
-@otp_required
-def make_superuser_redteamer(request):
-    if request.user.is_superuser:
-        redteam_group = Group.objects.get(name="redteam")
-        redteam_group.user_set.add(request.user)
-        return redirect(reverse("step_introduction"))
-
-
-@otp_required
-def skip_onboarding(request):
-    member = OrganizationMember.objects.get(user=request.user)
-    member.onboarded = True
-    member.save()
-    return redirect(reverse("crisis_room"))
-
-
-@class_view_decorator(otp_required)
 class OnboardingAccountCreationMixin(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, OrganizationsMixin, CreateView
 ):
+    """
+    Mixin to save organization code in form kwargs when creating new members.
+    """
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["organization_code"] = self.organization.code
         return kwargs
+
+
+# Account setup for multiple user accounts: redteam, admins, clients
+@class_view_decorator(otp_required)
+class OnboardingChooseUserTypeView(KatIntroductionAdminStepsMixin, TemplateView):
+    """
+    Step 1: Introduction about how to create multiple user accounts
+    """
+
+    current_step = 4
+    template_name = "account/step_3_account_user_type.html"
 
 
 @class_view_decorator(otp_required)
@@ -570,7 +560,7 @@ class OnboardingAccountSetupAdminView(
     OnboardingAccountCreationMixin,
 ):
     """
-    View to create a new admin account
+    Step 1: Create an admin account with admin rights
     """
 
     model = User
@@ -598,7 +588,7 @@ class OnboardingAccountSetupRedTeamerView(
 ):
 
     """
-    View to create a red team account
+    Step 2: Create an redteamer account with redteam rights
     """
 
     model = User
@@ -622,7 +612,7 @@ class OnboardingAccountSetupRedTeamerView(
 @class_view_decorator(otp_required)
 class OnboardingAccountSetupClientView(RegistrationBreadcrumbsMixin, OnboardingAccountCreationMixin):
     """
-    View to create a client account
+    Step 3: Create a client account.
     """
 
     model = User
@@ -645,15 +635,17 @@ class OnboardingAccountSetupClientView(RegistrationBreadcrumbsMixin, OnboardingA
 
 @class_view_decorator(otp_required)
 class CompleteOnboarding(OrganizationsMixin, View):
+    """
+    Complete onboarding of users and admins.
+    """
+
     def get(self, request, *args, **kwargs):
-        if request.user.is_superuser:
-            redteam_group = Group.objects.get(name="redteam")
-            redteam_group.user_set.add(request.user)
-            member, _ = OrganizationMember.objects.get_or_create(user=request.user, organization=self.organization)
+        redteam_group = Group.objects.get(name="redteam")
+        if redteam_group in request.user.groups.all():
+            member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
             member.onboarded = True
             member.save()
-            return redirect(reverse("step_indemnification_setup", kwargs={"organization_code": self.organization.code}))
-        member = OrganizationMember.objects.get(user=request.user, organization=self.organization)
-        member.onboarded = True
+            return redirect("step_indemnification_setup", organization_code=self.organization.code)
+        member, _ = OrganizationMember.objects.get_or_create(user=request.user, organization=self.organization)
         member.save()
-        return redirect(reverse("crisis_room"))
+        return redirect("crisis_room")

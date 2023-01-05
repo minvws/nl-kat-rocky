@@ -34,7 +34,7 @@ urlpatterns += i18n_patterns(
         name="privacy_statement",
     ),
     path(
-        "indemnifications/",
+        "<organization_code>/indemnifications/",
         IndemnificationAddView.as_view(),
         name="indemnification_add",
     ),
@@ -120,5 +120,4 @@ urlpatterns += i18n_patterns(
     ),
     path("<organization_code>/bytes/<boefje_meta_id>/raw", BytesRawView.as_view(), name="bytes_raw"),
     path("<organization_code>/kat-alogus/", include("katalogus.urls"), name="katalogus"),
-    
 )

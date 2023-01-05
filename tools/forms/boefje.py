@@ -35,7 +35,7 @@ class SelectBoefjeForm(BaseRockyForm):
     ):
         super().__init__(*args, **kwargs)
         self.boefjes = boefjes
-        kwargs["organization_code"] = organization_code
+        self.organization_code = organization_code
         self._build_form()
 
     def clean(self):
@@ -47,12 +47,18 @@ class SelectBoefjeForm(BaseRockyForm):
 
         return data
 
+    def set_organization_code(self):
+        for item in self.boefjes:
+            item["boefje"].organization_code = self.organization_code
+
     def _build_form(self) -> None:
+        self.set_organization_code()
         self.set_choices_for_field("boefje", self._get_choices(self.boefjes))
         self.set_required_options_for_widget(
             "boefje",
             [item["id"] for item in self.boefjes if item.get("required", False)],
         )
+        print(self.boefjes)
         self.fields["boefje"].widget.boefjes = self.boefjes
 
     def _get_choices(self, boefjes: List[Plugin]) -> Union[Choices, ChoicesGroups]:

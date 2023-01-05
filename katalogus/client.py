@@ -13,6 +13,7 @@ from tools.enums import SCAN_LEVEL
 
 
 class Plugin(BaseModel):
+    organization_code: str
     id: str
     type: str
     name: str
@@ -91,13 +92,15 @@ class KATalogusClientV1:
         response = requests.get(f"{self.organization_uri}/plugins")
         response.raise_for_status()
 
-        return [parse_plugin(boefje) for boefje in response.json() if boefje["type"] == "boefje"]
+        return [
+            parse_plugin(boefje, self.organization.code) for boefje in response.json() if boefje["type"] == "boefje"
+        ]
 
     def get_boefje(self, boefje_id: str) -> Plugin:
         response = requests.get(f"{self.organization_uri}/plugins/{boefje_id}")
         response.raise_for_status()
 
-        return parse_plugin(response.json())
+        return parse_plugin(response.json(), self.organization.code)
 
     def enable_boefje(self, boefje_id: str) -> None:
         self._patch_boefje_state(boefje_id, True)
@@ -130,7 +133,7 @@ class KATalogusClientV1:
         return BytesIO(response.content)
 
 
-def parse_plugin(plugin: Dict) -> Plugin:
+def parse_plugin(plugin: Dict, organization_code) -> Plugin:
     try:
         consumes = {type_by_name(consumes) for consumes in plugin["consumes"]}
     except StopIteration:
@@ -144,6 +147,7 @@ def parse_plugin(plugin: Dict) -> Plugin:
             pass
 
     return Plugin(
+        organization_code=organization_code,
         id=plugin["id"],
         type=plugin["type"],
         name=plugin.get("name") or plugin["id"],

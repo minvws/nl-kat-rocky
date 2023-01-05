@@ -25,7 +25,7 @@ urlpatterns = [
         name="step_setup_scan_ooi_info",
     ),
     path(
-        "step/setup-scan/ooi/detail/",
+        "<organization_code>/step/setup-scan/ooi/detail/",
         views.OnboardingSetupScanOOIDetailView.as_view(),
         name="step_setup_scan_ooi_detail",
     ),
@@ -45,7 +45,7 @@ urlpatterns = [
         name="step_setup_scan_ooi_add",
     ),
     path(
-        "step/report/",
+        "<organization_code>/step/report/",
         views.OnboardingReportView.as_view(),
         name="step_report",
     ),
