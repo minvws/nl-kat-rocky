@@ -34,7 +34,7 @@
           <div class="horizontal-view">
             <a href="{% url 'step_choose_user_type' organization.code %}"
                class="button">{% translate 'Create separate accounts' %}</a>
-            <a href="{% url 'complete_onboarding' organization.code %}"
+            <a href="{% url 'step_introduction' organization.code %}"
                class="button ">{% translate 'Continue with this account, onboard me!' %}</a>
           </div>
         {% endif %}

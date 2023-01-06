@@ -14,7 +14,7 @@
           <p>
             {% translate "Indemnification on the organization is already present." %}
           </p>
-          <a class="button" href="{% url 'crisis_room' %}">{% translate 'Continue' %}</a>
+          <a class="button" href="{% url 'step_account_setup_intro' organization.code %}">{% translate 'Continue' %}</a>
         {% else %}
           {% include 'partials/form/indemnification_add_form.html' %}
         {% endif %}

@@ -267,7 +267,7 @@ class Report(OrganizationsMixin):
     def get_boefjes(cls, organization: Organization):
         cls.boefjes = []
 
-        katalogus_boefjes = get_katalogus(organization).get_boefjes()
+        katalogus_boefjes = get_katalogus(organization.code).get_boefjes()
         for boefje in katalogus_boefjes:
             if boefje.id in cls.boefjes_required:
                 cls.add_boefje(boefje, True)

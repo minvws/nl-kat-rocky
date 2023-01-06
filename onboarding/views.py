@@ -282,7 +282,7 @@ class OnboardingSetupScanOOIDetailView(
         if not self.request.session.get("selected_boefjes"):
             return
         for boefje_id in self.request.session["selected_boefjes"]:
-            get_katalogus(self.organization).enable_boefje(boefje_id)
+            get_katalogus(self.organization.code).enable_boefje(boefje_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -455,7 +455,7 @@ class OnboardingOrganizationSetupView(
 
     def get_success_url(self) -> str:
         organization = Organization.objects.first()
-        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": organization.code})
+        return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]
@@ -487,7 +487,7 @@ class OnboardingOrganizationUpdateView(
         return self.organization
 
     def get_success_url(self) -> str:
-        return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
+        return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": self.organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]
@@ -500,30 +500,30 @@ class OnboardingOrganizationUpdateView(
 
 
 @class_view_decorator(otp_required)
-class OnboardingAccountSetupIntroView(SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView):
-    """
-    Step 3: Split flow to or continue with single account or continue to multiple account creation
-    """
-
-    template_name = "account/step_2c_account_setup_intro.html"
-    current_step = 3
-
-
-@class_view_decorator(otp_required)
 class OnboardingIndemnificationSetupView(
     SuperOrAdminUserRequiredMixin,
     KatIntroductionAdminStepsMixin,
     IndemnificationAddView,
 ):
     """
-    Step 4: Agree to idemnification to scan oois
+    Step 3: Agree to idemnification to scan oois
     """
 
-    current_step = 4
+    current_step = 3
     template_name = "account/step_2b_indemnification_setup.html"
 
     def get_success_url(self) -> str:
         return reverse_lazy("step_account_setup_intro", kwargs={"organization_code": self.organization.code})
+
+
+@class_view_decorator(otp_required)
+class OnboardingAccountSetupIntroView(SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView):
+    """
+    Step 4: Split flow to or continue with single account or continue to multiple account creation
+    """
+
+    template_name = "account/step_2c_account_setup_intro.html"
+    current_step = 4
 
 
 @class_view_decorator(otp_required)
@@ -547,7 +547,7 @@ class OnboardingChooseUserTypeView(KatIntroductionAdminStepsMixin, TemplateView)
     Step 1: Introduction about how to create multiple user accounts
     """
 
-    current_step = 3
+    current_step = 4
     template_name = "account/step_3_account_user_type.html"
 
 
@@ -563,7 +563,7 @@ class OnboardingAccountSetupAdminView(
     model = User
     template_name = "account/step_4_account_setup_admin.html"
     form_class = OnboardingCreateUserAdminForm
-    current_step = 3
+    current_step = 4
 
     def get_success_url(self) -> str:
         return reverse_lazy("step_account_setup_red_teamer", kwargs={"organization_code": self.organization.code})
@@ -591,7 +591,7 @@ class OnboardingAccountSetupRedTeamerView(
     model = User
     template_name = "account/step_5_account_setup_red_teamer.html"
     form_class = OnboardingCreateUserRedTeamerForm
-    current_step = 3
+    current_step = 4
 
     def get_success_url(self, **kwargs):
         return reverse_lazy("step_account_setup_client", kwargs={"organization_code": self.organization.code})
@@ -615,7 +615,7 @@ class OnboardingAccountSetupClientView(RegistrationBreadcrumbsMixin, OnboardingA
     model = User
     template_name = "account/step_6_account_setup_client.html"
     form_class = OnboardingCreateUserClientForm
-    current_step = 3
+    current_step = 4
 
     def get_success_url(self, **kwargs):
         return reverse_lazy("crisis_room")

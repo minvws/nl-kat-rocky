@@ -226,7 +226,7 @@ STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "assets"),)
 
 LOGIN_URL = "two_factor:login"
-LOGIN_REDIRECT_URL = "landing_page"
+LOGIN_REDIRECT_URL = "crisis_room"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

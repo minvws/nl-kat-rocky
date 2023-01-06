@@ -10,7 +10,7 @@ from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class IndemnificationAddView(FormView, OrganizationsMixin):
+class IndemnificationAddView(OrganizationsMixin, FormView):
     template_name = "indemnification_add.html"
     form_class = IndemnificationAddForm
 

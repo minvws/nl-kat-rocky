@@ -46,7 +46,7 @@ class KatIntroductionAdminStepsMixin(StepsMixin):
                 "text": _("2: Organization setup"),
                 "url": reverse_lazy("step_organization_setup"),
             },
-            {"text": _("3: Account setup"), "url": account_url},
-            {"text": _("4: Indemnification"), "url": idemnification_url},
+            {"text": _("3: Indemnification"), "url": idemnification_url},
+            {"text": _("4: Account setup"), "url": account_url},
         ]
         return steps
