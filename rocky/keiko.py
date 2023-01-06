@@ -7,6 +7,10 @@ from rocky.health import ServiceHealth
 from rocky.settings import KEIKO_API
 
 
+class ReportNotFoundException(Exception):
+    pass
+
+
 class KeikoClient:
     def __init__(self, base_uri: str):
         self.session = requests.Session()
@@ -32,8 +36,8 @@ class KeikoClient:
             res = self.session.get(f"{self._base_uri}/reports/{report_id}.keiko.pdf", stream=True)
             if res.status_code == 200:
                 return res.raw
-        else:
-            res.raise_for_status()
+        res.raise_for_status()
+        raise ReportNotFoundException
 
     def health(self) -> ServiceHealth:
         res = self.session.get(f"{self._base_uri}/health")

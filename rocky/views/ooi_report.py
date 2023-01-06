@@ -26,7 +26,7 @@ from requests import HTTPError
 from two_factor.views.utils import class_view_decorator
 
 from katalogus.client import get_katalogus
-from rocky.keiko import keiko_client
+from rocky.keiko import keiko_client, ReportNotFoundException
 from rocky.views.mixins import OOIBreadcrumbsMixin, SingleOOITreeMixin
 from rocky.views.ooi_view import (
     BaseOOIDetailView,
@@ -228,8 +228,10 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
         # open pdf as attachment
         try:
             return FileResponse(keiko_client.get_report(report_id), as_attachment=True, filename=report_file_name)
-        except HTTPError:
-            messages.error(self.request, _("Error generating report: Timeout reached"))
+        except (HTTPError, ReportNotFoundException):
+            messages.error(
+                self.request, _("Error generating report: Timeout reached. See Keiko logs for more information.")
+            )
             return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
 
 
