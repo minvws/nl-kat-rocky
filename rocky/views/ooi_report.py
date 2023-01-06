@@ -1,6 +1,5 @@
 import re
 from datetime import datetime
-from io import BytesIO
 from typing import Dict, List, Set, Type, Optional
 
 from django.contrib import messages
@@ -228,8 +227,7 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
 
         # open pdf as attachment
         try:
-            report_bytes = keiko_client.get_report(report_id)
-            return FileResponse(BytesIO(report_bytes), as_attachment=True, filename=report_file_name)
+            return FileResponse(keiko_client.get_report(report_id), as_attachment=True, filename=report_file_name)
         except HTTPError:
             messages.error(self.request, _("Error generating report: Timeout reached"))
             return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
