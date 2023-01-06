@@ -121,11 +121,13 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
 
     report_data_param = mock_keiko_client.generate_report.call_args[0][1]
     # Verify that the data is sent correctly to Keiko
-    assert report_data_param["meta"]["total"] == 1
-    assert report_data_param["meta"]["total_by_severity"]["low"] == 1
-    assert report_data_param["meta"]["total_by_severity_per_finding_type"]["low"] == 1
-    assert report_data_param["meta"]["total_by_finding_type"]["KAT-000"] == 1
-    assert report_data_param["meta"]["total_finding_types"] == 1
+    assert report_data_param["meta"] == {
+        "total": 1,
+        "total_by_severity": {"critical": 0, "high": 0, "medium": 0, "low": 1, "recommendation": 0},
+        "total_by_finding_type": {"KAT-000": 1},
+        "total_finding_types": 1,
+        "total_by_severity_per_finding_type": {"critical": 0, "high": 0, "medium": 0, "low": 1, "recommendation": 0},
+    }
     assert report_data_param["findings_grouped"]["KAT-000"]["finding_type"]["id"] == "KAT-000"
     assert report_data_param["findings_grouped"]["KAT-000"]["list"][0]["description"] == "Fake description..."
 
