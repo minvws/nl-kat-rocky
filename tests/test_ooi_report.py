@@ -117,7 +117,7 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
     response = OOIReportPDFView.as_view()(request)
 
     assert response.status_code == 200
-    assert response.content == b"fake_binary_pdf_content"
+    assert response.getvalue() == b"fake_binary_pdf_content"
 
     report_data_param = mock_keiko_client.generate_report.call_args[0][1]
     # Verify that the data is sent correctly to Keiko

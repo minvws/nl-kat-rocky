@@ -1,9 +1,10 @@
 import re
 from datetime import datetime
+from io import BytesIO
 from typing import Dict, List, Set, Type, Optional
 
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import FileResponse
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -27,11 +28,11 @@ from two_factor.views.utils import class_view_decorator
 
 from katalogus.client import get_katalogus
 from rocky.keiko import keiko_client
+from rocky.views.mixins import OOIBreadcrumbsMixin, SingleOOITreeMixin
 from rocky.views.ooi_view import (
     BaseOOIDetailView,
     ConnectorFormMixin,
 )
-from rocky.views.mixins import OOIBreadcrumbsMixin, SingleOOITreeMixin
 from tools.forms import OOIReportSettingsForm
 from tools.models import Organization
 from tools.ooi_helpers import (
@@ -227,12 +228,8 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, View):
 
         # open pdf as attachment
         try:
-            response = HttpResponse(
-                keiko_client.get_report(report_id),
-                content_type="application/pdf",
-            )
-            response["Content-Disposition"] = f'attachment; filename="{report_file_name}"'
-            return response
+            report_bytes = keiko_client.get_report(report_id)
+            return FileResponse(BytesIO(report_bytes), as_attachment=True, filename=report_file_name)
         except HTTPError:
             messages.error(self.request, _("Error generating report: Timeout reached"))
             return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
