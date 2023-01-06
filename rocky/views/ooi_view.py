@@ -61,6 +61,7 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, ListView):
         context["clearance_level_filter_form"] = ClearanceFilterForm(
             selected_clearance_levels, selected_clearance_types
         )
+
         return context
 
 
