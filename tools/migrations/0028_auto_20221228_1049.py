@@ -9,29 +9,29 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('tools', '0027_auto_20221212_2319'),
+        ("tools", "0027_auto_20230103_1721"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='organizationmember',
-            name='user',
+            model_name="organizationmember",
+            name="user",
             field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterUniqueTogether(
-            name='organizationmember',
-            unique_together={('user', 'organization')},
+            name="organizationmember",
+            unique_together={("user", "organization")},
         ),
         migrations.RemoveField(
-            model_name='organizationmember',
-            name='goal',
+            model_name="organizationmember",
+            name="goal",
         ),
         migrations.RemoveField(
-            model_name='organizationmember',
-            name='member_role',
+            model_name="organizationmember",
+            name="member_role",
         ),
         migrations.RemoveField(
-            model_name='organizationmember',
-            name='signal_username',
+            model_name="organizationmember",
+            name="signal_username",
         ),
     ]

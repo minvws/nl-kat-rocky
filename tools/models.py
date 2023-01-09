@@ -14,7 +14,7 @@ from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
 from rocky.settings import OCTOPOES_API
-import tagulous
+import tagulous.models
 
 
 User = get_user_model()
