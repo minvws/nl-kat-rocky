@@ -26,7 +26,7 @@ def test_boefjes_tasks(rf, user, organization, mocker):
     mock_scheduler_client.list_tasks.assert_has_calls(
         [
             call(
-                scheduler_id="boefje-_dev",
+                scheduler_id="boefje-test",
                 type="boefje",
                 limit=TASK_LIMIT,
                 offset=0,
@@ -50,7 +50,7 @@ def test_tasks_view_simple(rf, user, organization, mocker):
             {
                 "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
                 "hash": "19ed51514b37d42f79c5e95469956b05",
-                "scheduler_id": "boefje-_dev",
+                "scheduler_id": "boefje-test",
                 "type": "boefje",
                 "p_item": {
                     "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
@@ -109,7 +109,7 @@ def test_tasks_view_simple(rf, user, organization, mocker):
     mock_scheduler_client.list_tasks.assert_has_calls(
         [
             call(
-                scheduler_id="boefje-_dev",
+                scheduler_id="boefje-test",
                 type="boefje",
                 limit=TASK_LIMIT,
                 offset=0,
