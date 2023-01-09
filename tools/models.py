@@ -1,5 +1,6 @@
 import logging
 import uuid
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -7,13 +8,14 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from tagulous.models import TagField
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from katalogus.client import get_katalogus
 from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
 from rocky.settings import OCTOPOES_API
+import tagulous
+
 
 User = get_user_model()
 
@@ -24,6 +26,22 @@ GROUP_CLIENT = "clients"
 logger = logging.getLogger(__name__)
 
 ORGANIZATION_CODE_LENGTH = 32
+
+
+class OrganizationTag(tagulous.models.TagTreeModel):
+    COLOR_CHOICES = settings.TAG_COLORS
+    BORDER_TYPE_CHOICES = settings.TAG_BORDER_TYPES
+
+    color = models.CharField(choices=COLOR_CHOICES, max_length=20, default=COLOR_CHOICES[0][0])
+    border_type = models.CharField(choices=BORDER_TYPE_CHOICES, max_length=20, default=BORDER_TYPE_CHOICES[0][0])
+
+    class TagMeta:
+        force_lowercase = True
+        protect_all = True
+
+    @property
+    def css_class(self):
+        return f"tags-{self.color} {self.border_type}"
 
 
 class Organization(models.Model):
@@ -37,7 +55,7 @@ class Organization(models.Model):
             "that will be used in URLs and paths"
         ),
     )
-    tags = TagField(force_lowercase=True, protect_all=True, tree=True, blank=True)
+    tags = tagulous.models.TagField(to=OrganizationTag, blank=True)
 
     def __str__(self):
         return str(self.name)

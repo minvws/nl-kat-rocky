@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from tools.serializers import OrganizationSerializer, OrganizationSerializerReadOnly
+from tools.serializers import OrganizationSerializer, OrganizationSerializerReadOnlyCode
 from tools.models import Organization
 
 
@@ -14,5 +14,5 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         serializer_class = self.serializer_class
         if self.request.method != "POST":
-            serializer_class = OrganizationSerializerReadOnly
+            serializer_class = OrganizationSerializerReadOnlyCode
         return serializer_class

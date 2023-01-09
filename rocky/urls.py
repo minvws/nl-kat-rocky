@@ -12,7 +12,6 @@ handler404 = "rocky.views.handler404"
 router = routers.SimpleRouter()
 router.register(r"organization", OrganizationViewSet)
 
-
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("api/v1/", include(router.urls)),

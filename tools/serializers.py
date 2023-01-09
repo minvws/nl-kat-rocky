@@ -9,7 +9,7 @@ class OrganizationSerializer(TagSerializer):
         fields = ["id", "name", "code", "tags"]
 
 
-class OrganizationSerializerReadOnly(TagSerializer):
+class OrganizationSerializerReadOnlyCode(TagSerializer):
     class Meta:
         model = Organization
         fields = ["id", "name", "code", "tags"]

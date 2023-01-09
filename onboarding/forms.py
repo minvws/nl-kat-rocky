@@ -9,8 +9,7 @@ from tools.models import (
     GROUP_CLIENT,
     OrganizationMember,
 )
-from tools.enums import SCAN_LEVEL
-from tools.forms import BLANK_CHOICE
+from tools.forms import SCAN_LEVEL_CHOICES
 from account.forms import OrganizationMemberAddForm
 
 User = get_user_model()
@@ -39,7 +38,7 @@ class OnboardingSetClearanceLevelForm(forms.Form):
             },
         },
         widget=ClearanceLevelSelect(
-            choices=[BLANK_CHOICE] + SCAN_LEVEL.choices,
+            choices=SCAN_LEVEL_CHOICES,
             attrs={
                 "aria-describedby": _("explanation-clearance-level"),
             },

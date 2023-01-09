@@ -49,7 +49,11 @@ robotframework-postgresqldb
 pytest
 pytest-cov
 pytest-django
+pytest-drf
 pytest-mock
+git+https://github.com/dekkers/django-admin-auto-tests@fix-create-unique
+model-mommy
+factory-boy
 
 # Include formatters and linters
 -r requirements-check.txt

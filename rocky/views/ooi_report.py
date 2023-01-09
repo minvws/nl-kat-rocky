@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 from typing import Dict, List, Set, Type, Optional
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import FileResponse
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -24,10 +24,14 @@ from octopoes.models.ooi.findings import (
 from requests import HTTPError
 from two_factor.views.utils import class_view_decorator
 from katalogus.client import get_katalogus
-from rocky.keiko import keiko_client
 from rocky.views import BaseOOIDetailView
 from rocky.views.mixins import ConnectorFormMixin
+from rocky.keiko import keiko_client, ReportNotFoundException
 from rocky.views.mixins import OOIBreadcrumbsMixin, SingleOOITreeMixin
+from rocky.views.ooi_view import (
+    BaseOOIDetailView,
+    ConnectorFormMixin,
+)
 from tools.forms import OOIReportSettingsForm
 from tools.models import Organization
 from tools.ooi_helpers import (
@@ -96,6 +100,9 @@ def build_finding_dict(
 
     finding_dict["ooi"] = get_ooi_dict(ooi_store[str(finding_ooi.ooi)]) if str(finding_ooi.ooi) in ooi_store else None
     finding_dict["finding_type"] = finding_type_dict
+
+    if finding_dict["description"] is None:
+        finding_dict["description"] = finding_type_dict["description"]
 
     return finding_dict
 
@@ -200,10 +207,6 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixi
             messages.error(self.request, _("Error generating report: {}").format(e))
             return redirect(get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code))
 
-        if report_id is None:
-            messages.error(self.request, _("Error generating report: Timeout reached"))
-            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key, organization_code=self.organization.code))
-
         # generate file name
         report_name = "bevindingenrapport"
         org_code = self.organization.code
@@ -226,12 +229,13 @@ class OOIReportPDFView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixi
         report_file_name = f"{report_file_name}.pdf"
 
         # open pdf as attachment
-        response = HttpResponse(
-            keiko_client.get_report(report_id),
-            content_type="application/pdf",
-        )
-        response["Content-Disposition"] = f'attachment; filename="{report_file_name}"'
-        return response
+        try:
+            return FileResponse(keiko_client.get_report(report_id), as_attachment=True, filename=report_file_name)
+        except (HTTPError, ReportNotFoundException):
+            messages.error(
+                self.request, _("Error generating report: Timeout reached. See Keiko logs for more information.")
+            )
+            return redirect(get_ooi_url("ooi_report", self.ooi.primary_key))
 
 
 """
