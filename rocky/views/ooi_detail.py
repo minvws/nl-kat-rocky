@@ -12,7 +12,7 @@ from rocky.views import BaseOOIDetailView, OOIRelatedObjectAddView
 from tools.forms import ObservedAtForm, PossibleBoefjesFilterForm
 from tools.ooi_helpers import format_display
 from tools.view_helpers import Breadcrumb
-from tools.models import Indemnification
+from tools.models import Indemnification, OrganizationMember
 from katalogus.views.mixins import BoefjeMixin
 from account.mixins import OrganizationsMixin
 
@@ -45,7 +45,7 @@ class OOIDetailView(
         )
         messages.add_message(request, messages.SUCCESS, success_message)
 
-        return redirect("task_list")
+        return redirect("task_list", organization_code=self.organization.code)
 
     def handle_page_action(self, action: str) -> bool:
         try:
@@ -55,7 +55,7 @@ class OOIDetailView(
 
                 boefje = get_katalogus(self.organization.code).get_boefje(boefje_id)
                 ooi = self.get_single_ooi(self.organization.code, pk=ooi_id)
-                self.run_boefje_for_oois(boefje, [ooi], self.organization.code, self.api_connector)
+                self.run_boefje_for_oois(boefje, [ooi], self.api_connector)
                 return True
 
         except RequestException as exception:
@@ -71,6 +71,12 @@ class OOIDetailView(
         except Http404:
             return None
 
+    def get_organizationmember(self):
+        return OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
+
+    def get_organization_indemnification(self):
+        return Indemnification.objects.filter(organization=self.organization).exists()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -84,10 +90,11 @@ class OOIDetailView(
 
         # Filter boefjes on scan level <= OOI clearance level when not "show all"
         # or when not "acknowledged clearance level > 0"
+        member = self.get_organizationmember()
         if (
             (filter_form.is_valid() and not filter_form.cleaned_data["show_all"])
-            or self.request.user.organizationmember.acknowledged_clearance_level <= 0
-            or self.get_organization_indemnification
+            or member.acknowledged_clearance_level <= 0
+            or self.get_organization_indemnification()
         ):
             boefjes = [boefje for boefje in boefjes if boefje.scan_level.value <= self.ooi.scan_profile.level]
 
@@ -100,7 +107,7 @@ class OOIDetailView(
         context["declarations"] = declarations
         context["observations"] = observations
         context["inferences"] = inferences
-
+        context["member"] = self.get_organizationmember()
         context["object_details"] = format_display(self.get_ooi_properties(self.ooi))
         context["ooi_types"] = self.get_ooi_types_input_values(self.ooi)
         context["observed_at_form"] = self.get_connector_form()
@@ -111,8 +118,6 @@ class OOIDetailView(
         context["findings_severity_summary"] = self.findings_severity_summary()
         context["severity_summary_totals"] = self.get_findings_severity_totals()
         context["possible_boefjes_filter_form"] = filter_form
-        context["organization_indemnification"] = Indemnification.objects.filter(
-            organization=self.organization
-        ).exists()
+        context["organization_indemnification"] = self.get_organization_indemnification()
 
         return context

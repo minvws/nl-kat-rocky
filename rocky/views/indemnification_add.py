@@ -20,7 +20,7 @@ class IndemnificationAddView(OrganizationsMixin, FormView):
             organization=self.organization,
         )
         self.add_success_notification()
-        return redirect("crisis_room")
+        return super().post(request, *args, **kwargs)
 
     def add_success_notification(self):
         success_message = _("Indemnification successfully set.")

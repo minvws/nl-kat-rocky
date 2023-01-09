@@ -63,7 +63,7 @@ class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMix
         self.api_connector = self.get_api_connector(self.organization.code)
 
     def get(self, request, *args, **kwargs):
-        self.ooi = self.get_ooi(self.organization.code)
+        self.ooi = self.get_ooi(organization_code=self.organization.code)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

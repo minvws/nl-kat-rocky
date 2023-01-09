@@ -43,9 +43,9 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
         self.api_connector = self.get_api_connector(self.organization.code)
         return super().dispatch(request, *args, **kwargs)
 
-    def run_boefje(self, katalogus_boefje: Boefje, ooi: OOI, organization: Organization) -> None:
+    def run_boefje(self, katalogus_boefje: Boefje, ooi: OOI) -> None:
 
-        boefje_queue_name = f"boefje-{organization.code}"
+        boefje_queue_name = f"boefje-{self.organization.code}"
 
         boefje = Boefje(
             id=katalogus_boefje.id,
@@ -62,7 +62,7 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
             id=uuid4().hex,
             boefje=boefje,
             input_ooi=ooi.reference,
-            organization=organization.code,
+            organization=self.organization.code,
         )
 
         item = QueuePrioritizedItem(id=boefje_task.id, priority=1, data=boefje_task)
@@ -73,7 +73,6 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
         self,
         boefje: Boefje,
         oois: List[OOI],
-        organization: Organization,
         api_connector: OctopoesAPIConnector,
     ) -> None:
 
@@ -86,7 +85,7 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
                     ),
                     datetime.now(timezone.utc),
                 )
-            self.run_boefje(boefje, ooi, organization)
+            self.run_boefje(boefje, ooi)
 
     def scan(self, view_args) -> None:
         if "ooi" not in view_args:
@@ -110,7 +109,7 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
         oois = [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in ooi_ids]
 
         try:
-            self.run_boefje_for_oois(boefje, oois, self.request.active_organization, self.api_connector)
+            self.run_boefje_for_oois(boefje, oois, self.api_connector)
         except HTTPError:
             return
 

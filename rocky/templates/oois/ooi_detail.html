@@ -30,7 +30,7 @@
         {% if enabled_boefjes_available %}
           <div class="horizontal-view">
             <div>
-              {% if user.organizationmember.acknowledged_clearance_level > 0 and organization_indemnification %}
+              {% if member.acknowledged_clearance_level > 0 and organization_indemnification %}
                 <form method="get" class="inline">
                   <input type="hidden" name="ooi_id" value="{{ ooi }}">
                   {% include 'partials/form/form_errors.html' with form=possible_boefjes_filter_form %}

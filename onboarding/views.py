@@ -392,25 +392,22 @@ class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView, OrganizationsMix
     template_name = "dns_report.html"
     report = DNSReport
 
-    def get_ooi(self):
-        return self.get_dns_zone_for_url(super().get_ooi(self.organization.code))
-
-    def get_dns_zone_for_url(self, ooi: OOI):
+    def get_dns_zone_for_url(self):
         """
         Path to DNSZone: url > hostnamehttpurl > netloc > fqdn > dns_zone
         """
-        if ooi.ooi_type != "URL":
-            return ooi
+        if self.ooi.ooi_type != "URL":
+            return self.ooi
 
         try:
-            web_url = self.tree.store[str(ooi.web_url)]
+            web_url = self.tree.store[str(self.ooi.web_url)]
             netloc = self.tree.store[str(web_url.netloc)]
             fqdn = self.tree.store[str(netloc.fqdn)]
             dns_zone = super().get_ooi(self.organization.code, pk=str(fqdn.dns_zone))
             return dns_zone
         except KeyError:
             messages.add_message(self.request, messages.ERROR, _("No DNS zone found."))
-            return ooi
+            return self.ooi
 
 
 class RegistrationBreadcrumbsMixin(BreadcrumbsMixin):
@@ -450,17 +447,22 @@ class OnboardingOrganizationSetupView(
     def get(self, request, *args, **kwargs):
         organization = Organization.objects.first()
         if organization:
+            self.get_or_create_organizationmember(organization)
             return redirect(reverse("step_organization_update", kwargs={"organization_code": organization.code}))
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self) -> str:
         organization = Organization.objects.first()
+        self.get_or_create_organizationmember(organization)
         return reverse_lazy("step_indemnification_setup", kwargs={"organization_code": organization.code})
 
     def form_valid(self, form):
         org_name = form.cleaned_data["name"]
         self.add_success_notification(org_name)
         return super().form_valid(form)
+
+    def get_or_create_organizationmember(self, organization):
+        OrganizationMember.objects.get_or_create(user=self.request.user, organization=organization)
 
     def add_success_notification(self, org_name):
         success_message = _("{org_name} succesfully created.").format(org_name=org_name)
@@ -641,7 +643,7 @@ class CompleteOnboarding(OrganizationsMixin, View):
         redteam_group = Group.objects.get(name="redteam")
         if self.request.user.is_superuser and redteam_group not in self.request.user.groups.all():
             redteam_group.user_set.add(self.request.user)
-            return redirect(reverse("step_indemnification_setup", kwargs={"organization_code": self.organization.code}))
+            return redirect(reverse("step_introduction", kwargs={"organization_code": self.organization.code}))
         member.onboarded = True
         member.save()
         return redirect(reverse("crisis_room"))

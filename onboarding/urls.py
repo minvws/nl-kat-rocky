@@ -50,7 +50,7 @@ urlpatterns = [
         name="step_report",
     ),
     path(
-        "step/report/dns-report/",
+        "<organization_code>/step/report/dns-report/",
         views.DnsReportView.as_view(),
         name="dns_report",
     ),

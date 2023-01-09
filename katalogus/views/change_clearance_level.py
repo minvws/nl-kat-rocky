@@ -41,7 +41,6 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
         self.run_boefje_for_oois(
             boefje=boefje,
             oois=self.oois,
-            organization=self.organization,
             api_connector=self.get_api_connector(self.organization.code),
         )
         messages.add_message(self.request, messages.SUCCESS, _("Scanning successfully scheduled."))
