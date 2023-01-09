@@ -2,14 +2,13 @@
 
 {% if organizations_dropdown_list|length == 1 %}
   <li>
-    <a {% if request.resolver_match.view_name == 'organization_detail' %}aria-current="page"{% endif %}
-       href="{% url 'organization_detail' organization.code %}">{{ organization.name }}</a>
+    {{ organization.name }}
   </li>
 {% else %}
   <div class="dropdown">
     <button class="dropdown-button">
       <li>
-        <a href="{% url 'organization_detail' organization.code %}">{{ organization.name }}</a>
+        {{ organization.name }}
       </li>
       <span class="icon ti-chevron-down"></span>
     </button>
@@ -17,7 +16,7 @@
       {% for single_organization in organizations_dropdown_list %}
         {% if organization.code != single_organization.code %}
           <li>
-            <a href="{% url 'organization_detail' single_organization.code %}">{{ single_organization.name }}</a>
+            {{ single_organization.name }}
           </li>
         {% endif %}
       {% endfor %}
