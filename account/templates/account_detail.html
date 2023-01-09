@@ -48,7 +48,7 @@
               {{ member.organization }}
             </dd>
           </div>
-          {% if member.trusted_clearance_level > 0 %}
+          {% if member.acknowledged_clearance_level > 0 %}
             <div>
               <dt>
                 {% translate 'Permission to set OOI clearance levels ' %}
@@ -65,7 +65,7 @@
       <section>
         <div>
           <h2>{% translate 'OOI clearance' %}</h2>
-          {% if member.trusted_clearance_level < 0 %}
+          {% if member.trusted_clearance_level <= 0 %}
             <p>
               {% blocktranslate%}
               You don't have any clearance to scan objects.<br>
@@ -74,7 +74,9 @@
             </p>
           {% else %}
             <p>
-              {% translate 'You have currently accepted clearance up to level' %} <strong>L{{ member.acknowledged_clearance_level }}</strong>
+              {% translate 'You have currently accepted clearance up to level' %} <strong>
+              {% if member.acknowledged_clearance_level < 0 %}
+              L0{% else %}L{{ member.acknowledged_clearance_level }}{% endif %}</strong>
             </p>
             {% if member.acknowledged_clearance_level < member.trusted_clearance_level %}
               <p class="explanation">
