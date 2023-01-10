@@ -245,7 +245,10 @@ class MultipleOOIMixin(OctopoesMixin):
 class OOIBreadcrumbsMixin(BreadcrumbsMixin, OrganizationsMixin):
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         if isinstance(self.ooi, Finding):
-            start = {"url": reverse("finding_list"), "text": _("Findings")}
+            start = {
+                "url": reverse("finding_list", kwargs={"organization_code": self.organization.code}),
+                "text": _("Findings"),
+            }
         else:
             start = {
                 "url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}),
