@@ -20,12 +20,19 @@ def OnboardingMiddleware(get_response):
                 or "/plugins" in request.path
                 or "/i18n/" in request.path
                 or "/introduction/" in request.path
+                or request.path.startswith("/api/")
             ):
                 if not member_onboarded:
+
+                    if is_red_team(request.user):
+                        # a redteamer can be in many organizations, but we onboard the first one.
+                        member = OrganizationMember.objects.filter(user=request.user)
+                        return redirect(
+                            reverse("step_introduction", kwargs={"organization_code": member.first().organization.code})
+                        )
                     if request.user.is_superuser:
                         return redirect(reverse("step_introduction_registration"))
-                    if is_red_team(request.user):
-                        return redirect(reverse("step_introduction"))
+
         return response
 
     return middleware

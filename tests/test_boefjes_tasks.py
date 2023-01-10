@@ -1,13 +1,10 @@
 from unittest.mock import call
-
+from pytest_django.asserts import assertContains
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.urls import reverse
 from requests import HTTPError
-
-from pytest_django.asserts import assertContains
-
 from rocky.scheduler import PaginatedTasksResponse
-from rocky.views import TASK_LIMIT, BoefjesTaskListView
+from rocky.views.tasks import TASK_LIMIT, BoefjesTaskListView
 
 
 def test_boefjes_tasks(rf, user, organization, mocker):
@@ -16,10 +13,8 @@ def test_boefjes_tasks(rf, user, organization, mocker):
         {"count": 0, "next": None, "previous": None, "results": []}
     )
 
-    request = rf.get(reverse("boefjes_task_list"))
+    request = rf.get(reverse("boefjes_task_list", kwargs={"organization_code": organization.code}))
     request.user = user
-    request.active_organization = organization
-
     response = BoefjesTaskListView.as_view()(request)
 
     assert response.status_code == 200
@@ -85,9 +80,8 @@ def test_tasks_view_simple(rf, user, organization, mocker):
     """
     )
 
-    request = rf.get(reverse("task_list"))
+    request = rf.get(reverse("task_list", kwargs={"organization_code": organization.code}))
     request.user = user
-    request.active_organization = organization
 
     response = BoefjesTaskListView.as_view()(request)
 
@@ -97,26 +91,12 @@ def test_tasks_view_simple(rf, user, organization, mocker):
     mock_scheduler_client.list_tasks.assert_has_calls([call(f"boefje-{organization.code}", limit=TASK_LIMIT)])
 
 
-def test_tasks_view_no_organization(rf, user):
-    request = rf.get(reverse("task_list"))
-    request.user = user
-    request.active_organization = None
-    request.session = "session"
-    request._messages = FallbackStorage(request)
-
-    response = BoefjesTaskListView.as_view()(request)
-
-    assertContains(response, "error")
-    assertContains(response, "Organization could not be found")
-
-
 def test_tasks_view_error(rf, user, organization, mocker):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.list_tasks.side_effect = HTTPError
 
-    request = rf.get(reverse("task_list"))
+    request = rf.get(reverse("task_list", kwargs={"organization_code": organization.code}))
     request.user = user
-    request.active_organization = organization
     request.session = "session"
     request._messages = FallbackStorage(request)
 

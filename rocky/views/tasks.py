@@ -12,12 +12,13 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from rocky.scheduler import client
 from tools.models import Organization
+from account.mixins import OrganizationsMixin
 
 TASK_LIMIT = 50
 
 
 @class_view_decorator(otp_required)
-class DownloadTaskDetail(View):
+class DownloadTaskDetail(OrganizationsMixin, View):
     def get(self, request, *args, **kwargs):
         task_id = kwargs["task_id"]
         filename = "task_" + task_id + ".json"
@@ -36,20 +37,20 @@ class DownloadTaskDetail(View):
     def show_error_message(self):
         error_message = _("Task details not found.")
         messages.add_message(self.request, messages.ERROR, error_message)
-        return redirect(reverse("task_list"))
+        return redirect(reverse("task_list", kwargs={"organization_code": self.organization.code}))
 
 
 @class_view_decorator(otp_required)
-class TaskListView(ListView):
-    def setup(self, request, *args, **kwargs):
+class TaskListView(OrganizationsMixin, ListView):
+    def get(self, request, *args, **kwargs):
         self.task_type = None
-        self.org: Organization = request.active_organization
+        self.org: Organization = self.organization
         if self.org:
             self.task_type = self.plugin_type + "-" + self.org.code
         else:
             error_message = _("Organization could not be found")
             messages.add_message(request, messages.ERROR, error_message)
-        return super().setup(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         if self.task_type:
@@ -64,8 +65,8 @@ class TaskListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("ooi_list"), "text": _("Objects")},
-            {"url": reverse("task_list"), "text": _("Tasks")},
+            {"url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}), "text": _("Objects")},
+            {"url": reverse("task_list", kwargs={"organization_code": self.organization.code}), "text": _("Tasks")},
         ]
         return context
 

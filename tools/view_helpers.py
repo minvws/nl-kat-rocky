@@ -6,12 +6,11 @@ from datetime import date, datetime, timezone
 from enum import Enum
 from typing import Optional, List, TypedDict, Dict, Any
 from urllib.parse import urlparse, urlunparse, urlencode
-
 from django.contrib import messages
 from django.http.request import HttpRequest
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models.types import OOI_TYPES
-
+from account.mixins import OrganizationsMixin
 from tools.models import Organization
 
 
@@ -63,12 +62,15 @@ def url_with_querystring(path, **kwargs) -> str:
 
 def get_ooi_url(routename: str, ooi_id: str, **kwargs) -> str:
     kwargs["ooi_id"] = ooi_id
+    organization_code = kwargs["organization_code"]
+    # exclude in querystring
+    kwargs = {k: v for k, v in kwargs.items() if k not in "organization_code"}
 
     if "query" in kwargs:
         kwargs.update(kwargs["query"])
         del kwargs["query"]
 
-    return url_with_querystring(reverse(routename), **kwargs)
+    return url_with_querystring(reverse(routename, kwargs={"organization_code": organization_code}), **kwargs)
 
 
 def existing_ooi_type(ooi_type: str):
@@ -83,7 +85,7 @@ class Breadcrumb(TypedDict):
     url: str
 
 
-class BreadcrumbsMixin:
+class BreadcrumbsMixin(OrganizationsMixin):
     breadcrumbs: List[Breadcrumb] = []
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
@@ -138,7 +140,7 @@ class Step(TypedDict):
     url: str
 
 
-class StepsMixin:
+class StepsMixin(OrganizationsMixin):
     steps: List[Step] = []
     current_step: int = None
 
@@ -166,37 +168,27 @@ class OrganizationBreadcrumbsMixin(BreadcrumbsMixin):
 
 
 class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
-    breadcrumb_object: Organization = None
-
-    def set_breadcrumb_object(self, organization: Organization):
-        self.breadcrumb_object = organization
-
     def build_breadcrumbs(self):
-        if self.request.user.has_perm("tools.can_switch_organization"):
-            breadcrumbs = [
-                {"url": reverse("organization_list"), "text": _("Organizations")},
-                {
-                    "url": reverse("organization_detail", kwargs={"pk": self.breadcrumb_object.pk}),
-                    "text": self.breadcrumb_object.name,
-                },
-            ]
-        else:
-            breadcrumbs = [
-                {
-                    "url": reverse("crisis_room"),
-                    "text": self.breadcrumb_object.name,
-                }
-            ]
 
-        breadcrumbs.append(
+        breadcrumbs = [
             {
-                "url": reverse("organization_member_list", kwargs={"pk": self.breadcrumb_object.pk}),
-                "text": _("Members"),
-            }
-        )
+                "url": reverse("organization_detail", kwargs={"organization_code": self.organization.code}),
+                "text": self.organization.name,
+            },
+        ]
+        permission = self.request.user.has_perm("tools.view_organization")
+        if permission:
+            organization_url = {"url": reverse("organization_list"), "text": _("Organizations")}
+            breadcrumbs.insert(0, organization_url)
 
         return breadcrumbs
 
 
 class ObjectsBreadcrumbsMixin(BreadcrumbsMixin):
-    breadcrumbs = [{"url": reverse_lazy("ooi_list"), "text": _("Objects")}]
+    def build_breadcrumbs(self):
+        return [
+            {
+                "url": reverse_lazy("ooi_list", kwargs={"organization_code": self.organization.code}),
+                "text": _("Objects"),
+            }
+        ]

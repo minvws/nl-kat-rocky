@@ -3,22 +3,17 @@ from io import BytesIO
 from typing import Dict, Type, Set, List
 
 import requests
-from django.urls import reverse_lazy
 from octopoes.models import OOI
 from octopoes.models.types import type_by_name
 from pydantic import BaseModel
 
 from rocky.health import ServiceHealth
 from rocky.settings import KATALOGUS_API
-from tools.models import SCAN_LEVEL, Organization
-from tools.view_helpers import BreadcrumbsMixin
-
-
-class KATalogusBreadcrumbsMixin(BreadcrumbsMixin):
-    breadcrumbs = [{"text": "KAT-alogus", "url": reverse_lazy("katalogus")}]
+from tools.enums import SCAN_LEVEL
 
 
 class Plugin(BaseModel):
+    organization_code: str
     id: str
     type: str
     name: str
@@ -30,36 +25,19 @@ class Plugin(BaseModel):
     enabled: bool = True
 
 
-class KATalogusClientInterface:
-    def health(self) -> ServiceHealth:
-        raise NotImplementedError()
-
-    def get_boefjes(self) -> List[Plugin]:
-        raise NotImplementedError()
-
-    def get_boefje(self, boefje_id: str) -> Plugin:
-        raise NotImplementedError()
-
-    def enable_boefje(self, boefje_id: str) -> None:
-        raise NotImplementedError()
-
-    def disable_boefje(self, boefje_id: str) -> None:
-        raise NotImplementedError()
-
-    def get_enabled_boefjes(self) -> List[Plugin]:
-        raise NotImplementedError()
-
-    def get_description(self, boefje_id: str) -> str:
-        raise NotImplementedError()
-
-    def get_cover(self, boefje_id: str) -> BytesIO:
-        raise NotImplementedError()
-
-
-class KATalogusClientV1(KATalogusClientInterface):
+class KATalogusClientV1:
     def __init__(self, base_uri: str, organization: str):
         self.base_uri = base_uri
+        self.organization = organization
         self.organization_uri = f"{base_uri}/v1/organisations/{organization}"
+
+    def create_organization(self, name: str):
+        response = requests.post(f"{self.base_uri}/v1/organisations/", json={"id": self.organization, "name": name})
+        response.raise_for_status()
+
+    def delete_organization(self):
+        response = requests.delete(f"{self.organization_uri}")
+        response.raise_for_status()
 
     def get_all_plugins(self):
         response = requests.get(f"{self.organization_uri}/plugins")
@@ -114,13 +92,13 @@ class KATalogusClientV1(KATalogusClientInterface):
         response = requests.get(f"{self.organization_uri}/plugins")
         response.raise_for_status()
 
-        return [parse_plugin(boefje) for boefje in response.json() if boefje["type"] == "boefje"]
+        return [parse_plugin(boefje, self.organization) for boefje in response.json() if boefje["type"] == "boefje"]
 
     def get_boefje(self, boefje_id: str) -> Plugin:
         response = requests.get(f"{self.organization_uri}/plugins/{boefje_id}")
         response.raise_for_status()
 
-        return parse_plugin(response.json())
+        return parse_plugin(response.json(), self.organization)
 
     def enable_boefje(self, boefje_id: str) -> None:
         self._patch_boefje_state(boefje_id, True)
@@ -153,7 +131,7 @@ class KATalogusClientV1(KATalogusClientInterface):
         return BytesIO(response.content)
 
 
-def parse_plugin(plugin: Dict) -> Plugin:
+def parse_plugin(plugin: Dict, organization_code) -> Plugin:
     try:
         consumes = {type_by_name(consumes) for consumes in plugin["consumes"]}
     except StopIteration:
@@ -167,6 +145,7 @@ def parse_plugin(plugin: Dict) -> Plugin:
             pass
 
     return Plugin(
+        organization_code=organization_code,
         id=plugin["id"],
         type=plugin["type"],
         name=plugin.get("name") or plugin["id"],
@@ -179,9 +158,5 @@ def parse_plugin(plugin: Dict) -> Plugin:
     )
 
 
-def get_katalogus(organization: str) -> KATalogusClientInterface:
+def get_katalogus(organization: str) -> KATalogusClientV1:
     return KATalogusClientV1(KATALOGUS_API, organization)
-
-
-def get_enabled_boefjes_for_ooi_class(ooi_class: Type[OOI], organization: Organization) -> List[Plugin]:
-    return [boefje for boefje in get_katalogus(organization.code).get_enabled_boefjes() if ooi_class in boefje.consumes]

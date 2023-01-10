@@ -1,6 +1,5 @@
 from typing import List, Dict
 from typing import Set, Type, Tuple, Union
-
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +9,6 @@ from octopoes.models import OOI
 from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_relations, OOI_TYPES, to_concrete
 from two_factor.views.utils import class_view_decorator
-
 from rocky.views.ooi_view import SingleOOITreeMixin
 from tools.ooi_helpers import (
     get_knowledge_base_data_for_ooi,
@@ -19,12 +17,13 @@ from tools.ooi_helpers import (
     RiskLevelSeverity,
 )
 from tools.view_helpers import existing_ooi_type, url_with_querystring
+from account.mixins import OrganizationsMixin
 
 
-class OOIRelatedObjectManager(SingleOOITreeMixin):
+class OOIRelatedObjectManager(SingleOOITreeMixin, OrganizationsMixin):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
 
     def get_related_objects(self):
         related = []
@@ -39,10 +38,10 @@ class OOIRelatedObjectManager(SingleOOITreeMixin):
         return related
 
 
-class OOIFindingManager(SingleOOITreeMixin):
+class OOIFindingManager(SingleOOITreeMixin, OrganizationsMixin):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+        self.api_connector = self.get_api_connector(self.organization.code)
 
     def get_findings(self) -> List[Dict]:
         findings: List[Dict] = []
@@ -100,12 +99,12 @@ class OOIFindingManager(SingleOOITreeMixin):
 
 
 @class_view_decorator(otp_required)
-class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, TemplateView):
+class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, OrganizationsMixin, TemplateView):
     template_name = "oois/ooi_detail_add_related_object.html"
 
     def get(self, request, *args, **kwargs):
         if "ooi_id" in request.GET:
-            self.ooi_id = self.get_ooi(pk=request.GET.get("ooi_id"))
+            self.ooi_id = self.get_ooi(self.organization.code, pk=request.GET.get("ooi_id"))
 
         if "add_ooi_type" in request.GET:
             ooi_type_choice = self.split_ooi_type_choice(request.GET["add_ooi_type"])
@@ -128,7 +127,7 @@ class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, Templa
         return the URL to the corresponding add object form with corresponding get parameters
         """
 
-        path = reverse("ooi_add", kwargs={"ooi_type": ooi_type})
+        path = reverse("ooi_add", kwargs={"organization_code": self.organization.code, "ooi_type": ooi_type})
         query_params = {ooi_relation: ooi.primary_key}
 
         if ooi_type == "Finding":

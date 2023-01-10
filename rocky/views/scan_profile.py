@@ -9,6 +9,7 @@ from octopoes.models import InheritedScanProfile, EmptyScanProfile, DeclaredScan
 from two_factor.views.utils import class_view_decorator
 from rocky.views import OOIDetailView
 from tools.forms import SetClearanceLevelForm
+from tools.models import Indemnification, OrganizationMember
 from tools.view_helpers import (
     get_mandatory_fields,
     get_ooi_url,
@@ -34,7 +35,10 @@ class ScanProfileDetailView(OOIDetailView, FormView):
     def get_context_data(self, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["mandatory_fields"] = get_mandatory_fields(self.request)
-        context["organization_indemnification"] = self.get_organization_indemnification()
+        context["user"] = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
+        context["organization_indemnification"] = Indemnification.objects.filter(
+            organization=self.organization
+        ).exists()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -54,7 +58,9 @@ class ScanProfileDetailView(OOIDetailView, FormView):
                 messages.WARNING,
                 _("Choose a valid level").format(ooi_name=self.ooi.human_readable),
             )
-        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+        return redirect(
+            get_ooi_url("scan_profile_detail", self.ooi.primary_key, organization_code=self.organization.code)
+        )
 
     def get_initial(self):
         initial = super().get_initial()

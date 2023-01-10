@@ -20,11 +20,7 @@
           {% for findings in findings_per_org_total %}
             <tr>
               <td>
-                {% if perms.tools.view_organization or request.user.is_superuser %}
-                  <a href="{{ findings.organization.get_absolute_url }}">{{ findings.organization.name }}</a>
-                {% else %}
-                  {{ findings.organization.name }}
-                {% endif %}
+                <a href="{% url 'organization_detail' findings.organization.code %}">{{ findings.organization.name }}</a>
               </td>
               <td class="number">{{ findings|get_item:"meta"|get_item:"total" }}</td>
               <td>
@@ -89,11 +85,7 @@
           {% for findings in findings_per_org_critical %}
             <tr>
               <td>
-                {% if perms.tools.view_organization or request.user.is_superuser %}
-                  <a href="{% url 'organization_list' %}">{{ findings.organization.name }}</a>
-                {% else %}
-                  {{ findings.organization.name }}
-                {% endif %}
+                <a href="{% url 'organization_detail' findings.organization.code %}">{{ findings.organization.name }}</a>
               </td>
               <td class="number">{{ findings|get_item:"meta"|get_item:"total_by_severity"|get_item:"critical" }}</td>
               <td>

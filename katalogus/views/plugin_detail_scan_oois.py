@@ -8,10 +8,11 @@ from django.contrib import messages
 from octopoes.models.types import type_by_name
 from tools.forms import SelectOOIForm, SelectOOIFilterForm
 from katalogus.views.mixins import BoefjeMixin
+from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class PluginDetailScanOOI(BoefjeMixin, TemplateView):
+class PluginDetailScanOOI(BoefjeMixin, OrganizationsMixin, TemplateView):
     limit_ooi_list = 9999
 
     def post(self, request, *args, **kwargs):
@@ -26,7 +27,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
                     boefje=boefje,
                     oois=oois_with_clearance_level,
                     organization=self.organization,
-                    api_connector=self.get_api_connector(),
+                    api_connector=self.get_api_connector(self.organization.code),
                 )
             oois_without_clearance_level = self.get_oois_without_clearance_level(selected_oois)
             if oois_without_clearance_level:
@@ -35,6 +36,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
                     reverse(
                         "change_clearance_level",
                         kwargs={
+                            "organization_code": self.organization.code,
                             "plugin_type": self.plugin["type"],
                             "plugin_id": plugin_id,
                             "scan_level": self.plugin["scan_level"],
@@ -45,13 +47,13 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
             messages.add_message(self.request, messages.ERROR, _("Scanning has failed to start."))
             return self.get(request, *args, **kwargs)
         messages.add_message(self.request, messages.SUCCESS, _("Scanning successfully scheduled."))
-        return redirect(reverse("task_list"))
+        return redirect(reverse("task_list", kwargs={"organization_code": self.organization.code}))
 
     def get_form_consumable_oois(self):
         """Get all available OOIS that plugin can consume."""
         ooi_types = self.plugin["consumes"]
         ooi_types = {type_by_name(ooi_type) for ooi_type in ooi_types}
-        oois = self.get_api_connector().list(ooi_types, limit=self.limit_ooi_list)
+        oois = self.get_api_connector(self.organization.code).list(ooi_types, limit=self.limit_ooi_list)
         return oois.items
 
     def get_form_filtered_consumable_oois(self):
@@ -63,7 +65,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
         """Return a list of selected oois that meets clearance level."""
         oois_with_clearance_level = []
         for ooi in selected_oois:
-            ooi_object = self.get_single_ooi(ooi)
+            ooi_object = self.get_single_ooi(self.organization.code, pk=ooi)
             if ooi_object.scan_profile.level >= self.plugin["scan_level"]:
                 oois_with_clearance_level.append(ooi_object)
         return oois_with_clearance_level
@@ -72,7 +74,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
         """Return a list from selected oois without clearance level for scanning"""
         oois_without_clearance_level = []
         for ooi in selected_oois:
-            ooi_object = self.get_single_ooi(ooi)
+            ooi_object = self.get_single_ooi(self.organization.code, pk=ooi)
             if ooi_object.scan_profile.level < self.plugin["scan_level"]:
                 oois_without_clearance_level.append(ooi_object.primary_key)
         return oois_without_clearance_level

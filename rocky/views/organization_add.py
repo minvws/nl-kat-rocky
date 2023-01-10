@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from onboarding.forms import OnboardingCreateOrganizationForm
+from account.forms import OrganizationForm
 from tools.models import Organization
 
 
@@ -19,7 +19,7 @@ class OrganizationAddView(PermissionRequiredMixin, CreateView):
 
     model = Organization
     template_name = "organizations/organization_add.html"
-    form_class = OnboardingCreateOrganizationForm
+    form_class = OrganizationForm
     success_url = reverse_lazy("organization_list")
     permission_required = "tools.add_organization"
 

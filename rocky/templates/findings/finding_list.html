@@ -16,6 +16,7 @@
         Click a finding for additional information.
       {% endblocktranslate %}
         </p>
+        {{ object_type_filters }}
         {% include 'partials/findings_list_toolbar.html' %}
         {% translate 'Object list' as filter_title %}
         {% include 'partials/ooi_list_filters.html' with title=filter_title %}
@@ -38,18 +39,18 @@
                     <span class="{{ ooi.severity|lower }}">{{ ooi.severity }}</span>
                   </td>
                   <td>
-                    <a href="{% ooi_url 'ooi_detail' ooi.finding.primary_key query=mandatory_fields %}"
+                    <a href="{% ooi_url 'ooi_detail' ooi.finding.primary_key query=mandatory_fields organization_code=organization.code %}"
                        title="{% blocktranslate trimmed with finding=ooi.finding.primary_key %} Show details for {{ finding }} {% endblocktranslate %}">{{ ooi.finding.human_readable }}</a>
                   </td>
                   <td class="actions">
                     <a aria-label="Navigate to tree view of {{ ooi.finding.human_readable }}"
                        class="icon ti-subtask button"
-                       href="{% ooi_url 'ooi_tree' ooi.finding.primary_key query=mandatory_fields %}">{% translate 'Tree' %}</a>
+                       href="{% ooi_url 'ooi_tree' ooi.finding.primary_key query=mandatory_fields organization_code=organization.code %}">{% translate 'Tree' %}</a>
                   </td>
                   <td class="actions">
                     <a aria-label="Navigate to graph view of {{ ooi.finding.human_readable }}"
                        class="icon ti-affiliate button"
-                       href="{% ooi_url 'ooi_graph' ooi.finding.primary_key query=mandatory_fields %}">{% translate 'Graph' %}</a>
+                       href="{% ooi_url 'ooi_graph' ooi.finding.primary_key query=mandatory_fields organization_code=organization.code %}">{% translate 'Graph' %}</a>
                   </td>
                   <td class="actions">
                     <button class="expando-button"
@@ -66,21 +67,21 @@
                       <tr>
                         <td>{% translate 'Finding type:' %}</td>
                         <td>
-                          <a href="{% ooi_url 'ooi_detail' ooi.finding_type query=mandatory_fields %}"
+                          <a href="{% ooi_url 'ooi_detail' ooi.finding_type query=mandatory_fields organization_code=organization.code %}"
                              title="{% blocktranslate trimmed with finding_type=ooi.finding_type.human_readable %} Show details for {{ finding_type }} {% endblocktranslate %}">{{ ooi.finding_type.human_readable }}</a>
                         </td>
                       </tr>
                       <tr>
                         <td>{% translate 'OOI type:' %}</td>
                         <td>
-                          <a href="{% url 'ooi_list' %}?ooi_type={{ ooi.finding_type.object_type }}"
+                          <a href="{% url 'ooi_list' organization_code=organization.code %}?ooi_type={{ ooi.finding_type.object_type }}"
                              title="{% blocktranslate trimmed with ooi_type=ooi.finding_type.object_type %} Show {{ ooi_type }} objects {% endblocktranslate %}">{{ ooi.finding_type.object_type }}</a>
                         </td>
                       </tr>
                       <tr>
                         <td>{% translate 'Source OOI:' %}</td>
                         <td>
-                          <a href="{% ooi_url 'ooi_detail' ooi.finding.ooi query=mandatory_fields %}"
+                          <a href="{% ooi_url 'ooi_detail' ooi.finding.ooi query=mandatory_fields organization_code=organization.code %}"
                              title="{% blocktranslate trimmed with finding=ooi.finding.ooi %} Show details for {{ finding }} {% endblocktranslate %}">{{ ooi.finding.ooi }}</a>
                         </td>
                       </tr>

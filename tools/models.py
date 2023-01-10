@@ -1,13 +1,21 @@
+import logging
 import uuid
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from octopoes.connector.octopoes import OctopoesAPIConnector
+from katalogus.client import get_katalogus
 from tools.add_ooi_information import get_info, SEPARATOR
-from tools.validators import phone_validator
+from tools.enums import SCAN_LEVEL
+from tools.fields import LowerCaseSlugField
+from rocky.settings import OCTOPOES_API
+import tagulous.models
+
 
 User = get_user_model()
 
@@ -15,29 +23,42 @@ GROUP_ADMIN = "admin"
 GROUP_REDTEAM = "redteam"
 GROUP_CLIENT = "clients"
 
+logger = logging.getLogger(__name__)
 
-class SCAN_LEVEL(models.IntegerChoices):
-    L0 = 0, "L0"
-    L1 = 1, "L1"
-    L2 = 2, "L2"
-    L3 = 3, "L3"
-    L4 = 4, "L4"
+ORGANIZATION_CODE_LENGTH = 32
+
+
+class OrganizationTag(tagulous.models.TagTreeModel):
+    COLOR_CHOICES = settings.TAG_COLORS
+    BORDER_TYPE_CHOICES = settings.TAG_BORDER_TYPES
+
+    color = models.CharField(choices=COLOR_CHOICES, max_length=20, default=COLOR_CHOICES[0][0])
+    border_type = models.CharField(choices=BORDER_TYPE_CHOICES, max_length=20, default=BORDER_TYPE_CHOICES[0][0])
+
+    class TagMeta:
+        force_lowercase = True
+        protect_all = True
+
+    @property
+    def css_class(self):
+        return f"tags-{self.color} {self.border_type}"
 
 
 class Organization(models.Model):
-    name = models.CharField(max_length=126, unique=True)
-    code = models.CharField(max_length=8, unique=True, default=None, null=True)
-    signal_username = models.CharField(validators=[phone_validator], max_length=126, unique=True, blank=True, null=True)
-    signal_group_id = models.CharField(max_length=126, blank=True, null=True)
+    name = models.CharField(max_length=126, unique=True, help_text=_("The name of the organisation"))
+    code = LowerCaseSlugField(
+        max_length=ORGANIZATION_CODE_LENGTH,
+        unique=True,
+        allow_unicode=True,
+        help_text=_(
+            "A slug containing only lower-case unicode letters, numbers, hyphens or underscores "
+            "that will be used in URLs and paths"
+        ),
+    )
+    tags = tagulous.models.TagField(to=OrganizationTag, blank=True)
 
     def __str__(self):
         return str(self.name)
-
-    def has_signal_group(self):
-        if self.signal_username is None or self.signal_group_id is None:
-            return False
-
-        return True
 
     class Meta:
         permissions = (
@@ -50,6 +71,33 @@ class Organization(models.Model):
     def get_absolute_url(self):
         return reverse("organization_detail", args=[self.pk])
 
+    def delete(self, *args, **kwargs):
+        katalogus_client = get_katalogus(self.code)
+        # FIXME: Handle exceptions
+        katalogus_client.delete_organization()
+
+        octopoes_client = OctopoesAPIConnector(OCTOPOES_API, client=self.code)
+        # FIXME: Handle exceptions
+        octopoes_client.delete_node()
+
+        super().delete(*args, **kwargs)
+
+    @classmethod
+    def post_create(cls, instance, created, *args, **kwargs):
+        if not created:
+            return
+
+        katalogus_client = get_katalogus(instance.code)
+        # FIXME: Handle exceptions
+        katalogus_client.create_organization(instance.name)
+
+        octopoes_client = OctopoesAPIConnector(OCTOPOES_API, client=instance.code)
+        # FIXME: Handle exceptions
+        octopoes_client.create_node()
+
+
+post_save.connect(Organization.post_create, sender=Organization)
+
 
 class OrganizationMember(models.Model):
     class STATUSES(models.TextChoices):
@@ -59,22 +107,12 @@ class OrganizationMember(models.Model):
 
     scan_levels = [scan_level.value for scan_level in SCAN_LEVEL]
 
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, related_name="members")
     verified = models.BooleanField(default=False)
     authorized = models.BooleanField(default=False)
     status = models.CharField(choices=STATUSES.choices, max_length=64, default=STATUSES.NEW)
     member_name = models.CharField(max_length=126)
-    member_role = models.CharField(max_length=126)
-    goal = models.CharField(max_length=256)
-    signal_username = models.CharField(
-        validators=[phone_validator],
-        max_length=126,
-        unique=True,
-        default=None,
-        blank=True,
-        null=True,
-    )
     onboarded = models.BooleanField(default=False)
     trusted_clearance_level = models.IntegerField(
         default=-1, validators=[MinValueValidator(-1), MaxValueValidator(max(scan_levels))]
@@ -82,6 +120,9 @@ class OrganizationMember(models.Model):
     acknowledged_clearance_level = models.IntegerField(
         default=-1, validators=[MinValueValidator(-1), MaxValueValidator(max(scan_levels))]
     )
+
+    class Meta:
+        unique_together = ["user", "organization"]
 
     def __str__(self):
         return str(self.user)

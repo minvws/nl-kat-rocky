@@ -41,6 +41,7 @@ class PluginSettingsUpdateView(PermissionRequiredMixin, KATalogusMixin, FormView
                 reverse(
                     "plugin_detail",
                     kwargs={
+                        "organization_code": self.organization.code,
                         "plugin_type": self.plugin["type"],
                         "plugin_id": self.plugin_id,
                     },
@@ -50,16 +51,28 @@ class PluginSettingsUpdateView(PermissionRequiredMixin, KATalogusMixin, FormView
     def get_success_url(self):
         return reverse(
             "plugin_detail",
-            kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id},
+            kwargs={
+                "organization_code": self.organization.code,
+                "plugin_type": self.plugin["type"],
+                "plugin_id": self.plugin_id,
+            },
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
-            {"url": reverse("katalogus"), "text": _("KAT-alogus")},
+            {
+                "url": reverse("katalogus", kwargs={"organization_code": self.organization.code}),
+                "text": _("KAT-alogus"),
+            },
             {
                 "url": reverse(
-                    "plugin_detail", kwargs={"plugin_type": self.plugin["type"], "plugin_id": self.plugin_id}
+                    "plugin_detail",
+                    kwargs={
+                        "organization_code": self.organization.code,
+                        "plugin_type": self.plugin["type"],
+                        "plugin_id": self.plugin_id,
+                    },
                 ),
                 "text": self.plugin["name"],
             },
@@ -67,6 +80,7 @@ class PluginSettingsUpdateView(PermissionRequiredMixin, KATalogusMixin, FormView
                 "url": reverse(
                     "plugin_settings_add",
                     kwargs={
+                        "organization_code": self.organization.code,
                         "plugin_type": self.plugin["type"],
                         "plugin_id": self.plugin_id,
                     },
