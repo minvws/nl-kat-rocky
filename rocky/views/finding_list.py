@@ -5,7 +5,6 @@ from octopoes.models.ooi.findings import Finding
 from rocky.views.ooi_view import BaseOOIListView
 from tools.view_helpers import BreadcrumbsMixin
 from tools.ooi_helpers import get_finding_type_from_finding, get_knowledge_base_data_for_ooi
-from rocky.views import BaseOOIListView
 from account.mixins import OrganizationsMixin
 
 
