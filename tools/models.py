@@ -83,7 +83,7 @@ class Organization(models.Model):
         super().delete(*args, **kwargs)
 
     @classmethod
-    def post_create(cls, sender, instance, created, *args, **kwargs):
+    def post_create(cls, instance, created, *args, **kwargs):
         if not created:
             return
 
