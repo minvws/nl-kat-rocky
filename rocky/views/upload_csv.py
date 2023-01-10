@@ -54,7 +54,6 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
     template_name = "upload_csv.html"
     form_class = UploadCSVForm
     permission_required = "tools.can_scan_organization"
-    success_url = reverse_lazy("ooi_list")
     reference_cache: Dict[str, Any] = {"Network": {"internet": Network(name="internet")}}
     ooi_types: ClassVar[Dict[str, Any]] = {
         "Hostname": {"type": Hostname},
@@ -70,6 +69,9 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
         if not self.organization:
             self.add_error_notification(CSV_ERRORS["no_org"])
 
+    def get_success_url(self):
+        return reverse_lazy("ooi_list", kwargs={"organization_code": self.organization.code})
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["breadcrumbs"] = [
@@ -81,6 +83,13 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
         ]
         context["criterias"] = CSV_CRITERIAS
         return context
+
+    def get_or_create_network(self, network: str) -> Network:
+        if network in self.networks:
+            return self.networks[network]
+        network_ooi = Network(name=network)
+        self.networks[network] = network_ooi
+        return network_ooi
 
     def get_ooi_from_csv(self, ooi_type: str, values: Dict[str, str]):
         network = self.get_or_create_network(values.get("network", "internet"))
@@ -166,7 +175,6 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
                 if not row:
                     continue  # skip empty lines
                 try:
-                    print(row)
                     ooi = self.get_ooi_from_csv(object_type, row)
                     save_ooi(ooi=ooi, organization=self.organization.code)
                 except ValidationError:

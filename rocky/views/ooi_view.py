@@ -4,9 +4,6 @@ from typing import Type, List
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls.base import reverse_lazy
-from django.views.generic import TemplateView
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django_otp.decorators import otp_required
@@ -28,7 +25,7 @@ from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, ListView):
+class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, OrganizationsMixin, ListView):
     connector_form_class = ObservedAtForm
     paginate_by = 150
     context_object_name = "ooi_list"
@@ -44,7 +41,9 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, ListView):
         if selected_clearance_type is not None:
             scan_profile_types = {ScanProfileType(s) for s in selected_clearance_type}
 
-        return self.get_list(self.get_observed_at(), scan_level=scan_levels, scan_profile_type=scan_profile_types)
+        return self.get_list(
+            self.organization.code, self.get_observed_at(), scan_level=scan_levels, scan_profile_type=scan_profile_types
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

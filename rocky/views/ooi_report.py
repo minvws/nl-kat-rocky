@@ -24,8 +24,6 @@ from octopoes.models.ooi.findings import (
 from requests import HTTPError
 from two_factor.views.utils import class_view_decorator
 from katalogus.client import get_katalogus
-from rocky.views import BaseOOIDetailView
-from rocky.views.mixins import ConnectorFormMixin
 from rocky.keiko import keiko_client, ReportNotFoundException
 from rocky.views.mixins import OOIBreadcrumbsMixin, SingleOOITreeMixin
 from rocky.views.ooi_view import (

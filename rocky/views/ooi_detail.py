@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from enum import Enum
-from typing import List
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import redirect
@@ -11,7 +10,6 @@ from katalogus.utils import get_enabled_boefjes_for_ooi_class
 from rocky.views import BaseOOIDetailView, OOIRelatedObjectAddView
 from tools.forms import ObservedAtForm, PossibleBoefjesFilterForm
 from tools.ooi_helpers import format_display
-from tools.view_helpers import Breadcrumb
 from tools.models import Indemnification, OrganizationMember
 from katalogus.views.mixins import BoefjeMixin
 from account.mixins import OrganizationsMixin

@@ -23,7 +23,6 @@ from rocky.settings import OCTOPOES_API
 from tools.forms import DEPTH_MAX, DEPTH_DEFAULT
 from tools.models import Organization
 from rocky.bytes_client import get_bytes_client
-from tools.forms import ObservedAtForm, DEPTH_MAX, DEPTH_DEFAULT
 from tools.ooi_helpers import (
     get_knowledge_base_data_for_ooi_store,
 )

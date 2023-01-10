@@ -11,7 +11,6 @@ from requests import HTTPError
 from katalogus.client import get_katalogus
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
 from rocky.views.mixins import OctopoesMixin
-from tools.models import Organization
 from account.mixins import OrganizationsMixin
 
 logger = getLogger(__name__)
