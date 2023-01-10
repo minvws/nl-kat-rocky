@@ -26,7 +26,7 @@ from rocky.views.scans import ScanListView
 from rocky.views.signal import SignalQRView
 from rocky.views.scan_profile import ScanProfileDetailView, ScanProfileResetView
 from rocky.views.upload_csv import UploadCSV
-from rocky.views.health import Health, HealthChecks
+from rocky.views.health import flatten_health, Health, HealthChecks
 from rocky.views.tasks import DownloadTaskDetail, BoefjesTaskListView, NormalizersTaskListView
 from rocky.views.privacy_statement import PrivacyStatementView
 from rocky.views.handler404 import handler404
@@ -73,6 +73,7 @@ __all__ = [
     "ScanProfileDetailView",
     "ScanProfileResetView",
     "UploadCSV",
+    "flatten_health",
     "Health",
     "HealthChecks",
     "DownloadTaskDetail",

@@ -84,25 +84,6 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
         context["criterias"] = CSV_CRITERIAS
         return context
 
-    def get_or_create_network(self, network: str) -> Network:
-        if network in self.networks:
-            return self.networks[network]
-        network_ooi = Network(name=network)
-        self.networks[network] = network_ooi
-        return network_ooi
-
-    def get_ooi_from_csv(self, ooi_type: str, values: Dict[str, str]):
-        network = self.get_or_create_network(values.get("network", "internet"))
-        save_ooi(ooi=network, organization=self.organization.code)
-        if ooi_type == "Hostname":
-            return Hostname(name=values["name"], network=network.reference)
-        if ooi_type == "URL":
-            return URL(raw=values["raw"], network=network.reference)
-        if ooi_type == "IPAddressV4":
-            return IPAddressV4(address=values["address"], network=network.reference)
-        if ooi_type == "IPAddressV6":
-            return IPAddressV6(address=values["address"], network=network.reference)
-
     def get_or_create_reference(self, ooi_type_name: str, value: str):
         ooi_type_name = next(filter(lambda x: x.casefold() == ooi_type_name.casefold(), self.ooi_types.keys()))
 
