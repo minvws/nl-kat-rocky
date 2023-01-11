@@ -138,7 +138,7 @@ def test_tasks_view_error(rf, user, organization, mocker, lazy_task_list_with_bo
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
     mock_scheduler_client.get_lazy_task_list.side_effect = HTTPError
 
-    request = rf.get(reverse("task_list", kwargs={"organization_code": organization.code}))
+    request = rf.get(reverse("task_list"))
     request.user = user
     request.session = "session"
     request._messages = FallbackStorage(request)
