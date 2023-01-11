@@ -1,4 +1,4 @@
-from rocky.views.bytes_raw import BytesRawView
+from rocky.views.bytes_raw import BytesRawView, zip_data
 from rocky.views.ooi_view import BaseOOIFormView, BaseOOIListView, BaseOOIDetailView, BaseDeleteOOIView
 from rocky.views.finding_add import get_finding_type_from_id, FindingAddView
 from rocky.views.finding_list import FindingListView
@@ -33,6 +33,7 @@ from rocky.views.handler404 import handler404
 
 __all__ = [
     "BytesRawView",
+    "zip_data",
     "BaseOOIFormView",
     "BaseOOIListView",
     "BaseOOIDetailView",
