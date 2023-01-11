@@ -13,9 +13,9 @@ from katalogus.client import get_katalogus
 from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
-from rocky.settings import OCTOPOES_API
+from rocky import settings
 import tagulous.models
-
+from rocky.exceptions import RockyError
 
 User = get_user_model()
 
@@ -73,27 +73,36 @@ class Organization(models.Model):
 
     def delete(self, *args, **kwargs):
         katalogus_client = get_katalogus(self.code)
-        # FIXME: Handle exceptions
-        katalogus_client.delete_organization()
+        try:
+            katalogus_client.delete_organization()
+        except Exception as e:
+            raise RockyError(f"Katalogus returned error deleting organization: {e}") from e
 
-        octopoes_client = OctopoesAPIConnector(OCTOPOES_API, client=self.code)
-        # FIXME: Handle exceptions
-        octopoes_client.delete_node()
+        octopoes_client = OctopoesAPIConnector(settings.OCTOPOES_API, client=self.code)
+        try:
+            octopoes_client.delete_node()
+        except Exception as e:
+            raise RockyError(f"Octopoes returned error deleting organization: {e}") from e
 
         super().delete(*args, **kwargs)
 
     @classmethod
-    def post_create(cls, instance, created, *args, **kwargs):
+    def post_create(cls, sender, instance, created, *args, **kwargs):
         if not created:
             return
 
         katalogus_client = get_katalogus(instance.code)
-        # FIXME: Handle exceptions
-        katalogus_client.create_organization(instance.name)
+        try:
+            katalogus_client.create_organization(instance.name)
+        except Exception as e:
+            raise RockyError(f"Katalogus returned error creating organization: {e}") from e
 
-        octopoes_client = OctopoesAPIConnector(OCTOPOES_API, client=instance.code)
-        # FIXME: Handle exceptions
-        octopoes_client.create_node()
+        octopoes_client = OctopoesAPIConnector(settings.OCTOPOES_API, client=instance.code)
+
+        try:
+            octopoes_client.create_node()
+        except Exception as e:
+            raise RockyError(f"Octopoes returned error creating organization: {e}") from e
 
 
 post_save.connect(Organization.post_create, sender=Organization)

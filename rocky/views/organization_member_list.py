@@ -9,6 +9,7 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from tools.enums import SCAN_LEVEL
 from tools.models import OrganizationMember
+from tools.enums import SCAN_LEVEL
 from tools.view_helpers import OrganizationMemberBreadcrumbsMixin
 from account.mixins import OrganizationsMixin
 
