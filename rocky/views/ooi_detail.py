@@ -3,6 +3,7 @@ from enum import Enum
 from typing import List
 
 from django.contrib import messages
+from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
 from octopoes.models import OOI
@@ -80,7 +81,7 @@ class OOIDetailView(
         breadcrumbs = super().build_breadcrumbs()
         return breadcrumbs
 
-    def get_scan_history(self) -> scheduler.PaginatedTasksResponse:
+    def get_scan_history(self) -> Page:
         scheduler_id = f"boefje-{self.request.active_organization.code}"
 
         filters = [
@@ -92,13 +93,13 @@ class OOIDetailView(
         if self.request.GET.get("scan_history_search"):
             filters.append(
                 {
-                    "field": "data__input_ooi",
+                    "field": "data__boefje__name",
                     "operator": "eq",
                     "value": self.request.GET.get("scan_history_search"),
                 }
             )
 
-        offset = (int(self.request.GET.get("scan_history_page", 1)) - 1) * self.scan_history_limit
+        page = int(self.request.GET.get("scan_history_page", 1))
 
         status = self.request.GET.get("scan_history_status")
 
@@ -110,17 +111,15 @@ class OOIDetailView(
         if self.request.GET.get("scan_history_to"):
             max_created_at = datetime.strptime(self.request.GET.get("scan_history_to"), "%Y-%m-%d")
 
-        scan_history = scheduler.client.list_tasks(
+        scan_history = scheduler.client.get_lazy_task_list(
             scheduler_id=scheduler_id,
-            limit=self.scan_history_limit,
-            offset=offset,
             status=status,
             min_created_at=min_created_at,
             max_created_at=max_created_at,
             filters=filters,
         )
 
-        return scan_history
+        return Paginator(scan_history, self.scan_history_limit).page(page)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -166,11 +165,7 @@ class OOIDetailView(
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = self.get_organization_indemnification
 
-        scan_history = self.get_scan_history()
-        context["scan_history"] = scan_history
-        context["scan_history_pages"] = list(range(1, scan_history.count // self.scan_history_limit + 1))
-        context["scan_history_page"] = int(self.request.GET.get("scan_history_page", 1))
-
+        context["scan_history"] = self.get_scan_history()
         context["scan_history_form_fields"] = [
             "scan_history_from",
             "scan_history_to",

@@ -53,97 +53,62 @@
 
     </div>
 
-    <table rf-selector="table-scan-history">
+    {% if not scan_history %}
+      {% translate 'No scans found for this object' %}}
+    {% else %}
+
+      <table rf-selector="table-scan-history">
         <thead>
-            <tr>
-                <th scope="col">{% translate 'Object' %}</th>
-                <th scope="col">{% translate 'Status' %}</th>
-                <th scope="col">{% translate 'Created date' %}</th>
-                <th scope="col">{% translate 'Scan Details' %}</th>
-            </tr>
+        <tr>
+          <th scope="col">{% translate 'Object' %}</th>
+          <th scope="col">{% translate 'Boefje' %}</th>
+          <th scope="col">{% translate 'Status' %}</th>
+          <th scope="col">{% translate 'Created date' %}</th>
+          {# FIXME: implement detail page according to designs #}
+          {# <th scope="col">{% translate 'Scan Details' %}</th> #}
+        </tr>
         </thead>
         <tbody>
-            {% for scan in scan_history.results %}
-            <tr>
-                <td>
-                    {% if scan.type == 'boefje' %}
-                        <a href="{% ooi_url 'ooi_detail' scan.p_item.data.input_ooi %}">{{ scan.p_item.data.input_ooi }}</a>
-                    {% elif scan.type == 'normalizer' %}
-                      <a href="{% ooi_url 'ooi_detail' scan.p_item.data.raw_data.boefje_meta.input_ooi %}">{{ scan.p_item.data.raw_data.boefje_meta.input_ooi }}</a>
-                    {% else %}
-                      {{ scan.id }}
-                    {% endif %}
-                </td>
+        {% for scan in scan_history %}
+          <tr>
+            <td>
+              {% if scan.type == 'boefje' %}
+                <a href="{% ooi_url 'ooi_detail' scan.p_item.data.input_ooi %}">{{ scan.p_item.data.input_ooi }}</a>
+              {% elif scan.type == 'normalizer' %}
+                <a href="{% ooi_url 'ooi_detail' scan.p_item.data.raw_data.boefje_meta.input_ooi %}">{{ scan.p_item.data.raw_data.boefje_meta.input_ooi }}</a>
+              {% else %}
+                {{ scan.id }}
+              {% endif %}
+            </td>
+            <td>
+              {% if scan.type == 'boefje' %}
+                <a href="{% url 'plugin_detail' scan.type scan.p_item.data.boefje.id %}">{{ scan.p_item.data.boefje.name }}</a>
+              {% elif scan.type == 'normalizer' %}
+                <a href="{% url 'plugin_detail' scan.type scan.p_item.data.normalizer.id %}">{{ scan.p_item.data.normalizer.name }}</a>
+              {% else %}
+                {{ scan.id }}
+              {% endif %}
+            </td>
 
-                {% if scan.status.value == 'completed' %}
-                  <td class="confirmation">{{ scan.status.value|capfirst }}</td>
-                {% elif scan.status.value == 'failed' %}
-                  <td class="warning">{{ scan.status.value|capfirst }}</td>
-                {% else %}
-                  <td>{{ scan.status.value|capfirst }}</td>
-                {% endif %}
+            {% if scan.status.value == 'completed' %}
+              <td class="confirmation">{{ scan.status.value|capfirst }}</td>
+            {% elif scan.status.value == 'failed' %}
+              <td class="warning">{{ scan.status.value|capfirst }}</td>
+            {% else %}
+              <td>{{ scan.status.value|capfirst }}</td>
+            {% endif %}
 
-                <td>{{ scan.created_at }}</td>
+            <td>{{ scan.created_at }}</td>
 
-                <td><a href="">{% translate 'View Details' %}</a></td>
-            </tr>
-            {% endfor %}
+            {# FIXME: implement detail page according to designs #}
+            {# <td><a href="">{% translate 'View Details' %}</a></td> #}
+          </tr>
+        {% endfor %}
         </tbody>
-    </table>
+      </table>
 
-    {% if scan_history_pages|length > 1 %}
-    <nav role="navigation"
-         class="pagination"
-        aria-label="{% translate 'Pagination' %}">
-        <ul>
-            {% if scan_history_page|add:'-1' > 0  %}
-                <li>
-                  <a aria-label="{% translate 'Previous Page' %}"
-                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'-1'%}">
-                    <span>{% translate 'Previous' %}</span>
-                  </a>
-                </li>
-            {% endif %}
-
-            {% if scan_history_page|add:'-4' > 1 %}
-                <li>
-                  <a aria-label="{% translate 'Five Pages Back' %}"
-                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'-5'%}">
-                    &hellip;
-                  </a>
-                </li>
-            {% endif %}
-
-            {% for i in scan_history_pages %}
-                {% if i|add:'-4' <= scan_history_page <= i|add:'4' %}
-                    <li>
-                        <a aria-label="{% translate 'Page' %} {{ i }}"
-                           href="{{ request.path }}?{% url_replace 'scan_history_page' i %}"
-                           {% if i == scan_history_page %}aria-current="true"{% endif %}>
-                            {{ i }}
-                        </a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-
-            {% if scan_history_page|add:'4' < scan_history_pages|length %}
-                <li>
-                  <a aria-label="{% translate 'Five Pages Forward' %}"
-                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'5'%}">
-                    &hellip;
-                  </a>
-                </li>
-            {% endif %}
-
-            {% if scan_history_page|add:'1' < scan_history_pages|length %}
-                <li>
-                  <a aria-label="{% translate 'Next Page' %}"
-                     href="{{ request.path }}?{% url_replace 'scan_history_page' scan_history_page|add:'1'%}">
-                    <span>{% translate 'Next' %}</span>
-                  </a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
     {% endif %}
+
 </div>
+
+{% include 'partials/list_paginator.html' with page_obj=scan_history page_param='scan_history_page' %}

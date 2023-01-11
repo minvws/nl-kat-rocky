@@ -1,6 +1,7 @@
 from datetime import datetime
 from logging import getLogger
 
+from django.core.paginator import Paginator, Page
 from django.http import FileResponse
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
@@ -35,7 +36,7 @@ class PluginDetailView(
     template_name = "plugin_detail.html"
     scan_history_limit = 10
 
-    def get_scan_history(self) -> scheduler.PaginatedTasksResponse:
+    def get_scan_history(self) -> Page:
         scheduler_id = f"{self.plugin['type']}-{self.request.active_organization.code}"
 
         filters = [
@@ -55,7 +56,7 @@ class PluginDetailView(
                 }
             )
 
-        offset = (int(self.request.GET.get("scan_history_page", 1)) - 1) * self.scan_history_limit
+        page = int(self.request.GET.get("scan_history_page", 1))
 
         status = self.request.GET.get("scan_history_status")
 
@@ -67,17 +68,15 @@ class PluginDetailView(
         if self.request.GET.get("scan_history_to"):
             max_created_at = datetime.strptime(self.request.GET.get("scan_history_to"), "%Y-%m-%d")
 
-        scan_history = scheduler.client.list_tasks(
+        scan_history = scheduler.client.get_lazy_task_list(
             scheduler_id=scheduler_id,
-            limit=self.scan_history_limit,
-            offset=offset,
             status=status,
             min_created_at=min_created_at,
             max_created_at=max_created_at,
             filters=filters,
         )
 
-        return scan_history
+        return Paginator(scan_history, self.scan_history_limit).page(page)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -92,10 +91,7 @@ class PluginDetailView(
             },
         ]
 
-        scan_history = self.get_scan_history()
-        context["scan_history"] = scan_history
-        context["scan_history_pages"] = list(range(1, scan_history.count // self.scan_history_limit + 1))
-        context["scan_history_page"] = int(self.request.GET.get("scan_history_page", 1))
+        context["scan_history"] = self.get_scan_history()
         context["scan_history_form_fields"] = [
             "scan_history_from",
             "scan_history_to",

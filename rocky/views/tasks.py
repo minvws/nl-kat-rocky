@@ -42,6 +42,8 @@ class DownloadTaskDetail(View):
 
 @class_view_decorator(otp_required)
 class TaskListView(ListView):
+    paginate_by = 20
+
     def setup(self, request, *args, **kwargs):
         self.scheduler_id = None
         self.org: Organization = request.active_organization
@@ -59,28 +61,23 @@ class TaskListView(ListView):
             return []
 
         scheduler_id = self.request.GET.get("scheduler_id", self.scheduler_id)
-        type = self.request.GET.get("type", self.plugin_type)
-        limit = self.request.GET.get("limit", TASK_LIMIT)
-        offset = self.request.GET.get("offset", 0)
+        type_ = self.request.GET.get("type", self.plugin_type)
         status = self.request.GET.get("status", None)
         min_created_at = self.request.GET.get("min_created_at", None)
         max_created_at = self.request.GET.get("max_created_at", None)
 
         try:
-            queryset = client.list_tasks(
+            return client.get_lazy_task_list(
                 scheduler_id=scheduler_id,
-                type=type,
-                limit=limit,
-                offset=offset,
+                object_type=type_,
                 status=status,
                 min_created_at=min_created_at,
                 max_created_at=max_created_at,
             )
-
-            return queryset.results
         except HTTPError:
             error_message = _("Fetching tasks failed: no connection with scheduler")
             messages.add_message(self.request, messages.ERROR, error_message)
+            return []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
