@@ -4,14 +4,16 @@
   {% translate 'Object list' as form_title %}
   <div>
     <h2>{{ form_title }}</h2>
-    <p class="warning"
-       role="group"
-       aria-label="{% translate 'scan level warning' %}">
-      {% blocktranslate trimmed with scan_level=plugin.scan_level %}
+    {% if select_oois_form.fields.ooi.choices %}
+      <p class="warning"
+         role="group"
+         aria-label="{% translate 'scan level warning' %}">
+        {% blocktranslate trimmed with scan_level=plugin.scan_level %}
         This boefje will only scan objects with a corresponding clearance level of <strong>L{{ scan_level }}</strong>
         or higher. There is no indemnification for this boefje to scan an OOI with a lower clearance level then <strong>L{{ scan_level }}</strong>. Use the filter to show OOI's with a lower clearance level.
       {% endblocktranslate %}
-    </p>
+      </p>
+    {% endif %}
     <div class="horizontal-view toolbar">
       <div>
         <form method="get" class="inline">

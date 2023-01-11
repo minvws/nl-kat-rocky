@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from enum import Enum
 from django.contrib import messages
+from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
 from octopoes.models import OOI
@@ -13,6 +14,7 @@ from tools.ooi_helpers import format_display
 from tools.models import Indemnification, OrganizationMember
 from katalogus.views.mixins import BoefjeMixin
 from account.mixins import OrganizationsMixin
+from rocky import scheduler
 
 
 class PageActions(Enum):
@@ -27,6 +29,7 @@ class OOIDetailView(
 ):
     template_name = "oois/ooi_detail.html"
     connector_form_class = ObservedAtForm
+    scan_history_limit = 10
 
     def post(self, request, *args, **kwargs):
         if "action" not in self.request.POST:
@@ -75,6 +78,46 @@ class OOIDetailView(
     def get_organization_indemnification(self):
         return Indemnification.objects.filter(organization=self.organization).exists()
 
+    def get_scan_history(self) -> Page:
+        scheduler_id = f"boefje-{self.request.active_organization.code}"
+
+        filters = [
+            {"field": "data__input_ooi", "operator": "eq", "value": self.get_ooi_id()},
+        ]
+
+        # FIXME: in context of ooi detail is doesn't make sense to search
+        # for an object name
+        if self.request.GET.get("scan_history_search"):
+            filters.append(
+                {
+                    "field": "data__boefje__name",
+                    "operator": "eq",
+                    "value": self.request.GET.get("scan_history_search"),
+                }
+            )
+
+        page = int(self.request.GET.get("scan_history_page", 1))
+
+        status = self.request.GET.get("scan_history_status")
+
+        min_created_at = None
+        if self.request.GET.get("scan_history_from"):
+            min_created_at = datetime.strptime(self.request.GET.get("scan_history_from"), "%Y-%m-%d")
+
+        max_created_at = None
+        if self.request.GET.get("scan_history_to"):
+            max_created_at = datetime.strptime(self.request.GET.get("scan_history_to"), "%Y-%m-%d")
+
+        scan_history = scheduler.client.get_lazy_task_list(
+            scheduler_id=scheduler_id,
+            status=status,
+            min_created_at=min_created_at,
+            max_created_at=max_created_at,
+            filters=filters,
+        )
+
+        return Paginator(scan_history, self.scan_history_limit).page(page)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -117,5 +160,14 @@ class OOIDetailView(
         context["severity_summary_totals"] = self.get_findings_severity_totals()
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = self.get_organization_indemnification()
+
+        context["scan_history"] = self.get_scan_history()
+        context["scan_history_form_fields"] = [
+            "scan_history_from",
+            "scan_history_to",
+            "scan_history_status",
+            "scan_history_search",
+            "scan_history_page",
+        ]
 
         return context
