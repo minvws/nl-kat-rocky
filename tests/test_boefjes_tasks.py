@@ -1,4 +1,3 @@
-from unittest.mock import call
 from pytest_django.asserts import assertContains
 from unittest.mock import call, MagicMock
 import pytest
