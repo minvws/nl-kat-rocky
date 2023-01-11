@@ -6,10 +6,11 @@ from django.contrib import messages
 from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
+from katalogus.utils import get_enabled_boefjes_for_ooi_class
 from octopoes.models import OOI
 from requests.exceptions import RequestException
 
-from katalogus.client import get_enabled_boefjes_for_ooi_class, get_katalogus
+from katalogus.client import get_katalogus
 from katalogus.views.mixins import BoefjeMixin
 from rocky import scheduler
 from rocky.views.mixins import OOIBreadcrumbsMixin, OrganizationIndemnificationMixin
