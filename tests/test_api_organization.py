@@ -71,7 +71,7 @@ class TestOrganizationViewSet(ViewSetTest):
         def test_it_returns_values(self, organizations, json):
             expected = express_organizations(organizations)
             actual = json
-            assert expected == actual
+            assert actual == expected
 
     class TestCreate(
         UsesPostMethod,
@@ -88,7 +88,7 @@ class TestOrganizationViewSet(ViewSetTest):
         def test_it_creates_new_organization(self, initial_ids, json):
             expected = initial_ids | {json["id"]}
             actual = set(Organization.objects.values_list("id", flat=True))
-            assert expected == actual
+            assert actual == expected
 
         def test_it_sets_expected_attrs(self, data, json):
             organization = Organization.objects.get(pk=json["id"])
@@ -101,7 +101,7 @@ class TestOrganizationViewSet(ViewSetTest):
 
             expected = express_organization(organization)
             actual = json
-            assert expected == actual
+            assert actual == expected
 
     class TestCreateKatalogusError(
         UsesPostMethod,
@@ -126,7 +126,7 @@ class TestOrganizationViewSet(ViewSetTest):
                     }
                 ],
             }
-            assert expected == json
+            assert json == expected
 
     class TestCreateOctopoesError(
         UsesPostMethod,
@@ -153,7 +153,7 @@ class TestOrganizationViewSet(ViewSetTest):
                     }
                 ],
             }
-            assert expected == json
+            assert json == expected
 
     class TestRetrieve(
         UsesGetMethod,
@@ -163,7 +163,7 @@ class TestOrganizationViewSet(ViewSetTest):
         def test_it_returns_organization(self, organization, json):
             expected = express_organization(organization)
             actual = json
-            assert expected == actual
+            assert actual == expected
 
     class TestUpdate(
         UsesPatchMethod,
@@ -197,7 +197,7 @@ class TestOrganizationViewSet(ViewSetTest):
 
             expected = express_organization(organization)
             actual = json
-            assert expected == actual
+            assert actual == expected
 
     class TestDestroy(
         UsesDeleteMethod,
@@ -212,7 +212,7 @@ class TestOrganizationViewSet(ViewSetTest):
         def test_it_deletes_organization(self, initial_ids, organization):
             expected = initial_ids - {organization.id}
             actual = set(Organization.objects.values_list("id", flat=True))
-            assert expected == actual
+            assert actual == expected
 
     class TestDestroyKatalogusError(
         UsesDeleteMethod,
@@ -235,7 +235,7 @@ class TestOrganizationViewSet(ViewSetTest):
                     }
                 ],
             }
-            assert expected == json
+            assert json == expected
 
     class TestDestroyOctopoesError(
         UsesDeleteMethod,
@@ -260,4 +260,4 @@ class TestOrganizationViewSet(ViewSetTest):
                     }
                 ],
             }
-            assert expected == json
+            assert json == expected
