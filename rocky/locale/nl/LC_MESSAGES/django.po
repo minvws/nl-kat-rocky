@@ -4549,17 +4549,10 @@ msgstr ""
 msgid "Currently filtered on:"
 msgstr "Momenteel gefilterd op:"
 
-#: templates/oois/ooi_list.html:25
-msgid "Showing "
-msgstr "Toont "
-
-#: templates/oois/ooi_list.html:25
-msgid "of"
-msgstr "van"
-
-#: templates/oois/ooi_list.html:25
-msgid "objects"
-msgstr "objecten"
+#: templates/oois/ooi_list.html:24
+#, python-format
+msgid "Showing %(length)s of %(total)s objects"
+msgstr "Toont %(length)s van %(total)s objecten"
 
 #: templates/oois/ooi_list.html:28
 #: templates/partials/elements/ooi_tree_condensed_table.html:8
