@@ -7,9 +7,14 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
-
+from unittest.mock import patch
 from rocky.views import UploadCSV
-from tools.models import OrganizationMember
+from tools.models import Organization, OrganizationMember
+
+
+@pytest.fixture
+def organization():
+    return Organization.objects.create(name="Test Organization", code="test")
 
 
 @pytest.fixture
@@ -61,7 +66,7 @@ EXPECTED_OOI_COUNTS = [2, 2, 6, 4, 4, 2]
 
 
 def test_upload_csv_page(rf, client, my_user, organization):
-    request = rf.get(reverse("upload_csv"))
+    request = rf.get(reverse("upload_csv", kwargs={"organization_code": organization.code}))
     request.user = my_user
     request.organization = organization
 
@@ -70,7 +75,7 @@ def test_upload_csv_page(rf, client, my_user, organization):
 
 
 def test_upload_csv_simple(rf, client, my_user, organization):
-    request = rf.get(reverse("upload_csv"))
+    request = rf.get(reverse("upload_csv", kwargs={"organization_code": organization.code}))
     request.user = my_user
     request.organization = organization
 
@@ -88,7 +93,10 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
 
-    request = rf.post(reverse("upload_csv"), {"object_type": "Hostname", "csv_file": example_file})
+    request = rf.post(
+        reverse("upload_csv", kwargs={"organization_code": organization.code}),
+        {"object_type": "Hostname", "csv_file": example_file},
+    )
     request.user = my_user
     request.organization = organization
 
@@ -113,7 +121,10 @@ def test_upload_csv(rf, client, my_user, organization, mocker, example_input, in
     example_file = BytesIO(example_input)
     example_file.name = f"{input_type}.csv"
 
-    request = rf.post(reverse("upload_csv"), {"object_type": input_type, "csv_file": example_file})
+    request = rf.post(
+        reverse("upload_csv", kwargs={"organization_code": organization.code}),
+        {"object_type": input_type, "csv_file": example_file},
+    )
     request.user = my_user
     request.organization = organization
 

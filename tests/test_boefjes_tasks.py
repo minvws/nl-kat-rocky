@@ -6,6 +6,12 @@ from django.urls import reverse
 from requests import HTTPError
 from rocky.scheduler import Task
 from rocky.views import BoefjesTaskListView
+from tools.models import Organization
+
+
+@pytest.fixture
+def organization():
+    return Organization.objects.create(name="Test Organization", code="test")
 
 
 @pytest.fixture
@@ -118,18 +124,6 @@ def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_b
             )
         ]
     )
-
-
-def test_tasks_view_no_organization(rf, user):
-    request = rf.get(reverse("task_list", kwargs={"organization_code": None}))
-    request.user = user
-    request.session = "session"
-    request._messages = FallbackStorage(request)
-
-    response = BoefjesTaskListView.as_view()(request)
-
-    assertContains(response, "error")
-    assertContains(response, "Organization could not be found")
 
 
 def test_tasks_view_error(rf, user, organization, mocker, lazy_task_list_with_boefje):

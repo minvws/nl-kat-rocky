@@ -13,7 +13,12 @@ from pytest_django.asserts import assertContains
 from requests import HTTPError
 
 from rocky.views import OOIReportView, OOIReportPDFView
-from tools.models import OrganizationMember, OOIInformation
+from tools.models import Organization, OrganizationMember, OOIInformation
+
+
+@pytest.fixture
+def organization():
+    return Organization.objects.create(name="Test Organization", code="test")
 
 
 @pytest.fixture
@@ -91,7 +96,10 @@ def setup_request(request, user, organization, mocker):
 
 
 def test_ooi_report(rf, my_user, organization, ooi_information, mocker):
-    request = rf.get(reverse("ooi_report"), {"ooi_id": "Finding|Network|testnetwork|KAT-000"})
+    request = rf.get(
+        reverse("ooi_report", kwargs={"organization_code": organization.code}),
+        {"ooi_id": "Finding|Network|testnetwork|KAT-000"},
+    )
     request.resolver_match = resolve("/objects/report/")
 
     setup_request(request, my_user, organization, mocker)
@@ -135,7 +143,10 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
 
 def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mocker):
 
-    request = rf.get(reverse("ooi_pdf_report"), {"ooi_id": "Finding|Network|testnetwork|KAT-000"})
+    request = rf.get(
+        reverse("ooi_pdf_report", kwargs={"organization_code": organization.code}),
+        {"ooi_id": "Finding|Network|testnetwork|KAT-000"},
+    )
     request.resolver_match = resolve("/objects/report/pdf/")
 
     setup_request(request, my_user, organization, mocker)
@@ -149,4 +160,8 @@ def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mock
     response = OOIReportPDFView.as_view()(request)
 
     assert response.status_code == 302
-    assert response.url == reverse("ooi_report") + "?ooi_id=Finding%7CNetwork%7Ctestnetwork%7CKAT-000"
+    assert (
+        response.url
+        == reverse("ooi_report", kwargs={"organization_code": organization.code})
+        + "?ooi_id=Finding%7CNetwork%7Ctestnetwork%7CKAT-000"
+    )

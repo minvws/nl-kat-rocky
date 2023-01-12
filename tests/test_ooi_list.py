@@ -17,6 +17,11 @@ from tools.models import Organization, OrganizationMember
 
 
 @pytest.fixture
+def organization():
+    return Organization.objects.create(name="Test Organization", code="test")
+
+
+@pytest.fixture
 def my_user(user, organization):
     OrganizationMember.objects.create(
         user=user,
@@ -38,11 +43,6 @@ def my_user(user, organization):
     device.token_set.create(token=user.get_username())
 
     return user
-
-
-@pytest.fixture
-def organization():
-    return Organization.objects.create(name="Organization Test", code="_test")
 
 
 def setup_octopoes_mock() -> Mock:
@@ -69,9 +69,9 @@ def setup_request(request, user, organization):
 
 
 def test_ooi_list(rf, my_user, organization):
-
-    request = rf.get(reverse("ooi_list"))
-    request.resolver_match = resolve("/objects/")
+    url = reverse("ooi_list", kwargs={"organization_code": organization.code})
+    request = rf.get(url)
+    request.resolver_match = resolve(url)
 
     request.user = my_user
     request.organization = organization
@@ -90,7 +90,7 @@ def test_ooi_list_with_clearance_type_filter_and_clearance_level_filter(rf, my_u
         reverse("ooi_list", kwargs={"organization_code": organization.code}),
         {"clearance_level": [0, 1], "clearance_type": ["declared", "inherited"]},
     )
-    request.resolver_match = resolve("/objects/")
+    request.resolver_match = resolve(organization.code + "/objects/")
 
     request.user = my_user
     request.organization = organization
