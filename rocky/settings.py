@@ -102,7 +102,7 @@ INSTALLED_APPS = [
     "django_password_validators.password_history",
     "rest_framework",
     "tagulous",
-    "drf_standardized_errors",
+    # "drf_standardized_errors",
 ]
 
 MIDDLEWARE = [

@@ -4,19 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from django.urls.base import reverse_lazy, reverse
 from datetime import date, datetime, timezone
 from enum import Enum
-from typing import Optional, List, TypedDict, Dict, Any
+from typing import List, TypedDict, Dict, Any
 from urllib.parse import urlparse, urlunparse, urlencode
 from django.contrib import messages
-from django.http.request import HttpRequest
-from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models.types import OOI_TYPES
 from account.mixins import OrganizationsMixin
-from tools.models import Organization
-
-
-class RockyHttpRequest(HttpRequest):
-    active_organization: Optional[Organization]
-    octopoes_api_connector: Optional[OctopoesAPIConnector]
 
 
 def convert_date_to_datetime(d: date) -> datetime:
