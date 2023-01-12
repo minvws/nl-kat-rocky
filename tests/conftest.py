@@ -1,7 +1,5 @@
 from unittest.mock import patch
-
 import pytest
-
 from tools.models import Organization
 
 

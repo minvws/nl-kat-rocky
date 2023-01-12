@@ -1,5 +1,4 @@
 from io import BytesIO
-
 import pytest
 from django.contrib.auth.models import Permission, ContentType
 from django.contrib.messages.middleware import MessageMiddleware
@@ -9,12 +8,7 @@ from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
 from unittest.mock import patch
 from rocky.views import UploadCSV
-from tools.models import Organization, OrganizationMember
-
-
-@pytest.fixture
-def organization():
-    return Organization.objects.create(name="Test Organization", code="test")
+from tools.models import OrganizationMember
 
 
 @pytest.fixture
@@ -65,6 +59,8 @@ INPUT_TYPES = ["Hostname", "Hostname", "IPAddressV4", "IPAddressV6", "URL", "URL
 EXPECTED_OOI_COUNTS = [2, 2, 6, 4, 4, 2]
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("organization")
 def test_upload_csv_page(rf, client, my_user, organization):
     request = rf.get(reverse("upload_csv", kwargs={"organization_code": organization.code}))
     request.user = my_user
@@ -74,6 +70,8 @@ def test_upload_csv_page(rf, client, my_user, organization):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("organization")
 def test_upload_csv_simple(rf, client, my_user, organization):
     request = rf.get(reverse("upload_csv", kwargs={"organization_code": organization.code}))
     request.user = my_user
@@ -87,6 +85,8 @@ def test_upload_csv_simple(rf, client, my_user, organization):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("organization")
 def test_upload_bad_input(rf, client, my_user, organization, mocker):
     mocker.patch("rocky.views.upload_csv.save_ooi")
 
@@ -113,7 +113,9 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
 
 
 @pytest.mark.parametrize(
-    "example_input, input_type, expected_ooi_counts", zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS)
+    "organization",
+    "example_input, input_type, expected_ooi_counts",
+    zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
 )
 def test_upload_csv(rf, client, my_user, organization, mocker, example_input, input_type, expected_ooi_counts):
     mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")

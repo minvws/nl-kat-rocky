@@ -1,5 +1,4 @@
 from unittest.mock import Mock
-
 import pytest
 from django.contrib.auth.models import Permission, ContentType
 from django.contrib.messages.middleware import MessageMiddleware
@@ -11,14 +10,8 @@ from octopoes.models import ScanLevel, ScanProfileType
 from octopoes.models.pagination import Paginated
 from octopoes.models.types import OOIType, Network
 from pytest_django.asserts import assertContains
-
 from rocky.views import OOIListView
-from tools.models import Organization, OrganizationMember
-
-
-@pytest.fixture
-def organization():
-    return Organization.objects.create(name="Test Organization", code="test")
+from tools.models import OrganizationMember
 
 
 @pytest.fixture
@@ -51,6 +44,8 @@ def setup_octopoes_mock() -> Mock:
     return mock
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("organization")
 def setup_request(request, user, organization):
     """
     Setup request with middlewares, user, organization and octopoes
@@ -68,6 +63,8 @@ def setup_request(request, user, organization):
     return request
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("organization")
 def test_ooi_list(rf, my_user, organization):
     url = reverse("ooi_list", kwargs={"organization_code": organization.code})
     request = rf.get(url)
@@ -85,6 +82,8 @@ def test_ooi_list(rf, my_user, organization):
     assertContains(response, "testnetwork")
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("organization")
 def test_ooi_list_with_clearance_type_filter_and_clearance_level_filter(rf, my_user, organization):
     request = rf.get(
         reverse("ooi_list", kwargs={"organization_code": organization.code}),

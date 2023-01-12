@@ -6,12 +6,6 @@ from django.urls import reverse
 from requests import HTTPError
 from rocky.scheduler import Task
 from rocky.views import BoefjesTaskListView
-from tools.models import Organization
-
-
-@pytest.fixture
-def organization():
-    return Organization.objects.create(name="Test Organization", code="test")
 
 
 @pytest.fixture
@@ -76,6 +70,7 @@ def lazy_task_list_with_boefje() -> MagicMock:
     return mock
 
 
+@pytest.mark.usefixtures("organization")
 def test_boefjes_tasks(rf, user, organization, mocker, lazy_task_list_empty):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_empty
@@ -101,6 +96,7 @@ def test_boefjes_tasks(rf, user, organization, mocker, lazy_task_list_empty):
     )
 
 
+@pytest.mark.usefixtures("organization")
 def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_boefje):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
@@ -126,6 +122,7 @@ def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_b
     )
 
 
+@pytest.mark.usefixtures("organization")
 def test_tasks_view_error(rf, user, organization, mocker, lazy_task_list_with_boefje):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
