@@ -1,76 +1,11 @@
 from pytest_django.asserts import assertContains
-from unittest.mock import call, MagicMock
-import pytest
+from unittest.mock import call
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.urls import reverse
 from requests import HTTPError
-from rocky.scheduler import Task
 from rocky.views import BoefjesTaskListView
 
 
-@pytest.fixture
-def lazy_task_list_empty() -> MagicMock:
-    mock = MagicMock()
-    mock.__getitem__.return_value = []
-    mock.count.return_value = 0
-    return mock
-
-
-@pytest.fixture
-def lazy_task_list_with_boefje() -> MagicMock:
-    mock = MagicMock()
-    mock.__getitem__.return_value = [
-        Task.parse_obj(
-            {
-                "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
-                "hash": "19ed51514b37d42f79c5e95469956b05",
-                "scheduler_id": "boefje-test",
-                "type": "boefje",
-                "p_item": {
-                    "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
-                    "hash": "19ed51514b37d42f79c5e95469956b05",
-                    "priority": 1,
-                    "data": {
-                        "id": "1b20f85f63d54baabe9ef3f19d6e3fae",
-                        "boefje": {
-                            "id": "dns-records",
-                            "name": "DnsRecords",
-                            "description": "Fetch the DNS record(s) of a hostname",
-                            "repository_id": None,
-                            "version": None,
-                            "scan_level": 1,
-                            "consumes": ["Hostname"],
-                            "produces": [
-                                "DNSNSRecord",
-                                "DNSARecord",
-                                "DNSCNAMERecord",
-                                "DNSMXRecord",
-                                "DNSZone",
-                                "Hostname",
-                                "DNSAAAARecord",
-                                "IPAddressV4",
-                                "DNSSOARecord",
-                                "DNSTXTRecord",
-                                "IPAddressV6",
-                                "Network",
-                                "NXDOMAIN",
-                            ],
-                        },
-                        "input_ooi": "Hostname|internet|mispo.es.",
-                        "organization": "_dev",
-                    },
-                },
-                "status": "completed",
-                "created_at": "2022-08-09 11:53:41.378292",
-                "modified_at": "2022-08-09 11:54:21.002838",
-            }
-        )
-    ]
-    mock.count.return_value = 1
-    return mock
-
-
-@pytest.mark.usefixtures("organization")
 def test_boefjes_tasks(rf, user, organization, mocker, lazy_task_list_empty):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_empty
@@ -96,7 +31,6 @@ def test_boefjes_tasks(rf, user, organization, mocker, lazy_task_list_empty):
     )
 
 
-@pytest.mark.usefixtures("organization")
 def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_boefje):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
@@ -122,7 +56,6 @@ def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_b
     )
 
 
-@pytest.mark.usefixtures("organization")
 def test_tasks_view_error(rf, user, organization, mocker, lazy_task_list_with_boefje):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje

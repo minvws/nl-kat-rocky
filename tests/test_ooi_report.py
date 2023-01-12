@@ -1,7 +1,5 @@
 from io import BytesIO
 from unittest.mock import Mock
-import pytest
-from django.contrib.auth.models import Permission, ContentType
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse, resolve
@@ -11,38 +9,6 @@ from octopoes.models.tree import ReferenceTree
 from pytest_django.asserts import assertContains
 from requests import HTTPError
 from rocky.views import OOIReportView, OOIReportPDFView
-from tools.models import OrganizationMember, OOIInformation
-
-
-@pytest.fixture
-def my_user(user, organization):
-    OrganizationMember.objects.create(
-        user=user,
-        organization=organization,
-        verified=True,
-        authorized=True,
-        status=OrganizationMember.STATUSES.ACTIVE,
-        trusted_clearance_level=4,
-        acknowledged_clearance_level=4,
-    )
-    content_type = ContentType.objects.get_by_natural_key("tools", "organizationmember")
-    permission, _ = Permission.objects.get_or_create(
-        content_type=content_type,
-        codename="can_scan_organization",
-    )
-    user.user_permissions.add(permission)
-
-    device = user.staticdevice_set.create(name="default")
-    device.token_set.create(token=user.get_username())
-
-    return user
-
-
-@pytest.fixture
-def ooi_information() -> OOIInformation:
-    data = {"description": "Fake description...", "recommendation": "Fake recommendation...", "risk": "Low"}
-    ooi_information = OOIInformation.objects.create(id="KATFindingType|KAT-000", data=data, consult_api=False)
-    return ooi_information
 
 
 def setup_octopoes_mock() -> Mock:
@@ -71,8 +37,6 @@ def setup_octopoes_mock() -> Mock:
     return mock
 
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("organization")
 def setup_request(request, user, organization, mocker):
     """
     Setup request with middlewares, user, organization and octopoes
@@ -90,8 +54,6 @@ def setup_request(request, user, organization, mocker):
     return request
 
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("organization")
 def test_ooi_report(rf, my_user, organization, ooi_information, mocker):
     request = rf.get(
         reverse("ooi_report", kwargs={"organization_code": organization.code}),
@@ -109,8 +71,6 @@ def test_ooi_report(rf, my_user, organization, ooi_information, mocker):
     assertContains(response, "Fake recommendation...")
 
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("organization")
 def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
     request = rf.get(reverse("ooi_pdf_report"), {"ooi_id": "Finding|Network|testnetwork|KAT-000"})
     request.resolver_match = resolve("/objects/report/pdf/")
@@ -140,8 +100,6 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
     assert report_data_param["findings_grouped"]["KAT-000"]["list"][0]["description"] == "Fake description..."
 
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("organization")
 def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mocker):
 
     request = rf.get(

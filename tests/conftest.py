@@ -1,6 +1,8 @@
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import pytest
-from tools.models import Organization
+from django.contrib.auth.models import Permission, ContentType
+from rocky.scheduler import Task
+from tools.models import Organization, OrganizationMember, OOIInformation
 
 
 @pytest.fixture
@@ -20,6 +22,30 @@ def user(django_user_model):
 
 
 @pytest.fixture
+def my_user(user, organization):
+    OrganizationMember.objects.create(
+        user=user,
+        organization=organization,
+        verified=True,
+        authorized=True,
+        status=OrganizationMember.STATUSES.ACTIVE,
+        trusted_clearance_level=4,
+        acknowledged_clearance_level=4,
+    )
+    content_type = ContentType.objects.get_by_natural_key("tools", "organizationmember")
+    permission, _ = Permission.objects.get_or_create(
+        content_type=content_type,
+        codename="can_scan_organization",
+    )
+    user.user_permissions.add(permission)
+
+    device = user.staticdevice_set.create(name="default")
+    device.token_set.create(token=user.get_username())
+
+    return user
+
+
+@pytest.fixture
 def mock_katalogus(mocker):
     mocker.patch("tools.models.get_katalogus")
 
@@ -27,3 +53,72 @@ def mock_katalogus(mocker):
 @pytest.fixture
 def mock_octopoes(mocker):
     mocker.patch("tools.models.OctopoesAPIConnector")
+
+
+@pytest.fixture
+def lazy_task_list_empty() -> MagicMock:
+    mock = MagicMock()
+    mock.__getitem__.return_value = []
+    mock.count.return_value = 0
+    return mock
+
+
+@pytest.fixture
+def lazy_task_list_with_boefje() -> MagicMock:
+    mock = MagicMock()
+    mock.__getitem__.return_value = [
+        Task.parse_obj(
+            {
+                "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
+                "hash": "19ed51514b37d42f79c5e95469956b05",
+                "scheduler_id": "boefje-test",
+                "type": "boefje",
+                "p_item": {
+                    "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
+                    "hash": "19ed51514b37d42f79c5e95469956b05",
+                    "priority": 1,
+                    "data": {
+                        "id": "1b20f85f63d54baabe9ef3f19d6e3fae",
+                        "boefje": {
+                            "id": "dns-records",
+                            "name": "DnsRecords",
+                            "description": "Fetch the DNS record(s) of a hostname",
+                            "repository_id": None,
+                            "version": None,
+                            "scan_level": 1,
+                            "consumes": ["Hostname"],
+                            "produces": [
+                                "DNSNSRecord",
+                                "DNSARecord",
+                                "DNSCNAMERecord",
+                                "DNSMXRecord",
+                                "DNSZone",
+                                "Hostname",
+                                "DNSAAAARecord",
+                                "IPAddressV4",
+                                "DNSSOARecord",
+                                "DNSTXTRecord",
+                                "IPAddressV6",
+                                "Network",
+                                "NXDOMAIN",
+                            ],
+                        },
+                        "input_ooi": "Hostname|internet|mispo.es.",
+                        "organization": "_dev",
+                    },
+                },
+                "status": "completed",
+                "created_at": "2022-08-09 11:53:41.378292",
+                "modified_at": "2022-08-09 11:54:21.002838",
+            }
+        )
+    ]
+    mock.count.return_value = 1
+    return mock
+
+
+@pytest.fixture
+def ooi_information() -> OOIInformation:
+    data = {"description": "Fake description...", "recommendation": "Fake recommendation...", "risk": "Low"}
+    ooi_information = OOIInformation.objects.create(id="KATFindingType|KAT-000", data=data, consult_api=False)
+    return ooi_information
