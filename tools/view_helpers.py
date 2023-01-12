@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls.base import reverse_lazy, reverse
 from datetime import date, datetime, timezone
 from enum import Enum
-from typing import Optional, List, TypedDict, Dict, Any
+from typing import List, TypedDict, Dict, Any
 from urllib.parse import urlparse, urlunparse, urlencode
 from django.contrib import messages
 from octopoes.models.types import OOI_TYPES

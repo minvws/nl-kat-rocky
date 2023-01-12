@@ -6,7 +6,6 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
-from unittest.mock import patch
 from rocky.views import UploadCSV
 from tools.models import OrganizationMember
 
@@ -115,9 +114,9 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
 @pytest.mark.parametrize(
     "organization",
     "example_input, input_type, expected_ooi_counts",
-    zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
+    [CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS],
 )
-def test_upload_csv(rf, client, my_user, organization, mocker, example_input, input_type, expected_ooi_counts):
+def test_upload_csv(rf, client, my_user, mocker, organization, example_input, input_type, expected_ooi_counts):
     mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")
 
     example_file = BytesIO(example_input)
