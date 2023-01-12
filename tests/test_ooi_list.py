@@ -13,7 +13,7 @@ from octopoes.models.types import OOIType, Network
 from pytest_django.asserts import assertContains
 
 from rocky.views import OOIListView
-from tools.models import OrganizationMember
+from tools.models import Organization, OrganizationMember
 
 
 @pytest.fixture
@@ -40,13 +40,18 @@ def my_user(user, organization):
     return user
 
 
+@pytest.fixture
+def organization():
+    return Organization.objects.create(name="Organization Test", code="_test")
+
+
 def setup_octopoes_mock() -> Mock:
     mock = Mock()
     mock.list.return_value = Paginated[OOIType](count=200, items=[Network(name="testnetwork")] * 150)
     return mock
 
 
-def setup_request(request, user, active_organization):
+def setup_request(request, user, organization):
     """
     Setup request with middlewares, user, organization and octopoes
     """
@@ -56,7 +61,7 @@ def setup_request(request, user, active_organization):
     request = MessageMiddleware(lambda r: r)(request)
 
     request.user = user
-    request.active_organization = active_organization
+    request.organization = organization
 
     request.octopoes_api_connector = setup_octopoes_mock()
 
@@ -69,7 +74,7 @@ def test_ooi_list(rf, my_user, organization):
     request.resolver_match = resolve("/objects/")
 
     request.user = my_user
-    request.active_organization = organization
+    request.organization = organization
 
     setup_request(request, my_user, organization)
 
@@ -81,11 +86,14 @@ def test_ooi_list(rf, my_user, organization):
 
 
 def test_ooi_list_with_clearance_type_filter_and_clearance_level_filter(rf, my_user, organization):
-    request = rf.get(reverse("ooi_list"), {"clearance_level": [0, 1], "clearance_type": ["declared", "inherited"]})
+    request = rf.get(
+        reverse("ooi_list", kwargs={"organization_code": organization.code}),
+        {"clearance_level": [0, 1], "clearance_type": ["declared", "inherited"]},
+    )
     request.resolver_match = resolve("/objects/")
 
     request.user = my_user
-    request.active_organization = organization
+    request.organization = organization
 
     setup_request(request, my_user, organization)
 

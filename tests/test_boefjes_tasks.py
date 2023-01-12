@@ -74,9 +74,9 @@ def test_boefjes_tasks(rf, user, organization, mocker, lazy_task_list_empty):
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_empty
 
-    request = rf.get(reverse("boefjes_task_list"))
+    request = rf.get(reverse("boefjes_task_list", kwargs={"organization_code": organization.code}))
     request.user = user
-    request.active_organization = organization
+    request.organization = organization
 
     response = BoefjesTaskListView.as_view()(request)
 
@@ -99,7 +99,7 @@ def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_b
     mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
     mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
 
-    request = rf.get(reverse("task_list"))
+    request = rf.get(reverse("task_list", kwargs={"organization_code": organization.code}))
     request.user = user
 
     response = BoefjesTaskListView.as_view()(request)
@@ -121,9 +121,8 @@ def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_b
 
 
 def test_tasks_view_no_organization(rf, user):
-    request = rf.get(reverse("task_list"))
+    request = rf.get(reverse("task_list", kwargs={"organization_code": None}))
     request.user = user
-    request.active_organization = None
     request.session = "session"
     request._messages = FallbackStorage(request)
 

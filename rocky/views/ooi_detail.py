@@ -79,7 +79,7 @@ class OOIDetailView(
         return Indemnification.objects.filter(organization=self.organization).exists()
 
     def get_scan_history(self) -> Page:
-        scheduler_id = f"boefje-{self.request.active_organization.code}"
+        scheduler_id = f"boefje-{self.organization.code}"
 
         filters = [
             {"field": "data__input_ooi", "operator": "eq", "value": self.get_ooi_id()},

@@ -63,7 +63,7 @@ EXPECTED_OOI_COUNTS = [2, 2, 6, 4, 4, 2]
 def test_upload_csv_page(rf, client, my_user, organization):
     request = rf.get(reverse("upload_csv"))
     request.user = my_user
-    request.active_organization = organization
+    request.organization = organization
 
     response = UploadCSV.as_view()(request)
     assert response.status_code == 200
@@ -72,7 +72,7 @@ def test_upload_csv_page(rf, client, my_user, organization):
 def test_upload_csv_simple(rf, client, my_user, organization):
     request = rf.get(reverse("upload_csv"))
     request.user = my_user
-    request.active_organization = organization
+    request.organization = organization
 
     request = SessionMiddleware(lambda r: r)(request)
     request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
@@ -90,7 +90,7 @@ def test_upload_bad_input(rf, client, my_user, organization, mocker):
 
     request = rf.post(reverse("upload_csv"), {"object_type": "Hostname", "csv_file": example_file})
     request.user = my_user
-    request.active_organization = organization
+    request.organization = organization
 
     request = SessionMiddleware(lambda r: r)(request)
     request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
@@ -115,7 +115,7 @@ def test_upload_csv(rf, client, my_user, organization, mocker, example_input, in
 
     request = rf.post(reverse("upload_csv"), {"object_type": input_type, "csv_file": example_file})
     request.user = my_user
-    request.active_organization = organization
+    request.organization = organization
 
     request = SessionMiddleware(lambda r: r)(request)
     request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id

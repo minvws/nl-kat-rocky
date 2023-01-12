@@ -73,7 +73,7 @@ def setup_octopoes_mock() -> Mock:
     return mock
 
 
-def setup_request(request, user, active_organization, mocker):
+def setup_request(request, user, organization, mocker):
     """
     Setup request with middlewares, user, organization and octopoes
     """
@@ -83,7 +83,7 @@ def setup_request(request, user, active_organization, mocker):
     request = MessageMiddleware(lambda r: r)(request)
 
     request.user = user
-    request.active_organization = active_organization
+    request.organization = organization
 
     request.octopoes_api_connector = setup_octopoes_mock()
 
