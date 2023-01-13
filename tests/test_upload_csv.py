@@ -58,8 +58,8 @@ def test_upload_csv_simple(rf, my_user, organization):
     assert response.status_code == 200
 
 
-def test_upload_bad_input(rf, my_user, organization, mocker):
-    mocker.patch("rocky.views.upload_csv.save_ooi")
+def test_upload_bad_input(rf, my_user, organization, mock_get_octopoes_api_connector):
+    # mocker.patch("rocky.views.upload_csv.save_ooi")
 
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
@@ -88,14 +88,14 @@ def test_upload_bad_input(rf, my_user, organization, mocker):
     "example_input, input_type, expected_ooi_counts",
     zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
 )
-def test_upload_csv(rf, my_user, mocker, organization, example_input, input_type, expected_ooi_counts):
-    mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")
-
+def test_upload_csv(rf, my_user, mock_get_octopoes_api_connector, organization, example_input, input_type,
+                    expected_ooi_counts):
     example_file = BytesIO(example_input)
     example_file.name = f"{input_type}.csv"
 
+    kwargs = {"organization_code": organization.code}
     request = rf.post(
-        reverse("upload_csv", kwargs={"organization_code": organization.code}),
+        reverse("upload_csv", kwargs=kwargs),
         {"object_type": input_type, "csv_file": example_file},
     )
     request.user = my_user
@@ -105,10 +105,10 @@ def test_upload_csv(rf, my_user, mocker, organization, example_input, input_type
     request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
     request = OTPMiddleware(lambda r: r)(request)
     request = MessageMiddleware(lambda r: r)(request)
-    response = UploadCSV.as_view()(request)
+    response = UploadCSV.as_view()(request, **kwargs)
 
     assert response.status_code == 302
-    assert mock_save_ooi.call_count == expected_ooi_counts
+    assert mock_get_octopoes_api_connector().save_declaration.call_count == expected_ooi_counts
 
     messages = list(request._messages)
     assert "successfully added" in messages[0].message
