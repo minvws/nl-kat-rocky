@@ -11,21 +11,19 @@ from django.urls.base import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 from django_otp.decorators import otp_required
+from pydantic import ValidationError
+from two_factor.views.utils import class_view_decorator
+
+from account.mixins import OrganizationView
 from octopoes.api.models import Declaration
-from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models import Reference
 from octopoes.models.ooi.dns.zone import Hostname
 from octopoes.models.ooi.network import Network, IPAddressV4, IPAddressV6
 from octopoes.models.ooi.web import URL
-from pydantic import ValidationError
-from two_factor.views.utils import class_view_decorator
-
-from rocky.settings import OCTOPOES_API
 from tools.forms.upload_csv import (
     UploadCSVForm,
     CSV_ERRORS,
 )
-from account.mixins import OrganizationsMixin
 
 CSV_CRITERIAS = [
     _("Add column titles. Followed by each object on a new line."),
@@ -44,13 +42,8 @@ CSV_CRITERIAS = [
 ]
 
 
-def save_ooi(ooi, organization) -> None:
-    connector = OctopoesAPIConnector(OCTOPOES_API, organization)
-    connector.save_declaration(Declaration(ooi=ooi, valid_time=datetime.now(timezone.utc)))
-
-
 @class_view_decorator(otp_required)
-class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
+class UploadCSV(PermissionRequiredMixin, OrganizationView, FormView):
     template_name = "upload_csv.html"
     form_class = UploadCSVForm
     permission_required = "tools.can_scan_organization"
@@ -118,7 +111,9 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
             if is_reference and required:
                 try:
                     referenced_ooi = self.get_or_create_reference(field, values.get(field))
-                    save_ooi(ooi=referenced_ooi, organization=self.organization.code)
+                    self.octopoes_api_connector.save_declaration(
+                        Declaration(ooi=referenced_ooi, valid_time=datetime.now(timezone.utc))
+                    )
                     kwargs[field] = referenced_ooi.reference
                 except IndexError:
                     if required:
@@ -157,7 +152,9 @@ class UploadCSV(PermissionRequiredMixin, OrganizationsMixin, FormView):
                     continue  # skip empty lines
                 try:
                     ooi = self.get_ooi_from_csv(object_type, row)
-                    save_ooi(ooi=ooi, organization=self.organization.code)
+                    self.octopoes_api_connector.save_declaration(
+                        Declaration(ooi=ooi, valid_time=datetime.now(timezone.utc))
+                    )
                 except ValidationError:
                     rows_with_error.append(row_number)
 

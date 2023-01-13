@@ -1,22 +1,23 @@
 import json
+
 from django.contrib import messages
 from django.http import FileResponse, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import View
 from django.views.generic.list import ListView
 from django_otp.decorators import otp_required
 from requests import HTTPError
 from two_factor.views.utils import class_view_decorator
+
+from account.mixins import OrganizationView
 from rocky.scheduler import client
-from account.mixins import OrganizationsMixin
 
 TASK_LIMIT = 50
 
 
 @class_view_decorator(otp_required)
-class DownloadTaskDetail(OrganizationsMixin, View):
+class DownloadTaskDetail(OrganizationView):
     def get(self, request, *args, **kwargs):
         task_id = kwargs["task_id"]
         filename = "task_" + task_id + ".json"
@@ -39,7 +40,7 @@ class DownloadTaskDetail(OrganizationsMixin, View):
 
 
 @class_view_decorator(otp_required)
-class TaskListView(OrganizationsMixin, ListView):
+class TaskListView(OrganizationView, ListView):
     paginate_by = 20
 
     def get(self, request, *args, **kwargs):

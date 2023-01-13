@@ -1,29 +1,42 @@
+from django.http import Http404
 from django.views import View
+
+from octopoes.connector.octopoes import OctopoesAPIConnector
+from rocky.settings import OCTOPOES_API
 from tools.models import Organization, OrganizationMember
-from django.http import Http404, HttpResponseRedirect
 
 
-class OrganizationsMixin(View):
-    organization = None
-    organizationmembers = None
+def get_octopoes_api_connector(base_uri: str, organization_code: str):
+    return OctopoesAPIConnector(base_uri, organization_code)
+
+
+class OrganizationView(View):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.organization = None
+        self.octopoes_api_connector = None
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect("login")
-        if "organization_code" in kwargs:
-            try:
-                self.organization = Organization.objects.get(code=kwargs["organization_code"])
-                if request.user.is_superuser:
-                    self.organizationmembers = OrganizationMember.objects.filter(organization=self.organization)
-                else:
-                    self.organizationmembers = OrganizationMember.objects.filter(
-                        user=self.request.user, organization=self.organization
-                    )
-                if not self.organizationmembers and not request.user.is_superuser:
-                    raise Http404()
-            except Organization.DoesNotExist:
-                raise Http404()
+        organization_code = kwargs["organization_code"]
+        try:
+            self.organization = Organization.objects.get(code=organization_code)
+        except Organization.DoesNotExist:
+            self.organization = None
+        self.octopoes_api_connector = get_octopoes_api_connector(OCTOPOES_API, organization_code)
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if self.organization is None:
+            raise Http404()
+
+        if (
+            not request.user.is_superuser
+            and not OrganizationMember.objects.filter(user=self.request.user, organization=self.organization).exists()
+        ):
+            raise Http404()
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

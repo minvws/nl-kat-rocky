@@ -1,9 +1,12 @@
 from typing import Dict, List, Union, Any
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
 from katalogus.client import Plugin
-from tools.forms import BaseRockyForm, CheckboxGroup, Choice, Choices, ChoicesGroups
+from tools.forms.settings import Choice
+from tools.forms.base import BaseRockyForm, CheckboxGroup, Choices, ChoicesGroups
 
 
 class CheckboxGroupBoefjeTiles(CheckboxGroup):
@@ -27,13 +30,11 @@ class SelectBoefjeForm(BaseRockyForm):
     def __init__(
         self,
         boefjes: List[Plugin],
-        organization_code: str,
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
         self.boefjes = boefjes
-        self.organization_code = organization_code
         self._build_form()
 
     def clean(self):
@@ -45,12 +46,7 @@ class SelectBoefjeForm(BaseRockyForm):
 
         return data
 
-    def set_organization_code(self):
-        for item in self.boefjes:
-            item["boefje"].organization_code = self.organization_code
-
     def _build_form(self) -> None:
-        self.set_organization_code()
         self.set_choices_for_field("boefje", self._get_choices(self.boefjes))
         self.set_required_options_for_widget(
             "boefje",

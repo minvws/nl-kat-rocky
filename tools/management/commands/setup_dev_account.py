@@ -1,10 +1,12 @@
-from colorama import Fore
 import logging
-from django.contrib.auth.models import Group
+
+from colorama import Fore
 from django.contrib.auth import get_user_model
-from django.core.management import BaseCommand
+from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.management import BaseCommand
+
 from tools.models import (
     GROUP_CLIENT,
     GROUP_REDTEAM,

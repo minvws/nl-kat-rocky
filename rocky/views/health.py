@@ -1,29 +1,30 @@
 import logging
 from typing import List
+
 from django.http import JsonResponse
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import TemplateView, View
 from django_otp.decorators import otp_required
-from two_factor.views.utils import class_view_decorator
-from octopoes.connector.octopoes import OctopoesAPIConnector
 from requests import RequestException
+from two_factor.views.utils import class_view_decorator
+
+from katalogus.health import get_katalogus_health
+from octopoes.connector.octopoes import OctopoesAPIConnector
+from rocky.bytes_client import get_bytes_client
 from rocky.health import ServiceHealth
 from rocky.keiko import keiko_client
-from rocky.version import __version__
-from katalogus.health import get_katalogus_health
 from rocky.scheduler import client
-from django.views.generic import TemplateView, View
-from rocky.bytes_client import get_bytes_client
-from rocky.views.mixins import OctopoesMixin
-from account.mixins import OrganizationsMixin
+from rocky.version import __version__
+from rocky.views.mixins import OctopoesView
 
 logger = logging.getLogger(__name__)
 
 
 @class_view_decorator(otp_required)
-class Health(OctopoesMixin, OrganizationsMixin, View):
+class Health(OctopoesView, View):
     def get(self, request, *args, **kwargs) -> JsonResponse:
-        octopoes_connector = self.get_api_connector(organization_code=self.organization.code)
+        octopoes_connector = self.octopoes_api_connector
         rocky_health = get_rocky_health(octopoes_connector)
         return JsonResponse(rocky_health.dict())
 
@@ -111,7 +112,7 @@ def flatten_health(health_: ServiceHealth) -> List[ServiceHealth]:
 
 
 @class_view_decorator(otp_required)
-class HealthChecks(OctopoesMixin, OrganizationsMixin, TemplateView):
+class HealthChecks(OctopoesView, TemplateView):
     template_name = "health.html"
 
     def get_context_data(self, **kwargs):
@@ -123,6 +124,6 @@ class HealthChecks(OctopoesMixin, OrganizationsMixin, TemplateView):
                 "text": _("Beautified"),
             },
         ]
-        rocky_health = get_rocky_health(self.get_api_connector(organization_code=self.organization.code))
+        rocky_health = get_rocky_health(self.octopoes_api_connector)
         context["health_checks"] = flatten_health(rocky_health)
         return context

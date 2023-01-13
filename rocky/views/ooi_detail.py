@@ -1,20 +1,23 @@
 from datetime import datetime, timezone
 from enum import Enum
+
 from django.contrib import messages
 from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
-from octopoes.models import OOI
 from requests.exceptions import RequestException
+
 from katalogus.client import get_katalogus
 from katalogus.utils import get_enabled_boefjes_for_ooi_class
-from rocky.views import BaseOOIDetailView, OOIRelatedObjectAddView
-from tools.forms import ObservedAtForm, PossibleBoefjesFilterForm
-from tools.ooi_helpers import format_display
-from tools.models import Indemnification, OrganizationMember
 from katalogus.views.mixins import BoefjeMixin
-from account.mixins import OrganizationsMixin
+from octopoes.models import OOI
 from rocky import scheduler
+from rocky.views.ooi_detail_related_object import OOIRelatedObjectAddView
+from rocky.views.ooi_view import BaseOOIDetailView
+from tools.forms.base import ObservedAtForm
+from tools.forms.ooi import PossibleBoefjesFilterForm
+from tools.models import Indemnification, OrganizationMember
+from tools.ooi_helpers import format_display
 
 
 class PageActions(Enum):
@@ -25,7 +28,6 @@ class OOIDetailView(
     BoefjeMixin,
     OOIRelatedObjectAddView,
     BaseOOIDetailView,
-    OrganizationsMixin,
 ):
     template_name = "oois/ooi_detail.html"
     connector_form_class = ObservedAtForm
@@ -34,7 +36,7 @@ class OOIDetailView(
     def post(self, request, *args, **kwargs):
         if "action" not in self.request.POST:
             return self.get(request, *args, **kwargs)
-        self.ooi = self.get_ooi(self.organization.code)
+        self.ooi = self.get_ooi()
         action_success = self.handle_page_action(request.POST.get("action"))
         if not action_success:
             return self.get(request, *args, **kwargs)
@@ -55,7 +57,7 @@ class OOIDetailView(
                 ooi_id = self.request.GET.get("ooi_id")
 
                 boefje = get_katalogus(self.organization.code).get_boefje(boefje_id)
-                ooi = self.get_single_ooi(self.organization.code, pk=ooi_id)
+                ooi = self.get_single_ooi(pk=ooi_id)
                 self.run_boefje_for_oois(boefje, [ooi], self.api_connector)
                 return True
 
@@ -68,7 +70,7 @@ class OOIDetailView(
             return self.ooi
 
         try:
-            return self.get_ooi(self.organization.code, pk=self.get_ooi_id(), observed_at=datetime.now(timezone.utc))
+            return self.get_ooi(pk=self.get_ooi_id(), observed_at=datetime.now(timezone.utc))
         except Http404:
             return None
 

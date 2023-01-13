@@ -2,18 +2,20 @@ from typing import List, Tuple, Any
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from octopoes.models import OOI
 
-from tools.forms import (
+from octopoes.models import OOI
+from tools.forms.settings import (
+    DEPTH_DEFAULT,
+    DEPTH_HELP_TEXT,
+    DEPTH_MAX,
+    SCAN_LEVEL_CHOICES,
+)
+from tools.forms.base import (
     BaseRockyForm,
     ObservedAtForm,
     CheckboxGroup,
     CheckboxTable,
-    DEPTH_DEFAULT,
-    DEPTH_HELP_TEXT,
-    DEPTH_MAX,
     LabeledCheckboxInput,
-    SCAN_LEVEL_CHOICES,
 )
 
 

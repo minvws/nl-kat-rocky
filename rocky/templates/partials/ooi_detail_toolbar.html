@@ -12,6 +12,6 @@
          class="button ghost">{% blocktranslate %}Delete {{ display_type }}{% endblocktranslate %}</a>
     {% endif %}
   {% endif %}
-  <a href="{% ooi_url 'ooi_report' ooi_id query=mandatory_fields organization_code=organization.code %}"
+  <a href="{% ooi_url 'ooi_report' ooi_id organization.code query=mandatory_fields %}"
      class="button ghost">{% translate 'Generate report' %}</a>
 </div>

@@ -1,15 +1,16 @@
-from django.views.generic import ListView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import ListView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
+
+from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class KATalogusSettingsListView(PermissionRequiredMixin, OrganizationsMixin, ListView):
+class KATalogusSettingsListView(PermissionRequiredMixin, OrganizationView, ListView):
     """View that gives an overview of all plugins settings"""
 
     template_name = "katalogus_settings.html"

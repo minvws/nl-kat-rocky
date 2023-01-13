@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import gettext as _
+
 from tools.forms.settings import BLANK_CHOICE
 
 OOI_TYPE_CHOICES = [

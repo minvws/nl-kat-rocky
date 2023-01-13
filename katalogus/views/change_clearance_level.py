@@ -1,17 +1,17 @@
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-from django.utils.translation import gettext_lazy as _
-from django.contrib import messages
-from django.urls import reverse
-from django.shortcuts import redirect
+
 from katalogus.views.mixins import BoefjeMixin
 from katalogus.views.mixins import KATalogusMixin
-from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, TemplateView):
+class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, TemplateView):
     template_name = "change_clearance_level.html"
 
     def setup(self, request, *args, **kwargs):
@@ -41,14 +41,14 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, OrganizationsMixin, Temp
         self.run_boefje_for_oois(
             boefje=boefje,
             oois=self.oois,
-            api_connector=self.get_api_connector(self.organization.code),
+            api_connector=self.octopoes_api_connector,
         )
         messages.add_message(self.request, messages.SUCCESS, _("Scanning successfully scheduled."))
         del request.session["selected_oois"]  # delete session
         return redirect(reverse("task_list", kwargs={"organization_code": self.organization.code}))
 
     def get_oois_objects_from_text_oois(self, oois):
-        return [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in oois]
+        return [self.get_single_ooi(pk=ooi_id) for ooi_id in oois]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

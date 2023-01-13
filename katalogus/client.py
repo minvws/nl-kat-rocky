@@ -3,17 +3,16 @@ from io import BytesIO
 from typing import Dict, Type, Set, List
 
 import requests
-from octopoes.models import OOI
-from octopoes.models.types import type_by_name
 from pydantic import BaseModel
 
+from octopoes.models import OOI
+from octopoes.models.types import type_by_name
 from rocky.health import ServiceHealth
 from rocky.settings import KATALOGUS_API
 from tools.enums import SCAN_LEVEL
 
 
 class Plugin(BaseModel):
-    organization_code: str
     id: str
     type: str
     name: str
@@ -131,7 +130,7 @@ class KATalogusClientV1:
         return BytesIO(response.content)
 
 
-def parse_plugin(plugin: Dict, organization_code) -> Plugin:
+def parse_plugin(plugin: Dict) -> Plugin:
     try:
         consumes = {type_by_name(consumes) for consumes in plugin["consumes"]}
     except StopIteration:
@@ -145,7 +144,6 @@ def parse_plugin(plugin: Dict, organization_code) -> Plugin:
             pass
 
     return Plugin(
-        organization_code=organization_code,
         id=plugin["id"],
         type=plugin["type"],
         name=plugin.get("name") or plugin["id"],

@@ -1,21 +1,22 @@
 from datetime import datetime, timezone
+
 from django.shortcuts import redirect
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django_otp.decorators import otp_required
+from two_factor.views.utils import class_view_decorator
+
 from octopoes.api.models import Declaration
 from octopoes.models.ooi.findings import KATFindingType
-from two_factor.views.utils import class_view_decorator
-from rocky.views.mixins import OctopoesMixin
+from rocky.views.mixins import OctopoesView
+from tools.forms.finding_type import FindingTypeAddForm
 from tools.models import OOIInformation
-from tools.forms import FindingTypeAddForm
 from tools.view_helpers import get_ooi_url
-from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class FindingTypeAddView(OctopoesMixin, OrganizationsMixin, FormView):
+class FindingTypeAddView(OctopoesView, FormView):
     template_name = "finding_type_add.html"
     form_class = FindingTypeAddForm
 
@@ -36,7 +37,7 @@ class FindingTypeAddView(OctopoesMixin, OrganizationsMixin, FormView):
         return context
 
     def form_valid(self, form):
-        self.api_connector = self.get_api_connector(self.organization.code)
+        self.api_connector = self.octopoes_api_connector
         form_data = form.cleaned_data
         # set data
         finding_type = KATFindingType(id=form_data["id"])
@@ -57,4 +58,4 @@ class FindingTypeAddView(OctopoesMixin, OrganizationsMixin, FormView):
 
         self.api_connector.save_declaration(Declaration(ooi=finding_type, valid_time=datetime.now(timezone.utc)))
 
-        return redirect(get_ooi_url("ooi_detail", finding_type.primary_key, organization_code=self.organization.code))
+        return redirect(get_ooi_url("ooi_detail", finding_type.primary_key, self.organization.code))

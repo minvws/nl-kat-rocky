@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -6,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import CreateView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from account.forms import OrganizationForm
 from tools.models import Organization
 

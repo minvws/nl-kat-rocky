@@ -1,16 +1,17 @@
 from enum import Enum
 from typing import List
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls.base import reverse
 from django.views.generic import ListView
-from requests.exceptions import RequestException
 from django_otp.decorators import otp_required
+from requests.exceptions import RequestException
 from two_factor.views.utils import class_view_decorator
+
 from tools.enums import SCAN_LEVEL
 from tools.models import OrganizationMember
 from tools.view_helpers import OrganizationMemberBreadcrumbsMixin
-from account.mixins import OrganizationsMixin
 
 
 class PageActions(Enum):
@@ -21,7 +22,6 @@ class PageActions(Enum):
 @class_view_decorator(otp_required)
 class OrganizationMemberListView(
     OrganizationMemberBreadcrumbsMixin,
-    OrganizationsMixin,
     ListView,
 ):
     model = OrganizationMember

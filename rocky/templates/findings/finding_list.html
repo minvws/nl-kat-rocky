@@ -37,11 +37,11 @@
                 {% spaceless %}
                   <tr>
                     <td>
-                      <a href="{% ooi_url 'ooi_detail' finding.primary_key query=mandatory_fields organization_code=organization.code %}"
+                      <a href="{% ooi_url 'ooi_detail' finding.primary_key organization.code query=mandatory_fields %}"
                          title="{% blocktranslate trimmed with finding=finding.primary_key %} Show details for {{ finding }} {% endblocktranslate %}">{{ finding.human_readable }}</a>
                     </td>
                     <td>
-                      <a href="{% ooi_url 'ooi_detail' finding.finding_type query=mandatory_fields organization_code=organization.code %}"
+                      <a href="{% ooi_url 'ooi_detail' finding.finding_type organization.code query=mandatory_fields %}"
                          title="{% blocktranslate trimmed with finding_type=finding.finding_type %} Show details for {{ finding_type }} {% endblocktranslate %}">{{ finding.finding_type.human_readable }}</a>
                     </td>
                     <td>
@@ -51,12 +51,12 @@
                     <td class="actions">
                       <a aria-label="Navigate to tree view of {{ finding.human_readable }}"
                          class="icon ti-subtask button"
-                         href="{% ooi_url 'ooi_tree' finding.primary_key query=mandatory_fields organization_code=organization.code %}">{% translate 'Tree' %}</a>
+                         href="{% ooi_url 'ooi_tree' finding.primary_key organization.code query=mandatory_fields %}">{% translate 'Tree' %}</a>
                     </td>
                     <td class="actions">
                       <a aria-label="Navigate to graph view of {{ finding.human_readable }}"
                          class="icon ti-affiliate button"
-                         href="{% ooi_url 'ooi_graph' finding.primary_key query=mandatory_fields organization_code=organization.code %}">{% translate 'Graph' %}</a>
+                         href="{% ooi_url 'ooi_graph' finding.primary_key organization.code query=mandatory_fields %}">{% translate 'Graph' %}</a>
                     </td>
                     <td class="actions">
                       <button class="expando-button"

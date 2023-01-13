@@ -1,12 +1,13 @@
 from io import BytesIO
+
 import pytest
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
-from rocky.views import UploadCSV
 
+from rocky.views.upload_csv import UploadCSV
 
 CSV_EXAMPLES = [
     # hostname

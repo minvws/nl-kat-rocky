@@ -23,7 +23,6 @@ from requests import HTTPError
 
 from tools.models import Organization
 
-
 pytestmark = pytest.mark.django_db
 
 
@@ -81,7 +80,9 @@ class TestOrganizationViewSet(ViewSetTest):
         data = static_fixture({"name": "Test Org 3", "code": "test3", "tags": ["tag2", "tag3"]})
 
         initial_ids = precondition_fixture(
-            lambda mock_katalogus, mock_octopoes, organizations: set(Organization.objects.values_list("id", flat=True)),
+            lambda mock_katalogus, mock_models_octopoes, organizations: set(
+                Organization.objects.values_list("id", flat=True)
+            ),
             async_=False,
         )
 
@@ -205,7 +206,9 @@ class TestOrganizationViewSet(ViewSetTest):
         Returns204,
     ):
         initial_ids = precondition_fixture(
-            lambda mock_katalogus, mock_octopoes, organizations: set(Organization.objects.values_list("id", flat=True)),
+            lambda mock_katalogus, mock_models_octopoes, organizations: set(
+                Organization.objects.values_list("id", flat=True)
+            ),
             async_=False,
         )
 

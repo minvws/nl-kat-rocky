@@ -9,17 +9,17 @@ from django.views import View
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 
+from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
 from katalogus.views import PluginSettingsListView
 from katalogus.views.mixins import KATalogusMixin
-from account.mixins import OrganizationsMixin
 from katalogus.views.plugin_detail_scan_oois import PluginDetailScanOOI
 from rocky import scheduler
 
 logger = getLogger(__name__)
 
 
-class PluginCoverImgView(OrganizationsMixin, View):
+class PluginCoverImgView(OrganizationView):
     """Get the cover image of a plugin."""
 
     def get(self, request, *args, **kwargs):

@@ -1,7 +1,9 @@
 from datetime import datetime, timezone
 from typing import Type, List, Dict, Any
-from django.contrib.auth.models import Group
+
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -10,27 +12,31 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from django_otp.decorators import otp_required
+from two_factor.views.utils import class_view_decorator
+
+from account.forms import OrganizationForm, OrganizationUpdateForm
+from account.mixins import OrganizationView
+from katalogus.client import get_katalogus
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models import DeclaredScanProfile
 from octopoes.models import OOI
 from octopoes.models.ooi.network import Network
 from octopoes.models.types import type_by_name
-from rocky.views.indemnification_add import IndemnificationAddView
-from two_factor.views.utils import class_view_decorator
-from django.contrib.auth import get_user_model
 from onboarding.forms import (
     OnboardingCreateUserAdminForm,
     OnboardingCreateUserRedTeamerForm,
     OnboardingCreateUserClientForm,
     OnboardingSetClearanceLevelForm,
 )
+from onboarding.mixins import RedTeamUserRequiredMixin, SuperOrAdminUserRequiredMixin
 from onboarding.view_helpers import (
     KatIntroductionStepsMixin,
     KatIntroductionAdminStepsMixin,
 )
-from katalogus.client import get_katalogus
+from rocky.views.indemnification_add import IndemnificationAddView
+from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
 from rocky.views.ooi_view import BaseOOIFormView, SingleOOITreeMixin, BaseOOIDetailView
-from tools.forms import SelectBoefjeForm
+from tools.forms.boefje import SelectBoefjeForm
 from tools.models import Organization, OrganizationMember
 from tools.ooi_form import OOIForm
 from tools.ooi_helpers import (
@@ -39,11 +45,7 @@ from tools.ooi_helpers import (
     filter_ooi_tree,
 )
 from tools.user_helpers import is_red_team
-from onboarding.mixins import RedTeamUserRequiredMixin, SuperOrAdminUserRequiredMixin
 from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
-from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
-from account.mixins import OrganizationsMixin
-from account.forms import OrganizationForm, OrganizationUpdateForm
 
 User = get_user_model()
 
@@ -59,7 +61,7 @@ class OnboardingBreadcrumbsMixin(BreadcrumbsMixin):
         ]
 
 
-class OnboardingStart(OrganizationsMixin):
+class OnboardingStart(OrganizationView):
     def get(self, request, *args, **kwargs):
         if request.user.is_superuser:
             return redirect("step_introduction_registration")
@@ -93,7 +95,6 @@ class OnboardingChooseReportInfoView(
 class OnboardingChooseReportTypeView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_2b_choose_report_type.html"
@@ -104,7 +105,6 @@ class OnboardingChooseReportTypeView(
 class OnboardingSetupScanSelectPluginsView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_3e_setup_scan_select_plugins.html"
@@ -139,11 +139,7 @@ class OnboardingSetupScanSelectPluginsView(
                 data = form.cleaned_data
                 request.session["selected_boefjes"] = data
             return redirect(
-                get_ooi_url(
-                    "step_setup_scan_ooi_detail",
-                    self.request.GET.get("ooi_id"),
-                    organization_code=self.organization.code,
-                )
+                get_ooi_url("step_setup_scan_ooi_detail", self.request.GET.get("ooi_id"), self.organization.code)
             )
         return self.get(request, *args, **kwargs)
 
@@ -200,7 +196,7 @@ class OnboardingSetupScanOOIAddView(
     def get_hidden_form_fields(self):
         hidden_fields = {}
         for field_name, params in self.hidden_form_fields.items():
-            ooi, created = get_or_create_ooi(self.api_connector, params["ooi"])
+            ooi, created = get_or_create_ooi(self.octopoes_api_connector, params["ooi"])
             hidden_fields[field_name] = ooi.primary_key
 
             if created:
@@ -227,7 +223,7 @@ class OnboardingSetupScanOOIAddView(
 
     def get_success_url(self, ooi: OOI) -> str:
         self.request.session["ooi_id"] = ooi.primary_key
-        return get_ooi_url("step_set_clearance_level", ooi.primary_key, organization_code=self.organization.code)
+        return get_ooi_url("step_set_clearance_level", ooi.primary_key, self.organization.code)
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         return super().build_breadcrumbs() + [
@@ -249,7 +245,6 @@ class OnboardingSetupScanOOIDetailView(
     SingleOOITreeMixin,
     KatIntroductionStepsMixin,
     OnboardingBreadcrumbsMixin,
-    OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_3c_setup_scan_ooi_detail.html"
@@ -261,19 +256,17 @@ class OnboardingSetupScanOOIDetailView(
         return super().get_ooi_id()
 
     def get(self, request, *args, **kwargs):
-        self.api_connector = self.get_api_connector(self.organization.code)
-        self.ooi = self.get_ooi(self.organization.code)
+        self.ooi = self.get_ooi()
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.set_clearance_level()
         self.enable_selected_boefjes()
-        return redirect(get_ooi_url("step_report", self.get_ooi_id(), organization_code=self.organization.code))
+        return redirect(get_ooi_url("step_report", self.get_ooi_id(), self.organization.code))
 
     def set_clearance_level(self):
-        self.api_connector = self.get_api_connector(self.organization.code)
-        ooi = self.get_ooi(self.organization.code)
-        self.api_connector.save_scan_profile(
+        ooi = self.get_ooi()
+        self.octopoes_api_connector.save_scan_profile(
             DeclaredScanProfile(reference=ooi.reference, level=self.request.session["clearance_level"]),
             valid_time=datetime.now(timezone.utc),
         )
@@ -295,7 +288,6 @@ class OnboardingSetClearanceLevelView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
     OnboardingBreadcrumbsMixin,
-    OrganizationsMixin,
     FormView,
 ):
     template_name = "step_3d_set_clearance_level.html"
@@ -309,11 +301,7 @@ class OnboardingSetClearanceLevelView(
         return context
 
     def get_success_url(self, **kwargs):
-        return get_ooi_url(
-            "step_setup_scan_select_plugins",
-            self.request.GET.get("ooi_id"),
-            organization_code=self.organization.code,
-        )
+        return get_ooi_url("step_setup_scan_select_plugins", self.request.GET.get("ooi_id"), self.organization.code)
 
     def form_valid(self, form):
         self.request.session["clearance_level"] = form.data["level"]
@@ -349,7 +337,6 @@ class OnboardingSetClearanceLevelView(
 class OnboardingReportView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
-    OrganizationsMixin,
     TemplateView,
 ):
     template_name = "step_4_report.html"
@@ -357,9 +344,7 @@ class OnboardingReportView(
 
     def post(self, request, *args, **kwargs):
         self.set_member_onboarded()
-        return redirect(
-            get_ooi_url("dns_report", self.request.GET.get("ooi_id"), organization_code=self.organization.code)
-        )
+        return redirect(get_ooi_url("dns_report", self.request.GET.get("ooi_id"), self.organization.code))
 
     def set_member_onboarded(self):
         member = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
@@ -388,7 +373,7 @@ class BaseReportView(RedTeamUserRequiredMixin, BaseOOIDetailView):
 
 
 @class_view_decorator(otp_required)
-class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView, OrganizationsMixin):
+class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView):
     template_name = "dns_report.html"
     report = DNSReport
 
@@ -403,7 +388,7 @@ class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView, OrganizationsMix
             web_url = self.tree.store[str(self.ooi.web_url)]
             netloc = self.tree.store[str(web_url.netloc)]
             fqdn = self.tree.store[str(netloc.fqdn)]
-            dns_zone = super().get_ooi(self.organization.code, pk=str(fqdn.dns_zone))
+            dns_zone = super().get_ooi(pk=str(fqdn.dns_zone))
             return dns_zone
         except KeyError:
             messages.add_message(self.request, messages.ERROR, _("No DNS zone found."))
@@ -473,7 +458,6 @@ class OnboardingOrganizationSetupView(
 class OnboardingOrganizationUpdateView(
     SuperOrAdminUserRequiredMixin,
     KatIntroductionAdminStepsMixin,
-    OrganizationsMixin,
     UpdateView,
 ):
     """
@@ -529,12 +513,8 @@ class OnboardingAccountSetupIntroView(SuperOrAdminUserRequiredMixin, KatIntroduc
 
 
 @class_view_decorator(otp_required)
-class OnboardingAccountCreationMixin(
-    SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, OrganizationsMixin, CreateView
-):
-    """
-    Mixin to save organization code in form kwargs when creating new members.
-    """
+class OnboardingAccountCreationMixin(SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, CreateView):
+    """ """
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -633,7 +613,7 @@ class OnboardingAccountSetupClientView(RegistrationBreadcrumbsMixin, OnboardingA
 
 
 @class_view_decorator(otp_required)
-class CompleteOnboarding(OrganizationsMixin, View):
+class CompleteOnboarding(OrganizationView):
     """
     Complete onboarding for redteamers and superusers.
     """

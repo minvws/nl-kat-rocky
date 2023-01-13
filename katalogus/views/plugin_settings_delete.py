@@ -1,17 +1,17 @@
-from django.views.generic import TemplateView
+from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import TemplateView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
+
 from katalogus.views.mixins import KATalogusMixin
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class PluginSettingsDeleteView(PermissionRequiredMixin, KATalogusMixin, TemplateView, OrganizationsMixin):
+class PluginSettingsDeleteView(PermissionRequiredMixin, KATalogusMixin, TemplateView):
     template_name = "plugin_settings_delete.html"
     permission_required = "tools.can_scan_organization"
 

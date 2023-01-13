@@ -1,5 +1,5 @@
-from django.views.generic import TemplateView
 from django.shortcuts import redirect
+from django.views.generic import TemplateView
 
 
 class LandingPageView(TemplateView):

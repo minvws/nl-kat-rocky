@@ -1,20 +1,22 @@
 from logging import getLogger
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import View
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-from django.utils.translation import gettext_lazy as _
+
+from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
-from django.views.generic import View
-from account.mixins import OrganizationsMixin
 
 logger = getLogger(__name__)
 
 
 @class_view_decorator(otp_required)
-class PluginEnableDisableView(OrganizationsMixin, View):
+class PluginEnableDisableView(OrganizationView):
     def dispatch(self, request, *args, **kwargs):
         self.katalogus_client = get_katalogus(self.organization.code)
         return super().dispatch(request, *args, **kwargs)

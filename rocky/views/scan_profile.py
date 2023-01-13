@@ -1,14 +1,16 @@
 from datetime import datetime, timezone
 from typing import Dict, Any, List
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django_otp.decorators import otp_required
-from octopoes.models import InheritedScanProfile, EmptyScanProfile, DeclaredScanProfile
 from two_factor.views.utils import class_view_decorator
-from rocky.views import OOIDetailView
-from tools.forms import SetClearanceLevelForm
+
+from octopoes.models import InheritedScanProfile, EmptyScanProfile, DeclaredScanProfile
+from rocky.views.ooi_detail import OOIDetailView
+from tools.forms.ooi import SetClearanceLevelForm
 from tools.models import Indemnification, OrganizationMember
 from tools.view_helpers import (
     get_mandatory_fields,
@@ -26,7 +28,7 @@ class ScanProfileDetailView(OOIDetailView, FormView):
         breadcrumbs = super().build_breadcrumbs()
         breadcrumbs.append(
             {
-                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key),
+                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code),
                 "text": _("Scan profile"),
             }
         )
@@ -58,9 +60,7 @@ class ScanProfileDetailView(OOIDetailView, FormView):
                 messages.WARNING,
                 _("Choose a valid level").format(ooi_name=self.ooi.human_readable),
             )
-        return redirect(
-            get_ooi_url("scan_profile_detail", self.ooi.primary_key, organization_code=self.organization.code)
-        )
+        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code))
 
     def get_initial(self):
         initial = super().get_initial()
@@ -84,7 +84,7 @@ class ScanProfileResetView(OOIDetailView):
                     ooi_name=self.ooi.human_readable
                 ),
             )
-            return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+            return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code))
 
         return super().get(request, *args, **kwargs)
 
@@ -94,13 +94,13 @@ class ScanProfileResetView(OOIDetailView):
             EmptyScanProfile(reference=self.ooi.reference),
             valid_time=datetime.now(timezone.utc),
         )
-        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code))
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         breadcrumbs = super().build_breadcrumbs()
         breadcrumbs.append(
             {
-                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key),
+                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code),
                 "text": _("Reset"),
             }
         )

@@ -1,9 +1,12 @@
 from django import forms
-from django.contrib.auth import get_user_model
 from django.contrib.auth import forms as auth_forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
-from tools.forms import BaseRockyForm
+
+from account.validators import get_password_validators_help_texts
+from tools.forms.base import BaseRockyForm
 from tools.models import (
     GROUP_CLIENT,
     GROUP_ADMIN,
@@ -11,8 +14,6 @@ from tools.models import (
     Organization,
     OrganizationMember,
 )
-from django.contrib.auth.password_validation import validate_password
-from account.validators import get_password_validators_help_texts
 from tools.models import ORGANIZATION_CODE_LENGTH
 
 User = get_user_model()

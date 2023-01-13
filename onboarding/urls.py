@@ -1,6 +1,6 @@
 from django.urls import path
-from onboarding import views
 
+from onboarding import views
 
 urlpatterns = [
     path("<organization_code>/", views.OnboardingStart.as_view(), name="onboarding_index"),

@@ -1,10 +1,13 @@
 from typing import List
-from katalogus.views.mixins import BoefjeMixin
-from rocky.views import BaseOOIDetailView, OOIFindingManager
-from rocky.views.mixins import OOIBreadcrumbsMixin
-from tools.forms import ObservedAtForm
-from tools.view_helpers import Breadcrumb, get_ooi_url
+
 from django.utils.translation import gettext_lazy as _
+
+from katalogus.views.mixins import BoefjeMixin
+from rocky.views.ooi_detail_related_object import OOIFindingManager
+from rocky.views.ooi_view import BaseOOIDetailView
+from rocky.views.mixins import OOIBreadcrumbsMixin
+from tools.forms.base import ObservedAtForm
+from tools.view_helpers import Breadcrumb, get_ooi_url
 
 
 class OOIFindingListView(OOIFindingManager, BoefjeMixin, BaseOOIDetailView, OOIBreadcrumbsMixin):
@@ -18,7 +21,7 @@ class OOIFindingListView(OOIFindingManager, BoefjeMixin, BaseOOIDetailView, OOIB
 
     def get_last_breadcrumb(self):
         return {
-            "url": get_ooi_url("ooi_findings", self.ooi.primary_key, organization_code=self.organization.code),
+            "url": get_ooi_url("ooi_findings", self.ooi.primary_key, self.organization.code),
             "text": _("Object findings"),
         }
 

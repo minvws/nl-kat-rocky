@@ -1,14 +1,16 @@
 import uuid
-from django.http import QueryDict
-from django.utils.translation import gettext_lazy as _
-from django.urls.base import reverse_lazy, reverse
 from datetime import date, datetime, timezone
 from enum import Enum
 from typing import List, TypedDict, Dict, Any
 from urllib.parse import urlparse, urlunparse, urlencode
+
 from django.contrib import messages
+from django.http import QueryDict
+from django.urls.base import reverse_lazy, reverse
+from django.utils.translation import gettext_lazy as _
+
+from account.mixins import OrganizationView
 from octopoes.models.types import OOI_TYPES
-from account.mixins import OrganizationsMixin
 
 
 def convert_date_to_datetime(d: date) -> datetime:
@@ -52,9 +54,8 @@ def url_with_querystring(path, **kwargs) -> str:
     )
 
 
-def get_ooi_url(routename: str, ooi_id: str, **kwargs) -> str:
+def get_ooi_url(routename: str, ooi_id: str, organization_code: str, **kwargs) -> str:
     kwargs["ooi_id"] = ooi_id
-    organization_code = kwargs["organization_code"]
     # exclude in querystring
     kwargs = {k: v for k, v in kwargs.items() if k not in "organization_code"}
 
@@ -77,7 +78,7 @@ class Breadcrumb(TypedDict):
     url: str
 
 
-class BreadcrumbsMixin(OrganizationsMixin):
+class BreadcrumbsMixin(OrganizationView):
     breadcrumbs: List[Breadcrumb] = []
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
@@ -132,7 +133,7 @@ class Step(TypedDict):
     url: str
 
 
-class StepsMixin(OrganizationsMixin):
+class StepsMixin(OrganizationView):
     steps: List[Step] = []
     current_step: int = None
 

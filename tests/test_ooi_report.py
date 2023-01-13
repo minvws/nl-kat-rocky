@@ -1,43 +1,40 @@
 from io import BytesIO
 from unittest.mock import Mock
+
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse, resolve
 from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
-from octopoes.models.tree import ReferenceTree
 from pytest_django.asserts import assertContains
 from requests import HTTPError
-from rocky.views import OOIReportView, OOIReportPDFView
+
+from octopoes.models.tree import ReferenceTree
+from rocky.views.ooi_report import OOIReportView, OOIReportPDFView
 
 
-def setup_octopoes_mock() -> Mock:
-    mock = Mock()
-    mock.get_tree.return_value = ReferenceTree.parse_obj(
-        {
-            "root": {
-                "reference": "Finding|Network|testnetwork|KAT-000",
-                "children": {"ooi": [{"reference": "Network|testnetwork", "children": {}}]},
-            },
-            "store": {
-                "Network|testnetwork": {
-                    "object_type": "Network",
-                    "primary_key": "Network|testnetwork",
-                    "name": "testnetwork",
-                },
-                "Finding|Network|testnetwork|KAT-000": {
-                    "object_type": "Finding",
-                    "primary_key": "Finding|Network|testnetwork|KAT-000",
-                    "ooi": "Network|testnetwork",
-                    "finding_type": "KATFindingType|KAT-000",
-                },
-            },
-        }
-    )
-    return mock
+TREE_DATA = {
+    "root": {
+        "reference": "Finding|Network|testnetwork|KAT-000",
+        "children": {"ooi": [{"reference": "Network|testnetwork", "children": {}}]},
+    },
+    "store": {
+        "Network|testnetwork": {
+            "object_type": "Network",
+            "primary_key": "Network|testnetwork",
+            "name": "testnetwork",
+        },
+        "Finding|Network|testnetwork|KAT-000": {
+            "object_type": "Finding",
+            "primary_key": "Finding|Network|testnetwork|KAT-000",
+            "ooi": "Network|testnetwork",
+            "finding_type": "KATFindingType|KAT-000",
+        },
+    },
+}
 
 
-def setup_request(request, user, organization, mocker):
+def setup_request(request, user):
     """
     Setup request with middlewares, user, organization and octopoes
     """
@@ -47,23 +44,24 @@ def setup_request(request, user, organization, mocker):
     request = MessageMiddleware(lambda r: r)(request)
 
     request.user = user
-    request.organization = organization
-
-    request.octopoes_api_connector = setup_octopoes_mock()
 
     return request
 
 
-def test_ooi_report(rf, my_user, organization, ooi_information, mocker):
+def test_ooi_report(rf, my_user, organization, ooi_information, mock_get_octopoes_api_connector):
+    kwargs = {"organization_code": organization.code}
+    url = reverse("ooi_report", kwargs=kwargs)
     request = rf.get(
-        reverse("ooi_report", kwargs={"organization_code": organization.code}),
+        url,
         {"ooi_id": "Finding|Network|testnetwork|KAT-000"},
     )
-    request.resolver_match = resolve("/objects/report/")
+    request.resolver_match = resolve(url)
 
-    setup_request(request, my_user, organization, mocker)
+    setup_request(request, my_user)
 
-    response = OOIReportView.as_view()(request)
+    mock_get_octopoes_api_connector().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
+
+    response = OOIReportView.as_view()(request, **kwargs)
 
     assert response.status_code == 200
     assertContains(response, "testnetwork")
@@ -71,18 +69,22 @@ def test_ooi_report(rf, my_user, organization, ooi_information, mocker):
     assertContains(response, "Fake recommendation...")
 
 
-def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
-    request = rf.get(reverse("ooi_pdf_report"), {"ooi_id": "Finding|Network|testnetwork|KAT-000"})
-    request.resolver_match = resolve("/objects/report/pdf/")
+def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mock_get_octopoes_api_connector, mocker):
+    kwargs = {"organization_code": organization.code}
+    url = reverse("ooi_pdf_report", kwargs=kwargs)
+    request = rf.get(url, {"ooi_id": "Finding|Network|testnetwork|KAT-000"})
+    request.resolver_match = resolve(url)
 
-    setup_request(request, my_user, organization, mocker)
+    setup_request(request, my_user)
+
+    mock_get_octopoes_api_connector().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
     # Setup Keiko mock
     mock_keiko_client = mocker.patch("rocky.views.ooi_report.keiko_client")
     mock_keiko_client.generate_report.return_value = "fake_report_id"
     mock_keiko_client.get_report.return_value = BytesIO(b"fake_binary_pdf_content")
 
-    response = OOIReportPDFView.as_view()(request)
+    response = OOIReportPDFView.as_view()(request, **kwargs)
 
     assert response.status_code == 200
     assert response.getvalue() == b"fake_binary_pdf_content"
@@ -100,15 +102,18 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mocker):
     assert report_data_param["findings_grouped"]["KAT-000"]["list"][0]["description"] == "Fake description..."
 
 
-def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mocker):
-
+def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mock_get_octopoes_api_connector, mocker):
+    kwargs = {"organization_code": organization.code}
+    url = reverse("ooi_pdf_report", kwargs=kwargs)
     request = rf.get(
-        reverse("ooi_pdf_report", kwargs={"organization_code": organization.code}),
+        url,
         {"ooi_id": "Finding|Network|testnetwork|KAT-000"},
     )
-    request.resolver_match = resolve("/objects/report/pdf/")
+    request.resolver_match = resolve(url)
 
-    setup_request(request, my_user, organization, mocker)
+    setup_request(request, my_user)
+
+    mock_get_octopoes_api_connector().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
     # Setup Keiko mock
     mock_keiko_client = mocker.patch("rocky.views.ooi_report.keiko_client")
@@ -116,7 +121,7 @@ def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mock
     # Returns None when timeout is reached, but no report was generated
     mock_keiko_client.get_report.side_effect = HTTPError
 
-    response = OOIReportPDFView.as_view()(request)
+    response = OOIReportPDFView.as_view()(request, **kwargs)
 
     assert response.status_code == 302
     assert (

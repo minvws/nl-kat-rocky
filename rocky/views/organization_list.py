@@ -1,7 +1,8 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from tools.models import Organization, OrganizationMember
 from tools.view_helpers import OrganizationBreadcrumbsMixin
 

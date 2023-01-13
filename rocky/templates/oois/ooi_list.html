@@ -37,7 +37,7 @@
                   {% spaceless %}
                     <tr>
                       <td>
-                        <a href="{% ooi_url 'ooi_detail' object.primary_key query=mandatory_fields organization_code=organization.code %}"
+                        <a href="{% ooi_url 'ooi_detail' object.primary_key organization.code query=mandatory_fields %}"
                            title="{% blocktranslate trimmed with name=object.human_readable %} Show details for {{ name }} {% endblocktranslate %}">{{ object.human_readable }}</a>
                       </td>
                       <td>

@@ -1,31 +1,33 @@
 from datetime import datetime, timezone
-from time import sleep
 from typing import Type, List
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls.base import reverse_lazy
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django_otp.decorators import otp_required
+from pydantic import ValidationError
+from time import sleep
+from two_factor.views.utils import class_view_decorator
+
 from octopoes.api.models import Declaration
 from octopoes.models import OOI, ScanLevel, DEFAULT_SCAN_LEVEL_FILTER, DEFAULT_SCAN_PROFILE_TYPE_FILTER, ScanProfileType
-from pydantic import ValidationError
-from two_factor.views.utils import class_view_decorator
 from rocky.views.mixins import (
     SingleOOIMixin,
     SingleOOITreeMixin,
     MultipleOOIMixin,
     ConnectorFormMixin,
 )
-from tools.forms import BaseRockyForm, ObservedAtForm, CLEARANCE_TYPE_CHOICES
+from tools.forms.base import BaseRockyForm, ObservedAtForm
+from tools.forms.settings import CLEARANCE_TYPE_CHOICES
 from tools.models import SCAN_LEVEL
 from tools.ooi_form import OOIForm, ClearanceFilterForm
 from tools.view_helpers import get_ooi_url, get_mandatory_fields
-from account.mixins import OrganizationsMixin
 
 
 @class_view_decorator(otp_required)
-class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, OrganizationsMixin, ListView):
+class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, ListView):
     connector_form_class = ObservedAtForm
     paginate_by = 150
     context_object_name = "ooi_list"
@@ -41,9 +43,7 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, OrganizationsMixin, 
         if selected_clearance_type is not None:
             scan_profile_types = {ScanProfileType(s) for s in selected_clearance_type}
 
-        return self.get_list(
-            self.organization.code, self.get_observed_at(), scan_level=scan_levels, scan_profile_type=scan_profile_types
-        )
+        return self.get_list(self.get_observed_at(), scan_level=scan_levels, scan_profile_type=scan_profile_types)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,13 +67,13 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, OrganizationsMixin, 
 
 
 @class_view_decorator(otp_required)
-class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMixin, TemplateView):
+class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, TemplateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector(self.organization.code)
+        self.octopoes_api_connector = self.octopoes_api_connector
 
     def get(self, request, *args, **kwargs):
-        self.ooi = self.get_ooi(organization_code=self.organization.code)
+        self.ooi = self.get_ooi()
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -87,13 +87,9 @@ class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, OrganizationsMix
 
 
 @class_view_decorator(otp_required)
-class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
+class BaseOOIFormView(SingleOOIMixin, FormView):
     ooi_class: Type[OOI] = None
     form_class = OOIForm
-
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector(self.organization.code)
 
     def get_ooi_class(self):
         return self.ooi.__class__ if hasattr(self, "ooi") else None
@@ -115,16 +111,15 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
     def get_form_kwargs(self):
         kwargs = {
             "ooi_class": self.get_ooi_class(),
-            "connector": self.get_api_connector(self.organization.code),
+            "connector": self.octopoes_api_connector,
         }
         kwargs.update(super().get_form_kwargs())
 
         return kwargs
 
     def save_ooi(self, data) -> OOI:
-        api_connector = self.get_api_connector(self.organization.code)
         new_ooi = self.ooi_class.parse_obj(data)
-        api_connector.save_declaration(Declaration(ooi=new_ooi, valid_time=datetime.now(timezone.utc)))
+        self.octopoes_api_connector.save_declaration(Declaration(ooi=new_ooi, valid_time=datetime.now(timezone.utc)))
         return new_ooi
 
     def form_valid(self, form):
@@ -142,7 +137,7 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
             return self.form_invalid(form)
 
     def get_success_url(self, ooi) -> str:
-        return get_ooi_url("ooi_detail", ooi.primary_key, organization_code=self.organization.code)
+        return get_ooi_url("ooi_detail", ooi.primary_key, self.organization.code)
 
     def get_readonly_fields(self) -> List:
         if not hasattr(self, "ooi"):
@@ -152,13 +147,13 @@ class BaseOOIFormView(SingleOOIMixin, OrganizationsMixin, FormView):
 
 
 @class_view_decorator(otp_required)
-class BaseDeleteOOIView(SingleOOIMixin, OrganizationsMixin, TemplateView):
+class BaseDeleteOOIView(SingleOOIMixin, TemplateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector(self.organization.code)
+        self.octopoes_api_connector = self.octopoes_api_connector
 
     def delete(self, request):
-        self.api_connector.delete(self.ooi.reference)
+        self.octopoes_api_connector.delete(self.ooi.reference)
         return HttpResponseRedirect(self.get_success_url())
 
     # Add support for browsers which only accept GET and POST for now.

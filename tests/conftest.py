@@ -1,6 +1,8 @@
 from unittest.mock import patch, MagicMock
+
 import pytest
 from django.contrib.auth.models import Permission, ContentType
+
 from rocky.scheduler import Task
 from tools.models import Organization, OrganizationMember, OOIInformation
 
@@ -51,8 +53,13 @@ def mock_katalogus(mocker):
 
 
 @pytest.fixture
-def mock_octopoes(mocker):
+def mock_models_octopoes(mocker):
     mocker.patch("tools.models.OctopoesAPIConnector")
+
+
+@pytest.fixture
+def mock_get_octopoes_api_connector(mocker):
+    return mocker.patch("account.mixins.get_octopoes_api_connector")
 
 
 @pytest.fixture

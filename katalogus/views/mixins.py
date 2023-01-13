@@ -2,21 +2,23 @@ from datetime import datetime, timezone
 from logging import getLogger
 from typing import List
 from uuid import uuid4
+
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from requests import HTTPError
+
+from account.mixins import OrganizationView
+from katalogus.client import get_katalogus
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models import OOI, DeclaredScanProfile
-from requests import HTTPError
-from katalogus.client import get_katalogus
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
-from rocky.views.mixins import OctopoesMixin
-from account.mixins import OrganizationsMixin
+from rocky.views.mixins import OctopoesView
 
 logger = getLogger(__name__)
 
 
-class KATalogusMixin(OrganizationsMixin):
+class KATalogusMixin(OrganizationView):
     def setup(self, request, *args, **kwargs):
         """
         Prepare organization info and KAT-alogus API client.
@@ -32,15 +34,11 @@ class KATalogusMixin(OrganizationsMixin):
                 self.plugin_schema = self.katalogus_client.get_plugin_schema(self.plugin_id)
 
 
-class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
+class BoefjeMixin(OctopoesView):
     """
     When a user wants to scan one or multiple OOI's,
     this mixin provides the methods to construct the boefjes for the OOI's and run them.
     """
-
-    def dispatch(self, request, *args, **kwargs):
-        self.api_connector = self.get_api_connector(self.organization.code)
-        return super().dispatch(request, *args, **kwargs)
 
     def run_boefje(self, katalogus_boefje: Boefje, ooi: OOI) -> None:
 
@@ -105,10 +103,10 @@ class BoefjeMixin(OctopoesMixin, OrganizationsMixin):
             return
 
         ooi_ids = view_args.getlist("ooi")
-        oois = [self.get_single_ooi(self.organization.code, pk=ooi_id) for ooi_id in ooi_ids]
+        oois = [self.get_single_ooi(pk=ooi_id) for ooi_id in ooi_ids]
 
         try:
-            self.run_boefje_for_oois(boefje, oois, self.api_connector)
+            self.run_boefje_for_oois(boefje, oois, self.octopoes_api_connector)
         except HTTPError:
             return
 

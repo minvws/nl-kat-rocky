@@ -1,14 +1,16 @@
 from typing import List, Dict
 from typing import Set, Type, Tuple, Union
+
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django_otp.decorators import otp_required
+from two_factor.views.utils import class_view_decorator
+
 from octopoes.models import OOI
 from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_relations, OOI_TYPES, to_concrete
-from two_factor.views.utils import class_view_decorator
 from rocky.views.ooi_view import SingleOOITreeMixin
 from tools.ooi_helpers import (
     get_knowledge_base_data_for_ooi,
@@ -17,13 +19,12 @@ from tools.ooi_helpers import (
     RiskLevelSeverity,
 )
 from tools.view_helpers import existing_ooi_type, url_with_querystring
-from account.mixins import OrganizationsMixin
 
 
-class OOIRelatedObjectManager(SingleOOITreeMixin, OrganizationsMixin):
+class OOIRelatedObjectManager(SingleOOITreeMixin):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector(self.organization.code)
+        self.api_connector = self.octopoes_api_connector
 
     def get_related_objects(self):
         related = []
@@ -38,10 +39,10 @@ class OOIRelatedObjectManager(SingleOOITreeMixin, OrganizationsMixin):
         return related
 
 
-class OOIFindingManager(SingleOOITreeMixin, OrganizationsMixin):
+class OOIFindingManager(SingleOOITreeMixin):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector(self.organization.code)
+        self.api_connector = self.octopoes_api_connector
 
     def get_findings(self) -> List[Dict]:
         findings: List[Dict] = []
@@ -99,12 +100,12 @@ class OOIFindingManager(SingleOOITreeMixin, OrganizationsMixin):
 
 
 @class_view_decorator(otp_required)
-class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, OrganizationsMixin, TemplateView):
+class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, TemplateView):
     template_name = "oois/ooi_detail_add_related_object.html"
 
     def get(self, request, *args, **kwargs):
         if "ooi_id" in request.GET:
-            self.ooi_id = self.get_ooi(self.organization.code, pk=request.GET.get("ooi_id"))
+            self.ooi_id = self.get_ooi(pk=request.GET.get("ooi_id"))
 
         if "add_ooi_type" in request.GET:
             ooi_type_choice = self.split_ooi_type_choice(request.GET["add_ooi_type"])

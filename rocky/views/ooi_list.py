@@ -1,11 +1,13 @@
-import json
 import csv
+import json
+
 from django.http import HttpResponse, Http404
-from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
 from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_collapsed_types, type_by_name
-from rocky.views import BaseOOIListView
+from rocky.views.ooi_view import BaseOOIListView
 
 
 class OOIListView(BaseOOIListView):
@@ -39,7 +41,7 @@ class OOIListExportView(OOIListView):
         if self.filtered_ooi_types:
             ooi_types = {type_by_name(t) for t in self.filtered_ooi_types}
 
-        ooi_list = self.get_api_connector(self.organization.code).list(ooi_types, observed_at).items
+        ooi_list = self.octopoes_api_connector.list(ooi_types, observed_at).items
         exports = [
             {
                 "observed_at": str(observed_at),

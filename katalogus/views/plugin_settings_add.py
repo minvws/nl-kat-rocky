@@ -1,12 +1,13 @@
-from django.views.generic import FormView
+from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import FormView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
+
 from katalogus.forms import PluginSchemaForm, PluginSettingAddEditForm
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from katalogus.views.mixins import KATalogusMixin
 
 

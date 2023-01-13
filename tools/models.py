@@ -1,5 +1,7 @@
 import logging
 import uuid
+
+import tagulous.models
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -7,14 +9,14 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from octopoes.connector.octopoes import OctopoesAPIConnector
+
 from katalogus.client import get_katalogus
+from octopoes.connector.octopoes import OctopoesAPIConnector
+from rocky.exceptions import RockyError
+from rocky.settings import OCTOPOES_API, TAG_COLORS, TAG_BORDER_TYPES
 from tools.add_ooi_information import get_info, SEPARATOR
 from tools.enums import SCAN_LEVEL
 from tools.fields import LowerCaseSlugField
-from rocky.settings import OCTOPOES_API, TAG_COLORS, TAG_BORDER_TYPES
-import tagulous.models
-from rocky.exceptions import RockyError
 
 User = get_user_model()
 
