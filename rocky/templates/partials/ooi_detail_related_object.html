@@ -12,7 +12,7 @@
   {% if not ooi_past_due %}
     {% if not ooi|is_finding and not ooi|is_finding_type %}
       <div class="horizontal-view {% if related %}toolbar{% endif %}">
-        <a href="{% ooi_url 'ooi_add_related' ooi.primary_key organization_code=organization.code %}"
+        <a href="{% ooi_url 'ooi_add_related' ooi.primary_key organization.code %}"
            class="button ghost">Add</a>
       </div>
     {% endif %}
@@ -29,7 +29,7 @@
         {% for related_ooi in related %}
           <tr>
             <td>
-              <a href="{% ooi_url 'ooi_detail' related_ooi.reference organization_code=organization.code %}">{{ related_ooi.reference.human_readable }}</a>
+              <a href="{% ooi_url 'ooi_detail' related_ooi.reference organization.code %}">{{ related_ooi.reference.human_readable }}</a>
             </td>
             <td>{{ related_ooi.name }}</td>
           </tr>

@@ -41,7 +41,7 @@
               {% for job in tree_node.children %}
                 {% if job.ooi_type == "Job" %}
                   <li>
-                    <a href="{% ooi_url 'ooi_detail' 'Job|'|add:job.id organization_code=organization.code %}"
+                    <a href="{% ooi_url 'ooi_detail' 'Job|'|add:job.id organization.code %}"
                        target="_blank">{{ job.human_readable }}</a>
                   </li>
                 {% endif %}
@@ -101,7 +101,7 @@
               {% for job in tree_node.children %}
                 {% if job.ooi_type == "Job" %}
                   <li>
-                    <a href="{% ooi_url 'ooi_detail' 'Job|'|add:job.id organization_code=organization.code %}"
+                    <a href="{% ooi_url 'ooi_detail' 'Job|'|add:job.id organization.code %}"
                        target="_blank">{{ job.human_readable }}</a>
                   </li>
                 {% endif %}

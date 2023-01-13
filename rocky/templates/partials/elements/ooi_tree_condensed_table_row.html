@@ -11,7 +11,7 @@
     {{ object.human_readable }}</a>
   </td>
   <td>
-    <a href="{% ooi_url 'ooi_tree' object.id ooi_type=object.ooi_type organization_code=organization.code %}"
+    <a href="{% ooi_url 'ooi_tree' object.id organization.code ooi_type=object.ooi_type %}"
        title="{% blocktranslate %}Show tree for {{ object_id }} with only children of type {{ object_ooi_type }}{% endblocktranslate %}">{{ object.ooi_type }}</a>
   </td>
   <td class="actions">

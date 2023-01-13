@@ -17,11 +17,11 @@
     <section>
       <div>
         <p>
-          {% translate 'Below you can see findings that were found for' %} <a href="{% ooi_url 'ooi_detail' ooi.primary_key organization_code=organization.code %}">{{ ooi.human_readable }}</a>
+          {% translate 'Below you can see findings that were found for' %} <a href="{% ooi_url 'ooi_detail' ooi.primary_key organization.code %}">{{ ooi.human_readable }}</a>
           {% translate 'and direct  children of this' %} <em>{{ ooi.get_ooi_type }}</em>.
         </p>
         <p>
-          {% translate 'This' %} <a href="{% ooi_url 'ooi_tree' ooi.primary_key depth=3 organization_code=organization.code %}">{% translate 'tree view' %}</a> {% translate 'of the' %} <em>{{ ooi.get_ooi_type }}</em>
+          {% translate 'This' %} <a href="{% ooi_url 'ooi_tree' ooi.primary_key organization.code depth=3 %}">{% translate 'tree view' %}</a> {% translate 'of the' %} <em>{{ ooi.get_ooi_type }}</em>
           {% translate 'shows the same objects.' %}
         </p>
       </div>
