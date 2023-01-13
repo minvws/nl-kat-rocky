@@ -81,9 +81,8 @@ def test_upload_bad_input(rf, my_user, organization, mocker):
 
 
 @pytest.mark.parametrize(
-    "organization",
     "example_input, input_type, expected_ooi_counts",
-    [CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS],
+    zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
 )
 def test_upload_csv(rf, my_user, mocker, organization, example_input, input_type, expected_ooi_counts):
     mock_save_ooi = mocker.patch("rocky.views.upload_csv.save_ooi")
