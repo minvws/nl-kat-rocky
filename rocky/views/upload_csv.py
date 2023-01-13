@@ -14,12 +14,14 @@ from django_otp.decorators import otp_required
 from pydantic import ValidationError
 from two_factor.views.utils import class_view_decorator
 
-from account.mixins import OrganizationView
+from account.mixins import OrganizationView, get_octopoes_api_connector
 from octopoes.api.models import Declaration
 from octopoes.models import Reference
 from octopoes.models.ooi.dns.zone import Hostname
 from octopoes.models.ooi.network import Network, IPAddressV4, IPAddressV6
 from octopoes.models.ooi.web import URL
+
+from rocky.settings import OCTOPOES_API
 from tools.forms.upload_csv import (
     UploadCSVForm,
     CSV_ERRORS,

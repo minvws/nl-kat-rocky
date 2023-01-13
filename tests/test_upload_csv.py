@@ -35,23 +35,25 @@ EXPECTED_OOI_COUNTS = [2, 2, 6, 4, 4, 2]
 
 
 def test_upload_csv_page(rf, my_user, organization):
-    request = rf.get(reverse("upload_csv", kwargs={"organization_code": organization.code}))
+    kwargs = {"organization_code": organization.code}
+    request = rf.get(reverse("upload_csv", kwargs=kwargs))
     request.user = my_user
     request.organization = organization
 
-    response = UploadCSV.as_view()(request)
+    response = UploadCSV.as_view()(request, **kwargs)
     assert response.status_code == 200
 
 
 def test_upload_csv_simple(rf, my_user, organization):
-    request = rf.get(reverse("upload_csv", kwargs={"organization_code": organization.code}))
+    kwargs = {"organization_code": organization.code}
+    request = rf.get(reverse("upload_csv", kwargs=kwargs))
     request.user = my_user
     request.organization = organization
 
     request = SessionMiddleware(lambda r: r)(request)
     request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
     request = OTPMiddleware(lambda r: r)(request)
-    response = UploadCSV.as_view()(request)
+    response = UploadCSV.as_view()(request, **kwargs)
 
     assert response.status_code == 200
 
@@ -62,8 +64,9 @@ def test_upload_bad_input(rf, my_user, organization, mocker):
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
 
+    kwargs = {"organization_code": organization.code}
     request = rf.post(
-        reverse("upload_csv", kwargs={"organization_code": organization.code}),
+        reverse("upload_csv", kwargs=kwargs),
         {"object_type": "Hostname", "csv_file": example_file},
     )
     request.user = my_user
@@ -73,7 +76,7 @@ def test_upload_bad_input(rf, my_user, organization, mocker):
     request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
     request = OTPMiddleware(lambda r: r)(request)
     request = MessageMiddleware(lambda r: r)(request)
-    response = UploadCSV.as_view()(request)
+    response = UploadCSV.as_view()(request, **kwargs)
 
     assert response.status_code == 302
 
