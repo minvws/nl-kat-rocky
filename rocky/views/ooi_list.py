@@ -49,7 +49,7 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
         return context
 
     def get(self, request: HttpRequest, status=200, *args, **kwargs) -> HttpResponse:
-        """ Override the response status in case submitting a form returns an error message """
+        """Override the response status in case submitting a form returns an error message"""
         response = super().get(request, *args, **kwargs)
         response.status_code = status
 
