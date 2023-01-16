@@ -24,8 +24,12 @@ def organization():
 
 @pytest.fixture
 def user(django_user_model):
-    user = django_user_model.objects.create_user(email="admin@openkat.nl", password="TestTest123!!")
+    user = django_user_model.objects.create_superuser(email="admin@openkat.nl", password="TestTest123!!")
     user.is_verified = lambda: True
+
+    device = user.staticdevice_set.create(name="default")
+    device.token_set.create(token=user.get_username())
+
     return user
 
 
@@ -47,20 +51,17 @@ def my_user(user, organization):
     )
     user.user_permissions.add(permission)
 
-    device = user.staticdevice_set.create(name="default")
-    device.token_set.create(token=user.get_username())
-
     return user
 
 
 @pytest.fixture
-def mock_katalogus(mocker):
-    mocker.patch("tools.models.get_katalogus")
+def mock_models_katalogus(mocker):
+    return mocker.patch("tools.models.get_katalogus")
 
 
 @pytest.fixture
 def mock_models_octopoes(mocker):
-    mocker.patch("tools.models.OctopoesAPIConnector")
+    return mocker.patch("tools.models.OctopoesAPIConnector")
 
 
 @pytest.fixture
