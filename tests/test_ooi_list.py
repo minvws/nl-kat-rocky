@@ -26,7 +26,7 @@ def setup_request(request, user):
     return request
 
 
-def test_ooi_list(rf, my_user, organization, mock_get_octopoes_api_connector):
+def test_ooi_list(rf, my_user, organization, mock_organization_view_octopoes):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_list", kwargs=kwargs)
     request = rf.get(url)
@@ -34,19 +34,19 @@ def test_ooi_list(rf, my_user, organization, mock_get_octopoes_api_connector):
 
     setup_request(request, my_user)
 
-    mock_get_octopoes_api_connector().list.return_value = Paginated[OOIType](
+    mock_organization_view_octopoes().list.return_value = Paginated[OOIType](
         count=200, items=[Network(name="testnetwork")] * 150
     )
 
     response = OOIListView.as_view()(request, **kwargs)
 
     assert response.status_code == 200
-    assert mock_get_octopoes_api_connector().list.call_count == 2
+    assert mock_organization_view_octopoes().list.call_count == 2
     assertContains(response, "testnetwork")
 
 
 def test_ooi_list_with_clearance_type_filter_and_clearance_level_filter(
-    rf, my_user, organization, mock_get_octopoes_api_connector
+    rf, my_user, organization, mock_organization_view_octopoes
 ):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_list", kwargs=kwargs)
@@ -58,21 +58,21 @@ def test_ooi_list_with_clearance_type_filter_and_clearance_level_filter(
 
     setup_request(request, my_user)
 
-    mock_get_octopoes_api_connector().list.return_value = Paginated[OOIType](
+    mock_organization_view_octopoes().list.return_value = Paginated[OOIType](
         count=200, items=[Network(name="testnetwork")] * 150
     )
 
     response = OOIListView.as_view()(request, **kwargs)
 
     assert response.status_code == 200
-    assert mock_get_octopoes_api_connector().list.call_count == 2
+    assert mock_organization_view_octopoes().list.call_count == 2
 
-    list_call_0 = mock_get_octopoes_api_connector().list.call_args_list[0]
+    list_call_0 = mock_organization_view_octopoes().list.call_args_list[0]
     assert list_call_0.kwargs["limit"] == 0
     assert list_call_0.kwargs["scan_level"] == {ScanLevel.L0, ScanLevel.L1}
     assert list_call_0.kwargs["scan_profile_type"] == {ScanProfileType.DECLARED, ScanProfileType.INHERITED}
 
-    list_call_1 = mock_get_octopoes_api_connector().list.call_args_list[1]
+    list_call_1 = mock_organization_view_octopoes().list.call_args_list[1]
     assert list_call_1.kwargs["limit"] == 150
     assert list_call_1.kwargs["offset"] == 0
     assert list_call_1.kwargs["scan_level"] == {ScanLevel.L0, ScanLevel.L1}

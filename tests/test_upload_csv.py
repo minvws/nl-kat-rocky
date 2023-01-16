@@ -58,7 +58,7 @@ def test_upload_csv_simple(rf, my_user, organization):
     assert response.status_code == 200
 
 
-def test_upload_bad_input(rf, my_user, organization, mock_get_octopoes_api_connector):
+def test_upload_bad_input(rf, my_user, organization, mock_organization_view_octopoes):
     # mocker.patch("rocky.views.upload_csv.save_ooi")
 
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
@@ -88,7 +88,7 @@ def test_upload_bad_input(rf, my_user, organization, mock_get_octopoes_api_conne
     "example_input, input_type, expected_ooi_counts",
     zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
 )
-def test_upload_csv(rf, my_user, mock_get_octopoes_api_connector, organization, example_input, input_type,
+def test_upload_csv(rf, my_user, mock_organization_view_octopoes, organization, example_input, input_type,
                     expected_ooi_counts):
     example_file = BytesIO(example_input)
     example_file.name = f"{input_type}.csv"
@@ -108,7 +108,7 @@ def test_upload_csv(rf, my_user, mock_get_octopoes_api_connector, organization, 
     response = UploadCSV.as_view()(request, **kwargs)
 
     assert response.status_code == 302
-    assert mock_get_octopoes_api_connector().save_declaration.call_count == expected_ooi_counts
+    assert mock_organization_view_octopoes().save_declaration.call_count == expected_ooi_counts
 
     messages = list(request._messages)
     assert "successfully added" in messages[0].message

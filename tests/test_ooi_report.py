@@ -48,7 +48,7 @@ def setup_request(request, user):
     return request
 
 
-def test_ooi_report(rf, my_user, organization, ooi_information, mock_get_octopoes_api_connector):
+def test_ooi_report(rf, my_user, organization, ooi_information, mock_organization_view_octopoes):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_report", kwargs=kwargs)
     request = rf.get(
@@ -59,7 +59,7 @@ def test_ooi_report(rf, my_user, organization, ooi_information, mock_get_octopoe
 
     setup_request(request, my_user)
 
-    mock_get_octopoes_api_connector().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
+    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
     response = OOIReportView.as_view()(request, **kwargs)
 
@@ -69,7 +69,7 @@ def test_ooi_report(rf, my_user, organization, ooi_information, mock_get_octopoe
     assertContains(response, "Fake recommendation...")
 
 
-def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mock_get_octopoes_api_connector, mocker):
+def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mock_organization_view_octopoes, mocker):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_pdf_report", kwargs=kwargs)
     request = rf.get(url, {"ooi_id": "Finding|Network|testnetwork|KAT-000"})
@@ -77,7 +77,7 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mock_get_oct
 
     setup_request(request, my_user)
 
-    mock_get_octopoes_api_connector().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
+    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
     # Setup Keiko mock
     mock_keiko_client = mocker.patch("rocky.views.ooi_report.keiko_client")
@@ -102,7 +102,7 @@ def test_ooi_pdf_report(rf, my_user, organization, ooi_information, mock_get_oct
     assert report_data_param["findings_grouped"]["KAT-000"]["list"][0]["description"] == "Fake description..."
 
 
-def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mock_get_octopoes_api_connector, mocker):
+def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mock_organization_view_octopoes, mocker):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_pdf_report", kwargs=kwargs)
     request = rf.get(
@@ -113,7 +113,7 @@ def test_ooi_pdf_report_timeout(rf, my_user, organization, ooi_information, mock
 
     setup_request(request, my_user)
 
-    mock_get_octopoes_api_connector().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
+    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
     # Setup Keiko mock
     mock_keiko_client = mocker.patch("rocky.views.ooi_report.keiko_client")

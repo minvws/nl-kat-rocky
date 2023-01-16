@@ -50,7 +50,7 @@ from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
 User = get_user_model()
 
 
-class OnboardingBreadcrumbsMixin(BreadcrumbsMixin):
+class OnboardingBreadcrumbsMixin(BreadcrumbsMixin, OrganizationView):
     def build_breadcrumbs(self):
 
         return [

@@ -57,7 +57,7 @@ def url_with_querystring(path, **kwargs) -> str:
 def get_ooi_url(routename: str, ooi_id: str, organization_code: str, **kwargs) -> str:
     kwargs["ooi_id"] = ooi_id
     # exclude in querystring
-    kwargs = {k: v for k, v in kwargs.items() if k not in "organization_code"}
+    kwargs = {k: v for k, v in kwargs.items()}
 
     if "query" in kwargs:
         kwargs.update(kwargs["query"])
@@ -78,7 +78,7 @@ class Breadcrumb(TypedDict):
     url: str
 
 
-class BreadcrumbsMixin(OrganizationView):
+class BreadcrumbsMixin:
     breadcrumbs: List[Breadcrumb] = []
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
@@ -160,7 +160,7 @@ class OrganizationBreadcrumbsMixin(BreadcrumbsMixin):
     breadcrumbs = [{"url": reverse_lazy("organization_list"), "text": _("Organizations")}]
 
 
-class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
+class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin, OrganizationView):
     def build_breadcrumbs(self):
 
         breadcrumbs = [
@@ -177,7 +177,7 @@ class OrganizationMemberBreadcrumbsMixin(BreadcrumbsMixin):
         return breadcrumbs
 
 
-class ObjectsBreadcrumbsMixin(BreadcrumbsMixin):
+class ObjectsBreadcrumbsMixin(BreadcrumbsMixin, OrganizationView):
     def build_breadcrumbs(self):
         return [
             {

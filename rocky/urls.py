@@ -34,7 +34,7 @@ from rocky.views.tasks import BoefjesTaskListView, NormalizersTaskListView, Down
 from rocky.views.upload_csv import UploadCSV
 from tools.viewsets import OrganizationViewSet
 
-handler404 = "rocky.views.handler404"
+handler404 = "rocky.views.handler404.handler404"
 
 router = routers.SimpleRouter()
 router.register(r"organization", OrganizationViewSet)

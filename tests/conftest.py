@@ -58,8 +58,13 @@ def mock_models_octopoes(mocker):
 
 
 @pytest.fixture
-def mock_get_octopoes_api_connector(mocker):
-    return mocker.patch("account.mixins.get_octopoes_api_connector")
+def mock_organization_view_octopoes(mocker):
+    return mocker.patch("account.mixins.OctopoesAPIConnector")
+
+
+@pytest.fixture
+def mock_crisis_room_octopoes(mocker):
+    return mocker.patch("crisis_room.views.OctopoesAPIConnector")
 
 
 @pytest.fixture

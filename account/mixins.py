@@ -6,10 +6,6 @@ from rocky.settings import OCTOPOES_API
 from tools.models import Organization, OrganizationMember
 
 
-def get_octopoes_api_connector(base_uri: str, organization_code: str):
-    return OctopoesAPIConnector(base_uri, organization_code)
-
-
 class OrganizationView(View):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -23,7 +19,7 @@ class OrganizationView(View):
             self.organization = Organization.objects.get(code=organization_code)
         except Organization.DoesNotExist:
             self.organization = None
-        self.octopoes_api_connector = get_octopoes_api_connector(OCTOPOES_API, organization_code)
+        self.octopoes_api_connector = OctopoesAPIConnector(OCTOPOES_API, organization_code)
 
     def dispatch(self, request, *args, **kwargs):
 

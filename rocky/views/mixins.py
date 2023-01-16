@@ -225,7 +225,7 @@ class MultipleOOIMixin(OctopoesView):
         return ", ".join(self.filtered_ooi_types)
 
 
-class OOIBreadcrumbsMixin(BreadcrumbsMixin):
+class OOIBreadcrumbsMixin(BreadcrumbsMixin, OrganizationView):
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         if isinstance(self.ooi, Finding):
             start = {
