@@ -32,6 +32,7 @@ from onboarding.mixins import RedTeamUserRequiredMixin, SuperOrAdminUserRequired
 from onboarding.view_helpers import (
     KatIntroductionStepsMixin,
     KatIntroductionAdminStepsMixin,
+    KatIntroductionRegistrationStepsMixin,
 )
 from rocky.views.indemnification_add import IndemnificationAddView
 from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
@@ -45,7 +46,7 @@ from tools.ooi_helpers import (
     filter_ooi_tree,
 )
 from tools.user_helpers import is_red_team
-from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
+from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb, StepsMixin
 
 User = get_user_model()
 
@@ -113,13 +114,10 @@ class OnboardingSetupScanSelectPluginsView(
 
     def get_form(self):
         boefjes = self.report.get_boefjes(self.organization)
+        boefjes = [
+            boefje for boefje in boefjes if boefje["boefje"].scan_level <= int(self.request.session["clearance_level"])
+        ]
         kwargs = {
-            "organization_code": self.organization.code,
-            "boefjes": [
-                boefje
-                for boefje in boefjes
-                if boefje["boefje"].scan_level <= int(self.request.session["clearance_level"])
-            ],
             "initial": {"boefje": [item["id"] for item in boefjes if item.get("required", False)]},
         }
 
@@ -130,7 +128,7 @@ class OnboardingSetupScanSelectPluginsView(
                 }
             )
 
-        return SelectBoefjeForm(**kwargs)
+        return SelectBoefjeForm(boefjes=boefjes, organization=self.organization, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -313,7 +311,7 @@ class OnboardingSetClearanceLevelView(
         messages.add_message(self.request, messages.SUCCESS, success_message)
 
     def get_boefje_cover_img(self, boefje_id):
-        return reverse("plugin_cover", kwargs={"plugin_id": boefje_id, "organization_code": self.organization.code})
+        return reverse("plugin_cover", kwargs={"plugin_id": boefje_id})
 
     def get_boefjes_tiles(self):
         tiles = [
@@ -404,7 +402,7 @@ class RegistrationBreadcrumbsMixin(BreadcrumbsMixin):
 # account flow
 @class_view_decorator(otp_required)
 class OnboardingIntroductionRegistrationView(
-    SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView
+    SuperOrAdminUserRequiredMixin, KatIntroductionRegistrationStepsMixin, TemplateView
 ):
     """
     Step: 1 - Registration introduction
@@ -417,7 +415,7 @@ class OnboardingIntroductionRegistrationView(
 @class_view_decorator(otp_required)
 class OnboardingOrganizationSetupView(
     SuperOrAdminUserRequiredMixin,
-    KatIntroductionAdminStepsMixin,
+    KatIntroductionRegistrationStepsMixin,
     CreateView,
 ):
     """

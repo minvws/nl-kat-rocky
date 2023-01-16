@@ -133,7 +133,7 @@ class Step(TypedDict):
     url: str
 
 
-class StepsMixin(OrganizationView):
+class StepsMixin:
     steps: List[Step] = []
     current_step: int = None
 
