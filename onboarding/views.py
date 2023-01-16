@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
@@ -46,7 +46,7 @@ from tools.ooi_helpers import (
     filter_ooi_tree,
 )
 from tools.user_helpers import is_red_team
-from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb, StepsMixin
+from tools.view_helpers import get_ooi_url, BreadcrumbsMixin, Breadcrumb
 
 User = get_user_model()
 

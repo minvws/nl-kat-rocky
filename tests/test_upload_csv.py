@@ -8,6 +8,7 @@ from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
 
 from rocky.views.upload_csv import UploadCSV
+from tests.conftest import setup_request
 
 CSV_EXAMPLES = [
     # hostname
@@ -59,8 +60,6 @@ def test_upload_csv_simple(rf, my_user, organization):
 
 
 def test_upload_bad_input(rf, my_user, organization, mock_organization_view_octopoes):
-    # mocker.patch("rocky.views.upload_csv.save_ooi")
-
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
 
@@ -69,13 +68,9 @@ def test_upload_bad_input(rf, my_user, organization, mock_organization_view_octo
         reverse("upload_csv", kwargs=kwargs),
         {"object_type": "Hostname", "csv_file": example_file},
     )
-    request.user = my_user
-    request.organization = organization
 
-    request = SessionMiddleware(lambda r: r)(request)
-    request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
-    request = OTPMiddleware(lambda r: r)(request)
-    request = MessageMiddleware(lambda r: r)(request)
+    setup_request(request, my_user)
+
     response = UploadCSV.as_view()(request, **kwargs)
 
     assert response.status_code == 302
@@ -88,8 +83,9 @@ def test_upload_bad_input(rf, my_user, organization, mock_organization_view_octo
     "example_input, input_type, expected_ooi_counts",
     zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
 )
-def test_upload_csv(rf, my_user, mock_organization_view_octopoes, organization, example_input, input_type,
-                    expected_ooi_counts):
+def test_upload_csv(
+    rf, my_user, mock_organization_view_octopoes, organization, example_input, input_type, expected_ooi_counts
+):
     example_file = BytesIO(example_input)
     example_file.name = f"{input_type}.csv"
 

@@ -2,6 +2,10 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 from django.contrib.auth.models import Permission, ContentType
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
+from django_otp import DEVICE_ID_SESSION_KEY
+from django_otp.middleware import OTPMiddleware
 
 from rocky.scheduler import Task
 from tools.models import Organization, OrganizationMember, OOIInformation
@@ -92,8 +96,8 @@ def lazy_task_list_with_boefje() -> MagicMock:
                     "data": {
                         "id": "1b20f85f63d54baabe9ef3f19d6e3fae",
                         "boefje": {
-                            "id": "dns-records",
-                            "name": "DnsRecords",
+                            "id": "test-boefje",
+                            "name": "TestBoefje",
                             "description": "Fetch the DNS record(s) of a hostname",
                             "repository_id": None,
                             "version": None,
@@ -134,3 +138,14 @@ def ooi_information() -> OOIInformation:
     data = {"description": "Fake description...", "recommendation": "Fake recommendation...", "risk": "Low"}
     ooi_information = OOIInformation.objects.create(id="KATFindingType|KAT-000", data=data, consult_api=False)
     return ooi_information
+
+
+def setup_request(request, user):
+    request = SessionMiddleware(lambda r: r)(request)
+    request.session[DEVICE_ID_SESSION_KEY] = user.staticdevice_set.get().persistent_id
+    request = OTPMiddleware(lambda r: r)(request)
+    request = MessageMiddleware(lambda r: r)(request)
+
+    request.user = user
+
+    return request

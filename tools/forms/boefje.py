@@ -18,7 +18,9 @@ class CheckboxGroupBoefjeTiles(CheckboxGroup):
     def __init__(self):
         super().__init__()
         self.boefjes: List[Plugin] = self.attrs.get("boefjes", [])
-        self.organization = self.attrs.get("organization", )
+        self.organization = self.attrs.get(
+            "organization",
+        )
 
     def create_option(self, *arg, **kwargs) -> Dict[str, Any]:
         option = super().create_option(*arg, **kwargs)

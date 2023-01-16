@@ -1,17 +1,12 @@
 from io import BytesIO
-from unittest.mock import Mock
 
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse, resolve
-from django_otp import DEVICE_ID_SESSION_KEY
-from django_otp.middleware import OTPMiddleware
 from pytest_django.asserts import assertContains
 from requests import HTTPError
 
 from octopoes.models.tree import ReferenceTree
 from rocky.views.ooi_report import OOIReportView, OOIReportPDFView
-
+from tests.conftest import setup_request
 
 TREE_DATA = {
     "root": {
@@ -32,20 +27,6 @@ TREE_DATA = {
         },
     },
 }
-
-
-def setup_request(request, user):
-    """
-    Setup request with middlewares, user, organization and octopoes
-    """
-    request = SessionMiddleware(lambda r: r)(request)
-    request.session[DEVICE_ID_SESSION_KEY] = user.staticdevice_set.get().persistent_id
-    request = OTPMiddleware(lambda r: r)(request)
-    request = MessageMiddleware(lambda r: r)(request)
-
-    request.user = user
-
-    return request
 
 
 def test_ooi_report(rf, my_user, organization, ooi_information, mock_organization_view_octopoes):

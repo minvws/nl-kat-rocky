@@ -79,7 +79,7 @@ class OOIGraphView(OOITreeView):
     def get_filtered_tree(self, tree_dict):
         filtered_tree = super().get_filtered_tree(tree_dict)
 
-        return hydrate_tree(filtered_tree)
+        return hydrate_tree(filtered_tree, self.organization.code)
 
     def get_last_breadcrumb(self):
         return {
@@ -93,11 +93,11 @@ class OOIGraphView(OOITreeView):
         return context
 
 
-def hydrate_tree(tree):
-    return hydrate_branch(tree)
+def hydrate_tree(tree, organization_code: str):
+    return hydrate_branch(tree, organization_code)
 
 
-def hydrate_branch(branch):
+def hydrate_branch(branch, organization_code: str):
     branch["name"] = branch["tree_meta"]["location"] + "-" + branch["ooi_type"]
     branch["overlay_data"] = {"Type": branch["ooi_type"]}
     if branch["ooi_type"] == "Finding":
@@ -109,7 +109,7 @@ def hydrate_branch(branch):
         branch["overlay_data"]["State"] = branch["state"]
 
     branch["display_name"] = branch["human_readable"]
-    # branch["graph_url"] = get_ooi_url("ooi_graph", branch["id"], organization_code=organization_code)
+    branch["graph_url"] = get_ooi_url("ooi_graph", branch["id"], organization_code=organization_code)
 
     if branch.get("children"):
         branch["children"] = [hydrate_branch(child) for child in branch["children"]]

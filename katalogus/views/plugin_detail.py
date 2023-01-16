@@ -5,7 +5,6 @@ from django.core.paginator import Paginator, Page
 from django.http import FileResponse
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views import View
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 
