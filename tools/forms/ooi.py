@@ -2,7 +2,7 @@ from typing import List, Tuple, Any
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from octopoes.models import OOI, ScanLevel
+from octopoes.models import OOI
 
 from tools.forms import (
     BaseRockyForm,
@@ -76,7 +76,7 @@ class SelectOOIForm(BaseRockyForm):
         return str(ooi), (
             ooi,
             ooi,
-            ooi.scan_profile.level if ooi.scan_profile else ScanLevel.L0,
+            ooi.scan_profile.level if ooi.scan_profile else 0,
         )
 
 
