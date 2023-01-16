@@ -311,7 +311,7 @@ class OnboardingSetClearanceLevelView(
         messages.add_message(self.request, messages.SUCCESS, success_message)
 
     def get_boefje_cover_img(self, boefje_id):
-        return reverse("plugin_cover", kwargs={"plugin_id": boefje_id})
+        return reverse("plugin_cover", kwargs={"plugin_id": boefje_id, "organization_code": self.organization.code})
 
     def get_boefjes_tiles(self):
         tiles = [

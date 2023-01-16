@@ -7,6 +7,8 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
 
+from octopoes.models import DeclaredScanProfile, ScanLevel, Reference
+from octopoes.models.ooi.network import Network
 from rocky.scheduler import Task
 from tools.models import Organization, OrganizationMember, OOIInformation
 
@@ -131,6 +133,46 @@ def lazy_task_list_with_boefje() -> MagicMock:
     ]
     mock.count.return_value = 1
     return mock
+
+
+@pytest.fixture
+def network():
+    return Network(
+        name="testnetwork",
+        scan_profile=DeclaredScanProfile(reference=Reference.from_str("Network|testnetwork"), level=ScanLevel.L1),
+    )
+
+
+@pytest.fixture
+def plugin_details():
+    return {
+        "id": "test-boefje",
+        "type": "boefje",
+        "name": "TestBoefje",
+        "description": "Meows to the moon",
+        "repository_id": "test-repository",
+        "scan_level": 1,
+        "consumes": ["Network"],
+        "produces": ["Network"],
+        "enabled": True,
+    }
+
+
+@pytest.fixture
+def plugin_schema():
+    return {
+        "title": "Arguments",
+        "type": "object",
+        "properties": {
+            "TEST_PROPERTY": {
+                "title": "TEST_PROPERTY",
+                "maxLength": 128,
+                "type": "string",
+                "description": "Test description",
+            }
+        },
+        "required": ["TEST_PROPERTY"],
+    }
 
 
 @pytest.fixture
