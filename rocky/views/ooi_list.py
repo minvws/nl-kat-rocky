@@ -49,8 +49,11 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
         return context
 
     def get(self, request: HttpRequest, status=200, *args, **kwargs) -> HttpResponse:
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context, status=status)
+        """ Override the response status in case submitting a form returns an error message """
+        response = super().get(request, *args, **kwargs)
+        response.status_code = status
+
+        return response
 
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """Perform bulk action on selected oois."""
