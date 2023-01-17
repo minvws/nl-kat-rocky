@@ -1,8 +1,8 @@
-import pytest
 from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains
-from tests.conftest import setup_request
+
 from katalogus.views import KATalogusView
+from tests.conftest import setup_request
 
 
 def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
