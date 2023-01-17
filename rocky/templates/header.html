@@ -22,7 +22,7 @@
     <!-- Adjust breakpoint as needed -->
     <ul>
       {% if request.user.is_authenticated %}
-        {% if organization.code and not view_type == "onboarding" %}
+        {% if not view_type == "onboarding" %}
           {% include 'partials/organizations_menu_dropdown.html' %}
         {% endif %}
         <li>
