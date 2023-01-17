@@ -15,7 +15,6 @@ from octopoes.models.exception import ObjectNotFoundException
 from rocky.views.ooi_view import BaseOOIListView
 from tools.forms.ooi import SelectOOIForm
 from tools.models import SCAN_LEVEL
-from tools.view_helpers import StepsMixin
 
 
 class PageActions(Enum):
