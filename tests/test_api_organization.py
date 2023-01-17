@@ -80,7 +80,7 @@ class TestOrganizationViewSet(ViewSetTest):
         data = static_fixture({"name": "Test Org 3", "code": "test3", "tags": ["tag2", "tag3"]})
 
         initial_ids = precondition_fixture(
-            lambda mock_katalogus, mock_models_octopoes, organizations: set(
+            lambda mock_models_katalogus, mock_models_octopoes, organizations: set(
                 Organization.objects.values_list("id", flat=True)
             ),
             async_=False,
@@ -206,7 +206,7 @@ class TestOrganizationViewSet(ViewSetTest):
         Returns204,
     ):
         initial_ids = precondition_fixture(
-            lambda mock_katalogus, mock_models_octopoes, organizations: set(
+            lambda mock_models_katalogus, mock_models_octopoes, organizations: set(
                 Organization.objects.values_list("id", flat=True)
             ),
             async_=False,

@@ -93,8 +93,10 @@ class Organization(models.Model):
             return
 
         katalogus_client = get_katalogus(instance.code)
+
         try:
-            katalogus_client.create_organization(instance.name)
+            if not katalogus_client.organization_exists():
+                katalogus_client.create_organization(instance.name)
         except Exception as e:
             raise RockyError(f"Katalogus returned error creating organization: {e}") from e
 
