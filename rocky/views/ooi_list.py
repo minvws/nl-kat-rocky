@@ -15,7 +15,7 @@ from octopoes.models.types import get_collapsed_types, type_by_name
 from octopoes.models.exception import ObjectNotFoundException
 from rocky.views.ooi_view import BaseOOIListView
 from tools.forms.ooi import SelectOOIForm
-from tools.models import SCAN_LEVEL
+from tools.models import SCAN_LEVEL, OrganizationMember
 
 
 class PageActions(Enum):
@@ -30,7 +30,7 @@ class OOIListView(BaseOOIListView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-
+        self.member = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
         self.filtered_ooi_types = self.get_filtered_ooi_types()
 
     def get_context_data(self, **kwargs):
@@ -55,7 +55,6 @@ class OOIListView(BaseOOIListView):
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """Perform bulk action on selected oois."""
         selected_oois = request.POST.getlist("ooi")
-
         if not selected_oois:
             messages.add_message(request, messages.ERROR, _("No OOIs selected."))
             return self.get(request, status=422, *args, **kwargs)
@@ -66,6 +65,7 @@ class OOIListView(BaseOOIListView):
             return self._delete_oois(selected_oois, request, *args, **kwargs)
 
         if action == PageActions.UPDATE_SCAN_PROFILE.value:
+
             return self._set_scan_profiles(selected_oois, request, *args, **kwargs)
 
         messages.add_message(request, messages.ERROR, _("Unknown action."))
@@ -78,7 +78,17 @@ class OOIListView(BaseOOIListView):
         for level, alias in SCAN_LEVEL.choices:
             if scan_profile != alias:
                 continue
-
+            if level > self.member.trusted_clearance_level and level > self.member.acknowledged_clearance_level:
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    _(
+                        "You do not have clearance for level %s. \
+                        You are trusted with clearance level %s and you acknowledged a clearance level of %s."
+                    )
+                    % (level, self.member.trusted_clearance_level, self.member.acknowledged_clearance_level),
+                )
+                return super().get(self.request, *args, **kwargs)
             for ooi in selected_oois:
                 try:
                     connector.save_scan_profile(
