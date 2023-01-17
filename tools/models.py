@@ -120,7 +120,7 @@ class OrganizationMember(models.Model):
     scan_levels = [scan_level.value for scan_level in SCAN_LEVEL]
 
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, related_name="members")
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True, related_name="members")
     verified = models.BooleanField(default=False)
     authorized = models.BooleanField(default=False)
     status = models.CharField(choices=STATUSES.choices, max_length=64, default=STATUSES.NEW)

@@ -9,7 +9,7 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 
 from account.forms import OrganizationForm
-from tools.models import Organization
+from tools.models import Organization, OrganizationMember
 
 
 @class_view_decorator(otp_required)
@@ -33,6 +33,8 @@ class OrganizationAddView(PermissionRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
+        self.object = form.save()
+        OrganizationMember.objects.get_or_create(user=self.request.user, organization=self.object)
         self.add_success_notification()
         return super().form_valid(form)
 
