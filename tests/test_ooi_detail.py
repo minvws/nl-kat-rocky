@@ -34,8 +34,10 @@ def mock_scheduler(mocker):
 
 
 def test_ooi_detail(
-    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje
+    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje, mocker
 ):
+    mocker.patch("katalogus.utils.get_katalogus")
+
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_detail", kwargs=kwargs)
     request = rf.get(url, {"ooi_id": "Network|testnetwork"})

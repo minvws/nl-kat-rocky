@@ -15,7 +15,7 @@ from tools.models import Organization, OrganizationMember, OOIInformation
 
 @pytest.fixture
 def organization():
-    with patch("katalogus.client.KATalogusClientV1.create_organization"), patch(
+    with patch("katalogus.client.KATalogusClientV1"), patch(
         "octopoes.connector.octopoes.OctopoesAPIConnector.create_node"
     ):
         organization = Organization.objects.create(name="Test Organization", code="test")

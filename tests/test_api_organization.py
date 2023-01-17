@@ -41,7 +41,7 @@ express_organizations = pluralized(express_organization)
 class TestOrganizationViewSet(ViewSetTest):
     @pytest.fixture
     def organizations(self):
-        with patch("katalogus.client.KATalogusClientV1.create_organization"), patch(
+        with patch("katalogus.client.KATalogusClientV1"), patch(
             "octopoes.connector.octopoes.OctopoesAPIConnector.create_node"
         ):
             return [
@@ -113,6 +113,7 @@ class TestOrganizationViewSet(ViewSetTest):
 
         @pytest.fixture(autouse=True)
         def mock_services(self, mocker):
+            mocker.patch("katalogus.client.KATalogusClientV1.organization_exists", return_value=False)
             mocker.patch("katalogus.client.KATalogusClientV1.create_organization", side_effect=HTTPError("Test error"))
             mocker.patch("octopoes.connector.octopoes.OctopoesAPIConnector.create_node")
 
@@ -138,6 +139,7 @@ class TestOrganizationViewSet(ViewSetTest):
 
         @pytest.fixture(autouse=True)
         def mock_services(self, mocker):
+            mocker.patch("katalogus.client.KATalogusClientV1.organization_exists", return_value=False)
             mocker.patch("katalogus.client.KATalogusClientV1.create_organization")
             mocker.patch(
                 "octopoes.connector.octopoes.OctopoesAPIConnector.create_node", side_effect=HTTPError("Test error")

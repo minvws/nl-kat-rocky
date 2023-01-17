@@ -5,8 +5,9 @@ from tests.conftest import setup_request
 from katalogus.views import KATalogusView
 
 
-@pytest.mark.django_db(True)
-def test_katalogus_plugin_listing(my_user, rf, organization):
+def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
+    mocker.patch("katalogus.client.KATalogusClientV1")
+
     kwargs = {"organization_code": organization.code}
     url = reverse("katalogus", kwargs=kwargs)
     request = rf.get(url)
