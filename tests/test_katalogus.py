@@ -1,12 +1,13 @@
-import pytest
 from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains
-from tests.conftest import setup_request
+
 from katalogus.views import KATalogusView
+from tests.conftest import setup_request
 
 
-@pytest.mark.django_db(True)
-def test_katalogus_plugin_listing(my_user, rf, organization):
+def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
+    mocker.patch("katalogus.client.KATalogusClientV1")
+
     kwargs = {"organization_code": organization.code}
     url = reverse("katalogus", kwargs=kwargs)
     request = rf.get(url)

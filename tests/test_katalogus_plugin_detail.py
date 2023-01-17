@@ -22,7 +22,12 @@ def test_plugin_detail(
     plugin_schema,
     mock_organization_view_octopoes,
     network,
+    mocker,
+    lazy_task_list_with_boefje,
 ):
+    mock_scheduler_client = mocker.patch("katalogus.views.plugin_detail.scheduler")
+    mock_scheduler_client.client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
+
     kwargs = {"organization_code": organization.code, "plugin_type": "boefje", "plugin_id": "test-plugin"}
     url = reverse("plugin_detail", kwargs=kwargs)
     request = rf.get(url)

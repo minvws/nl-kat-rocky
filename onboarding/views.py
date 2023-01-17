@@ -445,10 +445,15 @@ class OnboardingOrganizationSetupView(
         return super().form_valid(form)
 
     def get_or_create_organizationmember(self, organization):
-      if self.request.user.is_superuser:
-          OrganizationMember.objects.get_or_create(user=self.request.user, organization=organization, trusted_clearance_level=4, acknowledged_clearance_level=4)
-      else:
-          OrganizationMember.objects.get_or_create(user=self.request.user, organization=organization)
+        if self.request.user.is_superuser:
+            OrganizationMember.objects.get_or_create(
+                user=self.request.user,
+                organization=organization,
+                trusted_clearance_level=4,
+                acknowledged_clearance_level=4,
+            )
+        else:
+            OrganizationMember.objects.get_or_create(user=self.request.user, organization=organization)
 
     def add_success_notification(self, org_name):
         success_message = _("{org_name} succesfully created.").format(org_name=org_name)
