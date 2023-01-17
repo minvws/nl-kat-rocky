@@ -72,7 +72,7 @@ class OOIListView(BaseOOIListView):
         return self.get(request, status=404, *args, **kwargs)
 
     def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        connector = self.get_api_connector()
+        connector = self.octopoes_api_connector
         scan_profile = request.POST.get("scan-profile")
 
         for level, alias in SCAN_LEVEL.choices:
