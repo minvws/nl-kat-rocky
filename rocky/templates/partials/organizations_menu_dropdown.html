@@ -1,11 +1,15 @@
 {% load i18n %}
 
-{% if organizations_dropdown_list|length == 1 %}
+{% if organizations_dropdown_list|length == 1 and organization.code %}
   <li>{{ organization.name }}</li>
 {% else %}
   <div class="dropdown">
     <button class="dropdown-button">
-      <li>{{ organization.name }}</li>
+      {% if not organization.code %}
+          {% translate 'Select organization' %}
+      {% else %}
+        {{ organization.name }}
+      {% endif %}
       <span class="icon ti-chevron-down"></span>
     </button>
     <ul class="dropdown-list">
