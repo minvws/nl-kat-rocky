@@ -20,7 +20,7 @@ class IndemnificationAddView(OrganizationView, FormView):
             organization=self.organization,
         )
         self.add_success_notification()
-        return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def add_success_notification(self):
         success_message = _("Indemnification successfully set.")
