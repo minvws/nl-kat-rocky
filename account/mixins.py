@@ -46,7 +46,7 @@ class OrganizationView(View):
         if self.organization:
             context["organization"] = self.organization
         context["organization_member"] = self.organization_member
-        context["may_update_scan_profile"] = self._may_update_scan_profile
+        context["may_update_scan_profile"] = self.may_update_scan_profile
         return context
 
     @property
