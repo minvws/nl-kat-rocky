@@ -23,20 +23,18 @@ class OrganizationView(View):
             self.organization = Organization.objects.get(code=organization_code)
         except Organization.DoesNotExist:
             self.organization = None
+        try:
+            self.organization_member = OrganizationMember.objects.get(
+                user=self.request.user, organization=self.organization
+            )
+        except OrganizationMember.DoesNotExist:
+            self.organization_member = None
+
         self.octopoes_api_connector = OctopoesAPIConnector(OCTOPOES_API, organization_code)
-        self.organization_member = OrganizationMember.objects.get(
-            user=self.request.user, organization=self.organization
-        )
 
     def dispatch(self, request, *args, **kwargs):
 
-        if self.organization is None:
-            raise Http404()
-
-        if (
-            not request.user.is_superuser
-            and not OrganizationMember.objects.filter(user=self.request.user, organization=self.organization).exists()
-        ):
+        if self.organization is None or self.organization_member is None:
             raise Http404()
 
         return super().dispatch(request, *args, **kwargs)
