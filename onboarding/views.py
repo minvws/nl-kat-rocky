@@ -35,7 +35,6 @@ from onboarding.view_helpers import (
     KatIntroductionRegistrationStepsMixin,
 )
 from rocky.views.indemnification_add import IndemnificationAddView
-from rocky.views.ooi_detail import verify_may_update_scan_profile
 from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
 from rocky.views.ooi_view import BaseOOIFormView, SingleOOITreeMixin, BaseOOIDetailView
 from tools.forms.boefje import SelectBoefjeForm
@@ -259,7 +258,7 @@ class OnboardingSetupScanOOIDetailView(
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if not verify_may_update_scan_profile(self.request):
+        if not self.verify_may_update_scan_profile():
             return self.get(request, *args, **kwargs)
 
         self.set_clearance_level()

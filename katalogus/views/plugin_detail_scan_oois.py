@@ -10,7 +10,6 @@ from django.contrib import messages
 from katalogus.views.mixins import BoefjeMixin
 from octopoes.models.types import type_by_name
 
-from rocky.views.ooi_detail import verify_may_update_scan_profile
 from tools.forms.ooi import SelectOOIForm, SelectOOIFilterForm
 
 
@@ -20,7 +19,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         """Start scanning oois at plugin detail page."""
-        if not verify_may_update_scan_profile(self.request):
+        if not self.verify_may_update_scan_profile():
             return self.get(request, *args, **kwargs)
 
         selected_oois = request.POST.getlist("ooi")

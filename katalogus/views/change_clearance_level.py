@@ -8,7 +8,6 @@ from two_factor.views.utils import class_view_decorator
 
 from katalogus.views.mixins import BoefjeMixin
 from katalogus.views.mixins import KATalogusMixin
-from rocky.views.ooi_detail import verify_may_update_scan_profile
 
 
 @class_view_decorator(otp_required)
@@ -38,7 +37,7 @@ class ChangeClearanceLevel(BoefjeMixin, KATalogusMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         """Start scanning oois at plugin detail page."""
-        if not verify_may_update_scan_profile(self.request):
+        if not self.verify_may_update_scan_profile():
             return self.get(request, *args, **kwargs)
 
         boefje = self.katalogus_client.get_boefje(self.plugin_id)

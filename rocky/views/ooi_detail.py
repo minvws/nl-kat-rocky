@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
-from django.utils.translation import gettext_lazy as _
 from requests.exceptions import RequestException
 
 from katalogus.client import get_katalogus
@@ -35,7 +34,7 @@ class OOIDetailView(
     scan_history_limit = 10
 
     def post(self, request, *args, **kwargs):
-        if not verify_may_update_scan_profile(self.request):
+        if not self.verify_may_update_scan_profile():
             return self.get(request, *args, **kwargs)
 
         if "action" not in self.request.POST:
@@ -177,19 +176,3 @@ class OOIDetailView(
         ]
 
         return context
-
-
-def verify_may_update_scan_profile(request) -> bool:
-    organization_member = OrganizationMember.objects.get(user=request.user)
-
-    if not Indemnification.objects.filter(organization=organization_member.organization).exists():
-        messages.add_message(
-            request, messages.ERROR, _("The required indemnification to perform this action is missing.")
-        )
-        return False
-
-    if not organization_member.acknowledged_clearance_level > 0:
-        messages.add_message(request, messages.ERROR, _("Acknowledged clearance level too low."))
-        return False
-
-    return True

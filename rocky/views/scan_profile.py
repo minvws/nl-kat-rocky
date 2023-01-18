@@ -10,7 +10,7 @@ from two_factor.views.utils import class_view_decorator
 
 from octopoes.models import InheritedScanProfile, EmptyScanProfile, DeclaredScanProfile
 
-from rocky.views.ooi_detail import OOIDetailView, verify_may_update_scan_profile
+from rocky.views.ooi_detail import OOIDetailView
 from tools.forms.ooi import SetClearanceLevelForm
 from tools.models import Indemnification, OrganizationMember
 
@@ -46,20 +46,39 @@ class ScanProfileDetailView(OOIDetailView, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if not verify_may_update_scan_profile(self.request):
+        if not self.verify_may_update_scan_profile():
             return self.get(request, *args, **kwargs)
 
         super().post(request, *args, **kwargs)
-
         form = self.get_form()
         if form.is_valid():
-            self.api_connector.save_scan_profile(
-                DeclaredScanProfile(
-                    reference=self.ooi.reference,
-                    level=form.cleaned_data["level"],
-                ),
-                valid_time=datetime.now(timezone.utc),
-            )
+
+            level = form.cleaned_data["level"]
+            if (
+                level > self.organization_member.trusted_clearance_level
+                or level > self.organization_member.acknowledged_clearance_level
+            ):
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    _(
+                        "You do not have clearance for level %s. \
+                        You are trusted with clearance level %s and you acknowledged a clearance level of %s."
+                    )
+                    % (
+                        level,
+                        self.organization_member.trusted_clearance_level,
+                        self.organization_member.acknowledged_clearance_level,
+                    ),
+                )
+            else:
+                self.api_connector.save_scan_profile(
+                    DeclaredScanProfile(
+                        reference=self.ooi.reference,
+                        level=level,
+                    ),
+                    valid_time=datetime.now(timezone.utc),
+                )
         else:
             messages.add_message(
                 self.request,

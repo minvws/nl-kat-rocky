@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.http import Http404
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from octopoes.connector.octopoes import OctopoesAPIConnector
@@ -11,6 +13,8 @@ class OrganizationView(View):
         super().__init__(**kwargs)
         self.organization = None
         self.octopoes_api_connector = None
+        self._may_update_scan_profile = False
+        self.organization_member = None
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -20,6 +24,9 @@ class OrganizationView(View):
         except Organization.DoesNotExist:
             self.organization = None
         self.octopoes_api_connector = OctopoesAPIConnector(OCTOPOES_API, organization_code)
+        self.organization_member = OrganizationMember.objects.get(
+            user=self.request.user, organization=self.organization
+        )
 
     def dispatch(self, request, *args, **kwargs):
 
@@ -38,4 +45,24 @@ class OrganizationView(View):
         context = super().get_context_data(**kwargs)
         if self.organization:
             context["organization"] = self.organization
+        context["organization_member"] = self.organization_member
+        context["may_update_scan_profile"] = self._may_update_scan_profile
         return context
+
+    @property
+    def may_update_scan_profile(self):
+        if self.organization_member.acknowledged_clearance_level < 0:
+            return False
+        if self.organization_member.trusted_clearance_level < 0:
+            return False
+        return True
+
+    def verify_may_update_scan_profile(self) -> bool:
+        if self.organization_member.acknowledged_clearance_level < 0:
+            messages.add_message(self.request, messages.ERROR, _("Acknowledged clearance level too low."))
+            return False
+
+        if self.organization_member.trusted_clearance_level < 0:
+            messages.add_message(self.request, messages.ERROR, _("Trusted clearance level too low."))
+            return False
+        return True

@@ -14,10 +14,9 @@ from octopoes.models import Reference, DeclaredScanProfile
 from octopoes.models.types import get_collapsed_types, type_by_name
 from octopoes.models.exception import ObjectNotFoundException
 
-from rocky.views.ooi_detail import verify_may_update_scan_profile
 from rocky.views.ooi_view import BaseOOIListView
 from tools.forms.ooi import SelectOOIForm
-from tools.models import OrganizationMember, Indemnification
+from tools.models import Indemnification
 
 from tools.models import SCAN_LEVEL
 
@@ -34,7 +33,6 @@ class OOIListView(BaseOOIListView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.member = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
         self.filtered_ooi_types = self.get_filtered_ooi_types()
 
     def get_context_data(self, **kwargs):
@@ -45,7 +43,7 @@ class OOIListView(BaseOOIListView):
         context["select_oois_form"] = SelectOOIForm(
             context.get("ooi_list", []), organization_code=self.organization.code
         )
-        context["member"] = self.member
+        context["member"] = self.organization_member
         context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
         context["organization_indemnification"] = self.get_organization_indemnification
 
@@ -78,16 +76,19 @@ class OOIListView(BaseOOIListView):
         return self.get(request, status=404, *args, **kwargs)
 
     def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not verify_may_update_scan_profile(self.request):
+        if not self.verify_may_update_scan_profile():
             return self.get(request, status=403, *args, **kwargs)
 
-        connector = self.get_api_connector()
+        connector = self.octopoes_api_connector
         scan_profile = request.POST.get("scan-profile")
 
         for level, alias in SCAN_LEVEL.choices:
             if scan_profile != alias:
                 continue
-            if level > self.member.trusted_clearance_level and level > self.member.acknowledged_clearance_level:
+            if (
+                level > self.organization_member.trusted_clearance_level
+                or level > self.organization_member.acknowledged_clearance_level
+            ):
                 messages.add_message(
                     request,
                     messages.ERROR,
@@ -95,7 +96,11 @@ class OOIListView(BaseOOIListView):
                         "You do not have clearance for level %s. \
                         You are trusted with clearance level %s and you acknowledged a clearance level of %s."
                     )
-                    % (level, self.member.trusted_clearance_level, self.member.acknowledged_clearance_level),
+                    % (
+                        level,
+                        self.organization_member.trusted_clearance_level,
+                        self.organization_member.acknowledged_clearance_level,
+                    ),
                 )
                 return super().get(self.request, *args, **kwargs)
             for ooi in selected_oois:
@@ -128,7 +133,7 @@ class OOIListView(BaseOOIListView):
         return self.get(request, status=404, *args, **kwargs)
 
     def _delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        connector = self.get_api_connector()
+        connector = self.octopoes_api_connector
 
         for ooi in selected_oois:
             try:
