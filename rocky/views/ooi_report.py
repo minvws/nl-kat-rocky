@@ -155,7 +155,7 @@ class OOIReportView(OOIBreadcrumbsMixin, BaseOOIDetailView):
     connector_form_class = OOIReportSettingsForm
 
     def dispatch(self, request, *args, **kwargs):
-        if not "ooi_id" in request.GET:
+        if "ooi_id" not in request.GET:
             raise BadRequest("Missing ooi_id parameter")
         ooi_id = request.GET["ooi_id"]
 
