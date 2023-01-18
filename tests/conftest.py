@@ -10,7 +10,7 @@ from django_otp.middleware import OTPMiddleware
 from octopoes.models import DeclaredScanProfile, ScanLevel, Reference
 from octopoes.models.ooi.network import Network
 from rocky.scheduler import Task
-from tools.models import Organization, OrganizationMember, OOIInformation
+from tools.models import Organization, OrganizationMember, OOIInformation, Indemnification
 
 
 @pytest.fixture
@@ -48,6 +48,10 @@ def my_user(user, organization):
     permission, _ = Permission.objects.get_or_create(
         content_type=content_type,
         codename="can_scan_organization",
+    )
+    Indemnification.objects.create(
+        organization=organization,
+        user=user,
     )
     user.user_permissions.add(permission)
 
