@@ -13,9 +13,13 @@ from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models import Reference, DeclaredScanProfile
 from octopoes.models.types import get_collapsed_types, type_by_name
 from octopoes.models.exception import ObjectNotFoundException
+
+from rocky.views.ooi_detail import verify_may_update_scan_profile
 from rocky.views.ooi_view import BaseOOIListView
 from tools.forms.ooi import SelectOOIForm
-from tools.models import SCAN_LEVEL, OrganizationMember
+from tools.models import OrganizationMember, Indemnification
+
+from tools.models import SCAN_LEVEL
 
 
 class PageActions(Enum):
@@ -42,6 +46,7 @@ class OOIListView(BaseOOIListView):
             context.get("ooi_list", []), organization_code=self.organization.code
         )
         context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
+        context["organization_indemnification"] = self.get_organization_indemnification
 
         return context
 
@@ -72,7 +77,10 @@ class OOIListView(BaseOOIListView):
         return self.get(request, status=404, *args, **kwargs)
 
     def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        connector = self.octopoes_api_connector
+        if not verify_may_update_scan_profile(self.request):
+            return self.get(request, status=403, *args, **kwargs)
+
+        connector = self.get_api_connector()
         scan_profile = request.POST.get("scan-profile")
 
         for level, alias in SCAN_LEVEL.choices:
@@ -140,6 +148,9 @@ class OOIListView(BaseOOIListView):
         )
 
         return self.get(request, *args, **kwargs)
+
+    def get_organization_indemnification(self):
+        return Indemnification.objects.filter(organization=self.organization).exists()
 
 
 class OOIListExportView(OOIListView):

@@ -1,13 +1,16 @@
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 
+from django.urls import reverse
+from django.shortcuts import redirect
+from django.contrib import messages
+
 from katalogus.views.mixins import BoefjeMixin
 from octopoes.models.types import type_by_name
+
+from rocky.views.ooi_detail import verify_may_update_scan_profile
 from tools.forms.ooi import SelectOOIForm, SelectOOIFilterForm
 
 
@@ -17,6 +20,9 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         """Start scanning oois at plugin detail page."""
+        if not verify_may_update_scan_profile(self.request):
+            return self.get(request, *args, **kwargs)
+
         selected_oois = request.POST.getlist("ooi")
         plugin_id = request.POST.get("boefje_id")
         if selected_oois and plugin_id:
