@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-
+from django.urls import reverse_lazy
 from account.forms import IndemnificationAddForm
 from account.mixins import OrganizationView
 from tools.models import Indemnification
@@ -20,7 +20,10 @@ class IndemnificationAddView(OrganizationView, FormView):
             organization=self.organization,
         )
         self.add_success_notification()
-        return super().get(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("organization_detail", kwargs={"organization_code": self.organization.code})
 
     def add_success_notification(self):
         success_message = _("Indemnification successfully set.")
