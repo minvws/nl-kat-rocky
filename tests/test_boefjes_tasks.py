@@ -1,136 +1,153 @@
-import uuid
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import call, MagicMock
 
-from django.contrib.auth import get_user_model
+import pytest
 from django.contrib.messages.storage.fallback import FallbackStorage
-from django.test import RequestFactory, TestCase
 from django.urls import reverse
+from pytest_django.asserts import assertContains
 from requests import HTTPError
 
-from rocky.scheduler import PaginatedTasksResponse
-from rocky.views import TASK_LIMIT, BoefjesTaskListView
-from tools.models import Organization
-
-UUIDS = [uuid.uuid4() for _ in range(10)]
-User = get_user_model()
+from rocky.scheduler import Task
+from rocky.views import BoefjesTaskListView
 
 
-@patch("rocky.views.tasks.client")
-class TaskListTestCase(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.factory = RequestFactory()
-        cls.user = User.objects.create_user(email="admin@openkat.nl", password="TestTest123!!")
-        cls.organization = Organization.objects.create(name="Development", code="_dev")
-        cls.task_list = BoefjesTaskListView.as_view()
+@pytest.fixture
+def lazy_task_list_empty() -> MagicMock:
+    mock = MagicMock()
+    mock.__getitem__.return_value = []
+    mock.count.return_value = 0
+    return mock
 
-    def test_boefjes_tasks(self, mock_scheduler_client: MagicMock):
-        mock_scheduler_client.list_tasks.return_value = PaginatedTasksResponse.parse_obj(
-            {"count": 0, "next": None, "previous": None, "results": []}
-        )
 
-        request = self.factory.get(reverse("boefjes_task_list"))
-        request.user = self.user
-        request.user.is_verified = lambda: True
-        request.active_organization = self.organization
-
-        _ = self.task_list(request)
-
-        mock_scheduler_client.list_tasks.assert_has_calls([call("boefje-_dev", limit=TASK_LIMIT)])
-
-    def test_tasks_view_simple(self, mock_scheduler_client: MagicMock):
-        mock_scheduler_client.list_tasks.return_value = PaginatedTasksResponse.parse_raw(
-            """
-        {
-            "count": 1,
-            "next": null,
-            "previous": null,
-            "results": [
-                {
+@pytest.fixture
+def lazy_task_list_with_boefje() -> MagicMock:
+    mock = MagicMock()
+    mock.__getitem__.return_value = [
+        Task.parse_obj(
+            {
+                "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
+                "hash": "19ed51514b37d42f79c5e95469956b05",
+                "scheduler_id": "boefje-test",
+                "type": "boefje",
+                "p_item": {
                     "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
                     "hash": "19ed51514b37d42f79c5e95469956b05",
-                    "scheduler_id": "boefje-_dev",
-                    "p_item": {
-                        "id": "1b20f85f-63d5-4baa-be9e-f3f19d6e3fae",
-                        "hash": "19ed51514b37d42f79c5e95469956b05",
-                        "priority": 1,
-                        "data": {
-                            "id": "1b20f85f63d54baabe9ef3f19d6e3fae",
-                            "boefje": {
-                                "id": "dns-records",
-                                "name": "DnsRecords",
-                                "description": "Fetch the DNS record(s) of a hostname",
-                                "repository_id": null,
-                                "version": null,
-                                "scan_level": 1,
-                                "consumes": [
-                                    "Hostname"
-                                ],
-                                "produces": [
-                                    "DNSNSRecord",
-                                    "DNSARecord",
-                                    "DNSCNAMERecord",
-                                    "DNSMXRecord",
-                                    "DNSZone",
-                                    "Hostname",
-                                    "DNSAAAARecord",
-                                    "IPAddressV4",
-                                    "DNSSOARecord",
-                                    "DNSTXTRecord",
-                                    "IPAddressV6",
-                                    "Network",
-                                    "NXDOMAIN"
-                                ]
-                            },
-                            "input_ooi": "Hostname|internet|mispo.es.",
-                            "organization": "_dev"
-                        }
+                    "priority": 1,
+                    "data": {
+                        "id": "1b20f85f63d54baabe9ef3f19d6e3fae",
+                        "boefje": {
+                            "id": "dns-records",
+                            "name": "DnsRecords",
+                            "description": "Fetch the DNS record(s) of a hostname",
+                            "repository_id": None,
+                            "version": None,
+                            "scan_level": 1,
+                            "consumes": ["Hostname"],
+                            "produces": [
+                                "DNSNSRecord",
+                                "DNSARecord",
+                                "DNSCNAMERecord",
+                                "DNSMXRecord",
+                                "DNSZone",
+                                "Hostname",
+                                "DNSAAAARecord",
+                                "IPAddressV4",
+                                "DNSSOARecord",
+                                "DNSTXTRecord",
+                                "IPAddressV6",
+                                "Network",
+                                "NXDOMAIN",
+                            ],
+                        },
+                        "input_ooi": "Hostname|internet|mispo.es.",
+                        "organization": "_dev",
                     },
-                    "status": "completed",
-                    "created_at": "2022-08-09 11:53:41.378292",
-                    "modified_at": "2022-08-09 11:54:21.002838"
-                }
-            ]
-        }
-        """
+                },
+                "status": "completed",
+                "created_at": "2022-08-09 11:53:41.378292",
+                "modified_at": "2022-08-09 11:54:21.002838",
+            }
         )
+    ]
+    mock.count.return_value = 1
+    return mock
 
-        request = self.factory.get(reverse("task_list"))
-        request.user = self.user
-        request.user.is_verified = lambda: True
-        request.active_organization = self.organization
 
-        response = self.task_list(request)
+def test_boefjes_tasks(rf, user, organization, mocker, lazy_task_list_empty):
+    mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
+    mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_empty
 
-        self.assertContains(response, "1b20f85f")
-        self.assertContains(response, "Hostname|internet|mispo.es.")
+    request = rf.get(reverse("boefjes_task_list"))
+    request.user = user
+    request.active_organization = organization
 
-        mock_scheduler_client.list_tasks.assert_has_calls([call("boefje-_dev", limit=TASK_LIMIT)])
+    response = BoefjesTaskListView.as_view()(request)
 
-    def test_tasks_view_no_organization(self, _: MagicMock):
-        request = self.factory.get(reverse("task_list"))
-        request.user = self.user
-        request.user.is_verified = lambda: True
-        request.active_organization = None
-        setattr(request, "session", "session")
-        request._messages = FallbackStorage(request)
+    assert response.status_code == 200
 
-        response = self.task_list(request)
+    mock_scheduler_client.get_lazy_task_list.assert_has_calls(
+        [
+            call(
+                scheduler_id="boefje-test",
+                object_type="boefje",
+                status=None,
+                min_created_at=None,
+                max_created_at=None,
+            )
+        ]
+    )
 
-        self.assertContains(response, "error")
-        self.assertContains(response, "Organization could not be found")
 
-    def test_tasks_view_error(self, mock_scheduler_client: MagicMock):
-        mock_scheduler_client.list_tasks.side_effect = HTTPError
+def test_tasks_view_simple(rf, user, organization, mocker, lazy_task_list_with_boefje):
+    mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
+    mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
 
-        request = self.factory.get(reverse("task_list"))
-        request.user = self.user
-        request.user.is_verified = lambda: True
-        request.active_organization = self.organization
-        setattr(request, "session", "session")
-        request._messages = FallbackStorage(request)
+    request = rf.get(reverse("task_list"))
+    request.user = user
+    request.active_organization = organization
 
-        response = self.task_list(request)
+    response = BoefjesTaskListView.as_view()(request)
 
-        self.assertContains(response, "error")
-        self.assertContains(response, "Fetching tasks failed")
+    assertContains(response, "1b20f85f")
+    assertContains(response, "Hostname|internet|mispo.es.")
+
+    mock_scheduler_client.get_lazy_task_list.assert_has_calls(
+        [
+            call(
+                scheduler_id="boefje-test",
+                object_type="boefje",
+                status=None,
+                min_created_at=None,
+                max_created_at=None,
+            )
+        ]
+    )
+
+
+def test_tasks_view_no_organization(rf, user):
+    request = rf.get(reverse("task_list"))
+    request.user = user
+    request.active_organization = None
+    request.session = "session"
+    request._messages = FallbackStorage(request)
+
+    response = BoefjesTaskListView.as_view()(request)
+
+    assertContains(response, "error")
+    assertContains(response, "Organization could not be found")
+
+
+def test_tasks_view_error(rf, user, organization, mocker, lazy_task_list_with_boefje):
+    mock_scheduler_client = mocker.patch("rocky.views.tasks.client")
+    mock_scheduler_client.get_lazy_task_list.return_value = lazy_task_list_with_boefje
+    mock_scheduler_client.get_lazy_task_list.side_effect = HTTPError
+
+    request = rf.get(reverse("task_list"))
+    request.user = user
+    request.active_organization = organization
+    request.session = "session"
+    request._messages = FallbackStorage(request)
+
+    response = BoefjesTaskListView.as_view()(request)
+
+    assertContains(response, "error")
+    assertContains(response, "Fetching tasks failed")

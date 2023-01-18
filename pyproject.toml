@@ -3,7 +3,7 @@ requires = ["setuptools>=62.2", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta:__legacy__"
 
 [tool.setuptools_scm]
-version_scheme = "python-simplified-semver"
+version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
 
 [tool.black]
@@ -21,6 +21,7 @@ follow_imports = "skip"
 exclude = [".git", "__pycache__", "old", "build", "dist", "venv"]
 paths = ["./"]
 min_confidence = 90
+ignore_names = ["mock_*"]
 
 [tool.pylint.format]
 max-line-length = 120
@@ -28,3 +29,7 @@ max-line-length = 120
 [tool.pylint."MESSAGES CONTROL"]
 extension-pkg-whitelist = "pydantic" # Ignore pydantic import checks
 disable = ["E0203", "F0401", "R0914", "W1514", "R0903", "E0401"]
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-branch --cov-report=term-missing:skip-covered"
+DJANGO_SETTINGS_MODULE = "rocky.settings"

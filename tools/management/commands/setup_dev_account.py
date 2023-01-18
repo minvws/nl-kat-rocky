@@ -6,8 +6,8 @@ from django.core.management import BaseCommand
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
 
+from tools.enums import SCAN_LEVEL
 from tools.models import (
-    SCAN_LEVEL,
     Organization,
     OrganizationMember,
     GROUP_CLIENT,
@@ -47,7 +47,7 @@ class Command(BaseCommand):
                 try:
                     permission = Permission.objects.get(codename=codename)
                     permission_objects.append(permission.id)
-                except:
+                except permission.DoesNotExist:
                     raise ObjectDoesNotExist("Permission:" + str(permission) + " does not exist.")
         return permission_objects
 

@@ -1,7 +1,9 @@
 from typing import List, Tuple, Any
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from octopoes.models import OOI
+
 from tools.forms import (
     BaseRockyForm,
     ObservedAtForm,
@@ -10,10 +12,9 @@ from tools.forms import (
     DEPTH_DEFAULT,
     DEPTH_HELP_TEXT,
     DEPTH_MAX,
-    BLANK_CHOICE,
     LabeledCheckboxInput,
+    SCAN_LEVEL_CHOICES,
 )
-from tools.models import SCAN_LEVEL
 
 
 class OOIReportSettingsForm(ObservedAtForm):
@@ -50,8 +51,12 @@ class SelectOOIForm(BaseRockyForm):
     ooi = forms.MultipleChoiceField(
         label=_("Objects"),
         widget=CheckboxTable(
-            column_names=(_("Type"), "OOI", _("Clearance Level")),
-            column_templates=(None, None, "partials/scan_level_indicator.html"),
+            column_names=("OOI", _("Type"), _("Clearance Level")),
+            column_templates=(
+                "partials/hyperlink_ooi_id.html",
+                "partials/hyperlink_ooi_type.html",
+                "partials/scan_level_indicator.html",
+            ),
         ),
     )
 
@@ -69,17 +74,17 @@ class SelectOOIForm(BaseRockyForm):
     @staticmethod
     def _to_choice(ooi: OOI) -> Tuple[str, Any]:
         return str(ooi), (
-            ooi.get_ooi_type(),
-            ooi.human_readable,
-            ooi.scan_profile.level,
+            ooi,
+            ooi,
+            ooi.scan_profile.level if ooi.scan_profile else 0,
         )
 
 
 class SelectOOIFilterForm(BaseRockyForm):
     show_all = forms.NullBooleanField(
-        widget=LabeledCheckboxInput(
-            label=_("Show objects that don't meet the Boefjes scan level"),
-            autosubmit=True,
+        label=_("Show objects that don't meet the Boefjes scan level"),
+        widget=forms.CheckboxInput(
+            attrs={"class": "submit-on-click"},
         ),
     )
 
@@ -106,7 +111,7 @@ class SetClearanceLevelForm(forms.Form):
             },
         },
         widget=forms.Select(
-            choices=[BLANK_CHOICE] + SCAN_LEVEL.choices,
+            choices=SCAN_LEVEL_CHOICES,
             attrs={
                 "aria-describedby": _("explanation-clearance-level"),
             },
