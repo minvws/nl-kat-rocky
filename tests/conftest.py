@@ -192,3 +192,8 @@ def setup_request(request, user):
     request.user = user
 
     return request
+
+
+@pytest.fixture
+def mock_scheduler(mocker):
+    return mocker.patch("rocky.views.ooi_detail.scheduler.client")
