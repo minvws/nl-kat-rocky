@@ -45,6 +45,7 @@ class OOIListView(BaseOOIListView):
         context["select_oois_form"] = SelectOOIForm(
             context.get("ooi_list", []), organization_code=self.organization.code
         )
+        context["member"] = self.member
         context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
         context["organization_indemnification"] = self.get_organization_indemnification
 
