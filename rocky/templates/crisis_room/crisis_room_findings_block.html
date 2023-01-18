@@ -44,15 +44,15 @@
                     {% for key, value in findings.meta.total_by_severity.items %}
                       <tr>
                         <td>
-                          {% if value != 0 %}
-                            <a href="{% url 'finding_list' organization_code=findings.organization.code %}?severity={{ key }}"><span class="{{ key }}">{{ key|title }}</span></a>
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}"><span class="{{ key }}">{{ key|title }}</span></a>
                           {% else %}
                             <span class="{{ key }}">{{ key|title }}</span>
                           {% endif %}
                         </td>
                         <td class="number">
-                          {% if value != 0 %}
-                            <a href="{% url 'finding_list' organization_code=findings.organization.code %}?severity={{ key }}">{{ value }}</a>
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}">{{ value }}</a>
                           {% else %}
                             {{ value }}
                           {% endif %}
@@ -109,15 +109,15 @@
                     {% for key, value in findings.meta.total_by_severity.items %}
                       <tr>
                         <td>
-                          {% if value != 0 %}
-                            <a href="{% url 'finding_list' organization_code=findings.organization.code %}?severity={{ key }}"><span class="{{ key }}">{{ key|title }}</span></a>
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}"><span class="{{ key }}">{{ key|title }}</span></a>
                           {% else %}
                             <span class="{{ key }}">{{ key|title }}</span>
                           {% endif %}
                         </td>
                         <td class="number">
-                          {% if value != 0 %}
-                            <a href="{% url 'finding_list' organization_code=findings.organization.code %}?severity={{ key }}">{{ value }}</a>
+                          {% if value != 0 and findings.organization == request.active_organization %}
+                            <a href="{% url 'finding_list' %}?severity={{ key }}">{{ value }}</a>
                           {% else %}
                             {{ value }}
                           {% endif %}

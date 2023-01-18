@@ -164,8 +164,8 @@ class OOIList:
             return self.octopoes_connector.list(
                 self.ooi_types,
                 valid_time=self.valid_time,
-                offset=key.start,
-                limit=key.stop - key.start,
+                offset=key.start or 0,
+                limit=key.stop - (key.start or 0),
                 scan_level=self.scan_level,
                 scan_profile_type=self.scan_profile_type,
             ).items
