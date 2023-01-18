@@ -13,7 +13,7 @@ from account.mixins import OrganizationView
 from katalogus.client import Plugin, get_katalogus
 from octopoes.connector import ObjectNotFoundException
 from octopoes.connector.octopoes import OctopoesAPIConnector
-from octopoes.models import OOI, Reference, DeclaredScanProfile, ScanLevel, ScanProfileType
+from octopoes.models import OOI, Reference, ScanLevel, ScanProfileType
 from octopoes.models.ooi.findings import Finding
 from octopoes.models.origin import Origin, OriginType
 from octopoes.models.tree import ReferenceTree
@@ -118,15 +118,6 @@ class OctopoesView(OrganizationView):
             return min(depth, DEPTH_MAX)
         except ValueError:
             return default_depth
-
-    def declare_scan_level(self, reference: Reference, level: int) -> None:
-        self.octopoes_api_connector.save_scan_profile(
-            DeclaredScanProfile(
-                reference=reference,
-                level=level,
-            ),
-            datetime.now(timezone.utc),
-        )
 
 
 class OOIList:
