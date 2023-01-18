@@ -5,7 +5,7 @@ from django.views import View
 
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from rocky.settings import OCTOPOES_API
-from tools.models import Organization, OrganizationMember
+from tools.models import Organization, OrganizationMember, Indemnification
 
 
 class OrganizationView(View):
@@ -49,6 +49,8 @@ class OrganizationView(View):
 
     @property
     def may_update_scan_profile(self):
+        if not Indemnification.objects.filter(organization=self.organization).exists():
+            return False
         if self.organization_member.acknowledged_clearance_level < 0:
             return False
         if self.organization_member.trusted_clearance_level < 0:
@@ -56,6 +58,10 @@ class OrganizationView(View):
         return True
 
     def verify_may_update_scan_profile(self) -> bool:
+        if not Indemnification.objects.filter(organization=self.organization).exists():
+            messages.add_message(self.request, messages.ERROR, _("No indemnification present for organization."))
+            return False
+
         if self.organization_member.acknowledged_clearance_level < 0:
             messages.add_message(self.request, messages.ERROR, _("Acknowledged clearance level too low."))
             return False
