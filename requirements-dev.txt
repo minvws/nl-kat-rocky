@@ -12,7 +12,7 @@ django-two-factor-auth==1.14.0
 djlint==1.12.1
 idna==3.4
 lxml==4.9.1
-phonenumbers==8.12.57
+phonenumbers==8.13.4
 psycopg2-binary==2.9.5
 pydantic==1.8.2
 python-dotenv>=0.19.0
