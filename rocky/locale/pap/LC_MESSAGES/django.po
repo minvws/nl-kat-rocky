@@ -274,10 +274,8 @@ msgid "E-mail address"
 msgstr "Email adrès"
 
 #: account/templates/account_detail.html:37
-#, fuzzy
-#| msgid "Member name"
 msgid "Member type"
-msgstr "Nòmber di Miembro"
+msgstr "Tipo di miembro"
 
 #: account/templates/account_detail.html:45
 #: onboarding/templates/account/step_2a_organization_setup.html:13
@@ -1334,14 +1332,6 @@ msgid "KAT-alogus"
 msgstr "KAT-alogus"
 
 #: katalogus/templates/katalogus.html:14
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                    An overview of all available boefjes.\n"
-#| "                    Boefjes can be used to scan for vulnerablilities and "
-#| "security issues within specified objects.\n"
-#| "                    Each boefje has his own focus area and strengths.\n"
-#| "                  "
 msgid ""
 "\n"
 "                An overview of all available boefjes.\n"
@@ -2384,10 +2374,8 @@ msgid "Network"
 msgstr "Nètwèrk"
 
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:57
-#, fuzzy
-#| msgid "Start using KAT"
 msgid "Start scanning"
-msgstr "Kuminsa huza KAT"
+msgstr "Start skèn"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:10
 msgid "OpenKAT Introduction"
@@ -2616,16 +2604,12 @@ msgid "2: Organization setup"
 msgstr "Konfiguráß organisashon"
 
 #: onboarding/view_helpers.py:42 onboarding/view_helpers.py:60
-#, fuzzy
-#| msgid "Indemnification"
 msgid "3: Indemnification"
-msgstr "Indemnizashon"
+msgstr "3: Indemnizashon"
 
 #: onboarding/view_helpers.py:43 onboarding/view_helpers.py:64
-#, fuzzy
-#| msgid "3: Account setup"
 msgid "4: Account setup"
-msgstr "Account setup"
+msgstr "4: Account setup"
 
 #: onboarding/views.py:204
 msgid ""
@@ -2814,10 +2798,8 @@ msgid "Show Boefjes that exceed the OOI's scan level"
 msgstr "Mustra Boefjes ku ku a surpasa OOI's su nivel di skèn"
 
 #: tools/forms/settings.py:13
-#, fuzzy
-#| msgid "Show all"
 msgid "--- Show all ----"
-msgstr "Mustra tur"
+msgstr "--- Mustra tur ---"
 
 #: tools/forms/settings.py:17
 msgid "recommendation"
@@ -3833,10 +3815,8 @@ msgid "Code"
 msgstr "Código"
 
 #: rocky/templates/organizations/organization_detail.html:27
-#, fuzzy
-#| msgid "Indemnification"
 msgid "Add indemnification"
-msgstr "Indemnizashon"
+msgstr "Añadi indemnizashon"
 
 #: rocky/templates/organizations/organization_edit.html:11
 msgid "Edit organization"

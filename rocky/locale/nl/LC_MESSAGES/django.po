@@ -822,9 +822,8 @@ msgid "No data to build heatmap"
 msgstr "Geen gegevens om heatmap te bouwen"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:14
-#, fuzzy
 msgid "Failure mode affected object tabel:"
-msgstr "Bestand kon niet gedecodeerd worden:"
+msgstr "Faal modus getroffen objecten tabel:"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:19
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:19
@@ -2956,102 +2955,88 @@ msgid "Blue light"
 msgstr ""
 
 #: rocky/settings.py:356
-#, fuzzy
-#| msgid "medium"
 msgid "Blue medium"
-msgstr "midden"
+msgstr "Blauw"
 
 #: rocky/settings.py:357
 msgid "Blue dark"
-msgstr ""
+msgstr "Donkerblauw"
 
 #: rocky/settings.py:358
 msgid "Green light"
-msgstr ""
+msgstr "Lichtgroen"
 
 #: rocky/settings.py:359
-#, fuzzy
-#| msgid "medium"
 msgid "Green medium"
-msgstr "midden"
+msgstr "Groen"
 
 #: rocky/settings.py:360
 msgid "Green dark"
-msgstr ""
+msgstr "Donkergroen"
 
 #: rocky/settings.py:361
 msgid "Yellow light"
-msgstr ""
+msgstr "Lichtgeel"
 
 #: rocky/settings.py:362
-#, fuzzy
-#| msgid "medium"
 msgid "Yellow medium"
-msgstr "midden"
+msgstr "Geel"
 
 #: rocky/settings.py:363
 msgid "Yellow dark"
-msgstr ""
+msgstr "Donkergeel"
 
 #: rocky/settings.py:364
 msgid "Orange light"
-msgstr ""
+msgstr "Lichtoranje"
 
 #: rocky/settings.py:365
-#, fuzzy
-#| msgid "medium"
 msgid "Orange medium"
-msgstr "midden"
+msgstr "Oranje"
 
 #: rocky/settings.py:366
 msgid "Orange dark"
-msgstr ""
+msgstr "Donkeroranje"
 
 #: rocky/settings.py:367
 msgid "Red light"
-msgstr ""
+msgstr "Lichtrood"
 
 #: rocky/settings.py:368
-#, fuzzy
-#| msgid "medium"
 msgid "Red medium"
-msgstr "midden"
+msgstr "Rood"
 
 #: rocky/settings.py:369
-#, fuzzy
-#| msgid "Red teamer"
 msgid "Red dark"
-msgstr "Red teamer"
+msgstr "Donkerrood"
 
 #: rocky/settings.py:370
 msgid "Violet light"
-msgstr ""
+msgstr "Lichtviolet"
 
 #: rocky/settings.py:371
-#, fuzzy
-#| msgid "medium"
 msgid "Violet medium"
-msgstr "midden"
+msgstr "Violet"
 
 #: rocky/settings.py:372
 msgid "Violet dark"
-msgstr ""
+msgstr "Donkerviolet"
 
 #: rocky/settings.py:376
 msgid "Plain"
-msgstr ""
+msgstr "Vlak"
 
 #: rocky/settings.py:377
 msgid "Solid"
-msgstr ""
+msgstr "Solide"
 
 #: rocky/settings.py:378
 msgid "Dashed"
-msgstr ""
+msgstr "Onderbroken"
 
 #: rocky/settings.py:379
 msgid "Dotted"
-msgstr ""
+msgstr "Gestippeld"
 
 #: rocky/templates/404.html:10
 msgid "Error code 404: Page not found"
@@ -3421,10 +3406,6 @@ msgid "OpenKAT is sweet"
 msgstr "OpenKAT is lief"
 
 #: rocky/templates/landing_page.html:58
-#, fuzzy
-#| msgid ""
-#| "KAT thinks about privacy, and stores what is necessary, within the rules of "
-#| "your organization and the law."
 msgid ""
 "OpenKAT thinks about privacy, and stores what is necessary, within the rules "
 "of your organization and the law."
@@ -3694,10 +3675,6 @@ msgid "Currently there are no findings for OOI"
 msgstr "Er zijn geen bevindingen voor het object"
 
 #: rocky/templates/oois/ooi_list.html:13
-#, fuzzy
-#| msgid ""
-#| "An overview of your object list. Objects can be added manually or by "
-#| "running boefjes. Click an object for additional information."
 msgid ""
 "An overview of your object list. Objects can be added manually or by running "
 "boefjes.</br> Click an object for additional information."
@@ -3711,10 +3688,8 @@ msgstr "Momenteel gefilterd op:"
 
 #: rocky/templates/oois/ooi_list.html:22
 #: rocky/templates/partials/scan_history.html:9
-#, fuzzy
-#| msgid "Filter by"
 msgid "Filter"
-msgstr "Filteren op"
+msgstr "Filter"
 
 #: rocky/templates/oois/ooi_list.html:25
 #, python-format
@@ -3778,11 +3753,6 @@ msgid "Findings report for %(name)s"
 msgstr "Bevindingenrapport voor %(name)s"
 
 #: rocky/templates/oois/ooi_report.html:22
-#, fuzzy, python-format
-#| msgid ""
-#| "These are the findings of a KAT-analysis on %(observed_at)s. Click a "
-#| "finding for more detailed information about the issue, its origin, severity "
-#| "and possible solutions."
 msgid ""
 "These are the findings of a OpenKAT-analysis on %(observed_at)s. Click a "
 "finding for more detailed information about the issue, its origin, severity "
@@ -3823,20 +3793,16 @@ msgid "This"
 msgstr "Deze"
 
 #: rocky/templates/oois/ooi_summary.html:24
-#, fuzzy
-#| msgid "Go to tree view"
 msgid "tree view"
-msgstr "Ga naar boomweergave"
+msgstr "boomweergave"
 
 #: rocky/templates/oois/ooi_summary.html:24
 msgid "of the"
 msgstr "van de"
 
 #: rocky/templates/oois/ooi_summary.html:25
-#, fuzzy
-#| msgid "Show %(ooi_type)s objects"
 msgid "shows the same objects."
-msgstr "Laat %(ooi_type)s zien"
+msgstr "toont dezelfde objecten."
 
 #: rocky/templates/oois/ooi_tree.html:13
 msgid "Object tree"
@@ -4120,10 +4086,8 @@ msgid "Show filter options"
 msgstr "Filteropties tonen"
 
 #: rocky/templates/partials/list_paginator.html:6
-#, fuzzy
-#| msgid "Object list pagination"
 msgid "List pagination"
-msgstr "Objectenlijst"
+msgstr "Lijst paginering"
 
 #: rocky/templates/partials/list_paginator.html:10
 msgid "Previous Page"
