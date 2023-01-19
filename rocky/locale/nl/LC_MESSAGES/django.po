@@ -3447,7 +3447,12 @@ msgid ""
 "committed to the appropriate protection and use of personal information "
 "(sometimes referred to as \"personal data\", \"personally identifiable "
 "information\" or \"PII\") that has been collected online."
-msgstr "Voeg de privacyverklaring van uw organisatie toe."
+msgstr ""
+"KAT is toegewijd aan het beschermen van de vertrouwelijkheid en privacy van "
+"aan haar toevertrouwde informatie. Als onderdeel van deze fundamentele verplichting is KAT "
+"toegewijd aan de juiste bescherming en gebruik van persoonlijke informatie "
+"(soms aangeduid als \"persoonlijke gegevens\", \"persoonlijk identificeerbaar "
+"informatie\" of \"PII\") die online is verzameld."
 
 #: rocky/templates/oois/error.html:11
 msgid "Object List"
