@@ -2927,6 +2927,8 @@ msgid ""
 "A slug containing only lower-case unicode letters, numbers, hyphens or "
 "underscores that will be used in URLs and paths"
 msgstr ""
+"Un slug ta kontene solamente lower-case unicode letras, numbernan, hyphens òf "
+"underscores ku lo wordu huza den URLs i paths"
 
 #: tools/models.py:117
 msgid "new"
@@ -3345,6 +3347,8 @@ msgid ""
 "Indemnification on the organization present. You may now add objects and "
 "start scans."
 msgstr ""
+"Indemnizashon presente pa e organisashon. Bo por awor añadi ophetonan i "
+"kuminsa skèn."
 
 #: rocky/templates/indemnification_present.html:10
 #: rocky/templates/indemnification_present.html:13
@@ -4618,6 +4622,9 @@ msgid ""
 "Contact your system administrator about your verification to proceed to Two "
 "Factor Authentication setup."
 msgstr ""
+"Bo no ta verifika komo un miembro di un organisashon serka bo administrado di systema. "
+"Tuma kontakto ku bo administrado di systema pa e verifikashon pa sigi pa setup Two "
+"Factor Authentication."
 
 #: rocky/templates/two_factor/core/setup_complete.html:12
 msgid "Congratulations, you've successfully enabled two-factor authentication."

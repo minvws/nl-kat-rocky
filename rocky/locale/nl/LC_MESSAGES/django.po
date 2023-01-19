@@ -2952,7 +2952,7 @@ msgstr "Organisaties"
 
 #: rocky/settings.py:355
 msgid "Blue light"
-msgstr ""
+msgstr "Lichtblauw"
 
 #: rocky/settings.py:356
 msgid "Blue medium"
@@ -4316,7 +4316,7 @@ msgstr "Zoeken"
 
 #: rocky/templates/partials/scan_history.html:39
 msgid "Search by object name"
-msgstr ""
+msgstr "Zoeken op objectnaam"
 
 #: rocky/templates/partials/scan_history.html:57
 msgid "No scans found for this object"
