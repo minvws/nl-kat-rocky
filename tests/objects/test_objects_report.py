@@ -8,6 +8,7 @@ from octopoes.models.tree import ReferenceTree
 from rocky.views.ooi_report import OOIReportView, OOIReportPDFView
 from tests.conftest import setup_request
 
+
 TREE_DATA = {
     "root": {
         "reference": "Finding|Network|testnetwork|KAT-000",

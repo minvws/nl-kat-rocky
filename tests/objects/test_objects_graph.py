@@ -2,7 +2,7 @@ from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains
 
 from octopoes.models.tree import ReferenceTree
-from rocky.views.ooi_detail import OOIDetailView
+from rocky.views.ooi_tree import OOIGraphView
 from tests.conftest import setup_request
 
 
@@ -41,9 +41,9 @@ def test_ooi_graph(
 
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
-    response = OOIDetailView.as_view()(request, **kwargs)
+    response = OOIGraphView.as_view()(request, **kwargs)
 
     assert response.status_code == 200
-    assert mock_organization_view_octopoes().get_tree.call_count == 2
+    assert mock_organization_view_octopoes().get_tree.call_count == 1
     assertContains(response, "testnetwork")
     assertContains(response, "KAT-000")

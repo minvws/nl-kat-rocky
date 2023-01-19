@@ -56,11 +56,11 @@ def url_with_querystring(path, **kwargs) -> str:
 
 def get_ooi_url(routename: str, ooi_id: str, organization_code: str, **kwargs) -> str:
     kwargs["ooi_id"] = ooi_id
-    # exclude in querystring
-    kwargs = {k: v for k, v in kwargs.items()}
 
     if "query" in kwargs:
+        kwargs["query"] = {key: value for key, value in kwargs["query"] if key not in kwargs}
         kwargs.update(kwargs["query"])
+
         del kwargs["query"]
 
     return url_with_querystring(reverse(routename, kwargs={"organization_code": organization_code}), **kwargs)
