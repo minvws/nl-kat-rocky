@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-18 14:19+0000\n"
+"POT-Creation-Date: 2023-01-19 11:03+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: account/admin.py:18
 msgid "Permissions"
@@ -30,8 +30,8 @@ msgid "Account Type"
 msgstr "Account Type"
 
 #: account/forms/account_setup.py:34
-msgid "Every member of KAT must be part of a group."
-msgstr "Elke gebruiker van KAT moet onderdeel zijn van een groep."
+msgid "Every member of OpenKAT must be part of a group."
+msgstr "Elke gebruiker van OpenKAT moet deel uitmaken van een groep."
 
 #: account/forms/account_setup.py:37
 msgid "Please select a group to proceed."
@@ -39,13 +39,13 @@ msgstr "Selecteer een groep om door te gaan."
 
 #: account/forms/account_setup.py:52
 msgid ""
-"I declare that KAT may scan the assets of my organization and that I have "
-"permission to scan these assets. I am aware of the implications a scan with "
-"a higher scan level brings on my systems."
+"I declare that OpenKAT may scan the assets of my organization and that I have "
+"permission to scan these assets. I am aware of the implications a scan with a "
+"higher scan level brings on my systems."
 msgstr ""
-"Ik verklaar dat KAT de assets van mijn organisatie mag scannen en dat ik permissies "
-"heb om deze assets te scannen."
-"Ik ben bewust van de implicaties een scan met een hogere scan niveau kan hebben op mijn systemen."
+"Ik verklaar dat OpenKAT de assets van mijn organisatie mag scannen en dat ik "
+"toestemming heb om deze assets te scannen. Ik ben mij bewust van de "
+"implicaties die een scan met een hoger scanniveau heeft op mijn systemen."
 
 #: account/forms/account_setup.py:60
 msgid ""
@@ -53,9 +53,9 @@ msgid ""
 "organization. I have the expierence and knowledge to know what the "
 "consequences might be and can be held responsible for them."
 msgstr ""
-"Ik verklaar bevoegd te zijn deze vrijwaring te geven binnen mijn "
-"organisatie. Ik heb de ervaring en kennis om te weten wat de "
-"gevolgen zijn en kunnen daarvoor verantwoordelijk worden gehouden."
+"Ik verklaar dat ik bevoegd ben om deze vrijwaring binnen mijn organisatie af "
+"te geven. Ik heb de ervaring en de kennis om te weten wat de gevolgen kunnen "
+"zijn en kan daarvoor verantwoordelijk worden gehouden."
 
 #: account/forms/account_setup.py:70
 msgid "Trusted to change Clearance Levels."
@@ -63,7 +63,7 @@ msgstr "Vertrouwd om vrijwaringsniveau te veranderen."
 
 #: account/forms/account_setup.py:76
 msgid "Acknowledged to change Clearance Levels."
-msgstr "Erkend om goedkeuringsniveaus te wijzigen."
+msgstr "Heeft toestemming om goedkeuringsniveaus te wijzigen."
 
 #: account/forms/account_setup.py:87
 #: katalogus/templates/katalogus_settings.html:26
@@ -76,7 +76,7 @@ msgstr "Naam"
 
 #: account/forms/account_setup.py:89
 msgid "This name we will use to communicate with you."
-msgstr "Dit naam wordt gebruikt om met jou te communiceren."
+msgstr "Dit naam wordt gebruikt om met u te communiceren."
 
 #: account/forms/account_setup.py:93
 msgid "What do we call you?"
@@ -96,17 +96,18 @@ msgstr "Wachtwoord"
 
 #: account/forms/account_setup.py:115
 msgid "Choose your super secret password"
-msgstr "Kies uw supergeheime wachtwoord"
+msgstr "Kies uw wachtwoord"
 
 #: account/forms/account_setup.py:126
 msgid "Choose another email."
-msgstr "Kies een ander emailadres"
+msgstr "Kies een ander emailadres."
 
 #: account/forms/account_setup.py:188
 msgid "The name of the organization."
 msgstr "De naam van de organisatie."
 
 #: account/forms/account_setup.py:190 onboarding/forms.py:72
+#, fuzzy
 msgid "explanation-organization-name"
 msgstr "explanation-organization-name"
 
@@ -116,6 +117,7 @@ msgid "A unique code of {code_length} characters."
 msgstr "Een unieke code of {code_length} tekens."
 
 #: account/forms/account_setup.py:199
+#, fuzzy
 msgid "explanation-organization-code"
 msgstr "uitleg-organisatie-code"
 
@@ -125,7 +127,7 @@ msgstr "De naam van de organisatie is vereist om verder te gaan."
 
 #: account/forms/account_setup.py:206 onboarding/forms.py:79
 msgid "Choose another organization."
-msgstr "Kies een andere organisatie"
+msgstr "Kies een andere organisatie."
 
 #: account/forms/account_setup.py:209
 msgid "Organization code is required to proceed."
@@ -133,7 +135,7 @@ msgstr "Organisatiecode is vereist om verder te gaan."
 
 #: account/forms/account_setup.py:210
 msgid "Choose another code for your organization."
-msgstr "Kies een andere code voor je organisatie".
+msgstr "Kies een andere code voor uw organisatie."
 
 #: account/forms/account_setup.py:228
 msgid "The two password fields didn’t match."
@@ -145,7 +147,7 @@ msgstr "Nieuw wachtwoord"
 
 #: account/forms/account_setup.py:235
 msgid "Enter your new password"
-msgstr "Voer uw nieuwe wachtwoord in."
+msgstr "Voer uw nieuwe wachtwoord in"
 
 #: account/forms/account_setup.py:243
 msgid "New password confirmation"
@@ -157,21 +159,21 @@ msgstr "Het nieuwe wachtwoord opnieuw herhalen"
 
 #: account/forms/account_setup.py:251
 msgid "Confirm your new password"
-msgstr "Bevestig het nieuwe wachtwoord."
+msgstr "Bevestig het nieuwe wachtwoord"
 
 #: account/forms/login.py:12
 msgid "Please enter a correct email address and password."
-msgstr "Voer in een correcte e-mailadres en wachtwoord."
+msgstr "Voer een correct e-mailadres en wachtwoord in."
 
 #: account/forms/login.py:13
 msgid "This account is inactive."
 msgstr "Dit account is niet actief."
 
 #: account/forms/login.py:18
-msgid "Insert the email you registered with or got at KAT installation."
+msgid "Insert the email you registered with or got at OpenKAT installation."
 msgstr ""
-"Voer het e-mailadres in die je hebt gekregen bij de registratie of bij de "
-"KAT installatie."
+"Voer het e-mailadres in waarmee u zich hebt geregistreerd of dat u hebt "
+"gekregen bij de installatie van OpenKAT."
 
 #: account/forms/password_reset.py:8
 msgid "Email address"
@@ -182,20 +184,20 @@ msgid "A reset link will be sent to this email"
 msgstr "Er zal een reset link naar dit e-mailadres gestuurd worden"
 
 #: account/forms/password_reset.py:13
-msgid "The email address connected to your KAT-account"
-msgstr "Het e-mailadres verbonden met je KAT-account"
+msgid "The email address connected to your OpenKAT-account"
+msgstr "Het e-mailadres verbonden aan uw OpenKAT-account"
 
 #: account/forms/token.py:16
 msgid ""
 "Insert the token generated by the authenticator app to setup the two factor "
 "authentication."
 msgstr ""
-"Vul de token in die gegenereerd is door de authenticatie app om de two "
-"factor authenticatie te activeren."
+"Voer het token in dat door de authenticator-app is gegenereerd om de "
+"tweefactorauthenticatie in te stellen."
 
 #: account/forms/token.py:29
 msgid "Insert the token generated by your token authenticator app."
-msgstr "Voer de tokens in die door uw tokengenerator zijn gegenereerd."
+msgstr "Plaats het token dat door uw token authenticator app is gegenereerd."
 
 #: account/forms/token.py:42
 msgid "Backup token"
@@ -227,7 +229,7 @@ msgstr "Super gebruiker moet hebben is_superuser=True."
 
 #: account/models.py:59
 msgid "full name"
-msgstr "voor-en achternaam"
+msgstr "voor- en achternaam"
 
 #: account/models.py:60
 msgid "email"
@@ -250,8 +252,8 @@ msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
-"Geeft aan of deze gebruiker als actief moet worden behandeld. Schakel dit "
-"uit in plaats van accounts te verwijderen."
+"Bepaald of deze gebruiker behandeld moet worden als actief. Deselecteer dit in "
+"plaats van het verwijderen van gebruikers."
 
 #: account/models.py:73
 msgid "date joined"
@@ -269,7 +271,7 @@ msgstr "Wachtwoord opnieuw instellen"
 
 #: account/templates/account_detail.html:21
 msgid "Full name"
-msgstr "Voor-en achternaam"
+msgstr "Voor- en achternaam"
 
 #: account/templates/account_detail.html:29
 msgid "E-mail address"
@@ -306,7 +308,7 @@ msgstr ""
 "\n"
 "               U heeft geen toestemming om objecten te scannen.<br>\n"
 "               Neem contact op met de beheerder om u het nodige "
-vrijgaveniveau te geven.\n"
+"vrijwaringsniveau te geven.\n"
 "              "
 
 #: account/templates/account_detail.html:77
@@ -315,44 +317,43 @@ msgstr "U heeft momenteel toestemming geaccepteerd tot niveau"
 
 #: account/templates/account_detail.html:83
 msgid ""
-"You are granted clearance for level 4 by your admin. Before you can change "
-"OOI clearance levels up to this level, you need to accept this permission. "
+"You are granted clearance for level 4 by your admin. Before you can change OOI "
+"clearance levels up to this level, you need to accept this permission. "
 "Remember: <strong>with great power comes great responsibility.</strong>"
 msgstr ""
-"U krijgt toestemming voor niveau 4 van uw beheerder. Voordat u OOI-vrijwaringsniveaus "
-"kunt wijzigen tot dit niveau, moet u deze toestemming accepteren. "
-"Onthoud: <strong>met grote kracht komt grote verantwoordelijkheid.</strong>"
+"U krijgt toestemming voor niveau 4 van uw beheerder. Voordat u OOI-"
+"vrijwaringsniveaus kunt wijzigen tot dit niveau, moet u deze toestemming "
+"accepteren. Onthoud: <strong>met grote macht komt grote verantwoordelijkheid.</"
+"strong>"
 
 #: account/templates/account_detail.html:88
+#, fuzzy
 msgid ""
 "You can withdraw this at anytime you like, but know that you're not able to "
 "change clearance levels anymore when you do."
 msgstr ""
-"U kunt dit op elk gewenst moment intrekken, maar weet dat u vrijwaringsiveaus niet meer kunt"
-"wijzigen wanneer u dat doet."
+"U kunt dit op elk gewenst moment intrekken, maar weet dat u de vrijgaveniveaus "
+"niet meer kunt wijzigen als u dat doet."
 
 #: account/templates/login.html:7 rocky/templates/two_factor/core/login.html:7
 msgid "You are logged in."
 msgstr "U bent ingelogd."
 
-#: account/templates/login.html:10
-#: rocky/templates/two_factor/core/login.html:10
+#: account/templates/login.html:10 rocky/templates/two_factor/core/login.html:10
 msgid "Two factor authentication is enabled for your account."
 msgstr "Tweetrapsverificatie is ingeschakeld voor uw account."
 
-#: account/templates/login.html:14
-#: rocky/templates/two_factor/core/login.html:14
+#: account/templates/login.html:14 rocky/templates/two_factor/core/login.html:14
 msgid ""
 "Two factor authentication is not enabled for your account. Enable it to "
 "continue."
 msgstr ""
-"Tweetrapsverificatie is niet ingeschakeld voor uw account. Schakel in om "
-"door te gaan."
+"Tweetrapsverificatie is niet ingeschakeld voor uw account. Schakel in om door "
+"te gaan."
 
-#: account/templates/login.html:16
-#: rocky/templates/two_factor/core/login.html:16
+#: account/templates/login.html:16 rocky/templates/two_factor/core/login.html:16
 msgid "Setup two factor authentication"
-msgstr "Tweetrapsverificatie uitschakelen"
+msgstr "Tweetrapsverificatie instellen"
 
 #: account/templates/login.html:21 account/views/login.py:65
 #: account/views/login.py:102 account/views/password_reset.py:32
@@ -362,8 +363,7 @@ msgstr "Tweetrapsverificatie uitschakelen"
 msgid "Login"
 msgstr "Inloggen"
 
-#: account/templates/login.html:27
-#: rocky/templates/two_factor/core/login.html:27
+#: account/templates/login.html:27 rocky/templates/two_factor/core/login.html:27
 msgid "Credentials"
 msgstr "Gebruikersgegevens"
 
@@ -382,35 +382,32 @@ msgstr "toelichting"
 msgid "Explanation"
 msgstr "Toelichting"
 
-#: account/templates/login.html:34
-#: rocky/templates/two_factor/core/login.html:34
+#: account/templates/login.html:34 rocky/templates/two_factor/core/login.html:34
 msgid "Please enter the token generated by your token generator."
-msgstr "Voer de tokens in die door uw tokengenerator zijn gegenereerd."
+msgstr "Voer het token in dat door uw tokengenerator is gegenereerd."
 
-#: account/templates/login.html:41
-#: rocky/templates/two_factor/core/login.html:41
+#: account/templates/login.html:41 rocky/templates/two_factor/core/login.html:41
 msgid ""
 "Use this form for entering backup tokens for logging in. These tokens have "
 "been generated for you to print and keep safe. Please enter one of these "
 "backup tokens to login to your account."
 msgstr ""
-"Gebruik dit formulier om backup tokens in te voeren om in te loggen. Deze "
-"tokens zijn gegenereerd om af te drukken en veilig te bewaren. Voer een van "
-"deze backup tokens in om in te loggen op uw account."
+"Gebruik dit formulier voor het invoeren van back-up tokens om in te loggen. "
+"Deze tokens zijn gegenereerd voor u om af te drukken en veilig te bewaren. "
+"Voer een van deze back-up tokens in om in te loggen op uw account."
 
-#: account/templates/login.html:54
-#: rocky/templates/two_factor/core/login.html:54
+#: account/templates/login.html:54 rocky/templates/two_factor/core/login.html:54
 msgid "As a last resort, you can use a backup token:"
-msgstr "Als laatste redmiddel kunt u een backup token gebruiken:"
+msgstr "Of gebruik een backupcode:"
 
-#: account/templates/login.html:61
-#: rocky/templates/two_factor/core/login.html:61
+#: account/templates/login.html:61 rocky/templates/two_factor/core/login.html:61
 msgid "Use Backup Token"
-msgstr "Backup token gebruiken"
+msgstr "Back-up Token gebruiken"
 
 #: account/templates/password_reset.html:13
 msgid "Use the form below to reset your password."
-msgstr "Gebruik onderstaand formulier om het wachtwoord opnieuw in te stellen."
+msgstr ""
+"Gebruik het onderstaande formulier om uw wachtwoord opnieuw in te stellen."
 
 #: account/templates/password_reset.html:24
 #: account/templates/password_reset_confirm.html:24
@@ -420,15 +417,15 @@ msgstr "Terug"
 #: account/templates/password_reset.html:25
 #: account/templates/password_reset_confirm.html:25
 msgid "Send"
-msgstr "Versturen"
+msgstr "Verstuur"
 
 #: account/templates/password_reset_confirm.html:12
 msgid "Confirm reset password"
-msgstr "Bevestig het opnieuw instellen van uw wachtwoord."
+msgstr "Bevestig het opnieuw instellen van uw wachtwoord"
 
 #: account/templates/password_reset_confirm.html:14
 msgid "Use the form below to confirm resetting your password"
-msgstr "Gebruik onderstaand formulier om het wachtwoord opnieuw in te stellen."
+msgstr "Gebruik onderstaand formulier om het wachtwoord opnieuw in te stellen"
 
 #: account/templates/password_reset_confirm.html:21
 msgid "Confirm password"
@@ -436,17 +433,17 @@ msgstr "Bevestig wachtwoord"
 
 #: account/templates/password_reset_confirm.html:30
 msgid "The link is invalid"
-msgstr "De link is onjuist."
+msgstr "De link is ongeldig"
 
 #: account/templates/password_reset_confirm.html:32
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
-"De link om het wachtwoord opnieuw in te stellen was onjuist, wellicht is "
-"deze al gebruikt. Probeer nogmaals opnieuw het wachtwoord in te stellen."
+"De link om het wachtwoord opnieuw in te stellen was onjuist, wellicht is deze "
+"al gebruikt. Probeer nogmaals opnieuw het wachtwoord in te stellen."
 
-#: account/templates/password_reset_email.html:2
+#: account/templates/password_reset_email.html:4
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
@@ -455,17 +452,17 @@ msgstr ""
 "U ontvangt deze e-mail omdat er een verzoek is gedaan om het wachtwoord voor "
 "uw profiel op %(site_name)s te herstellen."
 
-#: account/templates/password_reset_email.html:4
+#: account/templates/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
 msgstr "Ga naar de volgende pagina en kies een nieuw wachtwoord:"
 
-#: account/templates/password_reset_email.html:8
+#: account/templates/password_reset_email.html:10
 msgid "Sincerely,"
 msgstr "Hoogachtend,"
 
-#: account/templates/password_reset_email.html:10
-msgid "The KAT team"
-msgstr "Het KAT team"
+#: account/templates/password_reset_email.html:11
+msgid "The OpenKAT team"
+msgstr "Het OpenKAT team"
 
 #: account/templates/password_reset_subject.txt:2
 #, python-format
@@ -478,20 +475,22 @@ msgstr "E-mailadres herstellen"
 
 #: account/templates/recover_email.html:13
 msgid "Information on how to recover your connected email address"
-msgstr "Informatie over hoe jij je e-mailadres kan herstellen"
+msgstr "Informatie over hoe u uw verbonden e-mailadres kunt herstellen"
 
 #: account/templates/recover_email.html:16
 msgid "Forgotten email address?"
-msgstr "E-mailadres vergeten"
+msgstr "E-mailadres vergeten?"
 
 #: account/templates/recover_email.html:19
 msgid ""
 "If you don’t remember the email address connected to your account, contact: "
-msgstr "Weet u het emailadres niet meer? Neem dan contact op met: "
+msgstr ""
+"Als u het aan uw account gekoppelde e-mailadres niet meer weet, neem dan "
+"contact op met:"
 
 #: account/templates/recover_email.html:24
 msgid "Please contact the system administrator."
-msgstr "Neem contact op met het systeembeheer."
+msgstr "Neem contact op met de systeembeheerder."
 
 #: account/templates/recover_email.html:31
 msgid "Back to Home"
@@ -503,7 +502,7 @@ msgstr "Terug naar login"
 
 #: account/validators.py:13
 msgid "Your password must contain at least the following:"
-msgstr "Jouw wachtwoord moet tenminste de volgende bevatten:"
+msgstr "Uw wachtwoord moet ten minste het volgende bevatten:"
 
 #: account/validators.py:17
 msgid " characters"
@@ -531,15 +530,15 @@ msgstr " hoofdletters"
 
 #: account/views/login.py:49
 msgid "Your session has timed out. Please login again."
-msgstr "Je sessie is verlopen. Alsjeblieft log in nog een keer."
+msgstr "Uw sessie is verlopen. Gelieve opnieuw in te loggen."
 
 #: account/views/login.py:61 rocky/templates/header.html:19
-msgid "KAT"
-msgstr "KAT"
+msgid "OpenKAT"
+msgstr "OpenKAT"
 
 #: account/views/login.py:106
 msgid "Two factor authentication"
-msgstr "Tweetrapsverificatie uitschakelen"
+msgstr "Tweetrapsverificatie"
 
 #: account/views/password_reset.py:58
 msgid "We couldn't send a password reset link. Contact "
@@ -548,7 +547,9 @@ msgstr "We konden geen link voor wachtwoordherstel verzenden. Contact "
 #: account/views/password_reset.py:60
 msgid ""
 "We couldn't send a password reset link. Contact your system administrator."
-msgstr "Er is een fout opgetreden. Neem contact op met het systeembeheerder."
+msgstr ""
+"We konden geen wachtwoord reset link sturen. Neem contact op met uw "
+"systeembeheerder."
 
 #: fmea/forms.py:31 fmea/forms.py:123
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:17
@@ -568,7 +569,7 @@ msgstr "Omschrijving"
 
 #: fmea/forms.py:33
 msgid "Frequency Level"
-msgstr "Voorkomen"
+msgstr "Frequentieniveau"
 
 #: fmea/forms.py:34
 msgid "Detectability Level"
@@ -576,11 +577,11 @@ msgstr "Detecteerbaarheid"
 
 #: fmea/forms.py:35
 msgid "Effect(s)"
-msgstr "Effect"
+msgstr "Effect(en)"
 
 #: fmea/forms.py:39
 msgid "Describe in one sentence what type of failure mode you are creating."
-msgstr "Beschrijf in één zin welke type bevinding je wilt maken."
+msgstr "Beschrijf in één zin welke type bevinding u wilt maken."
 
 #: fmea/forms.py:40
 msgid "Describe the failure mode in details."
@@ -599,44 +600,49 @@ msgid ""
 "Is this failure mode easy detectable? Give it a score from 1 to 5. 1: always "
 "detectable and 5: almost undetectable."
 msgstr ""
-" Is deze bevinding eenvoudig te detecteren? Geef het een score van 1 tot 5. "
-"1: altijd te detecteren en 5: bijna niet te detecteren."
+"Is deze bevinding eenvoudig te detecteren? Geef het een score van 1 tot 5. 1: "
+"altijd te detecteren en 5: bijna niet te detecteren."
 
 #: fmea/forms.py:54
 msgid "Describe the type of failure mode"
-msgstr "Beschrijf het type bevinding."
+msgstr "Beschrijf het type bevinding"
 
 #: fmea/forms.py:55
+#, fuzzy
 msgid "explanation-failure-mode"
 msgstr "explanation-failure-mode"
 
 #: fmea/forms.py:61
 msgid "Describe in more detail what the failure mode is about."
-msgstr "Beschrijf in detail waar de bevinding over gaat."
+msgstr "Beschrijf in meer detail waar het om gaat."
 
 #: fmea/forms.py:62
+#, fuzzy
 msgid "explanation-description"
 msgstr "Omschrijving impact"
 
 #: fmea/forms.py:67
+#, fuzzy
 msgid "explanation-frequency-level"
 msgstr "explanation-frequency-level"
 
 #: fmea/forms.py:72
+#, fuzzy
 msgid "explanation-detectability_level"
 msgstr "explanation-detectability_level"
 
 #: fmea/forms.py:81
+#, fuzzy
 msgid "You must at least set a failure mode."
 msgstr "Beschrijf hoe dit type bevinding kan worden opgelost"
 
 #: fmea/forms.py:84
 msgid "Choose a frequency level."
-msgstr "Voorkomen"
+msgstr "Kies een frequentieniveau."
 
 #: fmea/forms.py:87
 msgid "Choose a detectability level."
-msgstr "Detecteerbaarheid"
+msgstr "Kies een detectieniveau."
 
 #: fmea/forms.py:90
 msgid "Choose at least one effect."
@@ -650,7 +656,7 @@ msgstr "Betrokken afdeling"
 
 #: fmea/forms.py:125
 msgid "Affected Objects"
-msgstr "Voeg object toe"
+msgstr "Betrokken objecten"
 
 #: fmea/forms.py:128
 msgid "Choose a failure mode which applies to "
@@ -665,11 +671,11 @@ msgid "Which objects does this failure mode affect when it occurs?"
 msgstr "Welke objecten hebben met de bevinding te maken als het gebeurd?"
 
 #: fmea/forms.py:136
+#, fuzzy
 msgid "explanation-affected-ooi-type"
 msgstr "Uitleg"
 
-#: fmea/forms.py:148
-#: fmea/templates/fmea/fmea_failure_mode_effect_detail.html:26
+#: fmea/forms.py:148 fmea/templates/fmea/fmea_failure_mode_effect_detail.html:26
 msgid "Effect"
 msgstr "Effect"
 
@@ -684,17 +690,19 @@ msgstr "Geef een voorbeeld van een mogelijk effect van de bevinding."
 #: fmea/forms.py:154
 msgid ""
 "Describe the severity of this effect ex. 1: not severe and 5: catastrophic"
-msgstr "Beschrijf de ernst van het effect. 1: niet ernstig en 5: catastrofaal."
+msgstr "Beschrijf de ernst van het effect. 1: niet ernstig en 5: catastrofaal"
 
 #: fmea/forms.py:161
 msgid "Describe a possible effect for FMEA"
 msgstr "Beschrijf een mogelijk effect voor FMEA"
 
 #: fmea/forms.py:162
+#, fuzzy
 msgid "explanation-effect"
 msgstr "Uitleg van het effect"
 
 #: fmea/forms.py:167
+#, fuzzy
 msgid "explanation-severity-level"
 msgstr "explanation-severity-level"
 
@@ -704,15 +712,15 @@ msgstr "Het effect is vereist."
 
 #: fmea/forms.py:175
 msgid "This effect already exists."
-msgstr "De gebruiker bestaat al"
+msgstr "Dit effect bestaat al."
 
 #: fmea/forms.py:178
 msgid "Choose a severity level."
-msgstr "Reset scan niveau"
+msgstr "Kies een scan niveau"
 
 #: fmea/models.py:9
 msgid "Finances"
-msgstr "Financiën"
+msgstr "Financiële situatie"
 
 #: fmea/models.py:10
 msgid "Marketing"
@@ -780,18 +788,16 @@ msgstr "Niveau 5: Frequent. Incidenten komen dagelijks voor."
 
 #: fmea/models.py:34
 msgid ""
-"Level 1: Always Detectable. Incident (almost) never occurs, almost "
-"unthinkable."
+"Level 1: Always Detectable. Incident (almost) never occurs, almost unthinkable."
 msgstr ""
 "Niveau 1: altijd detecteerbaar. Incident komt (bijna) nooit voor, bijna "
 "ondenkbaar."
 
 #: fmea/models.py:35
-msgid ""
-"Level 2: Usually Detectable. Incidents occur less than once a year (3-5)."
+msgid "Level 2: Usually Detectable. Incidents occur less than once a year (3-5)."
 msgstr ""
-"Niveau 2: Meestal detecteerbaar. Incidenten komen minder dan één keer per "
-"jaar (3-5) voor."
+"Niveau 2: Meestal detecteerbaar. Incidenten komen minder dan één keer per jaar "
+"(3-5) voor."
 
 #: fmea/models.py:36
 msgid "Level 3: Detectable. Faillure mode is detectable with effort."
@@ -807,8 +813,8 @@ msgid ""
 "Level 5: Almost Undetectable. Faillure mode detection is very difficult or "
 "nearly impossible."
 msgstr ""
-"Niveau 5: Bijna niet detecteerbaar. Detectie van foutmodus is erg moeilijk "
-"of bijna onmogelijk."
+"Niveau 5: Bijna niet detecteerbaar. Detectie van foutmodus is erg moeilijk of "
+"bijna onmogelijk."
 
 #: fmea/models.py:66 fmea/templates/fmea/fmea_failure_mode_list.html:11
 #: fmea/views/view_helpers.py:16
@@ -828,8 +834,9 @@ msgid "No data to build heatmap"
 msgstr "Geen gegevens om heatmap te bouwen"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:14
+#, fuzzy
 msgid "Failure mode affected object tabel:"
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Bestand kon niet gedecodeerd worden:"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:19
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:19
@@ -853,16 +860,17 @@ msgid "Edit"
 msgstr "Bewerken"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:33
+#, fuzzy
 msgid "Failure mode affected objects cannot be found."
 msgstr "Bestand kon niet gedecodeerd worden"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:11
 msgid "Define which objects are affected for a failure mode"
-msgstr "Beschrijf hoe dit type bevinding kan worden opgelost"
+msgstr "Definiëren welke objecten worden beïnvloed voor een foutmodus"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:16
 msgid "Failure mode affected objects"
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Beïnvloedde objecten"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:19
 #: fmea/templates/fmea/fmea_failure_mode_effect_form.html:18
@@ -881,7 +889,7 @@ msgstr "Opslaan"
 #: rocky/templates/organizations/organization_member_add.html:15
 #: rocky/templates/partials/elements/ooi_detail_settings.html:9
 #: rocky/templates/partials/elements/ooi_report_settings.html:9
-#: rocky/templates/partials/form/indemnification_add_form.html:30
+#: rocky/templates/partials/form/indemnification_add_form.html:27
 #: rocky/templates/partials/scan_history.html:49
 #: rocky/templates/two_factor/_wizard_actions.html:12
 msgid "Submit"
@@ -890,26 +898,30 @@ msgstr "Indienen"
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:25
 #: fmea/templates/fmea/fmea_failure_mode_list.html:70
 msgid "No failure mode yet defined."
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Er is nog geen storing gedefinieerd."
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:26
 msgid "To add affected objects to a failure mode, first create one."
-msgstr "Beschrijf hoe dit type bevinding kan worden opgelost"
+msgstr ""
+"Om betrokken objecten toe te voegen aan een foutmodus, maakt u er eerst een "
+"aan."
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:27
 #: fmea/templates/fmea/fmea_failure_mode_list.html:71
+#, fuzzy
 msgid "Create failure mode"
 msgstr "Omschrijf uw bevinding"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:14
 msgid "Failure mode affected objects tabel:"
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Tabel met getroffen objecten:"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:37
 msgid "No failure mode affected objects yet defined."
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Er zijn nog geen objecten met een storing gedefinieerd."
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:38
+#, fuzzy
 msgid "Create failure mode Affected Objects"
 msgstr "Omschrijf uw bevinding"
 
@@ -923,6 +935,7 @@ msgstr "Selecteer de objecten uit de graaf"
 
 #: fmea/templates/fmea/fmea_failure_mode_departments.html:16
 #: fmea/templates/fmea/fmea_failure_mode_list.html:18
+#, fuzzy
 msgid "Failure Mode"
 msgstr "Bestand kon niet gedecodeerd worden"
 
@@ -935,6 +948,7 @@ msgid "Nothing found."
 msgstr "Geen resultaten."
 
 #: fmea/templates/fmea/fmea_failure_mode_detail.html:14
+#, fuzzy
 msgid "Failure mode properties"
 msgstr "Bestand kon niet gedecodeerd worden"
 
@@ -1023,7 +1037,7 @@ msgstr "Beschrijf hoe dit type bevinding kan worden opgelost"
 
 #: fmea/templates/fmea/fmea_failure_mode_form.html:16
 msgid "Failure mode and effects"
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Foutmodus en gevolgen"
 
 #: fmea/templates/fmea/fmea_failure_mode_form.html:25
 msgid "No failure mode effects created."
@@ -1069,7 +1083,7 @@ msgstr "Omschrijving:"
 
 #: fmea/templates/fmea/fmea_failure_mode_list.html:45
 msgid "Frequency level:"
-msgstr "Frequentieniveau"
+msgstr "Frequentieniveau:"
 
 #: fmea/templates/fmea/fmea_failure_mode_list.html:46
 msgid "Detectability level:"
@@ -1113,7 +1127,7 @@ msgstr "Ernst: "
 
 #: fmea/templates/fmea/fmea_failure_mode_report.html:18
 msgid "Detectability: "
-msgstr "Detecteerbaarheid:"
+msgstr "Detecteerbaarheid: "
 
 #: fmea/templates/fmea/fmea_failure_mode_report.html:19
 msgid "Frequency: "
@@ -1149,25 +1163,25 @@ msgid ""
 "collecting knowledge about possible points of failure in a design, "
 "manufacturing process, product or service."
 msgstr ""
-"FMEA (foutmodus en effectieve analyse) is een stapsgewijze aanpak voor "
-"kennis verzamelen over mogelijke faalpunten in een ontwerp, productieproces, "
-"product of dienst."
+"FMEA (foutmodus en effectieve analyse) is een stapsgewijze aanpak voor kennis "
+"verzamelen over mogelijke faalpunten in een ontwerp, productieproces, product "
+"of dienst."
 
 #: fmea/templates/fmea/fmea_index.html:19
 msgid ""
 "Failure mode (FM) refers to the way in which something might break down and "
-"includes potential errors that may occur, especially errors that may affect "
-"a system. Effective analysis (EA) involves deciphering the consequences of "
-"those break downs by making sure that all failures can be detected, "
-"determining how frequently a failure might occur and identifying which "
-"potential failures should be prioritized."
+"includes potential errors that may occur, especially errors that may affect a "
+"system. Effective analysis (EA) involves deciphering the consequences of those "
+"break downs by making sure that all failures can be detected, determining how "
+"frequently a failure might occur and identifying which potential failures "
+"should be prioritized."
 msgstr ""
-"Failure mode (FM) verwijst naar de manier waarop iets kapot kan gaan en "
-"omvat mogelijke fouten die kunnen optreden, met name fouten die van invloed "
-"kunnen zijn op een systeem. Effectieve analyse (EA) omvat het ontcijferen "
-"van de gevolgen van die storingen door ervoor te zorgen dat alle storingen "
-"kunnen worden opgespoord, bepalen hoe vaak een storing kan optreden en "
-"identificeren welke potentiële mislukkingen moeten prioriteit krijgen."
+"Failure mode (FM) verwijst naar de manier waarop iets kapot kan gaan en omvat "
+"mogelijke fouten die kunnen optreden, met name fouten die van invloed kunnen "
+"zijn op een systeem. Effectieve analyse (EA) omvat het ontcijferen van de "
+"gevolgen van die storingen door ervoor te zorgen dat alle storingen kunnen "
+"worden opgespoord, bepalen hoe vaak een storing kan optreden en identificeren "
+"welke potentiële mislukkingen moeten prioriteit krijgen."
 
 #: fmea/templates/fmea/fmea_index.html:34
 msgid "Create affected objects of a failure mode"
@@ -1265,8 +1279,8 @@ msgstr "Waarschuwing vrijwaringsniveau"
 #: katalogus/templates/change_clearance_level.html:12
 #, python-format
 msgid ""
-"%(plugin_name)s will only scan objects with a corresponding clearance level "
-"of <strong>L%(scan_level)s</strong> or higher."
+"%(plugin_name)s will only scan objects with a corresponding clearance level of "
+"<strong>L%(scan_level)s</strong> or higher."
 msgstr ""
 "%(plugin_name)s kan alleen objecten scannen met een overeenkomend "
 "vrijwaringsniveau van <strong>L%(scan_level)s</strong> of hoger."
@@ -1278,13 +1292,13 @@ msgstr "Scan OOI"
 #: katalogus/templates/change_clearance_level.html:21
 #, python-format
 msgid ""
-"The following objects are not yet cleared for level %(scan_level)s, please "
-"be advised that by continuing you will declare a level %(scan_level)s on "
-"these objects."
+"The following objects are not yet cleared for level %(scan_level)s, please be "
+"advised that by continuing you will declare a level %(scan_level)s on these "
+"objects."
 msgstr ""
 "De volgende objecten hebben geen vrijwaringsniveau van %(scan_level)s, "
-"alsjeblieft let erop dat wanneer je doorgaat je een vrijwaring zet naar "
-"niveau %(scan_level)s voor deze objecten"
+"alsjeblieft let erop dat wanneer je doorgaat je een vrijwaring zet naar niveau "
+"%(scan_level)s voor deze objecten."
 
 #: katalogus/templates/change_clearance_level.html:26
 msgid "Selected OOIs:"
@@ -1338,15 +1352,15 @@ msgstr "KAT-alogus"
 msgid ""
 "\n"
 "                An overview of all available boefjes.\n"
-"                Boefjes can be used to scan for vulnerablilities and "
-"security issues within specified objects.\n"
+"                Boefjes can be used to scan for vulnerablilities and security "
+"issues within specified objects.\n"
 "                Each boefje has his own focus area and strengths.\n"
 "              "
 msgstr ""
 "\n"
 "                Een overzicht van alle beschikbare boefjes.\n"
-"                Boefjes kunnen worden gebruikt om te scannen op "
-"kwetsbaarheden en beveiligingsproblemen binnen gespecificeerde objecten.\n"
+"                Boefjes kunnen worden gebruikt om te scannen op kwetsbaarheden "
+"en beveiligingsproblemen binnen gespecificeerde objecten.\n"
 "                Elk boefje heeft zijn eigen toepassing.\n"
 "              "
 
@@ -1472,24 +1486,25 @@ msgid "Object list"
 msgstr "Objectenlijst"
 
 #: katalogus/templates/partials/objects_to_scan.html:8
+#, python-format
 msgid ""
 "This boefje will only scan objects with a corresponding clearance level of "
 "<strong>L%(scan_level)s</strong> or higher. There is no indemnification for "
-"this boefje to scan an OOI with a lower clearance level than "
-"<strong>L%(scan_level)s</strong>. Use the filter to show OOI's with a lower "
-"clearance level."
+"this boefje to scan an OOI with a lower clearance level than <strong>L"
+"%(scan_level)s</strong>. Use the filter to show OOI's with a lower clearance "
+"level."
 msgstr ""
-"Dit boefje scant alleen objecten met een overeenkomstig vrijwaringsniveau "
-"van <strong>(%(scan_level)s)</strong> of hoger. Er is geen vrijwaring voor dit boefje om een "
-"OOI met een lager scan level te scannen dan"
-"<strong>L%(scan_level)s</strong>. Gebruik het filter om OOI's met een lagere "
+"Dit boefje scant alleen objecten met een overeenkomstig vrijwaringsniveau van "
+"<strong>(%(scan_level)s)</strong> of hoger. Er is geen vrijwaring voor dit "
+"boefje om een OOI met een lager scan level te scannen dan<strong>L"
+"%(scan_level)s</strong>. Gebruik het filter om OOI's met een lagere "
 "vrijwaringssniveau."
 
 #: katalogus/templates/partials/objects_to_scan.html:33
 msgid ""
 "\n"
 "          <span>Warning scan level:</span>\n"
-"          Scanning OOI's with a lower clearance level will result in KAT "
+"          Scanning OOI's with a lower clearance level will result in OpenKAT "
 "increasing the clearance level on that OOI,\n"
 "          not only for this scan but from now on out, until it manually gets "
 "set to something else again.\n"
@@ -1498,42 +1513,43 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-" <span>Waarschuwing scanniveau:</span>\n"
-"           Het scannen van OOI's met een lager vrijgaveniveau betekent in KAT "
-"het vrijgaveniveau voor die OOI verhogen,\n"
-"           niet alleen voor deze scan, maar vanaf nu uit, totdat het handmatig wordt "
-"gezet to weer iets anders.\n"
-"           Dit betekent dat alle andere ingeschakelde Boefjes deze hogere 
-"vrijwaringsniveau ook zullen gebruiken.\n"
+"         <span>Waarschuwingsscanniveau:</span>\n"
+"          Het scannen van OOI's met een lager vrijgaveniveau leidt ertoe dat "
+"OpenKAT het vrijgaveniveau op die OOI verhoogt,\n"
+"          niet alleen voor deze scan maar vanaf nu, totdat het handmatig weer "
+"op iets anders wordt ingesteld.\n"
+"          Dit betekent dat alle andere ingeschakelde Boefjes ook dit hogere "
+"vrijgaveniveau zullen gebruiken.\n"
 "        "
 
 #: katalogus/templates/partials/objects_to_scan.html:44
+#, python-format
 msgid ""
 "\n"
 "          You currently don't have any objects that meet the scan level of "
 "%(name)s.\n"
-"          Add objects with a complying clearance level, or alter the "
-"clearance level of existing objects.\n"
+"          Add objects with a complying clearance level, or alter the clearance "
+"level of existing objects.\n"
 "        "
 msgstr ""
 "\n"
 "              U heeft momenteel geen objecten die voldoen aan het scanniveau "
 "van %(name)s. \n"
-"              Voeg objecten toe met een voldoend vrijwaringsniveau, of "
-"wijzig het vrijwaringsniveau van bestaande objecten.\n"
+"              Voeg objecten toe met een voldoend vrijwaringsniveau, of wijzig "
+"het vrijwaringsniveau van bestaande objecten.\n"
 "            "
 
 #: katalogus/templates/partials/objects_to_scan.html:49
+#, python-format
 msgid ""
 "\n"
 "          You currently don't have scannable objects for %(name)s.\n"
-"          Add objects to use this boefje. This boefje is able to scan "
-"objects of the following types:\n"
+"          Add objects to use this boefje. This boefje is able to scan objects "
+"of the following types:\n"
 "        "
 msgstr ""
 "\n"
-"              U heeft momenteel geen scanbare objecten voor "
-"%(name)s. \n"
+"              U heeft momenteel geen scanbare objecten voor %(name)s. \n"
 "              Voeg objecten toe om dit boefje te gebruiken. Dit boefje kan "
 "objecten scannen van de volgende soorten:\n"
 "            "
@@ -1601,8 +1617,8 @@ msgid ""
 "Are you sure you want to delete setting %(name)s for the plugin "
 "%(plugin_name)s?"
 msgstr ""
-"Ben je zeker dat je de instelling %(name)s voor de plugin %(plugin_name)s "
-"wilt verwijderen?"
+"Ben je zeker dat je de instelling %(name)s voor de plugin %(plugin_name)s wilt "
+"verwijderen?"
 
 #: katalogus/templates/plugin_settings_delete.html:18
 #: katalogus/templates/plugin_settings_list.html:22
@@ -1732,7 +1748,7 @@ msgstr ""
 
 #: onboarding/forms.py:38 tools/forms/ooi.py:115
 msgid "Please select a clearance level to proceed."
-msgstr "Kies een vrijwaringsniveau om verder te gaan"
+msgstr "Kies een vrijwaringsniveau om verder te gaan."
 
 #: onboarding/forms.py:44 tools/forms/ooi.py:121
 msgid "explanation-clearance-level"
@@ -1743,16 +1759,17 @@ msgid "What is the name of your organization."
 msgstr "Wat is de naam van uw organisatie."
 
 #: onboarding/forms.py:70
-msgid "The name of the organization this KAT account is for."
-msgstr "De naam van de organisatie waar dit KAT account voor is."
+msgid "The name of the organization this OpenKAT account is for."
+msgstr "De naam van de organisatie waar deze OpenKAT account voor is."
 
 #: onboarding/forms.py:101
 msgid "Trusted to set clearance levels on OOI's"
-msgstr "Vertrouwd om vrijwaringsniveau te zetten voor OOI's:"
+msgstr "Vertrouwd om vrijwaringsniveau te zetten voor OOI's"
 
 #: onboarding/forms.py:103
 msgid "Give this user permission to set clearance levels on OOI's"
-msgstr "Geef deze gebruiker toestemming om vrijwaringsniveaus op OOI's in te stellen"
+msgstr ""
+"Geef deze gebruiker toestemming om vrijwaringsniveaus op OOI's in te stellen"
 
 #: onboarding/templates/account/step_1_registration_intro.html:10
 msgid "Register"
@@ -1765,16 +1782,16 @@ msgstr "Maak een account aan voor uw organisatie"
 #: onboarding/templates/account/step_1_registration_intro.html:16
 msgid ""
 "All user  accounts are part of an organization. So if you’re new and your "
-"company is also new to KAT you can register here to create a KAT account for "
-"your company including an admin account for you. If you like a user account "
-"that is connected to an already existing organization within KAT you can ask "
-"the admin to create an account for you."
+"company is also new to OpenKAT you can register here to create a OpenKAT "
+"account for your company including an admin account for you. If you like a "
+"user account that is connected to an already existing organization within "
+"OpenKAT you can ask the admin to create an account for you."
 msgstr ""
-"Alle gebruikersaccounts maken deel uit van een organisatie. Dus als je nieuw bent en je "
-"bedrijf is ook nieuw bij KAT, u kunt zich hier registreren om een ​​KAT-account aan te maken voor "
-"uw bedrijf inclusief een beheerdersaccount voor u. Als u van een gebruikersaccount houdt "
-"die aangesloten is bij een reeds bestaande organisatie binnen KAT kun je de admin vragen"
-"om een ​​account voor je aan te maken."
+"Alle gebruikersaccounts maken deel uit van een organisatie. Dus als u nieuw "
+"bent en uw organisatie is ook nieuw in OpenKAT kunt u zich hier registreren om "
+"een OpenKAT account aan te maken inclusief een admin account voor u. Als u een "
+"gebruikersaccount wilt dat verbonden is met een reeds bestaande organisatie "
+"binnen OpenKAT kunt u de admin vragen een account voor u aan te maken."
 
 #: onboarding/templates/account/step_1_registration_intro.html:26
 #: onboarding/templates/account/step_1_registration_intro.html:37
@@ -1785,23 +1802,24 @@ msgstr "Begin hier"
 
 #: onboarding/templates/account/step_1_registration_intro.html:27
 #: onboarding/templates/step_1_introduction.html:19
-msgid "How does KAT work"
-msgstr "Hoe werkt KAT?"
+msgid "How does OpenKAT work"
+msgstr "Hoe werkt OpenKAT?"
 
 #: onboarding/templates/account/step_1_registration_intro.html:29
 msgid ""
-"KAT is able to give insight into security risks on your online objects. For "
-"example, your websites, mailservers or online data. KAT uses scans to find "
-"and assess the area's that might be at risk and reports these back to you. "
-"As a user you decide which insight you would like and KAT guides you to "
-"through the process. During this introduction you will be guided through the "
-"steps to create a report."
+"OpenKAT is able to give insight into security risks on your online objects. "
+"For example, your websites, mailservers or online data. OpenKAT uses scans to "
+"find and assess the area's that might be at risk and reports these back to "
+"you. As a user you decide which insight you would like and OpenKAT guides you "
+"to through the process. During this introduction you will be guided through "
+"the steps to create a report."
 msgstr ""
-"OpenKAT geeft inzicht in de beveiligingsrisico's van computers en netwerken. "
-"OpenKAT verzamelt, bewaart en analyseert data aan de hand van een datamodel "
-"en levert praktische rapportages. Als gebruiker besluit je wat je wilt "
-"weten, waarna OpenKAT je helpt bij de stappen die nodig zijn om antwoord te "
-"krijgen."
+"OpenKAT kan inzicht geven in beveiligingsrisico's op uw online objecten. "
+"Bijvoorbeeld uw websites, mailservers of online data. OpenKAT gebruikt scans "
+"om de risicogebieden te vinden en te beoordelen en rapporteert deze aan u "
+"terug. Als gebruiker beslist u welk inzicht u wenst en OpenKAT begeleidt u "
+"door het proces. Tijdens deze introductie wordt u door de stappen geleid om "
+"een rapport te maken."
 
 #: onboarding/templates/account/step_2a_organization_setup.html:10
 #: onboarding/templates/account/step_2a_organization_update.html:10
@@ -1811,8 +1829,8 @@ msgstr ""
 #: onboarding/templates/account/step_4_account_setup_admin.html:10
 #: onboarding/templates/account/step_5_account_setup_red_teamer.html:10
 #: onboarding/templates/account/step_6_account_setup_client.html:10
-msgid "KAT setup"
-msgstr "KAT setup"
+msgid "OpenKAT setup"
+msgstr "OpenKAT instellingen"
 
 #: onboarding/templates/account/step_2a_organization_setup.html:12
 #: onboarding/templates/account/step_2a_organization_update.html:12
@@ -1823,11 +1841,11 @@ msgstr "Organisaties setup"
 #: onboarding/templates/account/step_2a_organization_setup.html:15
 msgid ""
 "Please enter the following organization details. These details can be edited "
-"within the organization page within KAT when necesarry. Adding a new "
+"within the organization page within OpenKAT when necesarry. Adding a new "
 "organization requires a new database."
 msgstr ""
-"Vul de gegevens van uw organisatie in. Als u een nieuwe organisatie toevoegt "
-"heeft deze ook een nieuwe database nodig. "
+"Vul de volgende organisatiegegevens in. Deze gegevens kunnen worden bewerkt op "
+"de organisatie pagina in OpenKAT indien nodig."
 
 #: onboarding/templates/account/step_2a_organization_setup.html:27
 #: onboarding/templates/account/step_2a_organization_update.html:23
@@ -1840,15 +1858,17 @@ msgstr "Organisatie details"
 #: rocky/templates/organizations/organization_add.html:12
 msgid ""
 "Please enter the following organization details. These details can be edited "
-"within the organization page within KAT when necesarry."
-msgstr "Vul de gegevens van uw organisatie in."
+"within the organization page within OpenKAT when necesarry."
+msgstr ""
+"Vul de volgende organisatiegegevens in. Deze gegevens kunnen worden bewerkt op "
+"de organisatie pagina in OpenKAT indien nodig."
 
 #: onboarding/templates/account/step_2a_organization_update.html:25
 msgid "Submit changes"
 msgstr "Veranderingen opslaan"
 
-#: onboarding/templates/account/step_2a_organization_update.html:27
-#: onboarding/templates/account/step_2b_indemnification_setup.html:17
+#: onboarding/templates/account/step_2a_organization_update.html:28
+#: onboarding/templates/account/step_2b_indemnification_setup.html:18
 msgid "Continue"
 msgstr "Verder gaan"
 
@@ -1875,17 +1895,17 @@ msgstr "Organisatie opzetten met aparte accounts:"
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:16
 msgid ""
-"Within KAT it is possible to create separate user accounts with the specific "
-"roles. Each with their own functionalities and permissions. This is useful "
-"when multiple people will be working with the same KAT-setup. You can choose "
-"to create the separate accounts during this introduction or when you’re "
-"ready from the KAT users page."
+"Within OpenKAT it is possible to create separate user accounts with the "
+"specific roles. Each with their own functionalities and permissions. This is "
+"useful when multiple people will be working with the same OpenKAT-setup. You "
+"can choose to create the separate accounts during this introduction or when "
+"you’re ready from the OpenKAT users page."
 msgstr ""
-"Binnen KAT is het mogelijk om aparte gebruikersaccounts aan te maken met de specifieke"
-"rollen. Elk met hun eigen functionaliteiten en rechten. Dit is handig "
-"wanneer meerdere mensen met dezelfde KAT-setup gaan werken. U kunt kiezen "
-"om de aparte accounts aan te maken tijdens deze introductie of wanneer je"
-"klaar bent vanaf de KAT-gebruikerspagina."
+"Binnen OpenKAT is het mogelijk om aparte gebruikersaccounts aan te maken met "
+"de specifieke rollen. Elk met hun eigen functionaliteiten en rechten. Dit is "
+"handig als meerdere mensen met dezelfde OpenKAT-setup gaan werken. U kunt "
+"ervoor kiezen om de aparte accounts aan te maken tijdens deze introductie of "
+"wanneer u klaar bent vanuit de OpenKAT gebruikers pagina."
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:24
 msgid "Single account setup:"
@@ -1893,15 +1913,15 @@ msgstr "Enkel account setup:"
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:26
 msgid ""
-"Alternatively it is also an option to run KAT from a single user account. "
-"Which is useful when you are the only user in the account. You will be able "
-"to access the functionality of the different roles from your account. You "
-"can always add additional user accounts If you’re team expands in the future."
+"Alternatively it is also an option to run OpenKAT from a single user account. "
+"Which is useful when you are the only user in the account. You will be able to "
+"access the functionality of the different roles from your account. You can "
+"always add additional user accounts If you’re team expands in the future."
 msgstr ""
-"Als alternatief is het ook een optie om OpenKAT vanaf één gebruikersaccount uit te voeren."
-"Wat handig is als u de enige gebruiker in het account bent. U kunt "
-"toegang krijgen tot de functionaliteit van de verschillende rollen vanuit uw account. U "
-"kan altijd extra gebruikersaccounts toevoegen als je team in de toekomst uitbreidt."
+"Het is ook een optie om OpenKAT te draaien vanuit een account van één "
+"gebruiker. Dat is handig als u de enige gebruiker bent. U hebt dan toegang tot "
+"de functionaliteit van de verschillende rollen vanuit uw account. U kunt "
+"altijd extra gebruikersaccounts toevoegen als uw team in de toekomst uitbreidt."
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:36
 msgid "Create separate accounts"
@@ -1917,9 +1937,11 @@ msgstr "Gebruikers"
 
 #: onboarding/templates/account/step_3_account_user_type.html:15
 msgid ""
-"Within KAT there are three types of user accounts. Each has its own "
+"Within OpenKAT there are three types of user accounts. Each has its own "
 "functions."
-msgstr "OpenKAT kent drie soorten user accounts met ieder een eigen functie."
+msgstr ""
+"Binnen OpenKAT zijn er drie soorten gebruikersaccounts. Elk heeft zijn eigen "
+"functies."
 
 #: onboarding/templates/account/step_3_account_user_type.html:19
 #: onboarding/templates/account/step_4_account_setup_admin.html:13
@@ -2018,8 +2040,8 @@ msgstr "Maak organisatie setup af"
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:10
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:10
 #: onboarding/templates/step_4_report.html:10 onboarding/views.py:60
-msgid "KAT introduction"
-msgstr "KAT introductie"
+msgid "OpenKAT introduction"
+msgstr "OpenKAT introductie"
 
 #: onboarding/templates/dns_report.html:11
 msgid "DNS Report"
@@ -2028,58 +2050,61 @@ msgstr "DNS Rapport"
 #: onboarding/templates/dns_report.html:13
 #, python-format
 msgid ""
-"These are the findings of a KAT-analysis (%(observed_at)s). Click a finding "
-"for more detailed information about the issue, its origin, severity and "
-"possible solutions."
+"These are the findings of a OpenKAT-analysis (%(observed_at)s). Click a "
+"finding for more detailed information about the issue, its origin, severity "
+"and possible solutions."
 msgstr ""
-"Dit zijn de bevindingen van een OpenKAT-analyse op %(observed_at)s. Klik op "
-"een bevinding voor gedetailleerde informatie over het probleem, de "
-"oorsprong, ernst en mogelijke oplossingen."
+"Dit zijn de bevindingen van een OpenKAT-analyse (%(observed_at)s). Klik op een "
+"bevinding voor meer gedetailleerde informatie over het probleem, de oorsprong, "
+"ernst en mogelijke oplossingen."
 
 #: onboarding/templates/dns_report.html:22
 msgid "DNS Tree"
 msgstr "Boom"
 
 #: onboarding/templates/step_1_introduction.html:10
-#: rocky/templates/landing_page.html:13
-msgid "Welcome to KAT"
-msgstr "Welkom"
+#: rocky/templates/landing_page.html:12
+msgid "Welcome to OpenKAT"
+msgstr "Welkom bij OpenKAT"
 
 #: onboarding/templates/step_1_introduction.html:12
 msgid ""
-"KAT is the \"Kwetsbaarheden Analyse Tool\" (Vulnerabilities Analysis Tool). "
-"An Open-Source-project developed by the Ministery of Public Health, "
+"OpenKAT is the \"Kwetsbaarheden Analyse Tool\" (Vulnerabilities Analysis "
+"Tool). An Open-Source-project developed by the Ministery of Public Health, "
 "Wellbeing and Sports to make your and our world a safer place."
 msgstr ""
-"OpenKAT is de open versie van de Kwetsbaarheden Analyse Tool, een project "
-"dat met steun van het Ministerie van Volksgezondheid, Welzijn en Sport is "
-"gerealiseerd met als doel het verbeteren van de informatiebeveiliging."
+"OpenKAT is de Kwetsbaarheden Analyse Tool. Een Open-Source-project ontwikkeld "
+"door het Ministerie van Volksgezondheid, Welzijn en Sport om uw en onze wereld "
+"veiliger te maken."
 
 #: onboarding/templates/step_1_introduction.html:21
 msgid ""
-"KAT is able to give insight into security risks on your online objects. For "
-"example, your websites, mailservers or online data."
-msgstr "OpenKAT geeft inzicht in de beveiligingsrisicos van uw systemen."
+"OpenKAT is able to give insight into security risks on your online objects. "
+"For example, your websites, mailservers or online data."
+msgstr ""
+"OpenKAT kan inzicht geven in beveiligingsrisico's op uw online objecten. "
+"Bijvoorbeeld uw websites, mailservers of online data."
 
 #: onboarding/templates/step_1_introduction.html:27
 msgid ""
-"KAT uses plugins to find and assess the area's that might be at risk and "
+"OpenKAT uses plugins to find and assess the area's that might be at risk and "
 "reports these back to you. Each plugin has its own skillset which could be "
-"scanning, normalizing or analyzing data. As a user you decide which areas "
-"you would like to monitor or scan and which insight you would like to "
-"receive."
+"scanning, normalizing or analyzing data. As a user you decide which areas you "
+"would like to monitor or scan and which insight you would like to receive."
 msgstr ""
-"OpenKAT gebruikt plugins om risico's in beeld te brengen en hierover te "
-"rapporteren. Elke plugin heeft een eigen taak. De gebruiker beslist welke "
-"systemen worden gemonitord en welke informatie er wordt opgehaald."
+"OpenKAT gebruikt plugins om de risicogebieden te vinden en te beoordelen en "
+"rapporteert deze aan u. Elke plugin heeft zijn eigen vaardigheden, zoals het "
+"scannen, normaliseren of analyseren van gegevens. Als gebruiker beslist u "
+"welke gebieden u wilt monitoren of scannen en welk inzicht u wilt ontvangen."
 
 #: onboarding/templates/step_1_introduction.html:33
 msgid ""
-"Within KAT you can view the insights as well as all the data KAT has found. "
-"You can choose to browse through the data or view reports."
+"Within OpenKAT you can view the insights as well as all the data OpenKAT has "
+"found. You can choose to browse through the data or view reports."
 msgstr ""
-"OpenKAT kan de bevindingen laten zien, maar ook alle data waarop deze "
-"gebaseerd zijn."
+"Binnen OpenKAT kunt u zowel de inzichten als alle gegevens die OpenKAT heeft "
+"gevonden bekijken. U kunt ervoor kiezen door de gegevens te bladeren of "
+"rapporten te bekijken."
 
 #: onboarding/templates/step_1_introduction.html:38
 msgid ""
@@ -2108,15 +2133,16 @@ msgstr "Rapporten"
 
 #: onboarding/templates/step_2a_choose_report_info.html:15
 msgid ""
-"Reports within KAT contain an overview of the scanned objects, issues found "
-"within them and known security risks that the object might be vulnerable to. "
-"Each report gives a high overview of the state of the object as well as "
-"detailed information on what KAT found and possible solutions."
+"Reports within OpenKAT contain an overview of the scanned objects, issues "
+"found within them and known security risks that the object might be vulnerable "
+"to. Each report gives a high overview of the state of the object as well as "
+"detailed information on what OpenKAT found and possible solutions."
 msgstr ""
-"Rapporten bevatten een overzicht van de gescande objecten, van bevindingen "
-"en eventuele beveiligingsrisico's die zijn gevonden. Elk rapport bevat "
-"informatie over de status van een object, over bevindingen en mogelijke "
-"oplossingen."
+"Rapporten binnen OpenKAT bevatten een overzicht van de gescande objecten, de "
+"daarin gevonden problemen en bekende beveiligingsrisico's waarvoor het object "
+"kwetsbaar zou kunnen zijn. Elk rapport geeft een hoog overzicht van de "
+"toestand van het object en gedetailleerde informatie over wat OpenKAT heeft "
+"gevonden en mogelijke oplossingen."
 
 #: onboarding/templates/step_2a_choose_report_info.html:22
 msgid "Data"
@@ -2124,13 +2150,15 @@ msgstr "Data"
 
 #: onboarding/templates/step_2a_choose_report_info.html:24
 msgid ""
-"KAT can scan and analyze by using plugins. Each plugin has it's unique "
-"skillset and will collect specific data or give specific insights. You "
-"manage the plugins within your account which let's KAT know which plugins to "
-"run and on which objects or areas."
+"OpenKAT can scan and analyze by using plugins. Each plugin has it's unique "
+"skillset and will collect specific data or give specific insights. You manage "
+"the plugins within your account which let's OpenKAT know which plugins to run "
+"and on which objects or areas."
 msgstr ""
-"U kiest welke plugins er gebruikt worden voor de scans, op welke objecten of "
-"gebieden."
+"OpenKAT kan scannen en analyseren met behulp van plugins. Elke plugin heeft "
+"zijn eigen unieke vaardigheden en verzamelt specifieke gegevens of geeft "
+"specifieke inzichten. U beheert de plugins binnen uw account, waardoor OpenKAT "
+"weet welke plugins moeten worden uitgevoerd en op welke objecten of gebieden."
 
 #: onboarding/templates/step_2a_choose_report_info.html:31
 msgid "Generating a report"
@@ -2138,22 +2166,26 @@ msgstr "Genereer een rapport"
 
 #: onboarding/templates/step_2a_choose_report_info.html:33
 msgid ""
-"When you choose a report type KAT will guide you through the setup. KAT will "
-"ask the necesarry questions based on the input the report needs, as well as "
-"asks for permission to run plugins that you haven’t enabled yet but are "
-"needed to collect or analyze the data."
+"When you choose a report type OpenKAT will guide you through the setup. "
+"OpenKAT will ask the necesarry questions based on the input the report needs, "
+"as well as asks for permission to run plugins that you haven’t enabled yet but "
+"are needed to collect or analyze the data."
 msgstr ""
-"OpenKat vraagt om vrijwaring voor het scannen van objecten die nodig zijn om "
-"het rapport te maken."
+"Wanneer u een rapporttype kiest, zal OpenKAT u begeleiden bij de installatie. "
+"OpenKAT stelt de nodige vragen op basis van de invoer die het rapport nodig "
+"heeft, en vraagt om toestemming om plugins te gebruiken die u nog niet hebt "
+"ingeschakeld, maar die nodig zijn om de gegevens te verzamelen of te "
+"analyseren."
 
 #: onboarding/templates/step_2a_choose_report_info.html:38
 msgid ""
 "You can also choose to look at the collected data directly or generate your "
-"own report by selecting and running plugins on objects of your choice. KAT "
+"own report by selecting and running plugins on objects of your choice. OpenKAT "
 "will present the results."
 msgstr ""
-"Het is ook mogelijk om de data zelf te bekijken of specifieke plugins aan of "
-"uit te zetten."
+"U kunt er ook voor kiezen de verzamelde gegevens direct te bekijken of uw "
+"eigen rapport te genereren door plugins te selecteren en uit te voeren op "
+"objecten van uw keuze. OpenKAT zal de resultaten presenteren."
 
 #: onboarding/templates/step_2a_choose_report_info.html:42
 msgid "Permission"
@@ -2161,20 +2193,20 @@ msgstr "Toestemming"
 
 #: onboarding/templates/step_2a_choose_report_info.html:44
 msgid ""
-"Plugins can be provided by KAT but they can also come from the community. "
+"Plugins can be provided by OpenKAT but they can also come from the community. "
 "Before a plugin can run, you need to give it permission by enabling it."
 msgstr ""
-"Plugins zijn beschikbaar in de standaard installatie, maar kunnen ook door "
-"anderen worden gemaakt. Voordat een plugin gebruikt wordt geeft u "
-"toestemming."
+"Plugins kunnen geleverd worden door OpenKAT, maar ze kunnen ook van de "
+"gemeenschap komen. Voordat een plugin kan draaien, moet u hem toestemming "
+"geven door hem in te schakelen."
 
 #: onboarding/templates/step_2a_choose_report_info.html:49
 msgid ""
-"When you generate a report. KAT will let you know which plugins it requires "
-"or suggests so you can choose to enable them."
+"When you generate a report. OpenKAT will let you know which plugins it "
+"requires or suggests so you can choose to enable them."
 msgstr ""
-"Als u een rapport selecteert laat OpenKAT weten welke plugins ervoor nodig "
-"zijn."
+"Wanneer u een rapport genereert. OpenKAT laat u weten welke plugins het "
+"vereist of voorstelt, zodat u kunt kiezen om ze in te schakelen."
 
 #: onboarding/templates/step_2a_choose_report_info.html:59
 msgid "Let's choose a report"
@@ -2186,23 +2218,26 @@ msgstr "Kies een rapportage - Type"
 
 #: onboarding/templates/step_2b_choose_report_type.html:14
 msgid ""
-"Within KAT you can view reports for each of your current objects. For "
-"specific reports you can choose one of the available report types and "
-"generate a report. Such as a pen-test, a DNS-report or a mail report to give "
-"some examples."
+"Within OpenKAT you can view reports for each of your current objects. For "
+"specific reports you can choose one of the available report types and generate "
+"a report. Such as a pen-test, a DNS-report or a mail report to give some "
+"examples."
 msgstr ""
-"OpenKAT kan verschillende rapporten aanmaken, op basis van instellingen "
-"vooraf of aangepast aan de vraag."
+"Binnen OpenKAT kunt u rapporten bekijken voor elk van uw huidige objecten. "
+"Voor specifieke rapporten kunt u een van de beschikbare rapporttypes kiezen en "
+"een rapport genereren. Zoals een pen-test, een DNS-rapport of een mail-rapport."
 
 #: onboarding/templates/step_2b_choose_report_type.html:19
 msgid "For this tutorial we suggest a DNS-report to get you started."
-msgstr "Deze tutorial maakt gebruik van het DNS rapport"
+msgstr "Deze tutorial maakt gebruik van het DNS rapport."
 
 #: onboarding/templates/step_2b_choose_report_type.html:24
 msgid ""
-"When you start to generate this report. KAT will guide you through the "
+"When you start to generate this report. OpenKAT will guide you through the "
 "necessary steps."
-msgstr "Voordat je een DNS rapport aanmaakt laat OpenKAT je de stappen zien."
+msgstr ""
+"Wanneer u begint met het genereren van dit rapport. Zal OpenKAT u door de "
+"nodige stappen leiden."
 
 #: onboarding/templates/step_2b_choose_report_type.html:34
 msgid "DNS report"
@@ -2215,17 +2250,18 @@ msgid "Setup scan"
 msgstr "Scan instellingen"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:13
-msgid "Let KAT know what object to scan"
-msgstr "Selecteer het object om te scannen."
+msgid "Let OpenKAT know what object to scan"
+msgstr "Laat OpenKAT weten welk object gescand moet worden"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:15
 msgid ""
-"Plugins scan and analyze objects. KAT needs to know which object(s) you "
+"Plugins scan and analyze objects. OpenKAT needs to know which object(s) you "
 "would like to scan and analyze for the DNS-report. So it can tell you which "
 "plugins are available for the choosen object."
 msgstr ""
-"OpenKAT moet weten bij welk object gestart kan worden met scannen, om te "
-"bepalen welke plugins geschikt en nodig zijn."
+"Plugins scannen en analyseren objecten. OpenKAT moet weten welk(e) object(en) "
+"u wilt scannen en analyseren voor het DNS-rapport. Zo kan het u vertellen "
+"welke plugins beschikbaar zijn voor het gekozen object."
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:19
 msgid "Understanding objects"
@@ -2233,25 +2269,28 @@ msgstr "Objecten begrijpen"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:21
 msgid ""
-"A lot of things can be an object within the scope of KAT. For example a "
+"A lot of things can be an object within the scope of OpenKAT. For example a "
 "mailserver, an ip-address, a URL, a DNS record, a hostname or a network to "
 "name a few.  While these objects can be related to each other they are all "
-"objects within KAT that can be scanned to gain valuable insight."
+"objects within OpenKAT that can be scanned to gain valuable insight."
 msgstr ""
-"Een object kan van alles zijn, van een mailserver, ip-adres, DNS record of "
-"hostname."
+"Veel dingen kunnen een object zijn binnen het bereik van OpenKAT. Bijvoorbeeld "
+"een mailserver, een ip-adres, een URL, een DNS-record, een hostnaam of een "
+"netwerk om er maar een paar te noemen.  Hoewel deze objecten aan elkaar "
+"gerelateerd kunnen zijn, zijn het allemaal objecten binnen OpenKAT die gescand "
+"kunnen worden om waardevolle inzichten te verkrijgen."
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:29
 msgid "Creating, adding and editing objects"
-msgstr "Objecten aanmaken en aanpassen."
+msgstr "Objecten aanmaken en aanpassen"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:31
 msgid ""
-"Within KAT you can view, add and edit objects from the organization’s object "
-"page."
+"Within OpenKAT you can view, add and edit objects from the organization’s "
+"object page."
 msgstr ""
-"In KAT kan je objecten bekijken, toevoegen en aanpassen in de objecten "
-"pagina."
+"Binnen OpenKAT kunt u objecten bekijken, toevoegen en bewerken vanuit de "
+"objectpagina van de organisatie."
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:36
 msgid ""
@@ -2285,24 +2324,27 @@ msgstr "Afhankelijkheden"
 
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:27
 msgid ""
-"Most objects have dependencies on the existence of other objects. For "
-"example a URL needs to be connected to a network, hostname, fqdn (fully "
-"qualified domain name) and ip-address. KAT collects these additional object "
+"Most objects have dependencies on the existence of other objects. For example "
+"a URL needs to be connected to a network, hostname, fqdn (fully qualified "
+"domain name) and ip-address. OpenKAT collects these additional object "
 "automatically when possible. By running plugins to collect or extract this "
 "data."
 msgstr ""
-"Objecten zijn met elkaar verbonden. Zo hoort bij een url een ip adres, een "
-"netwerk enzovoorts. OpenKAT zoekt deze objecten op aan de hand van het "
-"datamodel, met behulp van de bijpassende plugins."
+"De meeste objecten zijn afhankelijk van het bestaan van andere objecten. "
+"Bijvoorbeeld een URL moet verbonden zijn met een netwerk, hostnaam, fqdn "
+"(fully qualified domain name) en ip-adres. OpenKAT verzamelt deze aanvullende "
+"objecten waar mogelijk automatisch. Door plugins te draaien die deze gegevens "
+"verzamelen of extraheren."
 
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:36
 msgid ""
-"The additional objects that KAT created will be added to your object list as "
-"separate objects. If KAT can’t add them automatically it will guide you "
+"The additional objects that OpenKAT created will be added to your object list "
+"as separate objects. If OpenKAT can’t add them automatically it will guide you "
 "through the process of creating them manually."
 msgstr ""
-"Nieuwe objecten worden toegevoegd. Als OpenKAT deze niet automatisch kan "
-"toevoegen kunnen ze ook handmatig worden aangevuld."
+"De extra objecten die OpenKAT heeft gemaakt zullen als afzonderlijke objecten "
+"aan uw objectlijst worden toegevoegd. Als OpenKAT ze niet automatisch kan "
+"toevoegen, leidt het u door het proces om ze handmatig te maken."
 
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:47
 msgid "Create object"
@@ -2310,10 +2352,11 @@ msgstr "Maak object aan"
 
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:15
 msgid ""
-"Based on the url you provided KAT added the necesarry additional objects to "
-"create a url object."
+"Based on the url you provided OpenKAT added the necesarry additional objects "
+"to create a url object."
 msgstr ""
-"Uitgaande van het eerste object heeft OpenKAT nieuwe objecten gevonden."
+"Op basis van de door u opgegeven url heeft OpenKAT de nodige extra objecten "
+"toegevoegd om een url-object te maken."
 
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:23
 msgid "URL"
@@ -2348,14 +2391,12 @@ msgid "Network"
 msgstr "Netwerk"
 
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:57
-#, fuzzy
-#| msgid "Start using KAT"
 msgid "Start scanning"
-msgstr "Start met OpenKAT"
+msgstr "Begin met scannen"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:10
-msgid "KAT Introduction"
-msgstr "KAT Introductie"
+msgid "OpenKAT Introduction"
+msgstr "OpenKAT Inleiding"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:12
 msgid "Setup - Set clearance level for example.org"
@@ -2366,18 +2407,21 @@ msgid "Introduction"
 msgstr "Introductie"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:15
-#: rocky/templates/partials/form/indemnification_add_form.html:7
+#: rocky/templates/partials/form/indemnification_add_form.html:6
 msgid ""
 "Some scans are lightweight while others might be a bit more agressive with "
-"their scanning. KAT requires you to set a clearance level for each object to "
-"prevent you from unintentionally running agressive scans. For example you "
+"their scanning. OpenKAT requires you to set a clearance level for each object "
+"to prevent you from unintentionally running agressive scans. For example you "
 "might have the right to run any type of scan on your own server but you "
 "probably don’t have the right to do so for objects owned by other people of "
 "companies."
 msgstr ""
-"OpenKAT vraagt een vrijwaringsniveau per object om te voorkomen dat de scans "
-"indringender zijn dan toegestaan in. Zo wordt voorkomen dat er schade "
-"ontstaat."
+"Sommige scans zijn licht, terwijl andere wat agressiever scannen. OpenKAT "
+"vereist dat u een toestemmingsniveau instelt voor elk object om te voorkomen "
+"dat u onbedoeld agressieve scans uitvoert. U kunt bijvoorbeeld het recht "
+"hebben om elk type scan op uw eigen server uit te voeren, maar u hebt "
+"waarschijnlijk niet het recht om dat te doen voor objecten die eigendom zijn "
+"van andere mensen of bedrijven."
 
 #: onboarding/templates/step_3d_set_clearance_level.html:26
 msgid "How to know required clearance level"
@@ -2386,20 +2430,22 @@ msgstr "Hoe kiest u het juiste vrijwaringsniveau?"
 #: onboarding/templates/step_3d_set_clearance_level.html:28
 msgid ""
 "Each plugin that scans will have a scan intesity score. The intesity of the "
-"scan must be equal to or below the clearance level you set for your object. "
-"If the scan has an intesity level that is too high, KAT will notify you "
-"before running it. Visually clearance levels and intesity scores are "
-"indicated with little cat paws."
+"scan must be equal to or below the clearance level you set for your object. If "
+"the scan has an intesity level that is too high, OpenKAT will notify you "
+"before running it. Visually clearance levels and intesity scores are indicated "
+"with little cat paws."
 msgstr ""
-"Elke plugin heeft een intensiteit, die aansluit bij het vrijwaringsniveau. "
-"Is de intensiteit van de scan te hoog voor de vrijwaring, dan wordt deze "
-"scan niet automatisch uitgevoerd."
+"Elke plugin die scant krijgt een scan-intesiteitsscore. De intesiteit van de "
+"scan moet gelijk zijn aan of lager zijn dan het vrijgaveniveau dat u voor uw "
+"object hebt ingesteld. Als de scan een te hoog intesiteitsniveau heeft, zal "
+"OpenKAT u waarschuwen voordat hij wordt uitgevoerd. Visueel worden clearance "
+"levels en intesitas scores aangegeven met kleine kattenpootjes."
 
 #: onboarding/templates/step_3d_set_clearance_level.html:36
 msgid ""
-"This scan has a scan intensity score of 1, requiring a level 1 clearance "
-"level to be run. This means that the scan does not touch the object itself, "
-"but only searches for information about the object."
+"This scan has a scan intensity score of 1, requiring a level 1 clearance level "
+"to be run. This means that the scan does not touch the object itself, but only "
+"searches for information about the object."
 msgstr ""
 "Deze scan heeft intensiteit niveau 1. De scan raakt het object niet aan en "
 "verzamelt alleen informatie."
@@ -2418,12 +2464,14 @@ msgstr "Vrijwaringsniveau aanpassen"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:53
 msgid ""
-"After creating a new object KAT will ask you to set a clearance level. On "
+"After creating a new object OpenKAT will ask you to set a clearance level. On "
 "the object detail page you can always change the clearance level. For the "
 "onboarding we will suggest to set the clearance level to L2."
 msgstr ""
-"Na het aanmaken van een object vraagt OpenKAT om een vrijwaring. Tijdens de "
-"on boarding kiezen we niveau 2."
+"Na het maken van een nieuw object zal OpenKAT u vragen een vrijgaveniveau in "
+"te stellen. Op de objectdetailpagina kunt u altijd het toestemmingsniveau "
+"wijzigen. Voor de onboarding stellen wij voor het toestemmingsniveau op L2 te "
+"zetten."
 
 #: onboarding/templates/step_3d_set_clearance_level.html:61
 #: onboarding/templates/step_3d_set_clearance_level.html:63
@@ -2444,13 +2492,13 @@ msgstr "Plugin introductie"
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:14
 msgid ""
-"KAT uses plugins to scan, check and analyze. Each plugin will bring a "
+"OpenKAT uses plugins to scan, check and analyze. Each plugin will bring a "
 "specific skillset that will help to generate your report. There are three "
 "types of plugins."
 msgstr ""
-"KAT gebruikt plugins om te scannen, checken en te analyzeren. Elke plugin "
-"brengt een specifieke skillset die je rapport aanvult. Er zijn drie type "
-"plugins."
+"OpenKAT gebruikt plugins om te scannen, te controleren en te analyseren. Elke "
+"plugin brengt een specifieke vaardighedenset mee die helpt bij het genereren "
+"van uw rapport. Er zijn drie soorten plugins."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:22
 #: tools/forms/boefje.py:38 rocky/templates/scan.html:9
@@ -2464,8 +2512,8 @@ msgid ""
 "Scan objects for data. Each boefje has a scan intensity score to prevent "
 "invasive scanning on objects where you don’t have the clearance to do so."
 msgstr ""
-"Scan objecten voor data. Elke boefje heeft een vrijwaringsniveau om te "
-"zorgen dat objecten niet te agressief worden gescant."
+"Scan objecten voor data. Elke boefje heeft een vrijwaringsniveau om te zorgen "
+"dat objecten niet te agressief worden gescant."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:30
 #: rocky/templates/tasks/normalizers.html:12
@@ -2477,8 +2525,7 @@ msgstr "Normalizers"
 msgid ""
 "Check the data for specific objects and add these object to your object list."
 msgstr ""
-"Check de data voor specifieke objecten en voeg deze toe aan je objecten "
-"lijst."
+"Check de data voor specifieke objecten en voeg deze toe aan je objecten lijst."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:36
 msgid "Bits"
@@ -2491,19 +2538,19 @@ msgstr ""
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:43
 msgid ""
-"KAT will be able to generate a full report when all the required and "
+"OpenKAT will be able to generate a full report when all the required and "
 "suggested plugins are enabled. If you choose not to give a plugin permission "
-"to run, the data that plugin would collect or produce will be left out of "
-"the report which will then be generated based on the available data "
-"collected by the enabled plugins. Below are the suggested and required "
-"plugins for this report."
+"to run, the data that plugin would collect or produce will be left out of the "
+"report which will then be generated based on the available data collected by "
+"the enabled plugins. Below are the suggested and required plugins for this "
+"report."
 msgstr ""
-"OpenKAT levert een compleet rapport als alle benodigde boefjes kunnen "
-"werken. Hieronder zijn de mogelijke en benodigde boefjes opgenomen."
+"OpenKAT levert een compleet rapport als alle benodigde boefjes kunnen werken. "
+"Hieronder zijn de mogelijke en benodigde boefjes opgenomen."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:53
 msgid "Let’s setup your scan by enabling the plugins of your choice below."
-msgstr "Start met het aanzetten van boefjes"
+msgstr "Start met het aanzetten van boefjes."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:57
 msgid "Suggested plugins"
@@ -2515,13 +2562,12 @@ msgstr "De boefjes zijn aan het scannen"
 
 #: onboarding/templates/step_4_report.html:15
 msgid ""
-"The enabled boefjes are collecting the data needed to generate the DNS-"
-"report. This may take some time based on the type of scans and the number of "
-"objects found. For the current scan we expect boefjes to take about 3 "
-"minutes."
+"The enabled boefjes are collecting the data needed to generate the DNS-report. "
+"This may take some time based on the type of scans and the number of objects "
+"found. For the current scan we expect boefjes to take about 3 minutes."
 msgstr ""
-"De boefjes verzamelen data. Dit duurt voor deze scan naar verwachting "
-"ongeveer 3 minuten."
+"De boefjes verzamelen data. Dit duurt voor deze scan naar verwachting ongeveer "
+"3 minuten."
 
 #: onboarding/templates/step_4_report.html:22
 msgid ""
@@ -2533,11 +2579,12 @@ msgstr ""
 #: onboarding/templates/step_4_report.html:27
 msgid ""
 "After the onboarding, boefjes run in the background. This enables you to use "
-"KAT in the meantime without waiting for scans to finish. When you would like "
-"to see the status of a scan you can open the \"tasks\" page."
+"OpenKAT in the meantime without waiting for scans to finish. When you would "
+"like to see the status of a scan you can open the \"tasks\" page."
 msgstr ""
-"Na de onboarding kunnen de boefjes op de achtergrond doorwerken. De status "
-"kan via de \"tasks\" pagina bekeken worden."
+"Na de onboarding draaien boefjes op de achtergrond. Hierdoor kunt u OpenKAT "
+"ondertussen gebruiken zonder te wachten tot de scans klaar zijn. Wanneer u de "
+"status van een scan wilt zien kunt u de \"taken\" pagina openen."
 
 #: onboarding/templates/step_4_report.html:35
 msgid "Open my DNS-report"
@@ -2565,22 +2612,20 @@ msgid "2: Organization setup"
 msgstr "2: Organisaties"
 
 #: onboarding/view_helpers.py:42 onboarding/view_helpers.py:60
-#, fuzzy
-#| msgid "Indemnification"
 msgid "3: Indemnification"
-msgstr "Vrijwaring"
+msgstr "3. Vrijwaring"
 
 #: onboarding/view_helpers.py:43 onboarding/view_helpers.py:64
-#, fuzzy
-#| msgid "3: Account setup"
 msgid "4: Account setup"
-msgstr "3: Accountbeveiliging"
+msgstr "4: Account setup"
 
 #: onboarding/views.py:204
 msgid ""
-"KAT added the following required object to your object list to complete your "
-"request: {}"
-msgstr "OpenKAT heeft het volgende object toevoegd"
+"OpenKAT added the following required object to your object list to complete "
+"your request: {}"
+msgstr ""
+"OpenKAT heeft het volgende vereiste object toegevoegd aan uw objectlijst om uw "
+"verzoek te voltooien: {}"
 
 #: onboarding/views.py:313
 msgid "Clearance level has been set"
@@ -2588,29 +2633,26 @@ msgstr "Vrijwaringsniveau toegepast"
 
 #: onboarding/views.py:395
 msgid "No DNS zone found."
-msgstr "Geen DNS zone gevonden"
+msgstr "Geen DNS zone gevonden."
 
 #: onboarding/views.py:401
-msgid "KAT Setup"
+msgid "OpenKAT Setup"
 msgstr "OpenKAT instellingen"
 
 #: onboarding/views.py:462
-#, fuzzy, python-brace-format
-#| msgid "User succesfully created."
+#, python-brace-format
 msgid "{org_name} succesfully created."
-msgstr "Gebruiker aangemaakt"
+msgstr "{org_name} succesvol aangemaakt."
 
 #: onboarding/views.py:493
-#, fuzzy, python-brace-format
-#| msgid "Organization succesfully updated."
+#, python-brace-format
 msgid "{org_name} succesfully updated."
-msgstr "Organisatie succesvol geupdate"
+msgstr "{org_name} succesvol bijgewerkt."
 
 #: onboarding/views.py:568 onboarding/views.py:596 onboarding/views.py:620
-#, fuzzy, python-brace-format
-#| msgid "User succesfully created."
+#, python-brace-format
 msgid "{name} succesfully created."
-msgstr "Gebruiker aangemaakt"
+msgstr "{name} succesvol aangemaakt."
 
 #: tools/forms/base.py:64
 msgid "Date"
@@ -2626,8 +2668,8 @@ msgid "KAT-ID"
 msgstr "KAT-ID"
 
 #: tools/forms/finding_type.py:28
-msgid "Unique ID within KAT, for this type"
-msgstr "Uniek ID in KAT voor dit type"
+msgid "Unique ID within OpenKAT, for this type"
+msgstr "Uniek ID binnen OpenKAT, voor dit type"
 
 #: tools/forms/finding_type.py:32
 msgid "Title"
@@ -2655,7 +2697,7 @@ msgstr "Hoe kan dit worden opgelost?"
 
 #: tools/forms/finding_type.py:49
 msgid "Describe how this type of finding can be solved"
-msgstr "Beschrijf hoe dit type bevinding kan worden opgelost."
+msgstr "Beschrijf hoe dit type bevinding kan worden opgelost"
 
 #: tools/forms/finding_type.py:52
 msgid "References"
@@ -2663,11 +2705,11 @@ msgstr "Referenties"
 
 #: tools/forms/finding_type.py:55
 msgid "Please give some references on the solution"
-msgstr "Referenties over de oplossing."
+msgstr "Referenties over de oplossing"
 
 #: tools/forms/finding_type.py:60
 msgid "Please give sources and references on the suggested solution"
-msgstr "Voeg bronnen of referenties over de oplossing toe."
+msgstr "Voeg bronnen of referenties over de oplossing toe"
 
 #: tools/forms/finding_type.py:63
 msgid "Impact description"
@@ -2732,7 +2774,7 @@ msgstr "Datum/Tijd (UTC)"
 
 #: tools/forms/finding_type.py:161
 msgid "Doc! I'm from the future, I'm here to take you back!"
-msgstr "Dokter! Ik kom uit de toekomst, ik ben hier om je terug te brengen!"
+msgstr "Doc! Ik kom uit de toekomst, ik ben hier om je terug te brengen!"
 
 #: tools/forms/finding_type.py:171 rocky/views/ooi_list.py:121
 #: rocky/views/ooi_list.py:146
@@ -2747,9 +2789,8 @@ msgstr "Filter types"
 #: rocky/templates/dashboard_client.html:35
 #: rocky/templates/dashboard_redteam.html:35 rocky/templates/header.html:43
 #: rocky/templates/indemnification_present.html:10 rocky/views/mixins.py:229
-#: rocky/views/ooi_add.py:48 rocky/views/ooi_add.py:78
-#: rocky/views/ooi_list.py:30 rocky/views/tasks.py:81
-#: rocky/views/upload_csv.py:71
+#: rocky/views/ooi_add.py:48 rocky/views/ooi_add.py:78 rocky/views/ooi_list.py:30
+#: rocky/views/tasks.py:81 rocky/views/upload_csv.py:71
 msgid "Objects"
 msgstr "Objecten"
 
@@ -2766,8 +2807,6 @@ msgid "Show Boefjes that exceed the OOI's scan level"
 msgstr "Toon Boefjes die het scanniveau van OOI's overschrijden"
 
 #: tools/forms/settings.py:13
-#, fuzzy
-#| msgid "Show all"
 msgid "--- Show all ----"
 msgstr "Toon alles"
 
@@ -2827,12 +2866,12 @@ msgstr "Voer bewijs van uw bevinding in"
 
 #: tools/forms/settings.py:54
 msgid ""
-"KAT stores a time indication with every observation, so it is possible to "
+"OpenKAT stores a time indication with every observation, so it is possible to "
 "see the status of your network through time. Select a datetime to change the "
 "view to represent that moment in time."
 msgstr ""
-"KAT bewaart een tijdsindicatie bij elke observatie, hierdoor is het mogelijk "
-"de status van de objecten op elk moment van de tijd in de historie te "
+"OpenKAT bewaart een tijdsindicatie bij elke observatie, hierdoor is het "
+"mogelijk de status van de objecten op elk moment van de tijd in de historie te "
 "bekijken. Selecteer een datum-tijd om naar die weergave te springen."
 
 #: tools/forms/settings.py:61
@@ -2860,10 +2899,8 @@ msgid "Organization code(s) in CSV does not exist in our database"
 msgstr "Organisatiecode in CSV bestaat niet in onze database"
 
 #: tools/forms/upload_csv.py:20
-#, fuzzy
-#| msgid "The number of columns does not meet the requirements."
 msgid "The number of columns do not meet the requirements."
-msgstr "Het aantal kolommen komen niet overheen met de vereisten."
+msgstr "Het aantal kolommen voldoet niet aan de eisen."
 
 #: tools/forms/upload_csv.py:21
 msgid "OOI Type in CSV does not meet the criterias."
@@ -2890,16 +2927,16 @@ msgid "Only accepts CSV file."
 msgstr "Accepteert alleen CSV bestanden."
 
 #: tools/models.py:49
-#, fuzzy
-#| msgid "Choose another organization."
 msgid "The name of the organisation"
-msgstr "Kies een andere organisatie"
+msgstr "De naam van de organisatie"
 
 #: tools/models.py:55
 msgid ""
 "A slug containing only lower-case unicode letters, numbers, hyphens or "
 "underscores that will be used in URLs and paths"
 msgstr ""
+"Een slug die alleen kleine unicode letters, cijfers, koppeltekens of "
+"underscores bevat en die zal worden gebruikt in URL's en paden"
 
 #: tools/models.py:117
 msgid "new"
@@ -3035,18 +3072,20 @@ msgstr ""
 
 #: rocky/templates/404.html:10
 msgid "Error code 404: Page not found"
-msgstr ""
+msgstr "Foutcode 404: Pagina niet gevonden"
 
 #: rocky/templates/404.html:12
-msgid ""
-"The page you wanted to see or the file you wanted to view was not found."
+msgid "The page you wanted to see or the file you wanted to view was not found."
 msgstr ""
+"De pagina die u wilde zien of het bestand dat u wilde bekijken is niet "
+"gevonden."
 
 #: rocky/templates/404.html:15
 msgid ""
 "You may be able to find the information you are looking for through the "
 "following pages:"
 msgstr ""
+"Wellicht kunt u via de volgende pagina's de informatie vinden die u zoekt:"
 
 #: rocky/templates/404.html:19 rocky/templates/crisis_room/crisis_room.html:10
 msgid "Crisis Room"
@@ -3066,19 +3105,20 @@ msgstr "Bevindingen"
 
 #: rocky/templates/404.html:29
 msgid "Or go back to the main page"
-msgstr ""
+msgstr "Of ga terug naar de hoofdpagina"
 
 #: rocky/templates/404.html:31
 msgid "Homepage"
-msgstr ""
+msgstr "Homepage"
 
 #: rocky/templates/crisis_room/crisis_room.html:12
 msgid ""
-"An overview of all (critical) findings KAT found. Check the detail section "
+"An overview of all (critical) findings OpenKAT found. Check the detail section "
 "for additional severity information."
 msgstr ""
-"Een overzicht van alle bevindingen gevonden door OpenKAT. Klik op een "
-"bevinding voor meer informatie."
+"Een overzicht van alle (kritieke) bevindingen die OpenKAT heeft gevonden. "
+"Bekijk de detailsectie voor aanvullende informatie over de ernst van de "
+"bevindingen."
 
 #: rocky/templates/crisis_room/crisis_room_findings_block.html:7
 msgid "Findings per organization"
@@ -3204,26 +3244,23 @@ msgstr "Bevinding"
 #: rocky/templates/findings/finding_list.html:14
 #, python-format
 msgid ""
-"An overview of all findings KAT found on %(date)s. Each finding relates to "
+"An overview of all findings OpenKAT found on %(date)s. Each finding relates to "
 "an object. Click a finding for additional information."
 msgstr ""
-"Een overzicht van alle bevindingen gevonden door KAT op %(date)s. Elke "
-"bevinding hoort bij een object. Klik op een bevinding voor meer informatie."
+"Een overzicht van alle bevindingen die OpenKAT heeft gevonden op %(date)s. "
+"Elke bevinding heeft betrekking op een object. Klik op een bevinding voor meer "
+"informatie."
 
 #: rocky/templates/findings/finding_list.html:25
-#, fuzzy
-#| msgid "Show settings"
 msgid "Showing "
-msgstr "Toon instellingen"
+msgstr "Weergegeven "
 
 #: rocky/templates/findings/finding_list.html:25
 #: rocky/templates/partials/pagination.html:5
 msgid "of"
-msgstr ""
+msgstr "van"
 
 #: rocky/templates/findings/finding_list.html:25
-#, fuzzy
-#| msgid "Objects"
 msgid "objects"
 msgstr "Objecten"
 
@@ -3250,10 +3287,8 @@ msgid "Show details for %(finding)s"
 msgstr "Bekijk details van %(finding)s"
 
 #: rocky/templates/findings/finding_list.html:68
-#, fuzzy
-#| msgid "Finding type"
 msgid "Finding type:"
-msgstr "Bevindingstype"
+msgstr "Bevindingstype:"
 
 #: rocky/templates/findings/finding_list.html:71
 #, python-format
@@ -3261,10 +3296,8 @@ msgid "Show details for %(finding_type)s"
 msgstr "Bekijk details van %(finding_type)s"
 
 #: rocky/templates/findings/finding_list.html:75
-#, fuzzy
-#| msgid "Object type"
 msgid "OOI type:"
-msgstr "Objecttype"
+msgstr "Objecttype:"
 
 #: rocky/templates/findings/finding_list.html:78
 #, python-format
@@ -3272,10 +3305,8 @@ msgid "Show %(ooi_type)s objects"
 msgstr "Laat %(ooi_type)s zien"
 
 #: rocky/templates/findings/finding_list.html:82
-#, fuzzy
-#| msgid "Source"
 msgid "Source OOI:"
-msgstr "Bron"
+msgstr "Bron:"
 
 #: rocky/templates/footer.html:19 rocky/views/privacy_statement.py:13
 msgid "Privacy Statement"
@@ -3291,24 +3322,21 @@ msgstr "Dit veld is verplicht"
 
 #: rocky/templates/graph-d3.html:13
 msgid ""
-"Click a circle top collapse / expand the tree, click the text to view the "
-"tree from that OOI and hover over the text to see details."
+"Click a circle top collapse / expand the tree, click the text to view the tree "
+"from that OOI and hover over the text to see details."
 msgstr ""
-"Klik op een cirkel om de de boom samen / uit te vouwen, klik op de text om "
-"de boom weergave vanaf het object te tonen en hover over de tekst om details "
-"te bekijken."
+"Klik op een cirkel om de boom in of uit te klappen, klik op de tekst om de "
+"boom van die OOI te bekijken en beweeg over de tekst om details te zien."
 
 #: rocky/templates/graph-d3.html:15
 msgid "Tree graph"
 msgstr "Boom"
 
 #: rocky/templates/header.html:18
-msgid "KAT logo, go to the homepage of KAT"
-msgstr "KAT-logo, ga naar de homepage van KAT"
+msgid "OpenKAT logo, go to the homepage of OpenKAT"
+msgstr "OpenKAT logo, ga naar de homepage van OpenKAT"
 
 #: rocky/templates/header.html:30
-#, fuzzy
-#| msgid "Crisis Room"
 msgid "Crisis room"
 msgstr "Crisis Room"
 
@@ -3342,117 +3370,114 @@ msgstr "Vrijwaring"
 
 #: rocky/templates/indemnification_present.html:7
 msgid ""
-"Indemnification on the organization present. You may now add objects and "
-"start scans."
+"Indemnification on the organization present. You may now add objects and start "
+"scans."
 msgstr ""
+"Vrijwaring op de aanwezige organisatie. U kunt nu objecten toevoegen en scans "
+"starten."
 
 #: rocky/templates/indemnification_present.html:10
 #: rocky/templates/indemnification_present.html:13
-#, fuzzy
-#| msgid "go to:"
 msgid "Go to"
-msgstr "ga naar:"
+msgstr "Ga naar"
 
-#: rocky/templates/landing_page.html:14
+#: rocky/templates/landing_page.html:13
 msgid "Kwetsbaarheden Analyse Tool"
 msgstr "Kwetsbaarheden Analyse Tool"
 
-#: rocky/templates/landing_page.html:21
-msgid "What is KAT?"
-msgstr "Wat is KAT?"
+#: rocky/templates/landing_page.html:19
+msgid "What is OpenKAT?"
+msgstr "Wat is OpenKAT?"
 
-#: rocky/templates/landing_page.html:24
-#, fuzzy
-#| msgid ""
-#| "KAT is a vulnerability analysis tool. An Open Source-project developed by "
-#| "the Ministry of Health, wellbeing and sports to make your and our world "
-#| "safer."
+#: rocky/templates/landing_page.html:21
 msgid ""
-"KAT is a vulnerability analysis tool. An Open Source-project developed by "
+"OpenKAT is a vulnerability analysis tool. An Open Source-project developed by "
 "the Ministry of Health, Welfare and Sport to make your and our world safer."
 msgstr ""
-"OpenKAT is de open versie van de Kwetsbaarheden Analyse Tool, een project "
-"dat met steun van het Ministerie van Volksgezondheid, Welzijn en Sport is "
-"gerealiseerd met als doel het verbeteren van de informatiebeveiliging."
+"OpenKAT is een tool voor kwetsbaarheidsanalyse. Een Open Source-project "
+"ontwikkeld door het Ministerie van Volksgezondheid, Welzijn en Sport om uw en "
+"onze wereld veiliger te maken."
 
-#: rocky/templates/landing_page.html:34
-msgid "KAT sees"
-msgstr "KAT ziet"
+#: rocky/templates/landing_page.html:30
+msgid "OpenKAT sees"
+msgstr "OpenKAT ziet"
 
-#: rocky/templates/landing_page.html:37
+#: rocky/templates/landing_page.html:32
 msgid ""
-"Dozens of tools are integrated in KAT to view the world (digital and "
+"Dozens of tools are integrated in OpenKAT to view the world (digital and "
 "analog). <br>Our motto is therefore: I see, I see, what you do not see."
 msgstr ""
-"OpenKAT integreert een grote hoeveelheid tools waarmee je de digitale wereld "
-"kunt observeren. <br>Het motto van KAT is: ik zie, ik zie wat jij niet ziet."
+"In OpenKAT zijn tientallen hulpmiddelen geïntegreerd om de wereld (digitaal en "
+"analoog) te bekijken. <br>Het motto is dan ook: Ik zie, ik zie, wat jij niet "
+"ziet."
 
-#: rocky/templates/landing_page.html:45
-msgid "KAT knows"
-msgstr "KAT weet"
+#: rocky/templates/landing_page.html:39
+msgid "OpenKAT knows"
+msgstr "OpenKAT weet"
 
-#: rocky/templates/landing_page.html:48
+#: rocky/templates/landing_page.html:41
 msgid ""
-"KAT does not forget (just like that), and can be queried without scanning "
+"OpenKAT does not forget (just like that), and can be queried without scanning "
 "again. Also about a historical situation."
 msgstr ""
-"OpenKAT vergeet niet, kan achteraf worden bevraagd en brengt geschiedenis in "
-"beeld."
+"OpenKAT vergeet niet (zomaar), en kan worden opgevraagd zonder opnieuw te "
+"scannen. Ook over een historische situatie."
 
-#: rocky/templates/landing_page.html:56
-msgid "KAT is secure"
-msgstr "KAT is veilig"
+#: rocky/templates/landing_page.html:48
+msgid "OpenKAT is secure"
+msgstr "OpenKAT is veilig"
 
-#: rocky/templates/landing_page.html:59
+#: rocky/templates/landing_page.html:50
 msgid ""
 "Forensically secured storage of evidence is one of the basic ingredients of "
-"KAT."
-msgstr ""
-"Forensisch geborgde opslag van bewijsmateriaal is de basis van OpenKAT."
+"OpenKAT."
+msgstr "Forensisch geborgde opslag van bewijsmateriaal is de basis van OpenKAT."
 
-#: rocky/templates/landing_page.html:66
-msgid "KAT is sweet"
-msgstr "KAT is lief"
+#: rocky/templates/landing_page.html:56
+msgid "OpenKAT is sweet"
+msgstr "OpenKAT is lief"
 
-#: rocky/templates/landing_page.html:69
+#: rocky/templates/landing_page.html:58
+#, fuzzy
+#| msgid ""
+#| "KAT thinks about privacy, and stores what is necessary, within the rules of "
+#| "your organization and the law."
 msgid ""
-"KAT thinks about privacy, and stores what is necessary, within the rules of "
-"your organization and the law."
-msgstr ""
-"OpenKAT slaat op wat nodig is, binnen het kader dat de beheerder stelt."
+"OpenKAT thinks about privacy, and stores what is necessary, within the rules "
+"of your organization and the law."
+msgstr "OpenKAT slaat op wat nodig is, binnen het kader dat de beheerder stelt."
 
-#: rocky/templates/landing_page.html:79
+#: rocky/templates/landing_page.html:68
 msgid "A wide playing field"
 msgstr "Een breed speelveld"
 
-#: rocky/templates/landing_page.html:81
+#: rocky/templates/landing_page.html:70
 msgid ""
-"KAT makes a copy of the actual reality by means of the integrated tools. "
+"OpenKAT makes a copy of the actual reality by means of the integrated tools. "
 "Within this copy you can search for answers to countless security and policy "
-"questions. Expected and unexpected changes in the world are made visible, "
-"and where necessary reported or made known directly to the right people."
+"questions. Expected and unexpected changes in the world are made visible, and "
+"where necessary reported or made known directly to the right people."
 msgstr ""
 "OpenKAT maakt een beeld van de werkelijkheid, waarbinnen je kunt zoeken naar "
-"informatie. Verwachte en onverwachte veranderingen worden zichtbaar gemaakt "
-"en zijn in OpenKAT als bevindingen beschikbaar."
+"informatie. Verwachte en onverwachte veranderingen worden zichtbaar gemaakt en "
+"zijn in OpenKAT als bevindingen beschikbaar."
 
 #: rocky/templates/legal/privacy_statement.html:11
-msgid "KAT Privacy Statement"
-msgstr "Privacyverklaring"
+msgid "OpenKAT Privacy Statement"
+msgstr "OpenKAT Privacyverklaring"
 
-#: rocky/templates/legal/privacy_statement.html:12
+#: rocky/templates/legal/privacy_statement.html:14
 msgid ""
-"KAT is dedicated to protecting the confidentiality and privacy of "
-"information entrusted to it. As part of this fundamental obligation, KAT is "
-"committed to the appropriate protection and use of personal information "
+"OpenKAT is dedicated to protecting the confidentiality and privacy of "
+"information entrusted to it. As part of this fundamental obligation, OpenKAT "
+"is committed to the appropriate protection and use of personal information "
 "(sometimes referred to as \"personal data\", \"personally identifiable "
 "information\" or \"PII\") that has been collected online."
 msgstr ""
-"KAT is toegewijd aan het beschermen van de vertrouwelijkheid en privacy van "
-"aan haar toevertrouwde informatie. Als onderdeel van deze fundamentele verplichting is KAT "
-"toegewijd aan de juiste bescherming en gebruik van persoonlijke informatie "
-"(soms aangeduid als \"persoonlijke gegevens\", \"persoonlijk identificeerbaar "
-"informatie\" of \"PII\") die online is verzameld."
+"OpenKAT is toegewijd aan het beschermen van de vertrouwelijkheid en privacy "
+"van informatie die aan haar is toevertrouwd. Als onderdeel van deze "
+"fundamentele verplichting zet OpenKAT zich in voor de juiste bescherming en "
+"het juiste gebruik van persoonsgegevens die online zijn verzameld."
 
 #: rocky/templates/oois/error.html:11
 msgid "Object List"
@@ -3460,7 +3485,7 @@ msgstr "Objectenlijst"
 
 #: rocky/templates/oois/error.html:14
 msgid "An error occurred. Please contact a system administrator."
-msgstr "Er is een fout opgetreden. Contacteer de systeembeheerder."
+msgstr "Er is een fout opgetreden. Neem contact op met een systeembeheerder."
 
 #: rocky/templates/oois/ooi_add.html:11
 #, python-format
@@ -3549,8 +3574,8 @@ msgstr "Zie"
 #: rocky/templates/oois/ooi_detail.html:83
 msgid "to find and enable boefjes that can scan within the current level."
 msgstr ""
-"om boefjes te vinden en in te schakelen die kunnen scannen binnen het "
-"huidige niveau."
+"om boefjes te vinden en in te schakelen die kunnen scannen binnen het huidige "
+"niveau."
 
 #: rocky/templates/oois/ooi_detail.html:83
 msgid "There are no boefjes available within the current clearance level of"
@@ -3594,7 +3619,7 @@ msgstr "Voeg object toe"
 
 #: rocky/templates/oois/ooi_detail_findings_list.html:15
 msgid "Overview of findings for "
-msgstr "Overzicht van bevindingen voor"
+msgstr "Overzicht van bevindingen voor "
 
 #: rocky/templates/oois/ooi_detail_findings_list.html:19
 msgid "Score"
@@ -3619,12 +3644,11 @@ msgstr "en het niveau"
 
 #: rocky/templates/oois/ooi_detail_findings_overview.html:12
 msgid ""
-"Findings can occur multiple times. To give better insight the following "
-"table shows the number of unique findings found as well as the number of "
-"occurences."
+"Findings can occur multiple times. To give better insight the following table "
+"shows the number of unique findings found as well as the number of occurences."
 msgstr ""
 "Bevindingen kunnen vaker voorkomen. De tabel geeft de unieke en herhaalde "
-"bevindingen"
+"bevindingen."
 
 #: rocky/templates/oois/ooi_detail_findings_overview.html:15
 msgid "See finding details"
@@ -3724,7 +3748,7 @@ msgstr "Lijst van weergaven voor OOI"
 
 #: rocky/templates/oois/ooi_page_tabs.html:7
 msgid "Overview"
-msgstr "Dienst"
+msgstr "Overzicht"
 
 #: rocky/templates/oois/ooi_past_due_warning.html:6
 msgid "This object is past due"
@@ -3740,8 +3764,7 @@ msgid ""
 msgstr "Dit object is voorbij de houdbaarheidsdatum. Je ziet een oude status."
 
 #: rocky/templates/oois/ooi_past_due_warning.html:16
-msgid ""
-"You will not be able to add Findings or other OOI's to past due objects."
+msgid "You will not be able to add Findings or other OOI's to past due objects."
 msgstr "Het is niet mogelijk om bevindingen of objecten toe te voegen."
 
 #: rocky/templates/oois/ooi_past_due_warning.html:19
@@ -3772,15 +3795,19 @@ msgid "Findings report for %(name)s"
 msgstr "Bevindingenrapport voor %(name)s"
 
 #: rocky/templates/oois/ooi_report.html:22
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "These are the findings of a KAT-analysis on %(observed_at)s. Click a "
+#| "finding for more detailed information about the issue, its origin, severity "
+#| "and possible solutions."
 msgid ""
-"These are the findings of a KAT-analysis on %(observed_at)s. Click a finding "
-"for more detailed information about the issue, its origin, severity and "
-"possible solutions."
+"These are the findings of a OpenKAT-analysis on %(observed_at)s. Click a "
+"finding for more detailed information about the issue, its origin, severity "
+"and possible solutions."
 msgstr ""
 "Dit zijn de bevindingen van een OpenKAT-analyse op %(observed_at)s. Klik op "
-"een bevinding voor gedetailleerde informatie over het probleem, de "
-"oorsprong, ernst en mogelijke oplossingen."
+"een bevinding voor gedetailleerde informatie over het probleem, de oorsprong, "
+"ernst en mogelijke oplossingen."
 
 #: rocky/templates/oois/ooi_report_404.html:15
 #, python-format
@@ -3790,8 +3817,8 @@ msgstr "Kan rapport voor %(name)s niet vinden."
 #: rocky/templates/oois/ooi_report_404.html:19
 #, python-format
 msgid ""
-"Perhaps it never was, perhaps it just didn't exist on %(observed_at)s<br> "
-"Try some other dates!"
+"Perhaps it never was, perhaps it just didn't exist on %(observed_at)s<br> Try "
+"some other dates!"
 msgstr ""
 "Misschien heeft het nooit bestaan, misschien alleen niet op "
 "%(observed_at)s<br>. Probeer eens een ander tijdstip!"
@@ -3802,15 +3829,15 @@ msgstr "Samenvatting van"
 
 #: rocky/templates/oois/ooi_summary.html:20
 msgid "Below you can see findings that were found for"
-msgstr ""
+msgstr "Hieronder ziet u de bevindingen die zijn gevonden voor"
 
 #: rocky/templates/oois/ooi_summary.html:21
 msgid "and direct  children of this"
-msgstr ""
+msgstr "en directe kinderen hiervan"
 
 #: rocky/templates/oois/ooi_summary.html:24
 msgid "This"
-msgstr ""
+msgstr "Deze"
 
 #: rocky/templates/oois/ooi_summary.html:24
 #, fuzzy
@@ -3820,7 +3847,7 @@ msgstr "Ga naar boomweergave"
 
 #: rocky/templates/oois/ooi_summary.html:24
 msgid "of the"
-msgstr ""
+msgstr "van de"
 
 #: rocky/templates/oois/ooi_summary.html:25
 #, fuzzy
@@ -3838,10 +3865,8 @@ msgid "Code"
 msgstr "Code"
 
 #: rocky/templates/organizations/organization_detail.html:27
-#, fuzzy
-#| msgid "Indemnification"
 msgid "Add indemnification"
-msgstr "Vrijwaring"
+msgstr "Vrijwaring toevoegen"
 
 #: rocky/templates/organizations/organization_edit.html:11
 msgid "Edit organization"
@@ -3852,8 +3877,7 @@ msgstr "Bewerk organisatie"
 msgid ""
 "\n"
 "            Set signal username for %(name)s.<br>\n"
-"            You can register your signal username with the QR code here:"
-"<br>\n"
+"            You can register your signal username with the QR code here:<br>\n"
 "            <a href=\"%(url)s\">Signal QR Code</a>\n"
 "          "
 msgstr ""
@@ -3868,10 +3892,8 @@ msgid "Save organization"
 msgstr "Organisatie"
 
 #: rocky/templates/organizations/organization_list.html:13
-#, fuzzy
-#| msgid "Edit organization"
 msgid "Add new organization"
-msgstr "Bewerk organisatie"
+msgstr "Nieuwe organisatie toevoegen"
 
 #: rocky/templates/organizations/organization_list.html:18
 msgid "Organization overview:"
@@ -3945,15 +3967,15 @@ msgstr "Toegevoegd op"
 
 #: rocky/templates/organizations/organization_member_list.html:21
 msgid "Has trusted permisson to set OOI clearance levels"
-msgstr ""
+msgstr "Vertrouwd om vrijwaringsniveau te zetten voor OOI's"
 
 #: rocky/templates/organizations/organization_member_list.html:22
 msgid "Acknowledged permisson to set OOI clearance levels"
-msgstr ""
+msgstr "Er is toestemming verleend om vrijgaveniveaus voor OOI vast te stellen"
 
 #: rocky/templates/organizations/organization_member_list.html:23
 msgid "Grant/revoke permisson to set OOI clearance levels"
-msgstr ""
+msgstr "Toestemming verlenen/intrekken om vrijgaveniveaus voor OOI in te stellen"
 
 #: rocky/templates/organizations/organization_page_tabs.html:4
 msgid "List of views for organization"
@@ -3974,10 +3996,8 @@ msgid "Hide settings"
 msgstr "Verberg instellingen"
 
 #: rocky/templates/partials/elements/ooi_list_settings_form.html:12
-#, fuzzy
-#| msgid "Filter types"
 msgid "Filter by OOI types"
-msgstr "Filter types"
+msgstr "Filter op OOI-types"
 
 #: rocky/templates/partials/elements/ooi_list_settings_form.html:33
 #: rocky/templates/partials/ooi_type_filters.html:30
@@ -4081,14 +4101,17 @@ msgstr "Sluit toelichting"
 msgid "Here, an indemnification can be given on behalf of your organization"
 msgstr "Geef hier een vrijwaring namens uw organisatie."
 
-#: rocky/templates/partials/form/indemnification_add_form.html:20
+#: rocky/templates/partials/form/indemnification_add_form.html:18
 msgid ""
-"Before you're able to add assets to KAT and to assign clearance levels, you "
-"have to give indemnification on the organization and declare that you as a "
+"Before you're able to add assets to OpenKAT and to assign clearance levels, "
+"you have to give indemnification on the organization and declare that you as a "
 "person can be held accountable."
 msgstr ""
+"Voordat u assets kunt toevoegen aan OpenKAT en bevoegdheidsniveaus kunt "
+"toekennen, moet u een vrijwaring geven over de organisatie en verklaren dat u "
+"als persoon aansprakelijk kunt worden gesteld."
 
-#: rocky/templates/partials/form/indemnification_add_form.html:28
+#: rocky/templates/partials/form/indemnification_add_form.html:25
 msgid "Register an indemnification"
 msgstr "Registreer een vrijwaring"
 
@@ -4106,16 +4129,12 @@ msgid "Sorting options"
 msgstr "Sorteer-opties"
 
 #: rocky/templates/partials/list_filters.html:10
-#, fuzzy
-#| msgid "Filter options"
 msgid "Hide filter options"
-msgstr "Filter-opties"
+msgstr "Filteropties verbergen"
 
 #: rocky/templates/partials/list_filters.html:12
-#, fuzzy
-#| msgid "Filter options"
 msgid "Show filter options"
-msgstr "Filter-opties"
+msgstr "Filteropties tonen"
 
 #: rocky/templates/partials/list_paginator.html:6
 #, fuzzy
@@ -4190,8 +4209,8 @@ msgid ""
 "This shows general information and its related objects. It also gives the "
 "possibility to add additonal related objects, or to scan for them."
 msgstr ""
-"Dit laat generieke informatie zien en gerelateerde objecten. Het geen ook de "
-"mogelijkheid gerelateerde objecten toe te voegen, of om ervoor te scannen"
+"Dit toont algemene informatie en gerelateerde objecten. Het geeft ook de "
+"mogelijkheid om verwante objecten toe te voegen, of ernaar te scannen."
 
 #: rocky/templates/partials/ooi_list_toolbar.html:15
 msgid "Scan for objects"
@@ -4247,7 +4266,9 @@ msgstr "Details van %(object_id)s"
 msgid ""
 "Findings of this findingtype have been marked 'critical' because of unknown "
 "CVSS. This requires manual investigation due to lack of CVSS score."
-msgstr "Deze bevinding is gemarkeerd vanwege een ontbrekende CVSS score"
+msgstr ""
+"Bevindingen van dit bevindingstype zijn gemarkeerd als \"kritiek\" vanwege "
+"onbekend CVSS. Dit vereist handmatig onderzoek wegens gebrek aan CVSS-score."
 
 #: rocky/templates/partials/ooi_report_findings_block_table_expanded_row.html:64
 #: rocky/templates/partials/ooi_report_severity_totals_table.html:8
@@ -4283,24 +4304,20 @@ msgid "Filter by"
 msgstr "Filteren op"
 
 #: rocky/templates/partials/organization_member_list_filters.html:12
-#, fuzzy
-#| msgid "Shown types"
 msgid "Shown status types"
 msgstr "Getoonde typen"
 
 #: rocky/templates/partials/organization_properties_table.html:6
 msgid "Organization name"
-msgstr "Organisatie"
+msgstr "Naam organisatie"
 
 #: rocky/templates/partials/organization_properties_table.html:10
 msgid "Organization code"
-msgstr "Organisatie"
+msgstr "Organisatie code"
 
 #: rocky/templates/partials/organizations_menu_dropdown.html:10
-#, fuzzy
-#| msgid "Save organization"
 msgid "Select organization"
-msgstr "Organisatie"
+msgstr "Selecteer organisatie"
 
 #: rocky/templates/partials/page-meta.html:8
 msgid "Logged in as"
@@ -4308,67 +4325,55 @@ msgstr "Ingelogd als"
 
 #: rocky/templates/partials/pagination.html:7
 msgid "first"
-msgstr ""
+msgstr "eerste"
 
 #: rocky/templates/partials/pagination.html:8
-#, fuzzy
-#| msgid "Previous"
 msgid "previous"
-msgstr "Vorige"
+msgstr "vorige"
 
 #: rocky/templates/partials/pagination.html:11
 msgid "next"
-msgstr ""
+msgstr "volgende"
 
 #: rocky/templates/partials/pagination.html:12
 msgid "last"
-msgstr ""
+msgstr "laatste"
 
 #: rocky/templates/partials/scan_history.html:4
-#, fuzzy
-#| msgid "Scan"
 msgid "Scans"
-msgstr "Scan"
+msgstr "Scans"
 
 #: rocky/templates/partials/scan_history.html:19
 msgid "From"
-msgstr ""
+msgstr "Van"
 
 #: rocky/templates/partials/scan_history.html:24
 msgid "To"
-msgstr ""
+msgstr "Aan"
 
 #: rocky/templates/partials/scan_history.html:31
-#, fuzzy
-#| msgid "staff status"
 msgid "Select status"
-msgstr "functie of status"
+msgstr "Selecteer status"
 
 #: rocky/templates/partials/scan_history.html:32
 msgid "Success"
-msgstr ""
+msgstr "Gelukt"
 
 #: rocky/templates/partials/scan_history.html:33
-#, fuzzy
-#| msgid "Failure mode"
 msgid "Failure"
 msgstr "Foutmodus"
 
 #: rocky/templates/partials/scan_history.html:38
-#, fuzzy
-#| msgid "March"
 msgid "Search"
-msgstr "Maart"
+msgstr "Zoeken"
 
 #: rocky/templates/partials/scan_history.html:39
 msgid "Search by object name"
 msgstr ""
 
 #: rocky/templates/partials/scan_history.html:57
-#, fuzzy
-#| msgid "Scan for objects"
 msgid "No scans found for this object"
-msgstr "Objecten scannen"
+msgstr "Geen scans gevonden voor dit object"
 
 #: rocky/templates/partials/scan_history.html:63
 msgid "Object"
@@ -4388,12 +4393,12 @@ msgstr "Ga direct naar de inhoud"
 #, python-format
 msgid ""
 "\n"
-"              This means that this object will be scanned by Boefjes with "
-"scan level\n"
+"              This means that this object will be scanned by Boefjes with scan "
+"level\n"
 "              %(scan_level)s and lower. Setting the clearance level from "
 "“declared”\n"
-"              to “inherit” means that this object will inherit its level "
-"from neighbouring\n"
+"              to “inherit” means that this object will inherit its level from "
+"neighbouring\n"
 "              objects. This means that the clearance level might stay the "
 "same, increase,\n"
 "              or decrease depending on other declared clearance levels. "
@@ -4403,25 +4408,25 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-" Dit object wordt gescand met scan level %(scan_level)s en lager. Een scan "
-"level dat is verklaard heeft een andere zwaarte dan wanneer die geerfd is."
+"              Dit betekent dat dit object door Boefjes zal worden gescand met "
+"scanniveau\n"
+"              %(scan_level)s en lager. Het instellen van het vrijgaveniveau "
+"van \"verklaard\"\n"
+"              op \"erven\" betekent dat dit object zijn niveau zal erven van "
+"naburige\n"
+"              objecten. Dit betekent dat het vrijgaveniveau gelijk kan "
+"blijven, kan toenemen,\n"
+"              of dalen, afhankelijk van andere gedeclareerde vrijgaveniveaus. "
+"Vrijgaveniveaus\n"
+"              van objecten die van dit vrijgaveniveau erven zullen ook opnieuw "
+"worden berekend.\n"
+"            "
 
 #: rocky/templates/scan_profiles/scan_profile_detail.html:30
 msgid "Set clearance level to inherit"
 msgstr "Zet vrijwaringsniveau op overerving"
 
 #: rocky/templates/scan_profiles/scan_profile_detail.html:36
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Objects with a clearance level higher than \"L0\" will be "
-#| "scanned automatically by Boefjes with\n"
-#| "                corresponding scan levels. This object has a clearance "
-#| "level of \"L0\".\n"
-#| "                This means that this object will not be scanned by any "
-#| "Boefje until that\n"
-#| "                Boefje is run manually for this object again.\n"
-#| "            "
 msgid ""
 "\n"
 "                This object has a clearance level of \"L0\". This means that "
@@ -4433,8 +4438,13 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Objecten worden automatisch gescand door boefjes met het bijpassende scan "
-"niveau."
+"                Dit object heeft een vrijgaveniveau van \"L0\". Dit betekent "
+"dat dit object door geen enkele Boefje zal worden gescand totdat dit\n"
+"                Boefje opnieuw handmatig wordt uitgevoerd voor dit object. "
+"Objecten met een vrijgaveniveau hoger dan \"L0\" zullen automatisch worden "
+"gescand door Boefjes met\n"
+"                overeenkomstige scanniveaus.\n"
+"            "
 
 #: rocky/templates/scan_profiles/scan_profile_reset.html:12
 msgid "Set clearance level for:"
@@ -4442,13 +4452,13 @@ msgstr "Zet vrijwaringsniveau voor:"
 
 #: rocky/templates/scan_profiles/scan_profile_reset.html:14
 msgid ""
-"Setting the scan level from \"declared\" to \"inherit\" means it will "
-"inherit a clearance level from other objects, or that no clearance level "
-"will be inherited. "
+"Setting the scan level from \"declared\" to \"inherit\" means it will inherit "
+"a clearance level from other objects, or that no clearance level will be "
+"inherited. "
 msgstr ""
-"Als u het scanniveau instelt van \"verklaard\" naar \"overerving\" betekent "
-"dit dat het een vrijwaringsniveau erven van andere objecten, of dat geen "
-"vrijwaringsniveauzal worden geërfd."
+"Het instellen van het scanniveau van \"declared\" op \"inherit\" betekent dat "
+"het een toestemmingsniveau van andere objecten erft, of dat er geen "
+"toestemmingsniveau wordt geërfd."
 
 #: rocky/templates/scan_profiles/scan_profile_reset.html:24
 msgid ""
@@ -4466,8 +4476,7 @@ msgid "Signal QR"
 msgstr "Signal QR"
 
 #: rocky/templates/signal_qr.html:12
-msgid ""
-"Scan this QR code to link Signal and add your number to registered users."
+msgid "Scan this QR code to link Signal and add your number to registered users."
 msgstr "Scan deze QR code om signal te verbinden en het nummer toe te voegen."
 
 #: rocky/templates/signal_qr.html:17
@@ -4498,17 +4507,13 @@ msgstr "Download taakdetails"
 
 #: rocky/templates/tasks/boefjes.html:50
 #: rocky/templates/tasks/normalizers.html:52
-#, fuzzy
-#| msgid "Download task detail"
 msgid "Download meta and raw data"
-msgstr "Download taakdetail"
+msgstr "Meta- en ruwe gegevens downloaden"
 
 #: rocky/templates/tasks/boefjes.html:52
 #: rocky/templates/tasks/normalizers.html:54
-#, fuzzy
-#| msgid "Download task detail"
 msgid "Download meta data"
-msgstr "Download taakdetail"
+msgstr "Metagegevens downloaden"
 
 #: rocky/templates/tasks/normalizers.html:15
 msgid "There are no tasks for normalizers"
@@ -4601,15 +4606,15 @@ msgid ""
 "Two-factor authentication is not enabled for your account. Enable two-factor "
 "authentication for enhanced account security."
 msgstr ""
-"Two-factor authenticatie is niet ingeschakeld voor uw account. Schakel "
-"tweestapsverificatie in voor betere accountbeveiliging."
+"Tweetrapsverificatie is niet ingeschakeld voor uw account. Schakel "
+"tweetrapsverificatie in voor betere accountbeveiliging."
 
 #: rocky/templates/two_factor/core/otp_required.html:18
 #: rocky/templates/two_factor/core/setup.html:6
 #: rocky/templates/two_factor/core/setup_complete.html:7
 #: rocky/templates/two_factor/profile/profile.html:76
 msgid "Enable Two-Factor Authentication"
-msgstr "Tweestaps verificatie aanzetten"
+msgstr "Tweetrapsverificatie aanzetten"
 
 #: rocky/templates/two_factor/core/phone_register.html:7
 msgid "Add Backup Phone"
@@ -4655,8 +4660,7 @@ msgid ""
 "above or you can insert this key using the secret key option of the "
 "authenticator app."
 msgstr ""
-"De sleutel hoort bij de QR code. Deze kunt u invoeren in uw authenticator "
-"app."
+"De sleutel hoort bij de QR code. Deze kunt u invoeren in uw authenticator app."
 
 #: rocky/templates/two_factor/core/setup.html:51
 msgid ""
@@ -4664,13 +4668,16 @@ msgid ""
 "Contact your system administrator about your verification to proceed to Two "
 "Factor Authentication setup."
 msgstr ""
+"U bent niet geverifieerd als organisatie lid door uw systeembeheerder. Neem "
+"contact op met uw systeembeheerder om verder te gaan met het instellen van "
+"tweetrapsverificatie."
 
 #: rocky/templates/two_factor/core/setup_complete.html:12
 msgid "Congratulations, you've successfully enabled two-factor authentication."
-msgstr "Gefeliciteerd, je hebt two-factor authenticatie ingeschakeld."
+msgstr "Gefeliciteerd, u heeft tweetrapsverficatie ingeschakeld."
 
 #: rocky/templates/two_factor/core/setup_complete.html:17
-msgid "Start using KAT"
+msgid "Start using OpenKAT"
 msgstr "Start met OpenKAT"
 
 #: rocky/templates/two_factor/core/setup_complete.html:21
@@ -4693,8 +4700,8 @@ msgstr "Tweetraps verificatie uitschakelen"
 
 #: rocky/templates/two_factor/profile/disable.html:9
 msgid ""
-"You are about to disable two-factor authentication. This weakens your "
-"account security, are you sure?"
+"You are about to disable two-factor authentication. This weakens your account "
+"security, are you sure?"
 msgstr ""
 "U staat op het punt tweestapsverificatie uit te schakelen. Dit verzwakt uw "
 "accountbeveiliging, weet u het zeker?"
@@ -4722,8 +4729,8 @@ msgstr "Backup telefoonnummers"
 
 #: rocky/templates/two_factor/profile/profile.html:28
 msgid ""
-"If your primary method is not available, we are able to send backup tokens "
-"to the phone numbers listed below."
+"If your primary method is not available, we are able to send backup tokens to "
+"the phone numbers listed below."
 msgstr ""
 "Als uw primaire methode niet beschikbaar is, kunnen we backup tokens naar de "
 "onderstaande telefoonnummers sturen."
@@ -4772,8 +4779,7 @@ msgstr "Uw OTP token is %(token)s"
 #: rocky/templates/upload_csv.html:12
 msgid "Automate the creation of multiple objects by uploading a CSV file."
 msgstr ""
-"Automatiseer het maken van meerdere objecten door een CSV-bestand te "
-"uploaden."
+"Automatiseer het maken van meerdere objecten door een CSV-bestand te uploaden."
 
 #: rocky/templates/upload_csv.html:15
 msgid "These are the criterias for CSV upload:"
@@ -4797,17 +4803,15 @@ msgstr "Kon niet met Scheduler verbinden. Service is mogelijk niet beschikbaar"
 
 #: rocky/views/health.py:95
 msgid "Rocky will not function properly. Not all services are healthy."
-msgstr "Rocky kan niet goed functioneren. Services zijn niet allemaal gezond."
+msgstr "Rocky kan niet goed functioneren. Niet alle services zijn gezond."
 
 #: rocky/views/health.py:124
 msgid "Beautified"
 msgstr "Verfraaid"
 
 #: rocky/views/indemnification_add.py:29
-#, fuzzy
-#| msgid "Organization succesfully set."
 msgid "Indemnification successfully set."
-msgstr "Organisatiecode mist"
+msgstr "Vrijwaringsniveau ingesteld."
 
 #: rocky/views/mixins.py:214
 msgid "All"
@@ -4844,6 +4848,9 @@ msgid ""
 "You do not have clearance for level %s.                         You are "
 "trusted with clearance level %s and you acknowledged a clearance level of %s."
 msgstr ""
+"U hebt geen machtiging voor niveau %s.                         U wordt "
+"vertrouwd met machtigingsniveau %s en u hebt een machtigingsniveau van %s "
+"erkend."
 
 #: rocky/views/ooi_list.py:114 rocky/views/ooi_list.py:121
 #, python-format
@@ -4869,8 +4876,7 @@ msgstr "Er is een fout opgetreden bij het verwijderen van %s."
 #: rocky/views/ooi_list.py:153
 #, python-format
 msgid ""
-"Successfully deleted %d ooi(s). Note: Bits can recreate objects "
-"automatically."
+"Successfully deleted %d ooi(s). Note: Bits can recreate objects automatically."
 msgstr ""
 "%d object(en) succesvol verwijderd. Let op: Bits kunnen objecten automatisch "
 "weer toevoegen."
@@ -4888,12 +4894,11 @@ msgid "Error generating report: {}"
 msgstr "Probleem met het genereren van rapport: {}"
 
 #: rocky/views/ooi_report.py:234
-#, fuzzy
-#| msgid "Error generating report: Timeout reached"
 msgid ""
-"Error generating report: Timeout reached. See Keiko logs for more "
-"information."
-msgstr "Probleem rapport genereren: Te lang geduurd"
+"Error generating report: Timeout reached. See Keiko logs for more information."
+msgstr ""
+"Fout bij het genereren van het rapport: Time-out bereikt. Zie Keiko logs voor "
+"meer informatie."
 
 #: rocky/views/ooi_tree.py:49
 msgid "Tree Visualisation"
@@ -4909,23 +4914,23 @@ msgstr "Instellingen"
 
 #: rocky/views/organization_add.py:42
 msgid "Organization added succesfully."
-msgstr "Organisatie succesvol toegoevoegd"
+msgstr "Organisatie succesvol toegoevoegd."
 
 #: rocky/views/organization_add.py:46
 msgid "You are not allowed to add organizations."
-msgstr "Uw mag geen organisaties toevoegen"
+msgstr "Uw mag geen organisaties toevoegen."
 
 #: rocky/views/organization_edit.py:79
 msgid "You are not allowed to change organizations."
-msgstr "U mag geen organisaties veranderen"
+msgstr "U mag geen organisaties veranderen."
 
 #: rocky/views/organization_member_add.py:45
 msgid "Member added succesfully."
-msgstr "Gebruiker toegevoegd"
+msgstr "Gebruiker toegevoegd."
 
 #: rocky/views/organization_member_edit.py:66
 msgid "You are not allowed to edit organization members."
-msgstr "Uw rol in de organsatie"
+msgstr "U mag geen gebruikers bewerken."
 
 #: rocky/views/scan_profile.py:86
 msgid "Choose a valid level"
@@ -4936,7 +4941,7 @@ msgstr "Kies een geldig niveau"
 msgid "Can not reset scan level. Scan level of {ooi_name} not declared"
 msgstr ""
 "Kan het scan niveau niet resetten. Het scan niveau van {ooi_name} is niet "
-"declared."
+"aangegeven."
 
 #: rocky/views/scan_profile.py:129
 msgid "Reset"
@@ -4955,1142 +4960,37 @@ msgid "Fetching tasks failed: no connection with scheduler"
 msgstr "Ophalen van taken mislukt: geen verbinding met scheduler"
 
 #: rocky/views/upload_csv.py:29
-#, fuzzy
-#| msgid ""
-#| "Do not add column titles and only 1 column is required. Each value on a "
-#| "new line."
 msgid "Add column titles. Followed by each object on a new line."
-msgstr ""
-"Voeg geen kolomtitels en alleen 1 kolom is nodig. Elk waarde op een nieuwe "
-"regel."
+msgstr "Voeg kolomtitels toe. Gevolgd door elk object op een nieuwe regel."
 
 #: rocky/views/upload_csv.py:31
-#, fuzzy
-#| msgid ""
-#| "For URL object type, a column with URL values is required, starting with "
-#| "http:// or https://"
 msgid ""
-"For URL object type, a column 'raw' with URL values is required, starting "
-"with http:// or https://, optionally a second column 'network' is supported "
+"For URL object type, a column 'raw' with URL values is required, starting with "
+"http:// or https://, optionally a second column 'network' is supported "
 msgstr ""
-"Voor URL object type, een kolom met URL waarden is nodig, beginnend met "
-"http:// of https://"
+"Voor het type URL-object is een kolom 'raw' met URL-waarden vereist, beginnend "
+"met http:// of https://; optioneel wordt een tweede kolom 'network' ondersteund"
 
 #: rocky/views/upload_csv.py:35
-#, fuzzy
-#| msgid ""
-#| "For Hostname object type, a column with hostnames values is required."
 msgid ""
-"For Hostname object type, a column with 'name' values is required, "
-"optionally a second column 'network' is supported "
-msgstr "Voor Hostname object type, een kolom met hostname waarden is nodig."
+"For Hostname object type, a column with 'name' values is required, optionally "
+"a second column 'network' is supported "
+msgstr ""
+"Voor het objecttype Hostname is een kolom met \"naam\"-waarden vereist, "
+"optioneel wordt een tweede kolom \"netwerk\" ondersteund"
 
 #: rocky/views/upload_csv.py:39
-#, fuzzy
-#| msgid ""
-#| "For IPAddressV4 and IPAddressV6 object types, a column of ip addresses is "
-#| "required."
 msgid ""
 "For IPAddressV4 and IPAddressV6 object types, a column of 'address' is "
 "required, optionally a second column 'network' is supported "
 msgstr ""
-"Voor IPAddressV4 en IPAddressV6 object types, een kolom met ip adressen is "
-"nodig."
+"Voor IPAddressV4- en IPAddressV6-objecttypes is een kolom 'adres' vereist, "
+"optioneel wordt een tweede kolom 'netwerk' ondersteund"
 
 #: rocky/views/upload_csv.py:162
-#, fuzzy
-#| msgid "Object(s) could not be created for line number(s): "
 msgid "Object(s) could not be created for row number(s): "
-msgstr "Object(en) kon niet gemaakt worden voor lijn nummer(s): "
+msgstr "Object(en) konden niet worden aangemaakt voor rijnummer(s):"
 
 #: rocky/views/upload_csv.py:165
 msgid "Object(s) successfully added."
 msgstr "Objecten succesvol toegevoegd."
-
-#~ msgid ""
-#~ "I declare that I am authorized to give this indemnification within my "
-#~ "organization."
-#~ msgstr ""
-#~ "Ik verklaar dat ik geautoriseerd ben om deze vrijwaring te geven binnen "
-#~ "mijn organisatie."
-
-#~ msgid "Unable to change signal username, once a group has been created."
-#~ msgstr "Kan signal gebruikersnaam niet wijzigen."
-
-#~ msgid "Username"
-#~ msgstr "Gebruikersnaam"
-
-#~ msgid "Messages"
-#~ msgstr "Berichten"
-
-#~ msgid "Site Maps"
-#~ msgstr "Sitemaps"
-
-#~ msgid "Static Files"
-#~ msgstr "Statische Bestanden"
-
-#~ msgid "Syndication"
-#~ msgstr "Syndicatie"
-
-#~ msgid "…"
-#~ msgstr "…"
-
-#~ msgid "That page number is not an integer"
-#~ msgstr "Dat paginanummer is geen geheel getal"
-
-#~ msgid "That page number is less than 1"
-#~ msgstr "Het paginanummer is kleiner dan 1"
-
-#~ msgid "That page contains no results"
-#~ msgstr "Deze pagina bevat geen resultaten"
-
-#~ msgid "Enter a valid value."
-#~ msgstr "Voer een geldige waarde in."
-
-#~ msgid "Enter a valid URL."
-#~ msgstr "Voer een geldige URL in."
-
-#~ msgid "Enter a valid integer."
-#~ msgstr "Vul een geldig geheel getal in."
-
-#~ msgid "Enter a valid email address."
-#~ msgstr "Vul een geldige e-mailadres in."
-
-#~ msgid ""
-#~ "Enter a valid “slug” consisting of letters, numbers, underscores or "
-#~ "hyphens."
-#~ msgstr ""
-#~ "Voer een geldige “slug” in die bestaat uit letters, cijfers, "
-#~ "onderstrepingstekens of koppeltekens."
-
-#~ msgid ""
-#~ "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, "
-#~ "or hyphens."
-#~ msgstr ""
-#~ "Voer een geldige slug in die bestaat uit unicode-letters, cijfers, "
-#~ "onderstrepingstekens of koppeltekens."
-
-#~ msgid "Enter a valid IPv4 address."
-#~ msgstr "Voer een geldig IPv4-adres in."
-
-#~ msgid "Enter a valid IPv6 address."
-#~ msgstr "Voer een geldig IPv6-adres in."
-
-#~ msgid "Enter a valid IPv4 or IPv6 address."
-#~ msgstr "Voer een geldig IPv4- of IPv6-adres in."
-
-#~ msgid "Enter only digits separated by commas."
-#~ msgstr "Voer alleen cijfers in, gescheiden door komma's."
-
-#, python-format
-#~ msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-#~ msgstr ""
-#~ "Zorg ervoor dat deze waarde %(limit_value)s is (het is %(show_value)s)."
-
-#, python-format
-#~ msgid "Ensure this value is less than or equal to %(limit_value)s."
-#~ msgstr ""
-#~ "Zorg ervoor dat deze waarde kleiner is dan of gelijk is aan "
-#~ "%(limit_value)s."
-
-#, python-format
-#~ msgid "Ensure this value is greater than or equal to %(limit_value)s."
-#~ msgstr ""
-#~ "Zorg ervoor dat deze waarde groter is dan of gelijk is aan "
-#~ "%(limit_value)s."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure this value has at least %(limit_value)d character (it has "
-#~ "%(show_value)d)."
-#~ msgid_plural ""
-#~ "Ensure this value has at least %(limit_value)d characters (it has "
-#~ "%(show_value)d)."
-#~ msgstr[0] ""
-#~ "Zorg ervoor dat deze waarde ten minste %(limit_value)d karakter heeft "
-#~ "(het heeft %(show_value)d)."
-#~ msgstr[1] ""
-#~ "Zorg ervoor dat deze waarde ten minste %(limit_value)d tekens heeft (hij "
-#~ "heeft %(show_value)d)."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure this value has at most %(limit_value)d character (it has "
-#~ "%(show_value)d)."
-#~ msgid_plural ""
-#~ "Ensure this value has at most %(limit_value)d characters (it has "
-#~ "%(show_value)d)."
-#~ msgstr[0] ""
-#~ "Zorg ervoor dat deze waarde maximaal %(limit_value)d karakter heeft (hij "
-#~ "heeft %(show_value)d)."
-#~ msgstr[1] ""
-#~ "Zorg ervoor dat deze waarde maximaal %(limit_value)d tekens heeft (hij "
-#~ "heeft %(show_value)d)."
-
-#~ msgid "Enter a number."
-#~ msgstr "Voer een nummer in."
-
-#, python-format
-#~ msgid "Ensure that there are no more than %(max)s digit in total."
-#~ msgid_plural "Ensure that there are no more than %(max)s digits in total."
-#~ msgstr[0] "Zorg ervoor dat er in totaal niet meer dan %(max)s cijfers zijn."
-#~ msgstr[1] "Zorg ervoor dat er in totaal niet meer dan %(max)s cijfers zijn."
-
-#, python-format
-#~ msgid "Ensure that there are no more than %(max)s decimal place."
-#~ msgid_plural "Ensure that there are no more than %(max)s decimal places."
-#~ msgstr[0] "Zorg ervoor dat er niet meer dan %(max)s decimalen zijn."
-#~ msgstr[1] "Zorg ervoor dat er niet meer dan %(max)s decimalen zijn."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure that there are no more than %(max)s digit before the decimal point."
-#~ msgid_plural ""
-#~ "Ensure that there are no more than %(max)s digits before the decimal "
-#~ "point."
-#~ msgstr[0] ""
-#~ "Zorg ervoor dat er niet meer dan %(max)s cijfer voor de komma staan."
-#~ msgstr[1] ""
-#~ "Zorg ervoor dat er niet meer dan %(max)s cijfers voor de komma staan."
-
-#, python-format
-#~ msgid ""
-#~ "File extension “%(extension)s” is not allowed. Allowed extensions are: "
-#~ "%(allowed_extensions)s."
-#~ msgstr ""
-#~ "Bestandsextensie “%(extension)s” is niet toegestaan. Toegestane extensies "
-#~ "zijn: %(allowed_extensions)s."
-
-#~ msgid "Null characters are not allowed."
-#~ msgstr "Null-tekens zijn niet toegestaan."
-
-#~ msgid "and"
-#~ msgstr "en"
-
-#, python-format
-#~ msgid "%(model_name)s with this %(field_labels)s already exists."
-#~ msgstr "%(model_name)s met deze %(field_labels)s bestaat al."
-
-#, python-format
-#~ msgid "Value %(value)r is not a valid choice."
-#~ msgstr "Waarde %(value)r is geen geldige keuze."
-
-#~ msgid "This field cannot be null."
-#~ msgstr "Dit veld kan niet nul zijn."
-
-#~ msgid "This field cannot be blank."
-#~ msgstr "Dit veld mag niet leeg zijn."
-
-#, python-format
-#~ msgid "%(model_name)s with this %(field_label)s already exists."
-#~ msgstr "%(model_name)s met deze %(field_label)s bestaat al."
-
-#, python-format
-#~ msgid ""
-#~ "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-#~ msgstr ""
-#~ "%(field_label)s moet uniek zijn voor %(date_field_label)s %(lookup_type)s."
-
-#, python-format
-#~ msgid "Field of type: %(field_type)s"
-#~ msgstr "Veld van type: %(field_type)s"
-
-#, python-format
-#~ msgid "“%(value)s” value must be either True or False."
-#~ msgstr "“%(value)s“-waarde moet Waar of Onwaar zijn."
-
-#, python-format
-#~ msgid "“%(value)s” value must be either True, False, or None."
-#~ msgstr "“%(value)s”-waarde moet Waar, Onwaar of Geen zijn."
-
-#~ msgid "Boolean (Either True or False)"
-#~ msgstr "Boolean (waar of onwaar)"
-
-#, python-format
-#~ msgid "String (up to %(max_length)s)"
-#~ msgstr "String (tot %(max_length)s)"
-
-#~ msgid "Comma-separated integers"
-#~ msgstr "Door komma's gescheiden gehele getallen"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
-#~ "format."
-#~ msgstr ""
-#~ "“%(value)s”-waarde heeft een ongeldige datumnotatie. Deze moet in JJJJ-MM-"
-#~ "DD staan ​​formaat."
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an "
-#~ "invalid date."
-#~ msgstr ""
-#~ "“%(value)s”-waarde heeft het juiste formaat (JJJJ-MM-DD) maar is ongeldig "
-#~ "datum."
-
-#~ msgid "Date (without time)"
-#~ msgstr "Datum (zonder tijd)"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:"
-#~ "ss[.uuuuuu]][TZ] format."
-#~ msgstr ""
-#~ "“%(value)s” waarde heeft een ongeldige formaat. Het moet in JJJJ-MM-DD UU:"
-#~ "MM[:ss[.uuuuuu]][TZ] formaat."
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-#~ "[TZ]) but it is an invalid date/time."
-#~ msgstr ""
-#~ "“%(value)s” waarde heeft het juiste formaat (JJJJ-MM-DD UU:MM[:ss[."
-#~ "uuuuuu]][TZ]) maar het is een ongeldige datum/tijd."
-
-#~ msgid "Date (with time)"
-#~ msgstr "Datum (met tijd)"
-
-#, python-format
-#~ msgid "“%(value)s” value must be a decimal number."
-#~ msgstr "“%(value)s” waarde moet een decimaal getal zijn."
-
-#~ msgid "Decimal number"
-#~ msgstr "Decimaal getal"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-#~ "uuuuuu] format."
-#~ msgstr ""
-#~ "“%(value)s”-waarde heeft een ongeldige indeling. Het moet in [DD] "
-#~ "[[HH:]MM:]ss[ zijn.uuuuuu] formaat."
-
-#~ msgid "Duration"
-#~ msgstr "Looptijd"
-
-#~ msgid "File path"
-#~ msgstr "Bestandspad"
-
-#, python-format
-#~ msgid "“%(value)s” value must be a float."
-#~ msgstr "“%(value)s” waarde moet een float zijn."
-
-#~ msgid "Floating point number"
-#~ msgstr "Floating komma nummer"
-
-#, python-format
-#~ msgid "“%(value)s” value must be an integer."
-#~ msgstr "“%(value)s” waarde moet een geheel getal zijn."
-
-#~ msgid "Integer"
-#~ msgstr "Geheel getal"
-
-#~ msgid "Big (8 byte) integer"
-#~ msgstr "Groot (8 byte) geheel getal"
-
-#~ msgid "Small integer"
-#~ msgstr "Klein geheel getal"
-
-#~ msgid "IPv4 address"
-#~ msgstr "IPv4 adres"
-
-#~ msgid "IP address"
-#~ msgstr "IP adres"
-
-#, python-format
-#~ msgid "“%(value)s” value must be either None, True or False."
-#~ msgstr "“%(value)s”-waarde moet Geen, Waar of Onwaar zijn."
-
-#~ msgid "Boolean (Either True, False or None)"
-#~ msgstr "Boolean (waar, onwaar of geen)"
-
-#~ msgid "Positive big integer"
-#~ msgstr "Positief groot geheel getal"
-
-#~ msgid "Positive integer"
-#~ msgstr "Positief geheel getal"
-
-#~ msgid "Positive small integer"
-#~ msgstr "Positief klein geheel getal"
-
-#, python-format
-#~ msgid "Slug (up to %(max_length)s)"
-#~ msgstr "Slug (tot %(max_length)s)"
-
-#~ msgid "Text"
-#~ msgstr "Tekst"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[."
-#~ "uuuuuu]] format."
-#~ msgstr ""
-#~ "“%(value)s” waarde heeft een ongeldig formaat. Het moet in HH:MM[:ss[."
-#~ "uuuuuu]]formaat."
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is "
-#~ "an invalid time."
-#~ msgstr ""
-#~ "“%(value)s” waarde heeft het juiste formaat (HH:MM[:ss[.uuuuuu]]) maar "
-#~ "het is een ongeldige tijd."
-
-#~ msgid "Time"
-#~ msgstr "Tijd"
-
-#~ msgid "Raw binary data"
-#~ msgstr "Onbewerkte binaire gegevens"
-
-#, python-format
-#~ msgid "“%(value)s” is not a valid UUID."
-#~ msgstr "“%(value)s” is geen geldige UUID."
-
-#~ msgid "Universally unique identifier"
-#~ msgstr "Universeel unieke identificatie"
-
-#~ msgid "File"
-#~ msgstr "Bestand"
-
-#~ msgid "Image"
-#~ msgstr "Afbeelding"
-
-#~ msgid "A JSON object"
-#~ msgstr "Een JSON object"
-
-#~ msgid "Value must be valid JSON."
-#~ msgstr "Waarde moet geldige JSON zijn."
-
-#, python-format
-#~ msgid "%(model)s instance with %(field)s %(value)r does not exist."
-#~ msgstr "%(model)s instantie met %(field)s %(value)r bestaat niet."
-
-#~ msgid "Foreign Key (type determined by related field)"
-#~ msgstr "Foreign Key (type bepaald door gerelateerd veld)"
-
-#~ msgid "One-to-one relationship"
-#~ msgstr "Een-op-een relatie"
-
-#, python-format
-#~ msgid "%(from)s-%(to)s relationship"
-#~ msgstr "%(from)s-%(to)s relatie"
-
-#, python-format
-#~ msgid "%(from)s-%(to)s relationships"
-#~ msgstr "%(from)s-%(to)s relaties"
-
-#~ msgid "Many-to-many relationship"
-#~ msgstr "Veel-op-veel relatie"
-
-#~ msgid ":?.!"
-#~ msgstr ":?.!"
-
-#~ msgid "Enter a whole number."
-#~ msgstr "Voer een geheel getal in."
-
-#~ msgid "Enter a valid date."
-#~ msgstr "Vul een geldige datum in."
-
-#~ msgid "Enter a valid time."
-#~ msgstr "Vul een geldige tijd in."
-
-#~ msgid "Enter a valid date/time."
-#~ msgstr "Vul een geldige datum/tijd in."
-
-#~ msgid "Enter a valid duration."
-#~ msgstr "Vul een geldige duur in."
-
-#, python-brace-format
-#~ msgid "The number of days must be between {min_days} and {max_days}."
-#~ msgstr "Het aantal dagen moet tussen {min_days} en {max_days} liggen."
-
-#~ msgid "No file was submitted. Check the encoding type on the form."
-#~ msgstr ""
-#~ "Er is geen bestand ingediend. Controleer het coderingstype op het "
-#~ "formulier."
-
-#~ msgid "No file was submitted."
-#~ msgstr "Er is geen bestand ingediend."
-
-#~ msgid "The submitted file is empty."
-#~ msgstr "Het ingediende bestand is leeg."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure this filename has at most %(max)d character (it has %(length)d)."
-#~ msgid_plural ""
-#~ "Ensure this filename has at most %(max)d characters (it has %(length)d)."
-#~ msgstr[0] ""
-#~ "Zorg ervoor dat deze bestandsnaam maximaal %(max)d karakter heeft (het "
-#~ "heeft %(length)d)."
-#~ msgstr[1] ""
-#~ "Zorg ervoor dat deze bestandsnaam maximaal %(max)d tekens heeft (hij "
-#~ "heeft %(length)d)."
-
-#~ msgid "Please either submit a file or check the clear checkbox, not both."
-#~ msgstr "Dien een bestand in of vink het selectievakje leeg aan, niet beide."
-
-#~ msgid ""
-#~ "Upload a valid image. The file you uploaded was either not an image or a "
-#~ "corrupted image."
-#~ msgstr ""
-#~ "Upload een geldige afbeelding. Het bestand dat u heeft geüpload was geen "
-#~ "afbeelding of een beschadigd beeld."
-
-#, python-format
-#~ msgid ""
-#~ "Select a valid choice. %(value)s is not one of the available choices."
-#~ msgstr ""
-#~ "Selecteer een geldige keuze. %(value)s is niet een van de beschikbare "
-#~ "keuzes."
-
-#~ msgid "Enter a list of values."
-#~ msgstr "Voer een lijst met waarden in."
-
-#~ msgid "Enter a complete value."
-#~ msgstr "Vul een volledige waarde in."
-
-#~ msgid "Enter a valid UUID."
-#~ msgstr "Voer een geldige UUID in."
-
-#~ msgid "Enter a valid JSON."
-#~ msgstr "Voer een geldige JSON in."
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#, python-format
-#~ msgid "(Hidden field %(name)s) %(error)s"
-#~ msgstr "(Verborgen veld %(name)s) %(error)s"
-
-#, python-format
-#~ msgid ""
-#~ "ManagementForm data is missing or has been tampered with. Missing fields: "
-#~ "%(field_names)s. You may need to file a bug report if the issue persists."
-#~ msgstr ""
-#~ "ManagementForm-gegevens ontbreken of er is mee geknoeid. Ontbrekende "
-#~ "velden: %(field_names)s. Mogelijk moet u een bugrapport indienen als het "
-#~ "probleem aanhoudt."
-
-#, python-format
-#~ msgid "Please submit at most %d form."
-#~ msgid_plural "Please submit at most %d forms."
-#~ msgstr[0] "Gelieve maximaal %d formulier in te dienen."
-#~ msgstr[1] "Gelieve maximaal %d formulieren in te dienen."
-
-#, python-format
-#~ msgid "Please submit at least %d form."
-#~ msgid_plural "Please submit at least %d forms."
-#~ msgstr[0] "Dien ten minste %d formulier in."
-#~ msgstr[1] "Dien ten minste %d formulieren in."
-
-#~ msgid "Order"
-#~ msgstr "Ordenen"
-
-#, python-format
-#~ msgid "Please correct the duplicate data for %(field)s."
-#~ msgstr "Corrigeer de dubbele gegevens voor %(field)s."
-
-#, python-format
-#~ msgid ""
-#~ "Please correct the duplicate data for %(field)s, which must be unique."
-#~ msgstr "Corrigeer de dubbele gegevens voor %(field)s, die uniek moet zijn."
-
-#, python-format
-#~ msgid ""
-#~ "Please correct the duplicate data for %(field_name)s which must be unique "
-#~ "for the %(lookup)s in %(date_field)s."
-#~ msgstr ""
-#~ "Corrigeer de dubbele gegevens voor %(field_name)s die uniek moeten "
-#~ "zijnvoor de %(lookup)s in %(date_field)s."
-
-#~ msgid "Please correct the duplicate values below."
-#~ msgstr "Corrigeer de dubbele waarden hieronder."
-
-#~ msgid "The inline value did not match the parent instance."
-#~ msgstr "De inline waarde kwam niet overeen met de bovenliggende waarde."
-
-#~ msgid ""
-#~ "Select a valid choice. That choice is not one of the available choices."
-#~ msgstr ""
-#~ "Selecteer een geldige keuze. Die keuze is niet een van de beschikbare "
-#~ "keuzes."
-
-#, python-format
-#~ msgid "“%(pk)s” is not a valid value."
-#~ msgstr "“%(pk)s” is geen geldige waarde."
-
-#, python-format
-#~ msgid ""
-#~ "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; "
-#~ "it may be ambiguous or it may not exist."
-#~ msgstr ""
-#~ "%(datetime)s kon niet worden geïnterpreteerd in tijdzone "
-#~ "%(current_timezone)s; het kan dubbelzinnig zijn of het kan niet bestaan."
-
-#~ msgid "Clear"
-#~ msgstr "Verwijderen"
-
-#~ msgid "Currently"
-#~ msgstr "Momenteel"
-
-#~ msgid "Change"
-#~ msgstr "Wijzigen"
-
-#~ msgid "Unknown"
-#~ msgstr "Niet bekend"
-
-#~ msgid "yes,no,maybe"
-#~ msgstr "ja,nee,misschien"
-
-#, python-format
-#~ msgid "%(size)d byte"
-#~ msgid_plural "%(size)d bytes"
-#~ msgstr[0] "%(size)d byte"
-#~ msgstr[1] "%(size)d bytes"
-
-#, python-format
-#~ msgid "%s KB"
-#~ msgstr "%s KB"
-
-#, python-format
-#~ msgid "%s MB"
-#~ msgstr "%s MB"
-
-#, python-format
-#~ msgid "%s GB"
-#~ msgstr "%s GB"
-
-#, python-format
-#~ msgid "%s TB"
-#~ msgstr "%s TB"
-
-#, python-format
-#~ msgid "%s PB"
-#~ msgstr "%s PB"
-
-#~ msgid "p.m."
-#~ msgstr "p.m."
-
-#~ msgid "a.m."
-#~ msgstr "a.m."
-
-#~ msgid "PM"
-#~ msgstr "PM"
-
-#~ msgid "AM"
-#~ msgstr "AM"
-
-#~ msgid "midnight"
-#~ msgstr "middernacht"
-
-#~ msgid "noon"
-#~ msgstr "middag"
-
-#~ msgid "Monday"
-#~ msgstr "Maandag"
-
-#~ msgid "Tuesday"
-#~ msgstr "Dinsdag"
-
-#~ msgid "Wednesday"
-#~ msgstr "Woensdag"
-
-#~ msgid "Thursday"
-#~ msgstr "Donderdag"
-
-#~ msgid "Friday"
-#~ msgstr "Vrijdag"
-
-#~ msgid "Saturday"
-#~ msgstr "Zaterdag"
-
-#~ msgid "Sunday"
-#~ msgstr "Zondag"
-
-#~ msgid "Mon"
-#~ msgstr "Ma"
-
-#~ msgid "Tue"
-#~ msgstr "Di"
-
-#~ msgid "Wed"
-#~ msgstr "Wo"
-
-#~ msgid "Thu"
-#~ msgstr "Do"
-
-#~ msgid "Fri"
-#~ msgstr "Vr"
-
-#~ msgid "Sat"
-#~ msgstr "Za"
-
-#~ msgid "Sun"
-#~ msgstr "Zo"
-
-#~ msgid "January"
-#~ msgstr "Januari"
-
-#~ msgid "February"
-#~ msgstr "Februari"
-
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgid "May"
-#~ msgstr "Mei"
-
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgid "August"
-#~ msgstr "Augustus"
-
-#~ msgid "September"
-#~ msgstr "September"
-
-#~ msgid "October"
-#~ msgstr "Oktober"
-
-#~ msgid "November"
-#~ msgstr "November"
-
-#~ msgid "December"
-#~ msgstr "December"
-
-#~ msgid "jan"
-#~ msgstr "jan"
-
-#~ msgid "feb"
-#~ msgstr "feb"
-
-#~ msgid "mar"
-#~ msgstr "mrt"
-
-#~ msgid "apr"
-#~ msgstr "apr"
-
-#~ msgid "may"
-#~ msgstr "mei"
-
-#~ msgid "jun"
-#~ msgstr "jun"
-
-#~ msgid "jul"
-#~ msgstr "jul"
-
-#~ msgid "aug"
-#~ msgstr "aug"
-
-#~ msgid "sep"
-#~ msgstr "sep"
-
-#~ msgid "oct"
-#~ msgstr "okt"
-
-#~ msgid "nov"
-#~ msgstr "nov"
-
-#~ msgid "dec"
-#~ msgstr "dec"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Jan."
-#~ msgstr "Jan."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Feb."
-#~ msgstr "Feb."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "March"
-#~ msgstr "Maart"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "May"
-#~ msgstr "Mei"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Aug."
-#~ msgstr "Aug"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Sept."
-#~ msgstr "Sept."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Oct."
-#~ msgstr "Okt"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Nov."
-#~ msgstr "Nov."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Dec."
-#~ msgstr "Dec."
-
-#~ msgctxt "alt. month"
-#~ msgid "January"
-#~ msgstr "Januari"
-
-#~ msgctxt "alt. month"
-#~ msgid "February"
-#~ msgstr "Februari"
-
-#~ msgctxt "alt. month"
-#~ msgid "March"
-#~ msgstr "Maart"
-
-#~ msgctxt "alt. month"
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgctxt "alt. month"
-#~ msgid "May"
-#~ msgstr "Mei"
-
-#~ msgctxt "alt. month"
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgctxt "alt. month"
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgctxt "alt. month"
-#~ msgid "August"
-#~ msgstr "Augustus"
-
-#~ msgctxt "alt. month"
-#~ msgid "September"
-#~ msgstr "September"
-
-#~ msgctxt "alt. month"
-#~ msgid "October"
-#~ msgstr "Oktober"
-
-#~ msgctxt "alt. month"
-#~ msgid "November"
-#~ msgstr "November"
-
-#~ msgctxt "alt. month"
-#~ msgid "December"
-#~ msgstr "December"
-
-#~ msgid "This is not a valid IPv6 address."
-#~ msgstr "Dit is geen geldig IPv6-adres."
-
-#, python-format
-#~ msgctxt "String to return when truncating text"
-#~ msgid "%(truncated_text)s…"
-#~ msgstr "%(truncated_text)s…"
-
-#~ msgid "or"
-#~ msgstr "of"
-
-#~ msgid ", "
-#~ msgstr ", "
-
-#, python-format
-#~ msgid "%(num)d year"
-#~ msgid_plural "%(num)d years"
-#~ msgstr[0] "%(num)d jaar"
-#~ msgstr[1] "%(num)d jaren"
-
-#, python-format
-#~ msgid "%(num)d month"
-#~ msgid_plural "%(num)d months"
-#~ msgstr[0] "%(num)d maand"
-#~ msgstr[1] "%(num)d maanden"
-
-#, python-format
-#~ msgid "%(num)d week"
-#~ msgid_plural "%(num)d weeks"
-#~ msgstr[0] "%(num)d week"
-#~ msgstr[1] "%(num)d weken"
-
-#, python-format
-#~ msgid "%(num)d day"
-#~ msgid_plural "%(num)d days"
-#~ msgstr[0] "%(num)d dag"
-#~ msgstr[1] "%(num)d dagen"
-
-#, python-format
-#~ msgid "%(num)d hour"
-#~ msgid_plural "%(num)d hours"
-#~ msgstr[0] "%(num)d uur"
-#~ msgstr[1] "%(num)d uren"
-
-#, python-format
-#~ msgid "%(num)d minute"
-#~ msgid_plural "%(num)d minutes"
-#~ msgstr[0] "%(num)d minuut"
-#~ msgstr[1] "%(num)d minuten"
-
-#~ msgid "Forbidden"
-#~ msgstr "Verboden"
-
-#~ msgid "CSRF verification failed. Request aborted."
-#~ msgstr "CSFR verificatie gefaald. Aanvraag afgebroken."
-
-#~ msgid ""
-#~ "You are seeing this message because this HTTPS site requires a “Referer "
-#~ "header” to be sent by your web browser, but none was sent. This header is "
-#~ "required for security reasons, to ensure that your browser is not being "
-#~ "hijacked by third parties."
-#~ msgstr ""
-#~ "Je ziet dit bericht omdat deze HTTPS-site een “Referer header“ vereist "
-#~ "die door uw webbrowser moet worden verzonden, maar er is geen verzonden. "
-#~ "Deze header is vereist om veiligheidsredenen, om ervoor te zorgen dat uw "
-#~ "browser niet wordt gekaapt door derden."
-
-#~ msgid ""
-#~ "If you have configured your browser to disable “Referer” headers, please "
-#~ "re-enable them, at least for this site, or for HTTPS connections, or for "
-#~ "“same-origin” requests."
-#~ msgstr ""
-#~ "Als u uw browser hebt geconfigureerd om de kopteksten van “Referer” uit "
-#~ "te schakelen, gelieve opnieuw-inschakelen, in ieder geval voor deze site, "
-#~ "of voor HTTPS-verbindingen, of voor “same-origin” verzoeken."
-
-#~ msgid ""
-#~ "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag "
-#~ "or including the “Referrer-Policy: no-referrer” header, please remove "
-#~ "them. The CSRF protection requires the “Referer” header to do strict "
-#~ "referer checking. If you’re concerned about privacy, use alternatives "
-#~ "like <a rel=\"noreferrer\" …> for links to third-party sites."
-#~ msgstr ""
-#~ "Als u de <meta name=\"referrer\" content=\"no-referrer\"> tag of "
-#~ "inclusief de kop “Referrer-Policy: no-referrer“ gebruikt, verwijder deze "
-#~ "alstublieft. De CSRF-beveiliging vereist dat de kop “Referer“ een strikte "
-#~ "referercontrole uitvoert. Als je je zorgen maakt over privacy, gebruik "
-#~ "dan alternatieven zoals <a rel=\"noreferrer\" …> voor links naar sites "
-#~ "van derden."
-
-#~ msgid ""
-#~ "You are seeing this message because this site requires a CSRF cookie when "
-#~ "submitting forms. This cookie is required for security reasons, to ensure "
-#~ "that your browser is not being hijacked by third parties."
-#~ msgstr ""
-#~ "U ziet dit bericht omdat deze site een CSRF-cookie vereist wanneer "
-#~ "formulieren verzenden. Deze cookie is vereist om veiligheidsredenen, om "
-#~ "ervoor te zorgen dat uw browser niet wordt gekaapt door derden."
-
-#~ msgid ""
-#~ "If you have configured your browser to disable cookies, please re-enable "
-#~ "them, at least for this site, or for “same-origin” requests."
-#~ msgstr ""
-#~ "Als u uw browser hebt geconfigureerd om cookies uit te schakelen, schakel "
-#~ "deze dan opnieuw in zij, in ieder geval voor deze site, of voor verzoeken "
-#~ "van dezelfde oorsprong."
-
-#~ msgid "More information is available with DEBUG=True."
-#~ msgstr "Meer informatie is beschikbaar met DEBUG=True."
-
-#~ msgid "No year specified"
-#~ msgstr "Geen jaar opgegeven"
-
-#~ msgid "Date out of range"
-#~ msgstr "Datum buiten bereik"
-
-#~ msgid "No month specified"
-#~ msgstr "Geen maand opgegeven"
-
-#~ msgid "No day specified"
-#~ msgstr "Geen dag opgegeven"
-
-#~ msgid "No week specified"
-#~ msgstr "Geen week opgegeven"
-
-#, python-format
-#~ msgid "No %(verbose_name_plural)s available"
-#~ msgstr "Geen %(verbose_name_plural)s beschikbaar"
-
-#, python-format
-#~ msgid ""
-#~ "Future %(verbose_name_plural)s not available because %(class_name)s."
-#~ "allow_future is False."
-#~ msgstr ""
-#~ "Toekomstige %(verbose_name_plural)s niet beschikbaar omdat %(class_name)s."
-#~ "allow_future is niet waar."
-
-#, python-format
-#~ msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-#~ msgstr "Ongeldige datumstring “%(datestr)s” gegeven formaat “%(format)s”"
-
-#, python-format
-#~ msgid "No %(verbose_name)s found matching the query"
-#~ msgstr "Geen %(verbose_name)s gevonden die overeenkomen met de zoekopdracht"
-
-#~ msgid "Page is not “last”, nor can it be converted to an int."
-#~ msgstr ""
-#~ "Pagina is niet “laatste“, en kan ook niet worden geconverteerd naar een "
-#~ "int."
-
-#, python-format
-#~ msgid "Invalid page (%(page_number)s): %(message)s"
-#~ msgstr "Ongeldige pagina (%(page_number)s): %(message)s"
-
-#, python-format
-#~ msgid "Empty list and “%(class_name)s.allow_empty” is False."
-#~ msgstr "Lege lijst en “%(class_name)s.allow_empty“ is False."
-
-#~ msgid "Directory indexes are not allowed here."
-#~ msgstr "Directory-indexen zijn hier niet toegestaan."
-
-#, python-format
-#~ msgid "“%(path)s” does not exist"
-#~ msgstr "“%(path)s” bestaat niet"
-
-#, python-format
-#~ msgid "Index of %(directory)s"
-#~ msgstr "Index van %(directory)s"
-
-#~ msgid "The install worked successfully! Congratulations!"
-#~ msgstr "De installatie is gelukt! Gefeliciteerd!"
-
-#, python-format
-#~ msgid ""
-#~ "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-#~ "target=\"_blank\" rel=\"noopener\">release notes</a> for Django "
-#~ "%(version)s"
-#~ msgstr ""
-#~ "Bekijk <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/"
-#~ "\" target=\"_blank\" rel=\"noopener\">release-opmerkingen</a> voor Django "
-#~ "%(version)s"
-
-#, python-format
-#~ msgid ""
-#~ "You are seeing this page because <a href=\"https://docs.djangoproject.com/"
-#~ "en/%(version)s/ref/settings/#debug\" target=\"_blank\" "
-#~ "rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
-#~ "configured any URLs."
-#~ msgstr ""
-#~ "Je ziet deze pagina omdat <a href=\"https://docs.djangoproject.com/en/"
-#~ "%(version)s/ref/settings/#debug\" target=\"_blank\" "
-#~ "rel=\"noopener\">DEBUG=True</a> staat in uw instellingenbestand en u "
-#~ "heeft geen URL's."
-
-#~ msgid "Django Documentation"
-#~ msgstr "Django Documentatie"
-
-#~ msgid "Topics, references, &amp; how-to’s"
-#~ msgstr "Onderwerpen, referenties en how-to's"
-
-#~ msgid "Tutorial: A Polling App"
-#~ msgstr "Tutorial: een polling-app"
-
-#~ msgid "Get started with Django"
-#~ msgstr "Aan de slag met Django"
-
-#~ msgid "Django Community"
-#~ msgstr "Django-gemeenschap"
-
-#~ msgid "Connect, get help, or contribute"
-#~ msgstr "Verbinden, hulp krijgen of bijdragen"
-
-#~ msgid "If everything is correct, you can continue to account setup."
-#~ msgstr ""
-#~ "Als alles correct is kunt u verder met de instellingen van uw account"
-
-#~ msgid "Continue to account setup"
-#~ msgstr "Verder naar accounts opzetten"
-
-#~ msgid "Got it, generate my report"
-#~ msgstr "Begrepen, maak mijn rapport aan"
-
-#~ msgid "Organization succesfully created."
-#~ msgstr "Organisatie succesvol toegevoegd."
-
-#~ msgid ""
-#~ "Hello, admin. You are already part of an organization. Early step is "
-#~ "skipped."
-#~ msgstr ""
-#~ "Hallo admin. U bent al gekoppeld aan een organisatie. Vroege stappen "
-#~ "worden overgeslagen."
-
-#~ msgid ""
-#~ "System Administrator: You are redirected to this page, because you have "
-#~ "to first setup an organization."
-#~ msgstr "Maak eerst een organisatie aan."
-
-#~ msgid "You are not allowed to add organization members."
-#~ msgstr "Registreer als een organisatielid."
-
-#~ msgid "N/A"
-#~ msgstr "NVT"
-
-#, python-format
-#~ msgid "Use KAT as %(name)s"
-#~ msgstr "Gebruik OpenKAT als %(name)s"
-
-#~ msgid "Signal username"
-#~ msgstr "Gebruikersnaam vergeten"
-
-#~ msgid "Added to group."
-#~ msgstr "Toegevoegd aan groep"
-
-#~ msgid "Add to signal group"
-#~ msgstr "Voeg toe aan signal groep"
-
-#~ msgid "Can't add member to signal group"
-#~ msgstr "Kan gebruiker niet aan signal groep toevoegen"
-
-#~ msgid "You are using KAT as "
-#~ msgstr "U gebruikt OpenKAT als"
-
-#~ msgid "Number of members"
-#~ msgstr "Aantal leden"
-
-#, python-format
-#~ msgid "Members of %(name)s"
-#~ msgstr "Leden van %(name)s"
-
-#~ msgid "Create signal group"
-#~ msgstr "Maak signal groep aan"
-
-#~ msgid ""
-#~ "No registered group phone nr. A group phone is needed to create a signal "
-#~ "group."
-#~ msgstr "Een groepstelefoon is nodig om een signal groep aan te maken"
-
-#~ msgid "Signal group ID"
-#~ msgstr "Signal Groep ID"
-
-#~ msgid "Send test message"
-#~ msgstr "Verstuur testbericht"
-
-#~ msgid "Mismatch stored and fetched ID"
-#~ msgstr "De opgeslagen en opgehaalde ID komen niet overeen"
-
-#~ msgid "No group has been created for this organization."
-#~ msgstr "Uw rol in de organsatie"
-
-#~ msgid "Download"
-#~ msgstr "Download"
-
-#~ msgid ""
-#~ "The current user has not been verified by a system administrator yet."
-#~ msgstr ""
-#~ "De huidige gebruiker is nog niet geverifieerd door een systeembeheerder."
-
-#~ msgid "Object list:"
-#~ msgstr "Objectenlijst:"

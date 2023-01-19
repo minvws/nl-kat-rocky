@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-18 14:19+0000\n"
+"POT-Creation-Date: 2023-01-19 11:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,25 +29,22 @@ msgid "Account Type"
 msgstr "Tipo di account"
 
 #: account/forms/account_setup.py:34
-msgid "Every member of KAT must be part of a group."
-msgstr "Kada miembro di KAT mester ta parti di un grupo."
+msgid "Every member of OpenKAT must be part of a group."
+msgstr "Kada miembro di OpenKAT mester ta parti di un grupo."
 
 #: account/forms/account_setup.py:37
 msgid "Please select a group to proceed."
 msgstr "Por favor selektá un grupo pa por sigi."
 
 #: account/forms/account_setup.py:52
-#, fuzzy
-#| msgid ""
-#| "I declare that KAT may scan the assets of my organization and I am aware "
-#| "of the risk the extra load on my systems will bring."
 msgid ""
-"I declare that KAT may scan the assets of my organization and that I have "
-"permission to scan these assets. I am aware of the implications a scan with "
-"a higher scan level brings on my systems."
+"I declare that OpenKAT may scan the assets of my organization and that I "
+"have permission to scan these assets. I am aware of the implications a scan "
+"with a higher scan level brings on my systems."
 msgstr ""
-"Mi ta deklará ku KAT tin mag di skèn e propiedatnan di mi organisashon i mi "
-"ta consiente di e riésgo i e èxtra karga ku lo tin riba mi sistema."
+"Mi ta deklara ku OpenKAT por skèn e propiedatnan di mi organisashon i ku mi "
+"tin pèrmit pa skèn e propiedatnan aki. Mi ta konsiente di e implikashonnan un skèn "
+"ku nivel di skèn haltu tin riba mi sistemanan."
 
 #: account/forms/account_setup.py:60
 msgid ""
@@ -55,18 +52,18 @@ msgid ""
 "organization. I have the expierence and knowledge to know what the "
 "consequences might be and can be held responsible for them."
 msgstr ""
+"Mi ta deklara ku mi tin autorisashon pa duna e indemnifikashon den mi "
+"organisashon. Mi tin e experiensia i konosimientu pa sa ki e"
+"konsequensianan lo ta i tambe mi ta para responsabel pa nan."
 
 #: account/forms/account_setup.py:70
-#, fuzzy
-#| msgid "Change clearance level"
 msgid "Trusted to change Clearance Levels."
-msgstr "Kambia nivél di autorisashon"
+msgstr "Konfiansa pa kambia nivél di autorisashonnan."
 
 #: account/forms/account_setup.py:76
-#, fuzzy
-#| msgid "Change clearance level"
+
 msgid "Acknowledged to change Clearance Levels."
-msgstr "Kambia nivél di autorisashon"
+msgstr "Atmití pa kambia nivél di autorisashonnan."
 
 #: account/forms/account_setup.py:87
 #: katalogus/templates/katalogus_settings.html:26
@@ -106,10 +103,8 @@ msgid "Choose another email."
 msgstr "Skoké un otro email."
 
 #: account/forms/account_setup.py:188
-#, fuzzy
-#| msgid "Choose another organization."
 msgid "The name of the organization."
-msgstr "Skohé un otro organisashon."
+msgstr "E nòmber di e organisashon."
 
 #: account/forms/account_setup.py:190 onboarding/forms.py:72
 msgid "explanation-organization-name"
@@ -118,13 +113,11 @@ msgstr "splikashon-nomber-organisashon"
 #: account/forms/account_setup.py:195
 #, python-brace-format
 msgid "A unique code of {code_length} characters."
-msgstr ""
+msgstr "Un codigo uniko di {code_length} letras."
 
 #: account/forms/account_setup.py:199
-#, fuzzy
-#| msgid "explanation-organization-name"
 msgid "explanation-organization-code"
-msgstr "splikashon-nomber-organisashon"
+msgstr "splikashon-codigo-organisashon"
 
 #: account/forms/account_setup.py:205 onboarding/forms.py:78
 msgid "Organization name is required to proceed."
@@ -135,16 +128,12 @@ msgid "Choose another organization."
 msgstr "Skohé un otro organisashon."
 
 #: account/forms/account_setup.py:209
-#, fuzzy
-#| msgid "Organization name is required to proceed."
 msgid "Organization code is required to proceed."
-msgstr "Nòmber di organisashon ta requerí pa sigi."
+msgstr "Codigo di organisashon ta requerí pa sigi."
 
 #: account/forms/account_setup.py:210
-#, fuzzy
-#| msgid "Choose another organization."
 msgid "Choose another code for your organization."
-msgstr "Skohé un otro organisashon."
+msgstr "Skohé un otro codigo pa bo organisashon."
 
 #: account/forms/account_setup.py:228
 msgid "The two password fields didn’t match."
@@ -179,8 +168,8 @@ msgid "This account is inactive."
 msgstr "E account aki no ta activá."
 
 #: account/forms/login.py:18
-msgid "Insert the email you registered with or got at KAT installation."
-msgstr "Yena e email ku b'a registrá ku ne òf ora di instalá KAT."
+msgid "Insert the email you registered with or got at OpenKAT installation."
+msgstr "Yena e email ku b'a registrá ku ne òf ora di instalá OpenKAT."
 
 #: account/forms/password_reset.py:8
 msgid "Email address"
@@ -191,15 +180,15 @@ msgid "A reset link will be sent to this email"
 msgstr "Un resèt link lo wòrdu manda na e email adrès aki"
 
 #: account/forms/password_reset.py:13
-msgid "The email address connected to your KAT-account"
-msgstr "E email adrès konektá ku bo account"
+msgid "The email address connected to your OpenKAT-account"
+msgstr "E email adrès konektá ku bo OpenKAT account"
 
 #: account/forms/token.py:16
 msgid ""
 "Insert the token generated by the authenticator app to setup the two factor "
 "authentication."
 msgstr ""
-"Hinka e token ku a wordu genera dor di bo authenticator app pa aktivá two "
+"Pone e token ku a wordu genera dor di bo authenticator app pa aktivá two "
 "factor authentication."
 
 #: account/forms/token.py:29
@@ -211,22 +200,16 @@ msgid "Backup token"
 msgstr "Backup token"
 
 #: account/mixins.py:62
-#, fuzzy
-#| msgid "Indemnification present."
 msgid "No indemnification present for organization."
-msgstr "Indemnizashon presente"
+msgstr "Ningun Indemnizashon presente pa organisashon."
 
 #: account/mixins.py:66
-#, fuzzy
-#| msgid "Change clearance level"
 msgid "Acknowledged clearance level too low."
-msgstr "Kambia nivél di autorisashon"
+msgstr "Nivél di autorisashon ku ba atmití ta hopi abou."
 
 #: account/mixins.py:70
-#, fuzzy
-#| msgid "Set clearance level for:"
 msgid "Trusted clearance level too low."
-msgstr "Pone nivél di autorisashon pa:"
+msgstr "Nivél di autorisashon konfiabel muchu abou."
 
 #: account/models.py:19
 msgid "The Email must be set"
@@ -305,16 +288,12 @@ msgid "Organization"
 msgstr "Organisashon"
 
 #: account/templates/account_detail.html:54
-#, fuzzy
-#| msgid "Set clearance level"
 msgid "Permission to set OOI clearance levels "
-msgstr "Pone nivél di autorisashon"
+msgstr "Pèrmit pa pone nivél di autorisashonnan pa OOI "
 
 #: account/templates/account_detail.html:67
-#, fuzzy
-#| msgid "Set clearance level"
 msgid "OOI clearance"
-msgstr "Pone nivél di autorisashon"
+msgstr "OOI autorisá"
 
 #: account/templates/account_detail.html:70
 msgid ""
@@ -324,10 +303,15 @@ msgid ""
 "clearance level.\n"
 "            "
 msgstr ""
+"\n"
+"              Bo no tin autorisashon pa skèn ophetonan.<br>\n"
+"              Tuma kontacto ku e admin pa duna'bo e necesario "
+"nivél di autorisashon.\n"
+"            "
 
 #: account/templates/account_detail.html:77
 msgid "You have currently accepted clearance up to level"
-msgstr ""
+msgstr "Bo a acceptá nivél di autorisashon te na nivel"
 
 #: account/templates/account_detail.html:83
 msgid ""
@@ -335,12 +319,17 @@ msgid ""
 "OOI clearance levels up to this level, you need to accept this permission. "
 "Remember: <strong>with great power comes great responsibility.</strong>"
 msgstr ""
+"Bo tin nivél di autorisashon pa nivél 4 duna pa bo admin. Prome ku bo kambia "
+"nivél di autorisashonnan pa OOI te na e nivel aki, bo mester prome acceptá e autorisashonnan aki. "
+"Korda: <strong>gran poder ta bin ku gran responsabilidat.</strong>"
 
 #: account/templates/account_detail.html:88
 msgid ""
 "You can withdraw this at anytime you like, but know that you're not able to "
 "change clearance levels anymore when you do."
 msgstr ""
+"Bo por retirá esaki n'e momento ku bo ke, pero sa ku bo no por "
+"kambia nivél di autorisashon mas ora bo hasi esaki."
 
 #: account/templates/login.html:7 rocky/templates/two_factor/core/login.html:7
 msgid "You are logged in."
@@ -455,7 +444,7 @@ msgid ""
 "used.  Please request a new password reset."
 msgstr "Por fabor pidi un password nobo."
 
-#: account/templates/password_reset_email.html:2
+#: account/templates/password_reset_email.html:4
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
@@ -464,17 +453,17 @@ msgstr ""
 "Bo ta risibiendo e mensahe aki paso bo a pidi un password resèt pa bo user "
 "account riba %(site_name)s."
 
-#: account/templates/password_reset_email.html:4
+#: account/templates/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
 msgstr "Por fabor bai na e siguinte página i skohé un password nobo:"
 
-#: account/templates/password_reset_email.html:8
+#: account/templates/password_reset_email.html:10
 msgid "Sincerely,"
 msgstr "Sinseramente"
 
-#: account/templates/password_reset_email.html:10
-msgid "The KAT team"
-msgstr "Tìm KAT"
+#: account/templates/password_reset_email.html:11
+msgid "The OpenKAT team"
+msgstr "Tìm OpenKAT"
 
 #: account/templates/password_reset_subject.txt:2
 #, python-format
@@ -544,8 +533,8 @@ msgid "Your session has timed out. Please login again."
 msgstr "Bo seshon a tèrminá. Por fabor log in dinobo."
 
 #: account/views/login.py:61 rocky/templates/header.html:19
-msgid "KAT"
-msgstr "KAT"
+msgid "OpenKAT"
+msgstr "OpenKAT"
 
 #: account/views/login.py:106
 msgid "Two factor authentication"
@@ -891,7 +880,7 @@ msgstr "Warda"
 #: rocky/templates/organizations/organization_member_add.html:15
 #: rocky/templates/partials/elements/ooi_detail_settings.html:9
 #: rocky/templates/partials/elements/ooi_report_settings.html:9
-#: rocky/templates/partials/form/indemnification_add_form.html:30
+#: rocky/templates/partials/form/indemnification_add_form.html:27
 #: rocky/templates/partials/scan_history.html:49
 #: rocky/templates/two_factor/_wizard_actions.html:12
 msgid "Submit"
@@ -1490,12 +1479,6 @@ msgid "Object list"
 msgstr "Lista di opheto"
 
 #: katalogus/templates/partials/objects_to_scan.html:8
-#, fuzzy, python-format
-#| msgid ""
-#| "This boefje will only scan objects with a corresponding clearance level "
-#| "of <strong>L%(scan_level)s</strong> or higher. There is no "
-#| "indemnification for this boefje to scan an OOI with a lower clearance "
-#| "level then <strong>L%(scan_level)s</strong>."
 msgid ""
 "This boefje will only scan objects with a corresponding clearance level of "
 "<strong>L%(scan_level)s</strong> or higher. There is no indemnification for "
@@ -1503,15 +1486,17 @@ msgid ""
 "<strong>L%(scan_level)s</strong>. Use the filter to show OOI's with a lower "
 "clearance level."
 msgstr ""
-"E Boefje aki ta skèn solamente ophetonan ku un nivél di autorisashon "
-"korespondente na (%(scan_level)s) òf mas haltu. No tin ningún indemnizashon "
-"pa e boefje aki pa skèn un OOI ku un nivél di autorisashon mas abou."
+"E boefje aki ta skèn solamente ophetonan ku un nivél di autorisashon di "
+"<strong>L%(scan_level)s</strong> òf mas haltu. No tin indemnizashon pa "
+"e boefje pa skèn un OOI ku un nivél di autorisashon mas abou ku "
+"<strong>L%(scan_level)s</strong>. Uza e filter pa mustra OOI's ku un nivél di autorisashon "
+"mas abou."
 
 #: katalogus/templates/partials/objects_to_scan.html:33
 msgid ""
 "\n"
 "          <span>Warning scan level:</span>\n"
-"          Scanning OOI's with a lower clearance level will result in KAT "
+"          Scanning OOI's with a lower clearance level will result in OpenKAT "
 "increasing the clearance level on that OOI,\n"
 "          not only for this scan but from now on out, until it manually gets "
 "set to something else again.\n"
@@ -1519,16 +1504,17 @@ msgid ""
 "clearance level aswel.\n"
 "        "
 msgstr ""
+"\n"
+"          <span>Advertensia nivel di skèn:</span>\n"
+"          Skèn OOI's ku nivel di authorisashon mas abou lo resulta ku OpenKAT "
+"mester subi e nivel di authorisashon pa e OOI,\n"
+"          no solamente pa e skèn aki for di awor i adelante, te ora manualmente e wordu pone "
+"na algu otro atrobe.\n"
+"          Esaki ta nifika ku tur otro Boefjes aktivo lo huza e nivel di authorisashon  "
+"aki tambe.\n"
+"        "
 
 #: katalogus/templates/partials/objects_to_scan.html:44
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "          You currently don't have any objects that meet the scan level "
-#| "of %(plugin.name)s.\n"
-#| "          Add objects with a complying clearance level, or alter the "
-#| "clearance level of existing objects.\n"
-#| "        "
 msgid ""
 "\n"
 "          You currently don't have any objects that meet the scan level of "
@@ -1539,20 +1525,12 @@ msgid ""
 msgstr ""
 "\n"
 "              Na e momento aki bo no tin ophetonan ku ta kwarda ku e nivel "
-"di autorisashon di %(plugin.name)s. \n"
+"di autorisashon di %(name)s. \n"
 "              Añadi ophetonan ku un nivel di authorisashon adequa, òf kambia "
 "e nivel di authorisashon di ophetonan eksistente.\n"
 "            "
 
 #: katalogus/templates/partials/objects_to_scan.html:49
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "          You currently don't have scannable objects for "
-#| "%(plugin.name)s.\n"
-#| "          Add objects to use this boefje. This boefje is able to scan "
-#| "objects of the following types:\n"
-#| "        "
 msgid ""
 "\n"
 "          You currently don't have scannable objects for %(name)s.\n"
@@ -1561,8 +1539,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"              Na e momento aki bo no tin ophetonan pa skèn pa "
-"%(plugin.name)s. \n"
+"              Na e momento aki bo no tin ophetonan pa skèn pa %(name)s. \n"
 "              Añadi ophetonan pa uza e boefje. E boefje aki ta dispuesto di "
 "skèn ophetonan di e sigiente tiponan:\n"
 "            "
@@ -1769,18 +1746,16 @@ msgid "What is the name of your organization."
 msgstr "Kiko ta bo nòmber di organisashon?"
 
 #: onboarding/forms.py:70
-msgid "The name of the organization this KAT account is for."
-msgstr "E nòmber di e organisashon e KAT account aki ta pe."
+msgid "The name of the organization this OpenKAT account is for."
+msgstr "E nòmber di e organisashon e OpenKAT account aki ta pe."
 
 #: onboarding/forms.py:101
-#, fuzzy
-#| msgid "Set clearance level for:"
 msgid "Trusted to set clearance levels on OOI's"
-msgstr "Pone nivél di autorisashon pa:"
+msgstr "Konfiá pa pone nivél di autorisashon riba OOI's"
 
 #: onboarding/forms.py:103
 msgid "Give this user permission to set clearance levels on OOI's"
-msgstr ""
+msgstr "Duna e usario pèrmiso pa pone nivel di authorisashon riba OOI's"
 
 #: onboarding/templates/account/step_1_registration_intro.html:10
 msgid "Register"
@@ -1793,13 +1768,13 @@ msgstr "Krea un account nobo pa bo organisashon"
 #: onboarding/templates/account/step_1_registration_intro.html:16
 msgid ""
 "All user  accounts are part of an organization. So if you’re new and your "
-"company is also new to KAT you can register here to create a KAT account for "
-"your company including an admin account for you. If you like a user account "
-"that is connected to an already existing organization within KAT you can ask "
-"the admin to create an account for you."
+"company is also new to OpenKAT you can register here to create a OpenKAT "
+"account for your company including an admin account for you. If you like a "
+"user account that is connected to an already existing organization within "
+"OpenKAT you can ask the admin to create an account for you."
 msgstr ""
 "Tur account ta parti di un organisashon. Kèmèn si bo ta nobo i bo kompania "
-"tambe ta nobo na KAT bo por registrá akinan pa krea un KAT account pa bo "
+"tambe ta nobo na OpenKAT bo por registrá akinan pa krea un OpenKAT account pa bo "
 "kompania inkluéndo un admin account pa bo. Si bo ke un account ku ta konekta "
 "ku un organisashon ku ta èksisti kaba na KAT bo por puntra e admin pa krea "
 "un account pa bo."
@@ -1813,23 +1788,23 @@ msgstr "Laga nos kuminsa"
 
 #: onboarding/templates/account/step_1_registration_intro.html:27
 #: onboarding/templates/step_1_introduction.html:19
-msgid "How does KAT work"
-msgstr "Kon KAT ta traha?"
+msgid "How does OpenKAT work"
+msgstr "Kon OpenKAT ta functiona?"
 
 #: onboarding/templates/account/step_1_registration_intro.html:29
 msgid ""
-"KAT is able to give insight into security risks on your online objects. For "
-"example, your websites, mailservers or online data. KAT uses scans to find "
-"and assess the area's that might be at risk and reports these back to you. "
-"As a user you decide which insight you would like and KAT guides you to "
-"through the process. During this introduction you will be guided through the "
-"steps to create a report."
+"OpenKAT is able to give insight into security risks on your online objects. "
+"For example, your websites, mailservers or online data. OpenKAT uses scans "
+"to find and assess the area's that might be at risk and reports these back "
+"to you. As a user you decide which insight you would like and OpenKAT guides "
+"you to through the process. During this introduction you will be guided "
+"through the steps to create a report."
 msgstr ""
-"KAT tin e posibilidàt di duna informashon mas detaya den riésgonan di "
+"OpenKAT tin e posibilidàt di duna informashon mas detaya den riésgonan di "
 "siguridát di bo online ophetonan. Por ehempel, bo websites, mailservers òf "
-"online data. KAT ta úza scans pa enkontra i asertà areanan ku por kore "
+"online data. OpenKAT ta úza scans pa enkontra i asertà areanan ku por kore "
 "riésgo i rapòrta esaki bèk na abo. Komo kliente bo ta skohè ki informashon "
-"bo ke i KAT ta guiá'bu dor di e proceso Durante e introdukshon aki bo lo "
+"bo ke i OpenKAT ta guiá'bu dor di e proceso Durante e introdukshon aki bo lo "
 "wòrdu guiá dor di e stapnan pa traha un rapòrt."
 
 #: onboarding/templates/account/step_2a_organization_setup.html:10
@@ -1840,8 +1815,8 @@ msgstr ""
 #: onboarding/templates/account/step_4_account_setup_admin.html:10
 #: onboarding/templates/account/step_5_account_setup_red_teamer.html:10
 #: onboarding/templates/account/step_6_account_setup_client.html:10
-msgid "KAT setup"
-msgstr "KAT setup"
+msgid "OpenKAT setup"
+msgstr "OpenKAT setup"
 
 #: onboarding/templates/account/step_2a_organization_setup.html:12
 #: onboarding/templates/account/step_2a_organization_update.html:12
@@ -1852,11 +1827,11 @@ msgstr "Setup organisashon"
 #: onboarding/templates/account/step_2a_organization_setup.html:15
 msgid ""
 "Please enter the following organization details. These details can be edited "
-"within the organization page within KAT when necesarry. Adding a new "
+"within the organization page within OpenKAT when necesarry. Adding a new "
 "organization requires a new database."
 msgstr ""
 "Por favor hinka e siguinte detayesnan pa e organisashon. E detayes nan aki "
-"por wordu editá den di pagina di organisashon den di KAT si ta necesario. "
+"por wordu editá den di pagina di organisashon den di OpenKAT si ta necesario. "
 "Añadi un organisashon nobo ta requerì un database nobo."
 
 #: onboarding/templates/account/step_2a_organization_setup.html:27
@@ -1870,36 +1845,32 @@ msgstr "Detayes di organisashon"
 #: rocky/templates/organizations/organization_add.html:12
 msgid ""
 "Please enter the following organization details. These details can be edited "
-"within the organization page within KAT when necesarry."
+"within the organization page within OpenKAT when necesarry."
 msgstr ""
 "Por fabor hinka e siguinte detayesnan pa e organisashon. E detayes nan aki "
-"por wordu editá den di e pagina di organisashon den di KAT ora ta necessario."
+"por wordu editá den di e pagina di organisashon den di OpenKAT ora ta necessario."
 
 #: onboarding/templates/account/step_2a_organization_update.html:25
 msgid "Submit changes"
-msgstr "Enviár kambionan"
+msgstr "Enviá kambionan"
 
-#: onboarding/templates/account/step_2a_organization_update.html:27
-#: onboarding/templates/account/step_2b_indemnification_setup.html:17
+#: onboarding/templates/account/step_2a_organization_update.html:28
+#: onboarding/templates/account/step_2b_indemnification_setup.html:18
 msgid "Continue"
-msgstr ""
+msgstr "Sigi"
 
 #: onboarding/templates/account/step_2b_indemnification_setup.html:12
-#, fuzzy
-#| msgid "Indemnifications"
 msgid "Indemnification setup"
-msgstr "Indemnizashon"
+msgstr "Setup Indemnizashon"
 
 #: onboarding/templates/account/step_2b_indemnification_setup.html:15
-#, fuzzy
-#| msgid "Indemnification present."
 msgid "Indemnification on the organization is already present."
-msgstr "Indemnizashon presente"
+msgstr "Indemnizashon riba e organisashon ta presente kaba."
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:12
 #: onboarding/templates/account/step_3_account_user_type.html:12
 msgid "Account setup"
-msgstr "Account seguridat"
+msgstr "Account setup"
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:13
 msgid "Accounts"
@@ -1911,15 +1882,15 @@ msgstr "Konfigurá organisashon ku accountnan separá:"
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:16
 msgid ""
-"Within KAT it is possible to create separate user accounts with the specific "
-"roles. Each with their own functionalities and permissions. This is useful "
-"when multiple people will be working with the same KAT-setup. You can choose "
-"to create the separate accounts during this introduction or when you’re "
-"ready from the KAT users page."
+"Within OpenKAT it is possible to create separate user accounts with the "
+"specific roles. Each with their own functionalities and permissions. This is "
+"useful when multiple people will be working with the same OpenKAT-setup. You "
+"can choose to create the separate accounts during this introduction or when "
+"you’re ready from the OpenKAT users page."
 msgstr ""
-"Den KAT ta posibel pa krea accountnan separá ku e ròlnan specìfiko kada un "
+"Den OpenKAT ta posibel pa krea accountnan separá ku e ròlnan specìfiko kada un "
 "ku nan mes functionalidat ì pèrmitnan. Esaki ta útil ora mayoria hende ke "
-"traha ku e mesun KAT-setup. Bo por skohé pa krea e accountnan separá durante "
+"traha ku e mesun OpenKAT-setup. Bo por skohé pa krea e accountnan separá durante "
 "e introdukshon aki of ora bo ta kla."
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:24
@@ -1928,12 +1899,13 @@ msgstr "Setup account pa mi mes:"
 
 #: onboarding/templates/account/step_2c_account_setup_intro.html:26
 msgid ""
-"Alternatively it is also an option to run KAT from a single user account. "
-"Which is useful when you are the only user in the account. You will be able "
-"to access the functionality of the different roles from your account. You "
-"can always add additional user accounts If you’re team expands in the future."
+"Alternatively it is also an option to run OpenKAT from a single user "
+"account. Which is useful when you are the only user in the account. You will "
+"be able to access the functionality of the different roles from your "
+"account. You can always add additional user accounts If you’re team expands "
+"in the future."
 msgstr ""
-"Alternativamente tambe ta un opshón pa huza KAT for di un solo account. Ku "
+"Alternativamente tambe ta un opshón pa huza OpenKAT for di un solo account. Ku "
 "ta útil si bo ta e úniko usadó di e account. Bo lo por tin e posibilidát pa "
 "tin accesso na functionalidatnan di e diferente ròlnan for di bo account. "
 "Abo por semper añadi accountnan adishonál si bo tìm expandé den futuro."
@@ -1952,10 +1924,10 @@ msgstr "Usarionan"
 
 #: onboarding/templates/account/step_3_account_user_type.html:15
 msgid ""
-"Within KAT there are three types of user accounts. Each has its own "
+"Within OpenKAT there are three types of user accounts. Each has its own "
 "functions."
 msgstr ""
-"Den KAT tin trés diferente tipo di user accounts. Kada ún tin su mes funkshón"
+"Den OpenKAT tin trés diferente tipo di user accounts. Kada ún tin su mes funkshón."
 
 #: onboarding/templates/account/step_3_account_user_type.html:19
 #: onboarding/templates/account/step_4_account_setup_admin.html:13
@@ -2058,21 +2030,20 @@ msgstr "Finalisá setup organisashon"
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:10
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:10
 #: onboarding/templates/step_4_report.html:10 onboarding/views.py:60
-msgid "KAT introduction"
-msgstr "KAT introdukshon"
+msgid "OpenKAT introduction"
+msgstr "OpenKAT introdukshon"
 
 #: onboarding/templates/dns_report.html:11
 msgid "DNS Report"
 msgstr "DNS Rapòrt"
 
 #: onboarding/templates/dns_report.html:13
-#, python-format
 msgid ""
-"These are the findings of a KAT-analysis (%(observed_at)s). Click a finding "
-"for more detailed information about the issue, its origin, severity and "
-"possible solutions."
+"These are the findings of a OpenKAT-analysis (%(observed_at)s). Click a "
+"finding for more detailed information about the issue, its origin, severity "
+"and possible solutions."
 msgstr ""
-"Esakinan ta e resultadonan di un KAT-analysis riba %(observed_at)s. Click un "
+"Esakinan ta e resultadonan di un OpenKAT-analysis riba %(observed_at)s. Click un "
 "resultadopa mas informashon detayá tokante e problema, su orígen, severidat "
 "i posibel solushonnan."
 
@@ -2081,37 +2052,37 @@ msgid "DNS Tree"
 msgstr "DNS Mapa"
 
 #: onboarding/templates/step_1_introduction.html:10
-#: rocky/templates/landing_page.html:13
-msgid "Welcome to KAT"
-msgstr "Bon Biní na KAT"
+#: rocky/templates/landing_page.html:12
+msgid "Welcome to OpenKAT"
+msgstr "Bon Biní na OpenKAT"
 
 #: onboarding/templates/step_1_introduction.html:12
 msgid ""
-"KAT is the \"Kwetsbaarheden Analyse Tool\" (Vulnerabilities Analysis Tool). "
-"An Open-Source-project developed by the Ministery of Public Health, "
+"OpenKAT is the \"Kwetsbaarheden Analyse Tool\" (Vulnerabilities Analysis "
+"Tool). An Open-Source-project developed by the Ministery of Public Health, "
 "Wellbeing and Sports to make your and our world a safer place."
 msgstr ""
-"KAT ta nifiká \"Kwetsbaarheden Analyse Tool\" (Vulnerebilidát Analysis "
+"OpenKAT ta nifiká \"Kwetsbaarheden Analyse Tool\" (Vulnerebilidát Analysis "
 "Tool). Un Open-Source-projecto traha dor di Ministerio di Salubridat, Medio "
 "Ambiente i Sport, pa hasi bo mundu i nos mundu un luga mas sigurá."
 
 #: onboarding/templates/step_1_introduction.html:21
 msgid ""
-"KAT is able to give insight into security risks on your online objects. For "
-"example, your websites, mailservers or online data."
+"OpenKAT is able to give insight into security risks on your online objects. "
+"For example, your websites, mailservers or online data."
 msgstr ""
-"KAT tin e abilidát di duna revelashon di riésgonan di siguridát di bo online "
+"OpenKAT tin e abilidát di duna revelashon di riésgonan di siguridát di bo online "
 "ophetonan. Por ehèmpel, bo website nan, mailservers òf online data."
 
 #: onboarding/templates/step_1_introduction.html:27
 msgid ""
-"KAT uses plugins to find and assess the area's that might be at risk and "
+"OpenKAT uses plugins to find and assess the area's that might be at risk and "
 "reports these back to you. Each plugin has its own skillset which could be "
 "scanning, normalizing or analyzing data. As a user you decide which areas "
 "you would like to monitor or scan and which insight you would like to "
 "receive."
 msgstr ""
-"KAT ta huza plugins pa deskubrì i evalúa e areanan ku por ta un riésgo i "
+"OpenKAT ta huza plugins pa deskubrì i evalúa e areanan ku por ta un riésgo i "
 "rapòrta esaki bèk na bo. Kada plugin tin nan mes sèt di abilidát ku por ta "
 "scan, nòrmalisá òf analisá data. Komo usario bo ta disidì kwa area bo tin "
 "gana di monitoriá òf skèn i tambe ki tipo di revelashon bo tin gana di "
@@ -2119,10 +2090,10 @@ msgstr ""
 
 #: onboarding/templates/step_1_introduction.html:33
 msgid ""
-"Within KAT you can view the insights as well as all the data KAT has found. "
-"You can choose to browse through the data or view reports."
+"Within OpenKAT you can view the insights as well as all the data OpenKAT has "
+"found. You can choose to browse through the data or view reports."
 msgstr ""
-"Den KAT bo por mira e insights i tambe tur data ku KAT a deskubrì. Bo por "
+"Den OpenKAT bo por mira e insights i tambe tur data ku KAT a deskubrì. Bo por "
 "skohé pa buska den e data òf wak rapòrt nan."
 
 #: onboarding/templates/step_1_introduction.html:38
@@ -2154,12 +2125,12 @@ msgstr "Rapport"
 
 #: onboarding/templates/step_2a_choose_report_info.html:15
 msgid ""
-"Reports within KAT contain an overview of the scanned objects, issues found "
-"within them and known security risks that the object might be vulnerable to. "
-"Each report gives a high overview of the state of the object as well as "
-"detailed information on what KAT found and possible solutions."
+"Reports within OpenKAT contain an overview of the scanned objects, issues "
+"found within them and known security risks that the object might be "
+"vulnerable to. Each report gives a high overview of the state of the object "
+"as well as detailed information on what OpenKAT found and possible solutions."
 msgstr ""
-"Rapòrtnan den KAT ta kontene un lista di ophetonan di skèn, problemanan haña "
+"Rapòrtnan den OpenKAT ta kontene un lista di ophetonan di skèn, problemanan haña "
 "serka nan i riesgo di siguridat nan ku e opheto por ta vulnerabel na dje. "
 "Kada rapòrt ta duna un lista prioritá di e estado di e opheto i tambe "
 "informashon detaya di tur loke KAT a enkontra i solushonanan posibel."
@@ -2170,14 +2141,14 @@ msgstr "Data"
 
 #: onboarding/templates/step_2a_choose_report_info.html:24
 msgid ""
-"KAT can scan and analyze by using plugins. Each plugin has it's unique "
+"OpenKAT can scan and analyze by using plugins. Each plugin has it's unique "
 "skillset and will collect specific data or give specific insights. You "
-"manage the plugins within your account which let's KAT know which plugins to "
-"run and on which objects or areas."
+"manage the plugins within your account which let's OpenKAT know which "
+"plugins to run and on which objects or areas."
 msgstr ""
-"KAT por skèn i analisá dor di huza plugins. Kada plugin tin nan mas sèt di "
+"OpenKAT por skèn i analisá dor di huza plugins. Kada plugin tin nan mas sèt di "
 "skills uniko i lo kolekta data spesifiko of duna mas informashon spesifiko. "
-"Bo ta maneha plugins den bo account ku ta laga KAT sa kwa plugins mester "
+"Bo ta maneha plugins den bo account ku ta laga OpenKAT sa kwa plugins mester "
 "huza riba kwa opheto òf areanan."
 
 #: onboarding/templates/step_2a_choose_report_info.html:31
@@ -2186,12 +2157,12 @@ msgstr "Generándo un rapport"
 
 #: onboarding/templates/step_2a_choose_report_info.html:33
 msgid ""
-"When you choose a report type KAT will guide you through the setup. KAT will "
-"ask the necesarry questions based on the input the report needs, as well as "
-"asks for permission to run plugins that you haven’t enabled yet but are "
-"needed to collect or analyze the data."
+"When you choose a report type OpenKAT will guide you through the setup. "
+"OpenKAT will ask the necesarry questions based on the input the report "
+"needs, as well as asks for permission to run plugins that you haven’t "
+"enabled yet but are needed to collect or analyze the data."
 msgstr ""
-"Ora bo skohe un tipo di rapòrt, KAT lo guiabu pa ku e setup. KAT lo "
+"Ora bo skohe un tipo di rapòrt, OpenKAT lo guiabu pa ku e setup. OpenKAT lo "
 "puntranan preguntanan nesesario basá riba e input ku e rapòrt mester, i "
 "tambe puntra pa pèrmiso pa run plugins ku bo no a aktiva ahinda pero ku ta "
 "nesesario pa pa kolekta òf analisa data."
@@ -2199,11 +2170,11 @@ msgstr ""
 #: onboarding/templates/step_2a_choose_report_info.html:38
 msgid ""
 "You can also choose to look at the collected data directly or generate your "
-"own report by selecting and running plugins on objects of your choice. KAT "
-"will present the results."
+"own report by selecting and running plugins on objects of your choice. "
+"OpenKAT will present the results."
 msgstr ""
 "Bo por tambe skohé pa mira e data kolekta direktamente òf genera bo mes "
-"rapòrt dor di selekta i start plugins riba ophetonan si bo eskoho. KAT lo "
+"rapòrt dor di selekta i start plugins riba ophetonan si bo eskoho. OpenKAT lo "
 "presentabu ku e resultadonan."
 
 #: onboarding/templates/step_2a_choose_report_info.html:42
@@ -2212,23 +2183,24 @@ msgstr "Permiso Nenga"
 
 #: onboarding/templates/step_2a_choose_report_info.html:44
 msgid ""
-"Plugins can be provided by KAT but they can also come from the community. "
-"Before a plugin can run, you need to give it permission by enabling it."
+"Plugins can be provided by OpenKAT but they can also come from the "
+"community. Before a plugin can run, you need to give it permission by "
+"enabling it."
 msgstr ""
-"Plugins ta bin di KAT pero nan tambe por bini dor di e komunidát. Promé un "
+"Plugins ta bin di OpenKAT pero nan tambe por bini dor di e komunidát. Promé un "
 "plugin por wordu huza, bo mester dunele pèrmiso dor di activé"
 
 #: onboarding/templates/step_2a_choose_report_info.html:49
 msgid ""
-"When you generate a report. KAT will let you know which plugins it requires "
-"or suggests so you can choose to enable them."
+"When you generate a report. OpenKAT will let you know which plugins it "
+"requires or suggests so you can choose to enable them."
 msgstr ""
-"Ora bo genera un rapòrt. KAT ta lagabu sa kwa plugins e mester òf duna'bu "
+"Ora bo genera un rapòrt. OpenKAT ta lagabu sa kwa plugins e mester òf duna'bu "
 "sugerencias pa skohé kwa pa activá."
 
 #: onboarding/templates/step_2a_choose_report_info.html:59
 msgid "Let's choose a report"
-msgstr "Skohé un rapòrt"
+msgstr "Ban skohé un rapòrt"
 
 #: onboarding/templates/step_2b_choose_report_type.html:12
 msgid "Choose a report - Type"
@@ -2236,12 +2208,12 @@ msgstr "Skohé un rapòrt - Tipo"
 
 #: onboarding/templates/step_2b_choose_report_type.html:14
 msgid ""
-"Within KAT you can view reports for each of your current objects. For "
+"Within OpenKAT you can view reports for each of your current objects. For "
 "specific reports you can choose one of the available report types and "
 "generate a report. Such as a pen-test, a DNS-report or a mail report to give "
 "some examples."
 msgstr ""
-"Den KAT bo por mira rapòrtnan pa kada un di bo ophetonan. Pa rapòrtnan "
+"Den OpenKAT bo por mira rapòrtnan pa kada un di bo ophetonan. Pa rapòrtnan "
 "specifikó bo por skohé un di e tipo rapòrtnan obtenibel i generá un rapòrt. "
 "Manera un pen-test, un DNS-rapòrt òf un mail rapòrt pa duna algun ehempel."
 
@@ -2251,10 +2223,10 @@ msgstr "Pa a tutoriál aki nos ta sugerí un DNS-rapòrt pa kuminsa ku ne."
 
 #: onboarding/templates/step_2b_choose_report_type.html:24
 msgid ""
-"When you start to generate this report. KAT will guide you through the "
+"When you start to generate this report. OpenKAT will guide you through the "
 "necessary steps."
 msgstr ""
-"Ora bo kuminsa generá e rapòrt aki. KAT lo guiá'bu dor di e stapnan "
+"Ora bo kuminsa generá e rapòrt aki. OpenKAT lo guiá'bu dor di e stapnan "
 "necesario."
 
 #: onboarding/templates/step_2b_choose_report_type.html:34
@@ -2268,16 +2240,16 @@ msgid "Setup scan"
 msgstr "Setup skèn"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:13
-msgid "Let KAT know what object to scan"
-msgstr "Laga KAT sa kwa opheto e tinku scan"
+msgid "Let OpenKAT know what object to scan"
+msgstr "Laga OpenKAT sa kwa opheto e tinku skèn"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:15
 msgid ""
-"Plugins scan and analyze objects. KAT needs to know which object(s) you "
+"Plugins scan and analyze objects. OpenKAT needs to know which object(s) you "
 "would like to scan and analyze for the DNS-report. So it can tell you which "
 "plugins are available for the choosen object."
 msgstr ""
-"Plugins skèn i analisá ophetonan. KAT mester sa kwa opheto(nan) abo tin gana "
+"Plugins skèn i analisá ophetonan. OpenKAT mester sa kwa opheto(nan) abo tin gana "
 "di skèn òf analisá pa e DNS-rapòrt. Pa e por bisa'bu kwa plugins ta "
 "obtenibel pa e opheto ku b'a skohé."
 
@@ -2287,15 +2259,15 @@ msgstr "Kompronde ophetonan"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:21
 msgid ""
-"A lot of things can be an object within the scope of KAT. For example a "
+"A lot of things can be an object within the scope of OpenKAT. For example a "
 "mailserver, an ip-address, a URL, a DNS record, a hostname or a network to "
 "name a few.  While these objects can be related to each other they are all "
-"objects within KAT that can be scanned to gain valuable insight."
+"objects within OpenKAT that can be scanned to gain valuable insight."
 msgstr ""
-"Hopi kos por ta un opheto den di e alkanse di KAT. Por ehempel un "
+"Hopi kos por ta un opheto den di e alkanse di OpenKAT. Por ehempel un "
 "mailserver, un ip-adrès, un URL, un DNS record, un hostname òf un netwèrk pa "
 "nombra un par. Mientras tantu e ophetonan aki por ta relatá na otro nan tur "
-"ta ophetonan den di KAT ku por wordu di skèn pa haña informashon balioso."
+"ta ophetonan den di OpenKAT ku por wordu di skèn pa haña informashon balioso."
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:29
 msgid "Creating, adding and editing objects"
@@ -2303,10 +2275,10 @@ msgstr "Kreando, añadiando i editá ophetonan"
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:31
 msgid ""
-"Within KAT you can view, add and edit objects from the organization’s object "
-"page."
+"Within OpenKAT you can view, add and edit objects from the organization’s "
+"object page."
 msgstr ""
-"Den KAT bo por mira, añadi i editá ophetonan di e organisashon su page di "
+"Den OpenKAT bo por mira, añadi i editá ophetonan di e organisashon su page di "
 "opheto."
 
 #: onboarding/templates/step_3a_setup_scan_ooi_info.html:36
@@ -2347,36 +2319,36 @@ msgstr "Dependesianan"
 msgid ""
 "Most objects have dependencies on the existence of other objects. For "
 "example a URL needs to be connected to a network, hostname, fqdn (fully "
-"qualified domain name) and ip-address. KAT collects these additional object "
-"automatically when possible. By running plugins to collect or extract this "
-"data."
+"qualified domain name) and ip-address. OpenKAT collects these additional "
+"object automatically when possible. By running plugins to collect or extract "
+"this data."
 msgstr ""
 "Mayoria ophetonan tin dependesianan riba e exsistencia di otro ophetonan. "
 "Por ehempel un URL mester ta konektá ku un nètwèrk, hostname, fqdn (fúl "
-"kwalifiká nòmber di domèin) i ip-adrès. KAT ta kolektá e ophetonan adishonal "
+"kwalifiká nòmber di domèin) i ip-adrès. OpenKAT ta kolektá e ophetonan adishonal "
 "automatikamente si ta posibel. Dor di start plugins pa kolektá òf extrahé "
 "data."
 
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:36
 msgid ""
-"The additional objects that KAT created will be added to your object list as "
-"separate objects. If KAT can’t add them automatically it will guide you "
-"through the process of creating them manually."
+"The additional objects that OpenKAT created will be added to your object "
+"list as separate objects. If OpenKAT can’t add them automatically it will "
+"guide you through the process of creating them manually."
 msgstr ""
-"E ophetonan adishonal ku KAT á krea lo wordu agregá na e lista di opehto "
-"komo ophetonan separá. Si KAT no por agregá esakinan automatikamente e ta "
+"E ophetonan adishonal ku OpenKAT á krea lo wordu agregá na e lista di opehto "
+"komo ophetonan separá. Si OpenKAT no por agregá esakinan automatikamente e ta "
 "guia'bu dor di e processo pa kreanan manualmente."
 
 #: onboarding/templates/step_3b_setup_scan_ooi_add.html:47
 msgid "Create object"
-msgstr "Krea ophetonan"
+msgstr "Krea opheto"
 
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:15
 msgid ""
-"Based on the url you provided KAT added the necesarry additional objects to "
-"create a url object."
+"Based on the url you provided OpenKAT added the necesarry additional objects "
+"to create a url object."
 msgstr ""
-"Á base di e url ku b'a duna, KAT a añadi e ophetonan necesario pa krea un "
+"Á base di e url ku b'a duna, OpenKAT a añadi e ophetonan necesario pa krea un "
 "url opheto."
 
 #: onboarding/templates/step_3c_setup_scan_ooi_detail.html:23
@@ -2418,8 +2390,8 @@ msgid "Start scanning"
 msgstr "Kuminsa huza KAT"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:10
-msgid "KAT Introduction"
-msgstr "KAT Introdukshon"
+msgid "OpenKAT Introduction"
+msgstr "OpenKAT Introdukshon"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:12
 msgid "Setup - Set clearance level for example.org"
@@ -2430,16 +2402,16 @@ msgid "Introduction"
 msgstr "Introdukshon"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:15
-#: rocky/templates/partials/form/indemnification_add_form.html:7
+#: rocky/templates/partials/form/indemnification_add_form.html:6
 msgid ""
 "Some scans are lightweight while others might be a bit more agressive with "
-"their scanning. KAT requires you to set a clearance level for each object to "
-"prevent you from unintentionally running agressive scans. For example you "
-"might have the right to run any type of scan on your own server but you "
-"probably don’t have the right to do so for objects owned by other people of "
-"companies."
+"their scanning. OpenKAT requires you to set a clearance level for each "
+"object to prevent you from unintentionally running agressive scans. For "
+"example you might have the right to run any type of scan on your own server "
+"but you probably don’t have the right to do so for objects owned by other "
+"people of companies."
 msgstr ""
-"Tin skènnan ta ligero mientras otronan por ta mas agresivo ku scanning. KAT "
+"Tin skènnan ta ligero mientras otronan por ta mas agresivo ku scanning. OpenKAT "
 "ta requerí abo pa pone un nivél di autorisashon pa kada opheto pa prevení "
 "abo pa in-intenshonalmente start skènnan agresivo. Por ehempel bo tin "
 "pèrmiso pa start kwalkièr tipo di skèn riba bo mes server pero abo "
@@ -2454,13 +2426,13 @@ msgstr "Kon pa sa nivél di autorisashon requerí"
 msgid ""
 "Each plugin that scans will have a scan intesity score. The intesity of the "
 "scan must be equal to or below the clearance level you set for your object. "
-"If the scan has an intesity level that is too high, KAT will notify you "
+"If the scan has an intesity level that is too high, OpenKAT will notify you "
 "before running it. Visually clearance levels and intesity scores are "
 "indicated with little cat paws."
 msgstr ""
 "Kada plugin ku skèn tin un score di nivél di intensidát. E nivél di "
-"intesidát di e skèn mester ta parew òf bou di e nivèl di autorisashon ku b'a "
-"pone riba bo opheto. Si e skèn tin un intensidát ku ta muchu haltu, KAT lo "
+"intesidát di e skèn mester ta parew òf bou di e nivel di autorisashon ku b'a "
+"pone riba bo opheto. Si e skèn tin un intensidát ku ta muchu haltu, OpenKAT lo "
 "notiká'bu prome ku start e scan. Visualmente nivél di autorisashon i nivél "
 "di intensidát ta wordu indikà ku patanan di pushi."
 
@@ -2490,11 +2462,11 @@ msgstr "Poniendo i kambiando bo nivél di autorisashon"
 
 #: onboarding/templates/step_3d_set_clearance_level.html:53
 msgid ""
-"After creating a new object KAT will ask you to set a clearance level. On "
-"the object detail page you can always change the clearance level. For the "
+"After creating a new object OpenKAT will ask you to set a clearance level. "
+"On the object detail page you can always change the clearance level. For the "
 "onboarding we will suggest to set the clearance level to L2."
 msgstr ""
-"Despues di krea un opheto nobo KAT lo puntra'bu pa pone un nivél di "
+"Despues di krea un opheto nobo OpenKAT lo puntra'bu pa pone un nivél di "
 "autorisashon. Riba e opheto su página detaya por por semper kambia e nivél "
 "di authorisahon. Pa e abòrdamentu aki nos lo sugerí'bu pa pone e nivél na L2."
 
@@ -2517,11 +2489,11 @@ msgstr "Plugins su introduskhon"
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:14
 msgid ""
-"KAT uses plugins to scan, check and analyze. Each plugin will bring a "
+"OpenKAT uses plugins to scan, check and analyze. Each plugin will bring a "
 "specific skillset that will help to generate your report. There are three "
 "types of plugins."
 msgstr ""
-"KAT ta huza plugins pa scan, check i analisá. Kada plugin ta trese un "
+"OpenKAT ta huza plugins pa scan, check i analisá. Kada plugin ta trese un "
 "abilidát specifikó ku lo juda pa generá bo rapòrt. Tin tres tipo di plugins."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:22
@@ -2563,14 +2535,14 @@ msgstr "Analisá e data disponibel pa yega na konklushonnan i perspectivanan."
 
 #: onboarding/templates/step_3e_setup_scan_select_plugins.html:43
 msgid ""
-"KAT will be able to generate a full report when all the required and "
+"OpenKAT will be able to generate a full report when all the required and "
 "suggested plugins are enabled. If you choose not to give a plugin permission "
 "to run, the data that plugin would collect or produce will be left out of "
 "the report which will then be generated based on the available data "
 "collected by the enabled plugins. Below are the suggested and required "
 "plugins for this report."
 msgstr ""
-"KAT ta dispuesto pa generá un fúl rapòrt ora tur e plugins nan requerí i "
+"OpenKAT ta dispuesto pa generá un fúl rapòrt ora tur e plugins nan requerí i "
 "sugerá ta aktivá. Si bo skohé pa no duna un plugin pèrmiso  pa start, e data "
 "ku e plugin lo mester kolektá òf produsí lo wordu saka for di e rapòrt ku lo "
 "generá a base di e data ku tin disponibel kolektá pa e plugins aktivo. Abou "
@@ -2610,11 +2582,11 @@ msgstr ""
 #: onboarding/templates/step_4_report.html:27
 msgid ""
 "After the onboarding, boefjes run in the background. This enables you to use "
-"KAT in the meantime without waiting for scans to finish. When you would like "
-"to see the status of a scan you can open the \"tasks\" page."
+"OpenKAT in the meantime without waiting for scans to finish. When you would "
+"like to see the status of a scan you can open the \"tasks\" page."
 msgstr ""
 "Despues di e onboarding, boefjes nan ta sigi den background. Esaki ta pone "
-"ku bo por uza KAT mientras tantu sin mester warda te ora e skènnan kaba. "
+"ku bo por uza OpenKAT mientras tantu sin mester warda te ora e skènnan kaba. "
 "Kaminda bo lo por ke mira e status di un skèn bo por habri e pagina di "
 "\"tarea\". "
 
@@ -2657,10 +2629,10 @@ msgstr "Account setup"
 
 #: onboarding/views.py:204
 msgid ""
-"KAT added the following required object to your object list to complete your "
-"request: {}"
+"OpenKAT added the following required object to your object list to complete "
+"your request: {}"
 msgstr ""
-"KAT a añadi e siguinte opheton na bo lista di ophetonan pa kompleta bo "
+"OpenKAT a añadi e siguinte opheton na bo lista di ophetonan pa kompleta bo "
 "petishon: {}"
 
 #: onboarding/views.py:313
@@ -2672,26 +2644,20 @@ msgid "No DNS zone found."
 msgstr "Zona di DNS no por a wòrdu enkontrá."
 
 #: onboarding/views.py:401
-msgid "KAT Setup"
-msgstr "KAT Setup"
+msgid "OpenKAT Setup"
+msgstr "OpenKAT Setup"
 
 #: onboarding/views.py:462
-#, fuzzy, python-brace-format
-#| msgid "User succesfully created."
 msgid "{org_name} succesfully created."
-msgstr "User a wòrdu krea ku èksito."
+msgstr "{org_name} a wòrdu krea ku èksito."
 
 #: onboarding/views.py:493
-#, fuzzy, python-brace-format
-#| msgid "Organization succesfully updated."
 msgid "{org_name} succesfully updated."
-msgstr "Organisashon a wòrdu kambia ku èksito."
+msgstr "{org_name} a wòrdu kambia ku èksito."
 
 #: onboarding/views.py:568 onboarding/views.py:596 onboarding/views.py:620
-#, fuzzy, python-brace-format
-#| msgid "User succesfully created."
 msgid "{name} succesfully created."
-msgstr "User a wòrdu krea ku èksito."
+msgstr "{name} a wòrdu krea ku èksito."
 
 #: tools/forms/base.py:64
 msgid "Date"
@@ -2708,8 +2674,8 @@ msgid "KAT-ID"
 msgstr "KAT-ID"
 
 #: tools/forms/finding_type.py:28
-msgid "Unique ID within KAT, for this type"
-msgstr "ID úniko den KAT, pa e tipo aki"
+msgid "Unique ID within OpenKAT, for this type"
+msgstr "ID úniko den OpenKAT, pa e tipo aki"
 
 #: tools/forms/finding_type.py:32
 msgid "Title"
@@ -2909,11 +2875,11 @@ msgstr "Agrega e fecha y ora di bo diskubrimentu (UTC)"
 
 #: tools/forms/settings.py:54
 msgid ""
-"KAT stores a time indication with every observation, so it is possible to "
-"see the status of your network through time. Select a datetime to change the "
-"view to represent that moment in time."
+"OpenKAT stores a time indication with every observation, so it is possible "
+"to see the status of your network through time. Select a datetime to change "
+"the view to represent that moment in time."
 msgstr ""
-"KAT ta warda indikashon di tempu pa kada obserbashon, kèmèn ta posíbel pa "
+"OpenKAT ta warda indikashon di tempu pa kada obserbashon, kèmèn ta posíbel pa "
 "mira kada status di bo nètwèrk via di e orario. Selektá un orario pa kambia "
 "e aparensia pa representá e momento ey den tempu."
 
@@ -2942,8 +2908,6 @@ msgid "Organization code(s) in CSV does not exist in our database"
 msgstr "Codigo di organisashon den e CSV no ta èksisti den nos database"
 
 #: tools/forms/upload_csv.py:20
-#, fuzzy
-#| msgid "The number of columns does not meet the requirements."
 msgid "The number of columns do not meet the requirements."
 msgstr "E kantidat di kòlòm nan no ta bon."
 
@@ -2972,10 +2936,9 @@ msgid "Only accepts CSV file."
 msgstr "Ta accepta solamente CSV."
 
 #: tools/models.py:49
-#, fuzzy
-#| msgid "Choose another organization."
+
 msgid "The name of the organisation"
-msgstr "Skohé un otro organisashon."
+msgstr "E nòmber di e organisashon"
 
 #: tools/models.py:55
 msgid ""
@@ -3015,120 +2978,108 @@ msgstr "Organisashonnan"
 
 #: rocky/settings.py:355
 msgid "Blue light"
-msgstr ""
+msgstr "Blòw kla"
 
 #: rocky/settings.py:356
-#, fuzzy
-#| msgid "medium"
 msgid "Blue medium"
-msgstr "mediano"
+msgstr "Blòw mediano"
 
 #: rocky/settings.py:357
 msgid "Blue dark"
-msgstr ""
+msgstr "Blòw skur"
 
 #: rocky/settings.py:358
 msgid "Green light"
-msgstr ""
+msgstr "Bèrdè kla"
 
 #: rocky/settings.py:359
-#, fuzzy
-#| msgid "medium"
 msgid "Green medium"
-msgstr "mediano"
+msgstr "Bèrdè mediano"
 
 #: rocky/settings.py:360
 msgid "Green dark"
-msgstr ""
+msgstr "Bèrdè skur"
 
 #: rocky/settings.py:361
 msgid "Yellow light"
-msgstr ""
+msgstr "Hel kla"
 
 #: rocky/settings.py:362
-#, fuzzy
-#| msgid "medium"
 msgid "Yellow medium"
-msgstr "mediano"
+msgstr "Hel mediano"
 
 #: rocky/settings.py:363
 msgid "Yellow dark"
-msgstr ""
+msgstr "Hel skur"
 
 #: rocky/settings.py:364
 msgid "Orange light"
-msgstr ""
+msgstr "Oraño kla"
 
 #: rocky/settings.py:365
-#, fuzzy
-#| msgid "medium"
 msgid "Orange medium"
-msgstr "mediano"
+msgstr "Oraño mediano"
 
 #: rocky/settings.py:366
 msgid "Orange dark"
-msgstr ""
+msgstr "Oraño skur"
 
 #: rocky/settings.py:367
 msgid "Red light"
-msgstr ""
+msgstr "Kòra kla"
 
 #: rocky/settings.py:368
-#, fuzzy
-#| msgid "medium"
 msgid "Red medium"
-msgstr "mediano"
+msgstr "Kòra mediano"
 
 #: rocky/settings.py:369
-#, fuzzy
-#| msgid "Red teamer"
 msgid "Red dark"
-msgstr "Tìm kòrá"
+msgstr "Kòra skur"
 
 #: rocky/settings.py:370
 msgid "Violet light"
-msgstr ""
+msgstr "Violeta kla"
 
 #: rocky/settings.py:371
-#, fuzzy
-#| msgid "medium"
 msgid "Violet medium"
-msgstr "mediano"
+msgstr "Violeta mediano"
 
 #: rocky/settings.py:372
 msgid "Violet dark"
-msgstr ""
+msgstr "Violeta skur"
 
 #: rocky/settings.py:376
 msgid "Plain"
-msgstr ""
+msgstr "Plano"
 
 #: rocky/settings.py:377
 msgid "Solid"
-msgstr ""
+msgstr "Solido"
 
 #: rocky/settings.py:378
 msgid "Dashed"
-msgstr ""
+msgstr "Strepiá"
 
 #: rocky/settings.py:379
 msgid "Dotted"
-msgstr ""
+msgstr "Puntá"
 
 #: rocky/templates/404.html:10
 msgid "Error code 404: Page not found"
-msgstr ""
+msgstr "Codigo di error 404: Página no enkontrá"
 
 #: rocky/templates/404.html:12
 msgid ""
 "The page you wanted to see or the file you wanted to view was not found."
 msgstr ""
+"E página ku bo kera wak òf e file ku bo kera mira no por wordu enkontra."
 
 #: rocky/templates/404.html:15
 msgid ""
 "You may be able to find the information you are looking for through the "
 "following pages:"
 msgstr ""
+"Porta bo por haña e informashon ku bo ta buskando riba e siguinte paginanan: "
 
 #: rocky/templates/404.html:19 rocky/templates/crisis_room/crisis_room.html:10
 msgid "Crisis Room"
@@ -3148,18 +3099,18 @@ msgstr "Diskubrimentu"
 
 #: rocky/templates/404.html:29
 msgid "Or go back to the main page"
-msgstr ""
+msgstr "Òf bai bèk na e prome pagina"
 
 #: rocky/templates/404.html:31
 msgid "Homepage"
-msgstr ""
+msgstr "Homepage"
 
 #: rocky/templates/crisis_room/crisis_room.html:12
 msgid ""
-"An overview of all (critical) findings KAT found. Check the detail section "
-"for additional severity information."
+"An overview of all (critical) findings OpenKAT found. Check the detail "
+"section for additional severity information."
 msgstr ""
-"Un relato general di tur diskubrimentu (krítiko) ku KAT a enkontrá. Chèk e "
+"Un relato general di tur diskubrimentu (krítiko) ku OpenKAT a enkontrá. Chèk e "
 "sekshon detayá pa informashon addishonal severo."
 
 #: rocky/templates/crisis_room/crisis_room_findings_block.html:7
@@ -3284,12 +3235,11 @@ msgid "Finding"
 msgstr "Diskubrimentu"
 
 #: rocky/templates/findings/finding_list.html:14
-#, python-format
 msgid ""
-"An overview of all findings KAT found on %(date)s. Each finding relates to "
-"an object. Click a finding for additional information."
+"An overview of all findings OpenKAT found on %(date)s. Each finding relates "
+"to an object. Click a finding for additional information."
 msgstr ""
-"Un relato general di tur diskubrimentu KAT á enkontrá riba %(date)s. Kada "
+"Un relato general di tur diskubrimentu OpenKAT á enkontrá riba %(date)s. Kada "
 "diskubrimentu ta relatá na un opheto. Klék un diskubrimentu pa informashon "
 "adishonál."
 
@@ -3324,24 +3274,18 @@ msgstr "Grafa"
 
 #: rocky/templates/findings/finding_list.html:43
 #: rocky/templates/findings/finding_list.html:85
-#, python-format
 msgid "Show details for %(finding)s"
 msgstr "Mustra detayes pa %(finding)s"
 
 #: rocky/templates/findings/finding_list.html:68
-#, fuzzy
-#| msgid "Finding type"
 msgid "Finding type:"
-msgstr "Tipo di diskubrimentu"
+msgstr "Tipo di diskubrimentu:"
 
 #: rocky/templates/findings/finding_list.html:71
-#, python-format
 msgid "Show details for %(finding_type)s"
 msgstr "Mustra detayes pa %(finding_type)s"
 
 #: rocky/templates/findings/finding_list.html:75
-#, fuzzy
-#| msgid "Object type"
 msgid "OOI type:"
 msgstr "Tipo di opheto"
 
@@ -3351,10 +3295,8 @@ msgid "Show %(ooi_type)s objects"
 msgstr "Mustra %(ooi_type)s ophetonan"
 
 #: rocky/templates/findings/finding_list.html:82
-#, fuzzy
-#| msgid "Source"
 msgid "Source OOI:"
-msgstr "Orígen"
+msgstr "Orígen OOI:"
 
 #: rocky/templates/footer.html:19 rocky/views/privacy_statement.py:13
 msgid "Privacy Statement"
@@ -3381,12 +3323,10 @@ msgid "Tree graph"
 msgstr "Mapa di Grafa"
 
 #: rocky/templates/header.html:18
-msgid "KAT logo, go to the homepage of KAT"
-msgstr "KAT logo, bai na e homepage di KAT"
+msgid "OpenKAT logo, go to the homepage of OpenKAT"
+msgstr "KAT logo, bai na e homepage di OpenKAT"
 
 #: rocky/templates/header.html:30
-#, fuzzy
-#| msgid "Crisis Room"
 msgid "Crisis room"
 msgstr "Sala di krísis"
 
@@ -3426,116 +3366,110 @@ msgstr ""
 
 #: rocky/templates/indemnification_present.html:10
 #: rocky/templates/indemnification_present.html:13
-#, fuzzy
-#| msgid "go to:"
 msgid "Go to"
-msgstr "bai na:"
+msgstr "Bai na:"
 
-#: rocky/templates/landing_page.html:14
+#: rocky/templates/landing_page.html:13
 msgid "Kwetsbaarheden Analyse Tool"
 msgstr "Kwetsbaarheden Analyse Tool"
 
-#: rocky/templates/landing_page.html:21
-msgid "What is KAT?"
-msgstr "Kiko ta bo meta ku KAT?"
+#: rocky/templates/landing_page.html:19
+msgid "What is OpenKAT?"
+msgstr "Kiko ta OpenKAT?"
 
-#: rocky/templates/landing_page.html:24
-#, fuzzy
-#| msgid ""
-#| "KAT is a vulnerability analysis tool. An Open Source-project developed by "
-#| "the Ministry of Health, wellbeing and sports to make your and our world "
-#| "safer."
+#: rocky/templates/landing_page.html:21
 msgid ""
-"KAT is a vulnerability analysis tool. An Open Source-project developed by "
-"the Ministry of Health, Welfare and Sport to make your and our world safer."
+"OpenKAT is a vulnerability analysis tool. An Open Source-project developed "
+"by the Ministry of Health, Welfare and Sport to make your and our world "
+"safer."
 msgstr ""
-"KAT ta un tool pa analisá vulnerabilidat. Un Open Source projekto diseña dor "
+"OpenKAT ta un tool pa analisá vulnerabilidat. Un Open Source projekto diseña dor "
 "di Ministerio di Salubridat, bienestar i spòrt pa hasi bo i nos mundu mas "
 "sigur."
 
-#: rocky/templates/landing_page.html:34
-msgid "KAT sees"
-msgstr "KAT ta mira"
+#: rocky/templates/landing_page.html:30
+msgid "OpenKAT sees"
+msgstr "OpenKAT ta mira"
 
-#: rocky/templates/landing_page.html:37
+#: rocky/templates/landing_page.html:32
 msgid ""
-"Dozens of tools are integrated in KAT to view the world (digital and "
+"Dozens of tools are integrated in OpenKAT to view the world (digital and "
 "analog). <br>Our motto is therefore: I see, I see, what you do not see."
 msgstr ""
-"Yen di tools ta integra den KAT pa mira e mundu (digital i  anoloog). "
+"Mayoria tools ta integra den OpenKAT pa mira e mundu (digital i anologo). "
 "<br>Nos motto ta e ora ey: Mi ta mira, mi ta mira loke bo no ta mira."
 
-#: rocky/templates/landing_page.html:45
-msgid "KAT knows"
-msgstr "KAT sá"
+#: rocky/templates/landing_page.html:39
+msgid "OpenKAT knows"
+msgstr "OpenKAT sá"
 
-#: rocky/templates/landing_page.html:48
+#: rocky/templates/landing_page.html:41
 msgid ""
-"KAT does not forget (just like that), and can be queried without scanning "
-"again. Also about a historical situation."
+"OpenKAT does not forget (just like that), and can be queried without "
+"scanning again. Also about a historical situation."
 msgstr ""
-"KAT no ta lubida (simplemente asina), i por kore sin mester skèn atrobe. "
+"OpenKAT no ta lubida (simplemente asina), i por kore sin mester skèn atrobe. "
 "Tambe tokante situashonnan historiko."
 
-#: rocky/templates/landing_page.html:56
-msgid "KAT is secure"
-msgstr "KAT ta sigúr"
+#: rocky/templates/landing_page.html:48
+msgid "OpenKAT is secure"
+msgstr "OpenKAT ta sigurá"
 
-#: rocky/templates/landing_page.html:59
+#: rocky/templates/landing_page.html:50
 msgid ""
 "Forensically secured storage of evidence is one of the basic ingredients of "
-"KAT."
-msgstr "Sigurá evidensia forénsiko ta un di e íngredientenan basiko di kAT."
+"OpenKAT."
+msgstr "Evidensia forénsiko sigurá ta un di e íngredientenan basiko di OpenKAT."
 
-#: rocky/templates/landing_page.html:66
-msgid "KAT is sweet"
-msgstr "KAT ta dushi"
+#: rocky/templates/landing_page.html:56
+msgid "OpenKAT is sweet"
+msgstr "OpenKAT ta dushi"
 
-#: rocky/templates/landing_page.html:69
+#: rocky/templates/landing_page.html:58
 msgid ""
-"KAT thinks about privacy, and stores what is necessary, within the rules of "
-"your organization and the law."
+"OpenKAT thinks about privacy, and stores what is necessary, within the rules "
+"of your organization and the law."
 msgstr ""
-"KAT ta pensa riba privacy, i ta warda loke ta nesesario, den e reglanan di "
+"OpenKAT ta pensa riba privacy, i ta warda loke ta nesesario, den e reglanan di "
 "bo organisashon i e lèi."
 
-#: rocky/templates/landing_page.html:79
+#: rocky/templates/landing_page.html:68
 msgid "A wide playing field"
 msgstr "Un vèld grandi pa hunga"
 
-#: rocky/templates/landing_page.html:81
+#: rocky/templates/landing_page.html:70
 msgid ""
-"KAT makes a copy of the actual reality by means of the integrated tools. "
+"OpenKAT makes a copy of the actual reality by means of the integrated tools. "
 "Within this copy you can search for answers to countless security and policy "
 "questions. Expected and unexpected changes in the world are made visible, "
 "and where necessary reported or made known directly to the right people."
 msgstr ""
-"KAT ta traha un kopia di e realidat aktual dor di e tools nan integrá. Den e "
+"OpenKAT ta traha un kopia di e realidat aktual dor di e tools nan integrá. Den e "
 "kopianan aki bo por buska pa kontestanan pa yen di preguntanan di siguridat "
 "i policy Kambionan den mundu espera i inespera ta wordu hasi visibel, i "
 "kaminda ta nesesario wordu rapòrta òf pa e hendenan apropia haña sa."
 
 #: rocky/templates/legal/privacy_statement.html:11
-msgid "KAT Privacy Statement"
-msgstr "KAT Deklarashon di Privasidat"
+msgid "OpenKAT Privacy Statement"
+msgstr "OpenKAT Deklarashon di Privasidat"
 
-#: rocky/templates/legal/privacy_statement.html:12
+#: rocky/templates/legal/privacy_statement.html:14
 msgid ""
-"KAT is dedicated to protecting the confidentiality and privacy of "
-"information entrusted to it. As part of this fundamental obligation, KAT is "
-"committed to the appropriate protection and use of personal information "
+"OpenKAT is dedicated to protecting the confidentiality and privacy of "
+"information entrusted to it. As part of this fundamental obligation, OpenKAT "
+"is committed to the appropriate protection and use of personal information "
 "(sometimes referred to as \"personal data\", \"personally identifiable "
 "information\" or \"PII\") that has been collected online."
 msgstr ""
-"KAT is dedicated to protecting the confidentiality and privacy of "
-"information entrusted to it. As part of this fundamental obligation, KAT is "
+"OpenKAT is dedicated to protecting the confidentiality and privacy of "
+"information entrusted to it. As part of this fundamental obligation, OpenKAT is "
 "committed to the appropriate protection and use of personal information "
 "(sometimes referred to as \"personal data\", \"personally identifiable "
 "information\" or \"PII\") that has been collected online."
 
 #: rocky/templates/oois/error.html:11
 msgid "Object List"
-msgstr "lista di opheto"
+msgstr "Lista di opheto"
 
 #: rocky/templates/oois/error.html:14
 msgid "An error occurred. Please contact a system administrator."
@@ -3556,7 +3490,6 @@ msgstr ""
 "agregá na e propiedát den e página di diskubrimentunan."
 
 #: rocky/templates/oois/ooi_add.html:38
-#, python-format
 msgid "Add %(display_type)s"
 msgstr "Añadí %(display_type)s"
 
@@ -3569,7 +3502,6 @@ msgid "Select the type of object you want to create."
 msgstr "Selektá e tipo di opheto ku bo ke krea"
 
 #: rocky/templates/oois/ooi_delete.html:12
-#, python-format
 msgid "Delete %(primary_key)s"
 msgstr "Kita %(primary_key)s"
 
@@ -3579,7 +3511,6 @@ msgid "Are you sure?"
 msgstr "Bo ta sigur?"
 
 #: rocky/templates/oois/ooi_delete.html:18
-#, python-format
 msgid "Here you can delete the %(display_type)s."
 msgstr "Akinan bo por kita e %(display_type)s."
 
@@ -3590,7 +3521,6 @@ msgstr "Jabi"
 
 #: rocky/templates/oois/ooi_delete.html:43
 #: rocky/templates/partials/ooi_detail_toolbar.html:12
-#, python-format
 msgid "Delete %(display_type)s"
 msgstr "Kita %(display_type)s"
 
@@ -3601,7 +3531,7 @@ msgstr ""
 
 #: rocky/templates/oois/ooi_detail.html:30
 msgid "using boefjes"
-msgstr "Boefjes Posibel"
+msgstr "uzando boefjes"
 
 #: rocky/templates/oois/ooi_detail.html:53
 #: rocky/templates/oois/ooi_detail_origins_observations.html:11
@@ -3741,12 +3671,10 @@ msgstr "Tarea ID"
 
 #: rocky/templates/oois/ooi_edit.html:11
 #: rocky/templates/partials/ooi_detail_toolbar.html:8
-#, python-format
 msgid "Edit %(display_type)s"
 msgstr "Editá %(display_type)s"
 
 #: rocky/templates/oois/ooi_edit.html:14
-#, python-format
 msgid "Here you can edit the %(display_type)s."
 msgstr "Akinan bo por editá e %(display_type)s."
 
@@ -3759,7 +3687,6 @@ msgstr ""
 "editá."
 
 #: rocky/templates/oois/ooi_edit.html:44
-#, python-format
 msgid "Save %(display_type)s"
 msgstr "Save %(display_type)s"
 
@@ -3768,10 +3695,6 @@ msgid "Currently there are no findings for OOI"
 msgstr "Aktualmente no a diskubri nada pa OOI"
 
 #: rocky/templates/oois/ooi_list.html:13
-#, fuzzy
-#| msgid ""
-#| "An overview of your object list. Objects can be added manually or by "
-#| "running boefjes. Click an object for additional information."
 msgid ""
 "An overview of your object list. Objects can be added manually or by running "
 "boefjes.</br> Click an object for additional information."
@@ -3785,22 +3708,16 @@ msgstr "Aktuálmente filtrá riba:"
 
 #: rocky/templates/oois/ooi_list.html:22
 #: rocky/templates/partials/scan_history.html:9
-#, fuzzy
-#| msgid "Filter by"
 msgid "Filter"
-msgstr "Filtra pa"
+msgstr "Filtrá"
 
 #: rocky/templates/oois/ooi_list.html:25
-#, fuzzy, python-format
-#| msgid "Show %(ooi_type)s objects"
 msgid "Showing %(length)s of %(total)s objects"
-msgstr "Mustra %(ooi_type)s ophetonan"
+msgstr "Mustrando %(length)s di %(total)s ophetonan"
 
 #: rocky/templates/oois/ooi_list.html:50 rocky/templates/oois/ooi_list.html:52
-#, fuzzy
-#| msgid "Related objects"
 msgid "Delete object(s)"
-msgstr "Ophetonan relatá"
+msgstr "Kita opheto(nan)"
 
 #: rocky/templates/oois/ooi_page_tabs.html:4
 msgid "List of views for OOI"
@@ -3808,7 +3725,7 @@ msgstr "Lista di resulatadonan pa OOI"
 
 #: rocky/templates/oois/ooi_page_tabs.html:7
 msgid "Overview"
-msgstr "Resúmen di kliénte:"
+msgstr "Resúmen"
 
 #: rocky/templates/oois/ooi_past_due_warning.html:6
 msgid "This object is past due"
@@ -3832,7 +3749,6 @@ msgstr ""
 
 #: rocky/templates/oois/ooi_past_due_warning.html:19
 #: rocky/templates/partials/hyperlink_ooi_id.html:5
-#, python-format
 msgid "Show details for %(name)s"
 msgstr "Mustra detayes pa %(name)s"
 
@@ -3858,23 +3774,20 @@ msgid "Findings report for %(name)s"
 msgstr "Rapport di resultadonan pa %(name)s"
 
 #: rocky/templates/oois/ooi_report.html:22
-#, python-format
 msgid ""
-"These are the findings of a KAT-analysis on %(observed_at)s. Click a finding "
-"for more detailed information about the issue, its origin, severity and "
-"possible solutions."
+"These are the findings of a OpenKAT-analysis on %(observed_at)s. Click a "
+"finding for more detailed information about the issue, its origin, severity "
+"and possible solutions."
 msgstr ""
-"Esakinan ta e resultadonan di un KAT-analysis riba %(observed_at)s. Click un "
+"Esakinan ta e resultadonan di un OpenKAT-analysis riba %(observed_at)s. Click un "
 "resultadopa mas informashon detayá tokante e problema, su orígen, severidat "
 "i posibel solushonnan."
 
 #: rocky/templates/oois/ooi_report_404.html:15
-#, python-format
 msgid "A report for %(name)s wasn't found."
 msgstr "Un rapport pa %(name)s no por a wordu haña."
 
 #: rocky/templates/oois/ooi_report_404.html:19
-#, python-format
 msgid ""
 "Perhaps it never was, perhaps it just didn't exist on %(observed_at)s<br> "
 "Try some other dates!"
@@ -3888,31 +3801,27 @@ msgstr "Resúmen pa"
 
 #: rocky/templates/oois/ooi_summary.html:20
 msgid "Below you can see findings that were found for"
-msgstr ""
+msgstr "Abou bo por mira diskubrimentunan ku a wordu haña pa"
 
 #: rocky/templates/oois/ooi_summary.html:21
 msgid "and direct  children of this"
-msgstr ""
+msgstr "i direktamente yiu di esaki"
 
 #: rocky/templates/oois/ooi_summary.html:24
 msgid "This"
-msgstr ""
+msgstr "Esaki"
 
 #: rocky/templates/oois/ooi_summary.html:24
-#, fuzzy
-#| msgid "Go to tree view"
 msgid "tree view"
-msgstr "Bai na mapa di resultado"
+msgstr "mapa di resultado"
 
 #: rocky/templates/oois/ooi_summary.html:24
 msgid "of the"
-msgstr ""
+msgstr "di e"
 
 #: rocky/templates/oois/ooi_summary.html:25
-#, fuzzy
-#| msgid "Show %(ooi_type)s objects"
 msgid "shows the same objects."
-msgstr "Mustra %(ooi_type)s ophetonan"
+msgstr "mustrando e mesun ophetonan."
 
 #: rocky/templates/oois/ooi_tree.html:13
 msgid "Object tree"
@@ -3954,10 +3863,8 @@ msgid "Save organization"
 msgstr "Warda organisashon"
 
 #: rocky/templates/organizations/organization_list.html:13
-#, fuzzy
-#| msgid "Edit organization"
 msgid "Add new organization"
-msgstr "Organisashon"
+msgstr "Añadi organisashon nobo"
 
 #: rocky/templates/organizations/organization_list.html:18
 msgid "Organization overview:"
@@ -3976,7 +3883,7 @@ msgstr "Account setup pa miembro"
 
 #: rocky/templates/organizations/organization_member_add.html:13
 msgid "Member details"
-msgstr "Habri detayes"
+msgstr "Detayes di miembro"
 
 #: rocky/templates/organizations/organization_member_edit.html:11
 #: rocky/views/organization_member_edit.py:56
@@ -3991,11 +3898,11 @@ msgstr "Editá %(name)s"
 #: rocky/templates/organizations/organization_member_edit.html:21
 #: rocky/templates/organizations/organization_member_list.html:18
 msgid "Member name"
-msgstr "Nòmber di Miembro"
+msgstr "Nòmber di miembro"
 
 #: rocky/templates/organizations/organization_member_edit.html:25
 msgid "Role in organization"
-msgstr "Bo ròl den e organisashon"
+msgstr "Ròl den organisashon"
 
 #: rocky/templates/organizations/organization_member_edit.html:29
 msgid "Goal"
@@ -4007,7 +3914,7 @@ msgstr "Autorisá pa firma"
 
 #: rocky/templates/organizations/organization_member_edit.html:41
 msgid "Save member"
-msgstr "Mustra miembronan"
+msgstr "Warda miembronan"
 
 #: rocky/templates/organizations/organization_member_list.html:9
 msgid "Add new member"
@@ -4031,15 +3938,15 @@ msgstr "Añadi riba"
 
 #: rocky/templates/organizations/organization_member_list.html:21
 msgid "Has trusted permisson to set OOI clearance levels"
-msgstr ""
+msgstr "Tin pèrmiso konfiabel pa pone nivel di authorisashon pa OOI"
 
 #: rocky/templates/organizations/organization_member_list.html:22
 msgid "Acknowledged permisson to set OOI clearance levels"
-msgstr ""
+msgstr "Pèrmiso atmitido pa pone nivel di authorisashon pa OOI"
 
 #: rocky/templates/organizations/organization_member_list.html:23
 msgid "Grant/revoke permisson to set OOI clearance levels"
-msgstr ""
+msgstr "Otorgá/revokà pèrmiso pa pone nivel di authorisashon pa OOI"
 
 #: rocky/templates/organizations/organization_page_tabs.html:4
 msgid "List of views for organization"
@@ -4060,15 +3967,13 @@ msgid "Hide settings"
 msgstr "Skonde settings"
 
 #: rocky/templates/partials/elements/ooi_list_settings_form.html:12
-#, fuzzy
-#| msgid "Filter types"
 msgid "Filter by OOI types"
-msgstr "Tipo di filternan"
+msgstr "Filtra pa tiponan di OOI"
 
 #: rocky/templates/partials/elements/ooi_list_settings_form.html:33
 #: rocky/templates/partials/ooi_type_filters.html:30
 msgid "Toggle all"
-msgstr "Kambia tur"
+msgstr "Pone tur"
 
 #: rocky/templates/partials/elements/ooi_list_settings_form.html:37
 #: rocky/templates/partials/elements/ooi_list_settings_form.html:48
@@ -4076,12 +3981,10 @@ msgid "Set filters"
 msgstr "Pone filternan"
 
 #: rocky/templates/partials/elements/ooi_tree_condensed_table_row.html:10
-#, python-format
 msgid "Show details for %(object_id)s, with %(child_count)s children."
 msgstr "Mustra detayes pa %(object_id)s, ku %(child_count)s su yiunan."
 
 #: rocky/templates/partials/elements/ooi_tree_condensed_table_row.html:15
-#, python-format
 msgid ""
 "Show tree for %(object_id)s with only children of type %(object_ooi_type)s"
 msgstr ""
@@ -4089,7 +3992,6 @@ msgstr ""
 "%(object_ooi_type)s"
 
 #: rocky/templates/partials/elements/ooi_tree_condensed_table_row.html:40
-#, python-format
 msgid "Unfold %(object_id)s with %(child_count)s children"
 msgstr "Habri %(object_id)s ku %(child_count)s su yiunan"
 
@@ -4167,19 +4069,21 @@ msgstr "Sera deklarashon"
 msgid "Here, an indemnification can be given on behalf of your organization"
 msgstr "Akinan, un indemnizashon por wordu duna p’e organisashon"
 
-#: rocky/templates/partials/form/indemnification_add_form.html:20
+#: rocky/templates/partials/form/indemnification_add_form.html:18
 msgid ""
-"Before you're able to add assets to KAT and to assign clearance levels, you "
-"have to give indemnification on the organization and declare that you as a "
-"person can be held accountable."
+"Before you're able to add assets to OpenKAT and to assign clearance levels, "
+"you have to give indemnification on the organization and declare that you as "
+"a person can be held accountable."
 msgstr ""
+"Prome ku bo por añadi propiedatnan na OpenKAT i pone nivelnan di authorisashon, "
+"bo mester duna indemnizashon na e organisashon i deklara ku abo komo persona "
+"por wordu pone responsabel."
 
-#: rocky/templates/partials/form/indemnification_add_form.html:28
+#: rocky/templates/partials/form/indemnification_add_form.html:25
 msgid "Register an indemnification"
 msgstr "Registrá un indemnizashon"
 
 #: rocky/templates/partials/hyperlink_ooi_type.html:5
-#, python-format
 msgid "Only show objects of type %(type)s"
 msgstr "Solamente mustra ophetonan di e tipo %(type)s"
 
@@ -4192,22 +4096,16 @@ msgid "Sorting options"
 msgstr "Opshonnan súrtí"
 
 #: rocky/templates/partials/list_filters.html:10
-#, fuzzy
-#| msgid "Filter options"
 msgid "Hide filter options"
-msgstr "Opshonnan di filter"
+msgstr "Skonde opshonnan di filter"
 
 #: rocky/templates/partials/list_filters.html:12
-#, fuzzy
-#| msgid "Filter options"
 msgid "Show filter options"
-msgstr "Opshonnan di filter"
+msgstr "Mustra opshonnan di filter"
 
 #: rocky/templates/partials/list_paginator.html:6
-#, fuzzy
-#| msgid "Object list pagination"
 msgid "List pagination"
-msgstr "Paginashon di lista di opheto"
+msgstr "Listra pagina"
 
 #: rocky/templates/partials/list_paginator.html:10
 msgid "Previous Page"
@@ -4325,7 +4223,6 @@ msgid "Open finding details"
 msgstr "Habri detaye di búskeda"
 
 #: rocky/templates/partials/ooi_report_findings_block_table_expanded_row.html:7
-#, python-format
 msgid "Details of %(object_id)s"
 msgstr "Detayes di %(object_id)s"
 
@@ -4372,10 +4269,8 @@ msgid "Filter by"
 msgstr "Filtra pa"
 
 #: rocky/templates/partials/organization_member_list_filters.html:12
-#, fuzzy
-#| msgid "Shown types"
 msgid "Shown status types"
-msgstr "Tiponan mustra"
+msgstr "Muestra di tiponan di status"
 
 #: rocky/templates/partials/organization_properties_table.html:6
 msgid "Organization name"
@@ -4386,10 +4281,8 @@ msgid "Organization code"
 msgstr "Kódigo di organisashon"
 
 #: rocky/templates/partials/organizations_menu_dropdown.html:10
-#, fuzzy
-#| msgid "Save organization"
 msgid "Select organization"
-msgstr "Warda organisashon"
+msgstr "Selektá organisashon"
 
 #: rocky/templates/partials/page-meta.html:8
 msgid "Logged in as"
@@ -4397,67 +4290,55 @@ msgstr "Logged in komo"
 
 #: rocky/templates/partials/pagination.html:7
 msgid "first"
-msgstr ""
+msgstr "prome"
 
 #: rocky/templates/partials/pagination.html:8
-#, fuzzy
-#| msgid "Previous"
 msgid "previous"
-msgstr "Anterior"
+msgstr "anterior"
 
 #: rocky/templates/partials/pagination.html:11
 msgid "next"
-msgstr ""
+msgstr "siguinte"
 
 #: rocky/templates/partials/pagination.html:12
 msgid "last"
-msgstr ""
+msgstr "ultimo"
 
 #: rocky/templates/partials/scan_history.html:4
-#, fuzzy
-#| msgid "Scan"
 msgid "Scans"
-msgstr "Skèn"
+msgstr "Skènnan"
 
 #: rocky/templates/partials/scan_history.html:19
 msgid "From"
-msgstr ""
+msgstr "Di"
 
 #: rocky/templates/partials/scan_history.html:24
 msgid "To"
-msgstr ""
+msgstr "Pa"
 
 #: rocky/templates/partials/scan_history.html:31
-#, fuzzy
-#| msgid "staff status"
 msgid "Select status"
-msgstr "status di personál"
+msgstr "Selektá status"
 
 #: rocky/templates/partials/scan_history.html:32
 msgid "Success"
-msgstr ""
+msgstr "Èxito"
 
 #: rocky/templates/partials/scan_history.html:33
-#, fuzzy
-#| msgid "Failure mode"
 msgid "Failure"
-msgstr "Failure mode"
+msgstr "Failure"
 
 #: rocky/templates/partials/scan_history.html:38
-#, fuzzy
-#| msgid "March"
 msgid "Search"
-msgstr "Maart"
+msgstr "Buska"
 
 #: rocky/templates/partials/scan_history.html:39
 msgid "Search by object name"
-msgstr ""
+msgstr "Buska riba nómber di opheto"
 
 #: rocky/templates/partials/scan_history.html:57
-#, fuzzy
-#| msgid "Scan for objects"
 msgid "No scans found for this object"
-msgstr "Skèn pa ophetonan"
+msgstr "Ningun skèn enkontra pa e opheto"
 
 #: rocky/templates/partials/scan_history.html:63
 msgid "Object"
@@ -4471,7 +4352,7 @@ msgstr "Fecha kreá"
 
 #: rocky/templates/partials/skip-to-content.html:3
 msgid "Go to content"
-msgstr "Bai na e kontenído"
+msgstr "Bai na e kontenido"
 
 #: rocky/templates/scan_profiles/scan_profile_detail.html:18
 #, python-format
@@ -4511,17 +4392,6 @@ msgid "Set clearance level to inherit"
 msgstr "Pone nivél di autorisashon na heredá"
 
 #: rocky/templates/scan_profiles/scan_profile_detail.html:36
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Objects with a clearance level higher than \"L0\" will be "
-#| "scanned automatically by Boefjes with\n"
-#| "                corresponding scan levels. This object has a clearance "
-#| "level of \"L0\".\n"
-#| "                This means that this object will not be scanned by any "
-#| "Boefje until that\n"
-#| "                Boefje is run manually for this object again.\n"
-#| "            "
 msgid ""
 "\n"
 "                This object has a clearance level of \"L0\". This means that "
@@ -4533,13 +4403,12 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"                Ophetonan ku un nivél di autorisashon mas haltu ku L0 lo "
-"wordu di skèn automatikamente dor di Boefjes ku\n"
-"                tin nivél di skèn correspondiente. E opheto aki tin un nivél "
-"di autorisashon di \"L0\". \n"
-"                Esaki ta nifiká ku e opheto aki no lo wordu di skèn dor di "
-"ningun Boefje te ora e\n"
-"                Boefje wordu aktivá manualmente pa e opheto aki atrobe.\n"
+"                E opheto aki tin un nivel di authorisashon di \"L0\". Esaki ta nifika ku "
+"e opheto aki no por wòrdu di skèn dor di ningun Boefje te ora\n"
+"                e Boefje aki ta wordu di skèn manualmente atrobe pe e opheto. Ophetonan ku un "
+"nivel di authorisashon mas haltu ku \"L0\" ta wòrdu di skèn automatikamente dor di Boefjes "
+"ku\n"
+"                nivelnan di skèn korespondiente.\n"
 "            "
 
 #: rocky/templates/scan_profiles/scan_profile_reset.html:12
@@ -4605,17 +4474,13 @@ msgstr "Download detayes di tarea"
 
 #: rocky/templates/tasks/boefjes.html:50
 #: rocky/templates/tasks/normalizers.html:52
-#, fuzzy
-#| msgid "Download task detail"
 msgid "Download meta and raw data"
-msgstr "Download tarea detaya"
+msgstr "Download meta data i data krudo"
 
 #: rocky/templates/tasks/boefjes.html:52
 #: rocky/templates/tasks/normalizers.html:54
-#, fuzzy
-#| msgid "Download task detail"
 msgid "Download meta data"
-msgstr "Download tarea detaya"
+msgstr "Download meta data"
 
 #: rocky/templates/tasks/normalizers.html:15
 msgid "There are no tasks for normalizers"
@@ -4779,8 +4644,8 @@ msgid "Congratulations, you've successfully enabled two-factor authentication."
 msgstr "Pabién, bo á activá two-factor authentication ku èksito."
 
 #: rocky/templates/two_factor/core/setup_complete.html:17
-msgid "Start using KAT"
-msgstr "Kuminsa huza KAT"
+msgid "Start using OpenKAT"
+msgstr "Kuminsa huza OpenKAT"
 
 #: rocky/templates/two_factor/core/setup_complete.html:21
 msgid ""
@@ -4911,10 +4776,8 @@ msgid "Beautified"
 msgstr "Bunitifiká"
 
 #: rocky/views/indemnification_add.py:29
-#, fuzzy
-#| msgid "Organization succesfully set."
 msgid "Indemnification successfully set."
-msgstr "Organisashon krea ku èksito."
+msgstr "Indemnizashon pone ku èxito."
 
 #: rocky/views/mixins.py:214
 msgid "All"
@@ -4925,7 +4788,6 @@ msgid "Type select"
 msgstr "Selektá tipo"
 
 #: rocky/views/ooi_add.py:88
-#, python-format
 msgid "Add %(ooi_type)s"
 msgstr "Añadí %(ooi_type)s"
 
@@ -4935,53 +4797,47 @@ msgstr " (mane "
 
 #: rocky/views/ooi_findings.py:25
 msgid "Object findings"
-msgstr "Diskubrimentu di opheto"
+msgstr "Diskubrimentunan di opheto"
 
 #: rocky/views/ooi_list.py:63
-#, fuzzy
-#| msgid "No file selected"
 msgid "No OOIs selected."
-msgstr "Ningun file no a wordu selektá."
+msgstr "Ningun OOI selektá."
 
 #: rocky/views/ooi_list.py:75
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown action."
-msgstr "Deskonosí"
+msgstr "Akshon deskonosí."
 
 #: rocky/views/ooi_list.py:96 rocky/views/scan_profile.py:65
-#, python-format
 msgid ""
 "You do not have clearance for level %s.                         You are "
 "trusted with clearance level %s and you acknowledged a clearance level of %s."
 msgstr ""
+"Bo no tin authorisashon pa nivel %s.                         Bo ta "
+"konfiabel pa nivel di authorisashon %s i bo a atmití un nivel di authorisashon di %s."
 
 #: rocky/views/ooi_list.py:114 rocky/views/ooi_list.py:121
-#, python-format
 msgid "An error occurred while saving clearance level for %s."
-msgstr ""
+msgstr "Un eror a surgi wardando nivel di authorisashon pa %s."
 
 #: rocky/views/ooi_list.py:128
-#, python-format
 msgid "Successfully set scan profile to %s for %d oois."
-msgstr ""
+msgstr "Ku exito a pone profil di skén pa %s pa %d oois."
 
 #: rocky/views/ooi_list.py:132
-#, python-format
 msgid "Unknown Scan Profile: %s."
-msgstr ""
+msgstr "Skèn profil deskonosi: %s."
 
 #: rocky/views/ooi_list.py:142 rocky/views/ooi_list.py:146
-#, python-format
 msgid "An error occurred deleting %s."
-msgstr ""
+msgstr "Un eror a surgi kitando %s."
 
 #: rocky/views/ooi_list.py:153
-#, python-format
 msgid ""
 "Successfully deleted %d ooi(s). Note: Bits can recreate objects "
 "automatically."
 msgstr ""
+"Ku exito a kita %d ooi(s). Nota: Bits por automatikamente krea ophetonan dinobo."
+
 
 #: rocky/views/ooi_report.py:160
 msgid "You can't generate a report for an OOI on a date in the future."
@@ -4996,12 +4852,11 @@ msgid "Error generating report: {}"
 msgstr "Error generándo rapòrt: {}"
 
 #: rocky/views/ooi_report.py:234
-#, fuzzy
-#| msgid "Error generating report: Timeout reached"
 msgid ""
 "Error generating report: Timeout reached. See Keiko logs for more "
 "information."
-msgstr "Error generándo rapòrt: Tempu a pasa"
+msgstr "Error generándo rapòrt: Tempu a pasa. Mira Keiko su registros pa mas "
+"informashon."
 
 #: rocky/views/ooi_tree.py:49
 msgid "Tree Visualisation"
@@ -5040,7 +4895,6 @@ msgid "Choose a valid level"
 msgstr "Skohé un nivél balido"
 
 #: rocky/views/scan_profile.py:108
-#, python-brace-format
 msgid "Can not reset scan level. Scan level of {ooi_name} not declared"
 msgstr "No por resèt nivél di skèn. Nivél di skèn òf {ooi_name} no ta deklará"
 
@@ -5061,1131 +4915,36 @@ msgid "Fetching tasks failed: no connection with scheduler"
 msgstr "No por haña tarea: no tin konekshon ku scheduler"
 
 #: rocky/views/upload_csv.py:29
-#, fuzzy
-#| msgid ""
-#| "Do not add column titles and only 1 column is required. Each value on a "
-#| "new line."
 msgid "Add column titles. Followed by each object on a new line."
-msgstr ""
-"No pone titulo pa kòlòm i solamente 1 kòlòm te necesario. Kada balor riba un "
-"liña nobo."
+msgstr "Añadi titulo pa kòlòm. Sigi pa kada opheto riba un liña nobo."
 
 #: rocky/views/upload_csv.py:31
-#, fuzzy
-#| msgid ""
-#| "For URL object type, a column with URL values is required, starting with "
-#| "http:// or https://"
 msgid ""
 "For URL object type, a column 'raw' with URL values is required, starting "
 "with http:// or https://, optionally a second column 'network' is supported "
 msgstr ""
-"Pa tipo di opheto URL, un kòlòm ku balornan URL ta requerí, kuminsando ku "
-"http:// òf https://"
+"Pa tipo di opheto URL, un kòlòm 'raw' ku balornan URL ta requerí, kuminsando ku "
+"http:// òf https://, optionalmente un siguinte kòlòm 'network' ta atmiti "
 
 #: rocky/views/upload_csv.py:35
-#, fuzzy
-#| msgid ""
-#| "For Hostname object type, a column with hostnames values is required."
 msgid ""
 "For Hostname object type, a column with 'name' values is required, "
 "optionally a second column 'network' is supported "
-msgstr "Pa tipo di opheto Hostname, un kòlòm ku balornan hostnames ta requerí."
+msgstr "Pa tipo di opheto Hostname, un kòlòm ku 'name' balornan ta requerí, "
+"opshonalmente un siguinte kòlòm 'network' ta atmiti "
 
 #: rocky/views/upload_csv.py:39
-#, fuzzy
-#| msgid ""
-#| "For IPAddressV4 and IPAddressV6 object types, a column of ip addresses is "
-#| "required."
 msgid ""
 "For IPAddressV4 and IPAddressV6 object types, a column of 'address' is "
 "required, optionally a second column 'network' is supported "
 msgstr ""
-"Pa tipo di ophetonan IPAddressV4 and IPAddressV6, un kòlòm ku ip adrès nan "
-"ta requerí."
+"Pa tipo di ophetonan IPAddressV4 and IPAddressV6, un kòlòm di 'address' "
+"ta requerí, opshonalmente un siguinte kòlòm 'network' ta atmiti "
 
 #: rocky/views/upload_csv.py:162
-#, fuzzy
-#| msgid "Object(s) could not be created for line number(s): "
 msgid "Object(s) could not be created for row number(s): "
 msgstr "Opheto(nan) no por a wordu krea pa e liña(nan): "
 
 #: rocky/views/upload_csv.py:165
 msgid "Object(s) successfully added."
 msgstr "Opheto(nan) añadi ku èxito."
-
-#~ msgid ""
-#~ "I declare that I am authorized to give this indemnification within my "
-#~ "organization."
-#~ msgstr ""
-#~ "Mi ta deklara ku ami ta authorisá pa duna e indemnizashon aki den mi "
-#~ "organisashon."
-
-#~ msgid "Unable to change signal username, once a group has been created."
-#~ msgstr "Inkapás pa kambia signal username, ora un grupo a wordu kreá."
-
-#~ msgid "Username"
-#~ msgstr "Username"
-
-#~ msgid "Messages"
-#~ msgstr "Mensahe"
-
-#~ msgid "Site Maps"
-#~ msgstr "Mapanan di site"
-
-#~ msgid "Static Files"
-#~ msgstr "Dokumento státiko"
-
-#~ msgid "Syndication"
-#~ msgstr "Indemnizashon"
-
-#~ msgid "…"
-#~ msgstr "…"
-
-#~ msgid "That page number is not an integer"
-#~ msgstr "E number di pagina no ta un number henter"
-
-#~ msgid "That page number is less than 1"
-#~ msgstr "E number di pagina ta menos ku 1"
-
-#~ msgid "That page contains no results"
-#~ msgstr "E pagina aya no ta kontené resultado"
-
-#~ msgid "Enter a valid value."
-#~ msgstr "Yena un number balido."
-
-#~ msgid "Enter a valid URL."
-#~ msgstr "Yena un URL balido."
-
-#~ msgid "Enter a valid integer."
-#~ msgstr "Yena un number henter valido."
-
-#~ msgid "Enter a valid email address."
-#~ msgstr "Yena un email adrès balido."
-
-#~ msgid ""
-#~ "Enter a valid “slug” consisting of letters, numbers, underscores or "
-#~ "hyphens."
-#~ msgstr ""
-#~ "Yena un “slug” balido ku ta konsisti di alfanumériko, underscore òf dash."
-
-#~ msgid ""
-#~ "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, "
-#~ "or hyphens."
-#~ msgstr ""
-#~ "Yena un “slug” balido ku ta konsisti di lètra Unicode, number, underscore "
-#~ "òf dash."
-
-#~ msgid "Enter a valid IPv4 address."
-#~ msgstr "Yena un IPv4 adrès balido."
-
-#~ msgid "Enter a valid IPv6 address."
-#~ msgstr "Yena un IPv6 adrès balido."
-
-#~ msgid "Enter a valid IPv4 or IPv6 address."
-#~ msgstr "Yena un IPv4 òf IPv6 adrès balido."
-
-#~ msgid "Enter only digits separated by commas."
-#~ msgstr "Yena solamente numbernan separá dor di kòma."
-
-#, python-format
-#~ msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-#~ msgstr "Ensigurá ku e balor aki ta %(limit_value)s (ku ta %(show_value)s)."
-
-#, python-format
-#~ msgid "Ensure this value is less than or equal to %(limit_value)s."
-#~ msgstr "Ensigurá ku e balor aki ta menos òf igual ku %(limit_value)s."
-
-#, python-format
-#~ msgid "Ensure this value is greater than or equal to %(limit_value)s."
-#~ msgstr "Ensigurá ku e balor aki ta mas grandi òf igual ku %(limit_value)s."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure this value has at least %(limit_value)d character (it has "
-#~ "%(show_value)d)."
-#~ msgid_plural ""
-#~ "Ensure this value has at least %(limit_value)d characters (it has "
-#~ "%(show_value)d)."
-#~ msgstr[0] ""
-#~ "Ensigurá ku e balor aki tin por lo menos %(limit_value)d karakter (e tin "
-#~ "%(show_value)d)."
-#~ msgstr[1] ""
-#~ "Ensigurá ku e balor aki tin por lo menos %(limit_value)d karakter (e tin "
-#~ "%(show_value)d)."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure this value has at most %(limit_value)d character (it has "
-#~ "%(show_value)d)."
-#~ msgid_plural ""
-#~ "Ensure this value has at most %(limit_value)d characters (it has "
-#~ "%(show_value)d)."
-#~ msgstr[0] ""
-#~ "Ensigurá ku e balor aki tin por lo maximo %(limit_value)d karakter (e tin "
-#~ "%(show_value)d)."
-#~ msgstr[1] ""
-#~ "Ensigurá ku e balor aki tin por lo maximo %(limit_value)d karakter (e tin "
-#~ "%(show_value)d)."
-
-#~ msgid "Enter a number."
-#~ msgstr "Yena un number."
-
-#, python-format
-#~ msgid "Ensure that there are no more than %(max)s digit in total."
-#~ msgid_plural "Ensure that there are no more than %(max)s digits in total."
-#~ msgstr[0] "Ensigurá ku no tin mas ku %(max)s number den su totalidát."
-#~ msgstr[1] "Ensigurá ku no tin mas ku %(max)s number den su totalidát."
-
-#, python-format
-#~ msgid "Ensure that there are no more than %(max)s decimal place."
-#~ msgid_plural "Ensure that there are no more than %(max)s decimal places."
-#~ msgstr[0] "Ensigurá ku no tin mas ku %(max)s number decimál. "
-#~ msgstr[1] "Ensigurá ku no tin mas ku %(max)s number decimál."
-
-#, python-format
-#~ msgid ""
-#~ "Ensure that there are no more than %(max)s digit before the decimal point."
-#~ msgid_plural ""
-#~ "Ensure that there are no more than %(max)s digits before the decimal "
-#~ "point."
-#~ msgstr[0] ""
-#~ "Ensigurá ku no tin mas ku %(max)s number promé ku e number decimál."
-#~ msgstr[1] ""
-#~ "Ensigurá ku no tin mas ku %(max)s number promé ku e number decimál."
-
-#, python-format
-#~ msgid ""
-#~ "File extension “%(extension)s” is not allowed. Allowed extensions are: "
-#~ "%(allowed_extensions)s."
-#~ msgstr ""
-#~ "File extension “%(extension)s” no ta pèrmiti. Extenshonnan pèrmiti ta: "
-#~ "%(allowed_extensions)s."
-
-#~ msgid "Null characters are not allowed."
-#~ msgstr "No ta pèrmiti seró karakters."
-
-#~ msgid "and"
-#~ msgstr "i"
-
-#, python-format
-#~ msgid "%(model_name)s with this %(field_labels)s already exists."
-#~ msgstr "%(model_name)s ku e %(field_labels)s aki ta èksisti kaba."
-
-#, python-format
-#~ msgid "Value %(value)r is not a valid choice."
-#~ msgstr "Balor %(value)r is not a valid choice."
-
-#~ msgid "This field cannot be null."
-#~ msgstr "E vèld aki no por ta bashi."
-
-#~ msgid "This field cannot be blank."
-#~ msgstr "E vèld aki no por ta bashi."
-
-#, python-format
-#~ msgid "%(model_name)s with this %(field_label)s already exists."
-#~ msgstr "%(model_name)s ku e %(field_label)s aki ta èksisti kaba."
-
-#, python-format
-#~ msgid ""
-#~ "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-#~ msgstr ""
-#~ "%(field_label)s mester ta úniko pa %(date_field_label)s %(lookup_type)s."
-
-#, python-format
-#~ msgid "Field of type: %(field_type)s"
-#~ msgstr "Vèld di tipo: %(field_type)s"
-
-#, python-format
-#~ msgid "“%(value)s” value must be either True or False."
-#~ msgstr "“%(value)s” su balor mester ta òf True òf False."
-
-#, python-format
-#~ msgid "“%(value)s” value must be either True, False, or None."
-#~ msgstr "“%(value)s” su balor mester ta òf True, False, òf None."
-
-#~ msgid "Boolean (Either True or False)"
-#~ msgstr "Boolean (Either True or False)"
-
-#, python-format
-#~ msgid "String (up to %(max_length)s)"
-#~ msgstr "Texto (te na %(max_length)s)"
-
-#~ msgid "Comma-separated integers"
-#~ msgstr "Numbernan kòma separá"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
-#~ "format."
-#~ msgstr ""
-#~ "“%(value)s” su balor tin un fòrmaat di fecha inbálido. E mester ta den e "
-#~ "fòrmaat aki YYYY-MM-DD"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an "
-#~ "invalid date."
-#~ msgstr ""
-#~ "“%(value)s” su balor ta den e fòrmaat korekto (YYYY-MM-DD) pero e fecha "
-#~ "ta inbálido."
-
-#~ msgid "Date (without time)"
-#~ msgstr "Fecha (sin tempu)"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:"
-#~ "ss[.uuuuuu]][TZ] format."
-#~ msgstr ""
-#~ "“%(value)s” su balor tin un fòrmaat inbálido. E mester ta den fòrmaat "
-#~ "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]."
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-#~ "[TZ]) but it is an invalid date/time."
-#~ msgstr ""
-#~ "“%(value)s” su balor ta den e fòrmaat korekto (YYYY-MM-DD HH:MM[:ss[."
-#~ "uuuuuu]][TZ]) pero e ta inbálido e fecha/tempu."
-
-#~ msgid "Date (with time)"
-#~ msgstr "Fecha (sin tempu)"
-
-#, python-format
-#~ msgid "“%(value)s” value must be a decimal number."
-#~ msgstr "“%(value)s” balor mester ta un number decimal."
-
-#~ msgid "Decimal number"
-#~ msgstr "Number decimal"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-#~ "uuuuuu] format."
-#~ msgstr ""
-#~ "“%(value)s” balor tin un fòrmat inbalido. E mester ta [DD] [[HH:]MM:]ss[."
-#~ "uuuuuu] fòrmat."
-
-#~ msgid "Duration"
-#~ msgstr "Durashon"
-
-#~ msgid "File path"
-#~ msgstr "Ruta di archivo"
-
-#, python-format
-#~ msgid "“%(value)s” value must be a float."
-#~ msgstr "“%(value)s” balor mester ta un float number."
-
-#~ msgid "Floating point number"
-#~ msgstr "Number ku kòma"
-
-#, python-format
-#~ msgid "“%(value)s” value must be an integer."
-#~ msgstr "“%(value)s” balor mester ta un number henter."
-
-#~ msgid "Integer"
-#~ msgstr "Number henter"
-
-#~ msgid "Big (8 byte) integer"
-#~ msgstr "Number henter grandi (8 byte)"
-
-#~ msgid "Small integer"
-#~ msgstr "Number henter chiki"
-
-#~ msgid "IPv4 address"
-#~ msgstr "IPv4 adrès"
-
-#~ msgid "IP address"
-#~ msgstr "IP adrès"
-
-#, python-format
-#~ msgid "“%(value)s” value must be either None, True or False."
-#~ msgstr "“%(value)s” balor mester ta òf None, True òf False."
-
-#~ msgid "Boolean (Either True, False or None)"
-#~ msgstr "Boolean (òf True, False òf None)"
-
-#~ msgid "Positive big integer"
-#~ msgstr "Number positivo henter grandi"
-
-#~ msgid "Positive integer"
-#~ msgstr "Number henter positivo"
-
-#~ msgid "Positive small integer"
-#~ msgstr "Number henter chiki positivo"
-
-#, python-format
-#~ msgid "Slug (up to %(max_length)s)"
-#~ msgstr "Slug (te na %(max_length)s)"
-
-#~ msgid "Text"
-#~ msgstr "Texto"
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[."
-#~ "uuuuuu]] format."
-#~ msgstr ""
-#~ "“%(value)s” balor tin un fòrmat inbalido. E mester ta den HH:MM[:ss[."
-#~ "uuuuuu]] fòrmat."
-
-#, python-format
-#~ msgid ""
-#~ "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is "
-#~ "an invalid time."
-#~ msgstr ""
-#~ "“%(value)s” balor tin e fòrmat korekto (HH:MM[:ss[.uuuuuu]]) pero e ta un "
-#~ "tempu inbalido."
-
-#~ msgid "Time"
-#~ msgstr "Tempu"
-
-#~ msgid "Raw binary data"
-#~ msgstr "Binary data krudo"
-
-#, python-format
-#~ msgid "“%(value)s” is not a valid UUID."
-#~ msgstr "“%(value)s” no ta un UUID balido."
-
-#~ msgid "Universally unique identifier"
-#~ msgstr "Universalmente identifikador úniko"
-
-#~ msgid "File"
-#~ msgstr "Archivo"
-
-#~ msgid "Image"
-#~ msgstr "Pòtret"
-
-#~ msgid "A JSON object"
-#~ msgstr "Un JSON opheto"
-
-#~ msgid "Value must be valid JSON."
-#~ msgstr "Balor mester ta un JSON balido."
-
-#, python-format
-#~ msgid "%(model)s instance with %(field)s %(value)r does not exist."
-#~ msgstr "%(model)s instansia ku %(field)s %(value)r no ta èksisti."
-
-#~ msgid "Foreign Key (type determined by related field)"
-#~ msgstr "Foreign Key (tipo determiná pa vèld relata)"
-
-#~ msgid "One-to-one relationship"
-#~ msgstr "One-to-one relashon"
-
-#, python-format
-#~ msgid "%(from)s-%(to)s relationship"
-#~ msgstr "%(from)s-%(to)s relashon"
-
-#, python-format
-#~ msgid "%(from)s-%(to)s relationships"
-#~ msgstr "%(from)s-%(to)s relashonnan"
-
-#~ msgid "Many-to-many relationship"
-#~ msgstr "Many-to-many relashon"
-
-#~ msgid ":?.!"
-#~ msgstr ":?.!"
-
-#~ msgid "Enter a whole number."
-#~ msgstr "Yena un number henter."
-
-#~ msgid "Enter a valid date."
-#~ msgstr "Yena un fecha balido."
-
-#~ msgid "Enter a valid time."
-#~ msgstr "Yena un fecha balido"
-
-#~ msgid "Enter a valid date/time."
-#~ msgstr "Yena un fecha/tempu balido."
-
-#~ msgid "Enter a valid duration."
-#~ msgstr "Yena un durashon balido."
-
-#, python-brace-format
-#~ msgid "The number of days must be between {min_days} and {max_days}."
-#~ msgstr "E number di dianan mester ta entre {min_days} ì {max_days}."
-
-#~ msgid "No file was submitted. Check the encoding type on the form."
-#~ msgstr ""
-#~ "Ningun file no a wordu manda. Chèk e tipo di encoding riba e formulario."
-
-#~ msgid "No file was submitted."
-#~ msgstr "Ningun file no a wordu manda."
-
-#~ msgid "The submitted file is empty."
-#~ msgstr "E file ku a wordu manda ta bashi"
-
-#, python-format
-#~ msgid ""
-#~ "Ensure this filename has at most %(max)d character (it has %(length)d)."
-#~ msgid_plural ""
-#~ "Ensure this filename has at most %(max)d characters (it has %(length)d)."
-#~ msgstr[0] ""
-#~ "Ensigurá e nòmber di file aki tin por lo maximo %(max)d karakter (e tin "
-#~ "%(length)d)."
-#~ msgstr[1] ""
-#~ "Ensigurá e nòmber di file aki tin por lo maximo %(max)d karakter (e tin "
-#~ "%(length)d)."
-
-#~ msgid "Please either submit a file or check the clear checkbox, not both."
-#~ msgstr ""
-#~ "Por fabor, òf manda e file òf check e clear checkbox, pero no tur dos "
-#~ "parew."
-
-#~ msgid ""
-#~ "Upload a valid image. The file you uploaded was either not an image or a "
-#~ "corrupted image."
-#~ msgstr ""
-#~ "Upload un pòtrèt balido. E file mandá no ta un pòtrèt òf e ta un pòtrèt "
-#~ "daña."
-
-#, python-format
-#~ msgid ""
-#~ "Select a valid choice. %(value)s is not one of the available choices."
-#~ msgstr ""
-#~ "Selektá un eskoho balido. %(value)s no ta un di e opshonnan disponibel."
-
-#~ msgid "Enter a list of values."
-#~ msgstr "Yena un lista di balornan"
-
-#~ msgid "Enter a complete value."
-#~ msgstr "Yena un balor kompletu."
-
-#~ msgid "Enter a valid UUID."
-#~ msgstr "Yena un UUID balido."
-
-#~ msgid "Enter a valid JSON."
-#~ msgstr "Yena un JSON balido."
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#, python-format
-#~ msgid "(Hidden field %(name)s) %(error)s"
-#~ msgstr "(Vèld skondí %(name)s) %(error)s"
-
-#, python-format
-#~ msgid ""
-#~ "ManagementForm data is missing or has been tampered with. Missing fields: "
-#~ "%(field_names)s. You may need to file a bug report if the issue persists."
-#~ msgstr ""
-#~ "ManagementForm ta falta data of a wordu manipula. Vèldnan ku fatla: "
-#~ "%(field_names)s. Bo lo mester manda un bug rapòrt si e problema pèrsisti."
-
-#, python-format
-#~ msgid "Please submit at most %d form."
-#~ msgid_plural "Please submit at most %d forms."
-#~ msgstr[0] "Por favor manda lo maximo %d formulario."
-#~ msgstr[1] "Por favor manda lo maximo %d formulario."
-
-#, python-format
-#~ msgid "Please submit at least %d form."
-#~ msgid_plural "Please submit at least %d forms."
-#~ msgstr[0] "Por fabor manda por lo menos %d formulario."
-#~ msgstr[1] "Por fabor manda por lo menos %d formularionan."
-
-#~ msgid "Order"
-#~ msgstr "Ordená"
-
-#, python-format
-#~ msgid "Please correct the duplicate data for %(field)s."
-#~ msgstr "Por fabor korigi e data dupliká na %(field)s."
-
-#, python-format
-#~ msgid ""
-#~ "Please correct the duplicate data for %(field)s, which must be unique."
-#~ msgstr "Por fabor korigi data duplika na %(field)s, ku mester ta úniko."
-
-#, python-format
-#~ msgid ""
-#~ "Please correct the duplicate data for %(field_name)s which must be unique "
-#~ "for the %(lookup)s in %(date_field)s."
-#~ msgstr ""
-#~ "Por fabor korigi e data dupliká pa %(field_name)s ku mester ta uniko pa e "
-#~ "%(lookup)s den %(date_field)s."
-
-#~ msgid "Please correct the duplicate values below."
-#~ msgstr "Por fabor korigí e balornan dupliká."
-
-#~ msgid "The inline value did not match the parent instance."
-#~ msgstr "E balornan riba mesun liña no ta meskos ku e instansia major."
-
-#~ msgid ""
-#~ "Select a valid choice. That choice is not one of the available choices."
-#~ msgstr ""
-#~ "Selektá un eskoho balido. Loke ba skohé no ta den e opshonnan ku tin."
-
-#, python-format
-#~ msgid "“%(pk)s” is not a valid value."
-#~ msgstr "“%(pk)s” no ta un balor balido."
-
-#, python-format
-#~ msgid ""
-#~ "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; "
-#~ "it may be ambiguous or it may not exist."
-#~ msgstr ""
-#~ "%(datetime)s no por a wòrdu intepretá den e zona di tempu "
-#~ "%(current_timezone)s; porta e no ta èksisti."
-
-#~ msgid "Clear"
-#~ msgstr "Kita"
-
-#~ msgid "Currently"
-#~ msgstr "Aktualmente"
-
-#~ msgid "Change"
-#~ msgstr "Kambia"
-
-#~ msgid "yes,no,maybe"
-#~ msgstr "si,nò,kisas"
-
-#, python-format
-#~ msgid "%(size)d byte"
-#~ msgid_plural "%(size)d bytes"
-#~ msgstr[0] "%(size)d byte"
-#~ msgstr[1] "%(size)d bytes"
-
-#, python-format
-#~ msgid "%s KB"
-#~ msgstr "%s KB"
-
-#, python-format
-#~ msgid "%s MB"
-#~ msgstr "%s MB"
-
-#, python-format
-#~ msgid "%s GB"
-#~ msgstr "%s GB"
-
-#, python-format
-#~ msgid "%s TB"
-#~ msgstr "%s TB"
-
-#, python-format
-#~ msgid "%s PB"
-#~ msgstr "%s PB"
-
-#~ msgid "p.m."
-#~ msgstr "p.m."
-
-#~ msgid "a.m."
-#~ msgstr "a.m."
-
-#~ msgid "PM"
-#~ msgstr "PM"
-
-#~ msgid "AM"
-#~ msgstr "AM"
-
-#~ msgid "midnight"
-#~ msgstr "marduga"
-
-#~ msgid "noon"
-#~ msgstr "nochi"
-
-#~ msgid "Monday"
-#~ msgstr "Djaluna"
-
-#~ msgid "Tuesday"
-#~ msgstr "Djamars"
-
-#~ msgid "Wednesday"
-#~ msgstr "Djarason"
-
-#~ msgid "Thursday"
-#~ msgstr "Djaweps"
-
-#~ msgid "Friday"
-#~ msgstr "Djabierne"
-
-#~ msgid "Saturday"
-#~ msgstr "Djasabra"
-
-#~ msgid "Sunday"
-#~ msgstr "Djadumingu"
-
-#~ msgid "Mon"
-#~ msgstr "Mon"
-
-#~ msgid "Tue"
-#~ msgstr "Tue"
-
-#~ msgid "Wed"
-#~ msgstr "Wed"
-
-#~ msgid "Thu"
-#~ msgstr "Thu"
-
-#~ msgid "Fri"
-#~ msgstr "Fri"
-
-#~ msgid "Sat"
-#~ msgstr "Sat"
-
-#~ msgid "Sun"
-#~ msgstr "Sun"
-
-#~ msgid "January"
-#~ msgstr "Januari"
-
-#~ msgid "February"
-#~ msgstr "Februari"
-
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgid "May"
-#~ msgstr "Mèi"
-
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgid "August"
-#~ msgstr "Augustus"
-
-#~ msgid "September"
-#~ msgstr "Sèptèmber"
-
-#~ msgid "October"
-#~ msgstr "Òktober"
-
-#~ msgid "November"
-#~ msgstr "November"
-
-#~ msgid "December"
-#~ msgstr "Desèmber"
-
-#~ msgid "jan"
-#~ msgstr "jan"
-
-#~ msgid "feb"
-#~ msgstr "feb"
-
-#~ msgid "mar"
-#~ msgstr "mar"
-
-#~ msgid "apr"
-#~ msgstr "apr"
-
-#~ msgid "may"
-#~ msgstr "mèi"
-
-#~ msgid "jun"
-#~ msgstr "jun"
-
-#~ msgid "jul"
-#~ msgstr "jul"
-
-#~ msgid "aug"
-#~ msgstr "aug"
-
-#~ msgid "sep"
-#~ msgstr "sep"
-
-#~ msgid "oct"
-#~ msgstr "okt"
-
-#~ msgid "nov"
-#~ msgstr "nov"
-
-#~ msgid "dec"
-#~ msgstr "dec"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Jan."
-#~ msgstr "Jan."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Feb."
-#~ msgstr "Feb."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "March"
-#~ msgstr "Maart"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "May"
-#~ msgstr "Mèi"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Aug."
-#~ msgstr "Aug."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Sept."
-#~ msgstr "Sept."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Oct."
-#~ msgstr "Okt."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Nov."
-#~ msgstr "Nov."
-
-#~ msgctxt "abbrev. month"
-#~ msgid "Dec."
-#~ msgstr "Dec."
-
-#~ msgctxt "alt. month"
-#~ msgid "January"
-#~ msgstr "Januari"
-
-#~ msgctxt "alt. month"
-#~ msgid "February"
-#~ msgstr "Februari"
-
-#~ msgctxt "alt. month"
-#~ msgid "March"
-#~ msgstr "Maart"
-
-#~ msgctxt "alt. month"
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgctxt "alt. month"
-#~ msgid "May"
-#~ msgstr "Mèi"
-
-#~ msgctxt "alt. month"
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgctxt "alt. month"
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgctxt "alt. month"
-#~ msgid "August"
-#~ msgstr "Augustus"
-
-#~ msgctxt "alt. month"
-#~ msgid "September"
-#~ msgstr "Sèptèmber"
-
-#~ msgctxt "alt. month"
-#~ msgid "October"
-#~ msgstr "Òktober"
-
-#~ msgctxt "alt. month"
-#~ msgid "November"
-#~ msgstr "Novèmber"
-
-#~ msgctxt "alt. month"
-#~ msgid "December"
-#~ msgstr "Desèmber"
-
-#~ msgid "This is not a valid IPv6 address."
-#~ msgstr "Esaki no ta un IPv6 adrès balido."
-
-#, python-format
-#~ msgctxt "String to return when truncating text"
-#~ msgid "%(truncated_text)s…"
-#~ msgstr "%(truncated_text)s…"
-
-#~ msgid "or"
-#~ msgstr "òf"
-
-#~ msgid ", "
-#~ msgstr ", "
-
-#, python-format
-#~ msgid "%(num)d year"
-#~ msgid_plural "%(num)d years"
-#~ msgstr[0] "%(num)d aña"
-#~ msgstr[1] "%(num)d añanan"
-
-#, python-format
-#~ msgid "%(num)d month"
-#~ msgid_plural "%(num)d months"
-#~ msgstr[0] "%(num)d luna"
-#~ msgstr[1] "%(num)d lunanan"
-
-#, python-format
-#~ msgid "%(num)d week"
-#~ msgid_plural "%(num)d weeks"
-#~ msgstr[0] "%(num)d simán"
-#~ msgstr[1] "%(num)d simánnan"
-
-#, python-format
-#~ msgid "%(num)d day"
-#~ msgid_plural "%(num)d days"
-#~ msgstr[0] "%(num)d dia"
-#~ msgstr[1] "%(num)d dianan"
-
-#, python-format
-#~ msgid "%(num)d hour"
-#~ msgid_plural "%(num)d hours"
-#~ msgstr[0] "%(num)d ora"
-#~ msgstr[1] "%(num)d oranan"
-
-#, python-format
-#~ msgid "%(num)d minute"
-#~ msgid_plural "%(num)d minutes"
-#~ msgstr[0] "%(num)d minùt"
-#~ msgstr[1] "%(num)d minùtnan"
-
-#~ msgid "Forbidden"
-#~ msgstr "Prohibi"
-
-#~ msgid "CSRF verification failed. Request aborted."
-#~ msgstr "CSRF verifikashon a faya. Request abòrtá."
-
-#~ msgid ""
-#~ "You are seeing this message because this HTTPS site requires a “Referer "
-#~ "header” to be sent by your web browser, but none was sent. This header is "
-#~ "required for security reasons, to ensure that your browser is not being "
-#~ "hijacked by third parties."
-#~ msgstr ""
-#~ "Bo ta mirando e mensahe aki paso e HTTPS site aki ta requerí un “Referer "
-#~ "header” pa wordu manda dor di bo web browser, pero nada no a wordu manda. "
-#~ "E header aki ta requerí pa rasonnan di seguridát, pa segurá ku bo browser "
-#~ "no ta wordu di hijacked dor di otro partidonan."
-
-#~ msgid ""
-#~ "If you have configured your browser to disable “Referer” headers, please "
-#~ "re-enable them, at least for this site, or for HTTPS connections, or for "
-#~ "“same-origin” requests."
-#~ msgstr ""
-#~ "Si bo a konfigurá bo browser pa desaktiva “Referer” headers, por fabor re-"
-#~ "aktiva nan, por lo menos pa e site aki, òf pa konekshonnan HTTPS, òf pa "
-#~ "“same-origin petishonnan."
-
-#~ msgid ""
-#~ "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag "
-#~ "or including the “Referrer-Policy: no-referrer” header, please remove "
-#~ "them. The CSRF protection requires the “Referer” header to do strict "
-#~ "referer checking. If you’re concerned about privacy, use alternatives "
-#~ "like <a rel=\"noreferrer\" …> for links to third-party sites."
-#~ msgstr ""
-#~ "Si bo ta uza e <meta name=\"referrer\" content=\"no-referrer\"> tag òf "
-#~ "inkluì e “Referrer-Policy: no-referrer” header, por fabor kita nan. E "
-#~ "CSRF protekshon ta requeri “Referer” header pa hasi referer checking "
-#~ "strikto. Si bo ta preukupa pa privacy, uza alternativonan manera <a "
-#~ "rel=\"noreferrer\" …> pa linknan na third-party sitenan."
-
-#~ msgid ""
-#~ "You are seeing this message because this site requires a CSRF cookie when "
-#~ "submitting forms. This cookie is required for security reasons, to ensure "
-#~ "that your browser is not being hijacked by third parties."
-#~ msgstr ""
-#~ "Bo ta mirando e mensahe aki paso e site aki ta requerí un CSRF cookie ora "
-#~ "manda formularionan. E cookie aki ta requerí debí na rasonnan pa "
-#~ "siguridát, pa sigurá ku bo browser no ta wordu di hijack dor di otro "
-#~ "partidonan."
-
-#~ msgid ""
-#~ "If you have configured your browser to disable cookies, please re-enable "
-#~ "them, at least for this site, or for “same-origin” requests."
-#~ msgstr ""
-#~ "Si bo a konfigurá bo browser pa desaktivá cookies, por fabor re-aktivá "
-#~ "nan, por lo menos pa e site aki, of pa “same-origin” petishon."
-
-#~ msgid "More information is available with DEBUG=True."
-#~ msgstr "Mas informashon ta disponibel ku DEBUG=True."
-
-#~ msgid "No year specified"
-#~ msgstr "Ningun aña specifiká"
-
-#~ msgid "Date out of range"
-#~ msgstr "Dató fuera di alkanse"
-
-#~ msgid "No month specified"
-#~ msgstr "Ningun luna specifiká"
-
-#~ msgid "No day specified"
-#~ msgstr "Ningun dia specifiká"
-
-#~ msgid "No week specified"
-#~ msgstr "Ningun simán specifiká"
-
-#, python-format
-#~ msgid "No %(verbose_name_plural)s available"
-#~ msgstr "%(verbose_name_plural)s no ta disponibel"
-
-#, python-format
-#~ msgid ""
-#~ "Future %(verbose_name_plural)s not available because %(class_name)s."
-#~ "allow_future is False."
-#~ msgstr ""
-#~ "Futuro %(verbose_name_plural)s no ta disponibel paso %(class_name)s."
-#~ "allow_future ta pone na False."
-
-#, python-format
-#~ msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-#~ msgstr "Fecha “%(datestr)s” no ta balido n'e formaat “%(format)s”"
-
-#, python-format
-#~ msgid "No %(verbose_name)s found matching the query"
-#~ msgstr "Ningun %(verbose_name)s por a wordu enkontra ku ta match e query"
-
-#~ msgid "Page is not “last”, nor can it be converted to an int."
-#~ msgstr "Pagina no ta e “delaster”, i tambe no por kombèrti pa un int."
-
-#, python-format
-#~ msgid "Invalid page (%(page_number)s): %(message)s"
-#~ msgstr "Pagina no ta balido (%(page_number)s): %(message)s"
-
-#, python-format
-#~ msgid "Empty list and “%(class_name)s.allow_empty” is False."
-#~ msgstr "Lista bashi i “%(class_name)s.allow_empty” ta pone na False."
-
-#~ msgid "Directory indexes are not allowed here."
-#~ msgstr "E índises di directorionan no ta pèrmiti aki."
-
-#, python-format
-#~ msgid "“%(path)s” does not exist"
-#~ msgstr "“%(path)s” no ta èksisti"
-
-#, python-format
-#~ msgid "Index of %(directory)s"
-#~ msgstr "Índise di %(directory)s"
-
-#~ msgid "The install worked successfully! Congratulations!"
-#~ msgstr "E installashon ta un èksito! Pabien!"
-
-#, python-format
-#~ msgid ""
-#~ "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-#~ "target=\"_blank\" rel=\"noopener\">release notes</a> for Django "
-#~ "%(version)s"
-#~ msgstr ""
-#~ "Mira <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-#~ "target=\"_blank\" rel=\"noopener\">release notes</a> pa Django %(version)s"
-
-#, python-format
-#~ msgid ""
-#~ "You are seeing this page because <a href=\"https://docs.djangoproject.com/"
-#~ "en/%(version)s/ref/settings/#debug\" target=\"_blank\" "
-#~ "rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
-#~ "configured any URLs."
-#~ msgstr ""
-#~ "Bo ta mirando e pagina aki paso <a href=\"https://docs.djangoproject.com/"
-#~ "en/%(version)s/ref/settings/#debug\" target=\"_blank\" "
-#~ "rel=\"noopener\">DEBUG=True</a> ta pone den bo settings i bo no a "
-#~ "konfigura ningun URLs."
-
-#~ msgid "Django Documentation"
-#~ msgstr "Dokumentashon di Django"
-
-#~ msgid "Topics, references, &amp; how-to’s"
-#~ msgstr "Tópikonan, referensianan, &amp; how-to’s"
-
-#~ msgid "Tutorial: A Polling App"
-#~ msgstr "Tutoriál: Un Polling App"
-
-#~ msgid "Get started with Django"
-#~ msgstr "Kuminsa huza Django"
-
-#~ msgid "Django Community"
-#~ msgstr "Komunidat di Django"
-
-#~ msgid "Connect, get help, or contribute"
-#~ msgstr "Konektá, haña ajudo, òf kontrubui"
-
-#~ msgid "If everything is correct, you can continue to account setup."
-#~ msgstr "Si tur kos ta korekto, bo por kontinuá pa account setup."
-
-#~ msgid "Continue to account setup"
-#~ msgstr "Sigi pa account setup"
-
-#~ msgid "Got it, generate my report"
-#~ msgstr "Ma kompronde, generà mi rapòrt"
-
-#~ msgid "Organization succesfully created."
-#~ msgstr "Organisashon a wòrdu krea ku èksito."
-
-#~ msgid ""
-#~ "Hello, admin. You are already part of an organization. Early step is "
-#~ "skipped."
-#~ msgstr ""
-#~ "Konta, admin. Bo ta parti kaba di un organisashon kaba. E stap prome a "
-#~ "wòrdu salta."
-
-#~ msgid ""
-#~ "System Administrator: You are redirected to this page, because you have "
-#~ "to first setup an organization."
-#~ msgstr ""
-#~ "Administradó di sistema: Bo a wordu resulata riba e pagina aki, paso bo "
-#~ "mester prome setup un organisashon."
-
-#~ msgid "You are not allowed to add organization members."
-#~ msgstr "Bo no ta pèrmiti pa añadi un miembro di organisashon."
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#, python-format
-#~ msgid "Use KAT as %(name)s"
-#~ msgstr "Uza KAT komo %(name)s"
-
-#~ msgid "Signal username"
-#~ msgstr "Bo nomber"
-
-#~ msgid "Added to group."
-#~ msgstr "Añadi na grupo"
-
-#~ msgid "Add to signal group"
-#~ msgstr "Añadi na grupo signal"
-
-#~ msgid "Can't add member to signal group"
-#~ msgstr "No por añadi miembro na signal grupo"
-
-#~ msgid "You are using KAT as "
-#~ msgstr "Bo ta huzando KAT komo "
-
-#~ msgid "Number of members"
-#~ msgstr "Kantidát di miembro"
-
-#, python-format
-#~ msgid "Members of %(name)s"
-#~ msgstr "Miembronan di %(name)s"
-
-#~ msgid "Create signal group"
-#~ msgstr "Krea grupo signal"
-
-#~ msgid ""
-#~ "No registered group phone nr. A group phone is needed to create a signal "
-#~ "group."
-#~ msgstr ""
-#~ "Grupo, number di telefòn, no registrá. Un grupo telefon mester pa krea un "
-#~ "signal group."
-
-#~ msgid "Signal group ID"
-#~ msgstr "ID pa grupo Signal "
-
-#~ msgid "Send test message"
-#~ msgstr "Manda test mensahe"
-
-#~ msgid "Mismatch stored and fetched ID"
-#~ msgstr "Deskordansia wardá i ID atraé"
-
-#~ msgid "No group has been created for this organization."
-#~ msgstr "Ningún grupo a wòrdu kreá pa e organisashon aki."
-
-#~ msgid "Download"
-#~ msgstr "Download"
-
-#~ msgid ""
-#~ "The current user has not been verified by a system administrator yet."
-#~ msgstr ""
-#~ "E kliénte aktual ahinda no por wordu verifiká dor di un administradó di "
-#~ "sistema."
-
-#~ msgid "Object list:"
-#~ msgstr "Lista di opheto"
