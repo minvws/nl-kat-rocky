@@ -259,7 +259,7 @@ class OnboardingSetupScanOOIDetailView(
     def post(self, request, *args, **kwargs):
 
         ooi = self.get_ooi()
-        level = self.request.session["clearance_level"]
+        level = int(self.request.session["clearance_level"])
         try:
             self.raise_clearance_level(ooi.reference, level)
         except (IndemnificationNotPresentException, ClearanceLevelTooLowException):
@@ -301,7 +301,7 @@ class OnboardingSetClearanceLevelView(
         return get_ooi_url("step_setup_scan_select_plugins", self.request.GET.get("ooi_id"), self.organization.code)
 
     def form_valid(self, form):
-        self.request.session["clearance_level"] = form.data["level"]
+        self.request.session["clearance_level"] = form.cleaned_data["level"]
         self.add_success_notification()
         return super().form_valid(form)
 
