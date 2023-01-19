@@ -107,7 +107,6 @@ msgid "The name of the organization."
 msgstr "De naam van de organisatie."
 
 #: account/forms/account_setup.py:190 onboarding/forms.py:72
-#, fuzzy
 msgid "explanation-organization-name"
 msgstr "explanation-organization-name"
 
@@ -117,7 +116,6 @@ msgid "A unique code of {code_length} characters."
 msgstr "Een unieke code of {code_length} tekens."
 
 #: account/forms/account_setup.py:199
-#, fuzzy
 msgid "explanation-organization-code"
 msgstr "uitleg-organisatie-code"
 
@@ -323,11 +321,9 @@ msgid ""
 msgstr ""
 "U krijgt toestemming voor niveau 4 van uw beheerder. Voordat u OOI-"
 "vrijwaringsniveaus kunt wijzigen tot dit niveau, moet u deze toestemming "
-"accepteren. Onthoud: <strong>met grote macht komt grote verantwoordelijkheid.</"
-"strong>"
+"accepteren. Onthoud: <strong>met grote macht komt grote verantwoordelijkheid.</strong>"
 
 #: account/templates/account_detail.html:88
-#, fuzzy
 msgid ""
 "You can withdraw this at anytime you like, but know that you're not able to "
 "change clearance levels anymore when you do."
@@ -608,33 +604,28 @@ msgid "Describe the type of failure mode"
 msgstr "Beschrijf het type bevinding"
 
 #: fmea/forms.py:55
-#, fuzzy
 msgid "explanation-failure-mode"
-msgstr "explanation-failure-mode"
+msgstr "uitleg-failure-mode"
 
 #: fmea/forms.py:61
 msgid "Describe in more detail what the failure mode is about."
 msgstr "Beschrijf in meer detail waar het om gaat."
 
 #: fmea/forms.py:62
-#, fuzzy
 msgid "explanation-description"
-msgstr "Omschrijving impact"
+msgstr "uitleg-omschrijving"
 
 #: fmea/forms.py:67
-#, fuzzy
 msgid "explanation-frequency-level"
-msgstr "explanation-frequency-level"
+msgstr "uitleg-frequency-level"
 
 #: fmea/forms.py:72
-#, fuzzy
 msgid "explanation-detectability_level"
-msgstr "explanation-detectability_level"
+msgstr "uitleg-detectability_level"
 
 #: fmea/forms.py:81
-#, fuzzy
 msgid "You must at least set a failure mode."
-msgstr "Beschrijf hoe dit type bevinding kan worden opgelost"
+msgstr "Je moet tenminste een faal modus zetten."
 
 #: fmea/forms.py:84
 msgid "Choose a frequency level."
@@ -671,9 +662,8 @@ msgid "Which objects does this failure mode affect when it occurs?"
 msgstr "Welke objecten hebben met de bevinding te maken als het gebeurd?"
 
 #: fmea/forms.py:136
-#, fuzzy
 msgid "explanation-affected-ooi-type"
-msgstr "Uitleg"
+msgstr "uitleg-affected-ooi-type"
 
 #: fmea/forms.py:148 fmea/templates/fmea/fmea_failure_mode_effect_detail.html:26
 msgid "Effect"
@@ -697,14 +687,12 @@ msgid "Describe a possible effect for FMEA"
 msgstr "Beschrijf een mogelijk effect voor FMEA"
 
 #: fmea/forms.py:162
-#, fuzzy
 msgid "explanation-effect"
-msgstr "Uitleg van het effect"
+msgstr "uitleg-effect"
 
 #: fmea/forms.py:167
-#, fuzzy
 msgid "explanation-severity-level"
-msgstr "explanation-severity-level"
+msgstr "uitleg-severity-level"
 
 #: fmea/forms.py:174
 msgid "The effect is required."
@@ -860,9 +848,8 @@ msgid "Edit"
 msgstr "Bewerken"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_detail.html:33
-#, fuzzy
 msgid "Failure mode affected objects cannot be found."
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Faal modus getroffen objecten kan niet gevonden worden."
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:11
 msgid "Define which objects are affected for a failure mode"
@@ -908,9 +895,8 @@ msgstr ""
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_form.html:27
 #: fmea/templates/fmea/fmea_failure_mode_list.html:71
-#, fuzzy
 msgid "Create failure mode"
-msgstr "Omschrijf uw bevinding"
+msgstr "Maak faal modus"
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:14
 msgid "Failure mode affected objects tabel:"
@@ -921,9 +907,8 @@ msgid "No failure mode affected objects yet defined."
 msgstr "Er zijn nog geen objecten met een storing gedefinieerd."
 
 #: fmea/templates/fmea/fmea_failure_mode_affected_object_list.html:38
-#, fuzzy
 msgid "Create failure mode Affected Objects"
-msgstr "Omschrijf uw bevinding"
+msgstr "Maak aan faal modus getroffen objecten"
 
 #: fmea/templates/fmea/fmea_failure_mode_departments.html:10
 msgid "Departments failure modes"
@@ -935,9 +920,8 @@ msgstr "Selecteer de objecten uit de graaf"
 
 #: fmea/templates/fmea/fmea_failure_mode_departments.html:16
 #: fmea/templates/fmea/fmea_failure_mode_list.html:18
-#, fuzzy
 msgid "Failure Mode"
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Faal modus"
 
 #: fmea/templates/fmea/fmea_failure_mode_departments.html:17
 msgid "Affected Departments"
@@ -948,9 +932,8 @@ msgid "Nothing found."
 msgstr "Geen resultaten."
 
 #: fmea/templates/fmea/fmea_failure_mode_detail.html:14
-#, fuzzy
 msgid "Failure mode properties"
-msgstr "Bestand kon niet gedecodeerd worden"
+msgstr "Faal modus eigenschappen"
 
 #: fmea/templates/fmea/fmea_failure_mode_detail.html:18
 #: fmea/templates/fmea/fmea_failure_mode_effect_detail.html:18
