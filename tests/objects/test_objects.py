@@ -22,7 +22,7 @@ def test_ooi_list(rf, my_user, organization, mock_organization_view_octopoes):
         count=200, items=[Network(name="testnetwork")] * 150
     )
 
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().list.call_count == 2
@@ -46,7 +46,7 @@ def test_ooi_list_with_clearance_type_filter_and_clearance_level_filter(
         count=200, items=[Network(name="testnetwork")] * 150
     )
 
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().list.call_count == 2
@@ -78,12 +78,11 @@ def test_ooi_list_delete_multiple(rf, my_user, organization, mock_organization_v
             "action": "delete",
         },
     )
-    request.resolver_match = resolve(url)
     setup_request(request, my_user)
 
     my_user.acknowledged_clearance_level = 0
     my_user.save()
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().list.call_count == 2
@@ -104,7 +103,7 @@ def test_update_scan_profile_multiple(rf, my_user, organization, mock_organizati
     )
     request.resolver_match = resolve(url)
     setup_request(request, my_user)
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().save_scan_profile.call_count == 2
@@ -122,9 +121,8 @@ def test_update_scan_profile_single(rf, my_user, organization, mock_organization
             "action": "update-scan-profile",
         },
     )
-    request.resolver_match = resolve(url)
     setup_request(request, my_user)
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().save_scan_profile.call_count == 1
@@ -150,7 +148,7 @@ def test_update_scan_profiles_forbidden_acknowledged(rf, my_user, organization, 
 
     setup_request(request, my_user)
 
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 403
     assert mock_organization_view_octopoes().save_scan_profile.call_count == 0
@@ -176,7 +174,7 @@ def test_update_scan_profiles_forbidden_trusted(rf, my_user, organization, mock_
 
     setup_request(request, my_user)
 
-    response = OOIListView.as_view()(request, **kwargs)
+    response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 403
     assert mock_organization_view_octopoes().save_scan_profile.call_count == 0

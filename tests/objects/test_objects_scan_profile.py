@@ -1,4 +1,3 @@
-from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains, assertNotContains
 
 from octopoes.models.tree import ReferenceTree
@@ -40,17 +39,10 @@ TREE_DATA = {
 
 def test_scan_profile(rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, mocker):
     mocker.patch("katalogus.utils.get_katalogus")
-
-    kwargs = {"organization_code": organization.code}
-    url = reverse("scan_profile_detail", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
-
-    setup_request(request, my_user)
-
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
-    response = ScanProfileDetailView.as_view()(request, **kwargs)
+    request = setup_request(rf.get("scan_profile_detail", {"ooi_id": "Network|testnetwork"}), my_user)
+    response = ScanProfileDetailView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().get_tree.call_count == 2
@@ -62,21 +54,14 @@ def test_scan_profile_no_permissions_acknowledged(
     rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, mocker
 ):
     mocker.patch("katalogus.utils.get_katalogus")
-
-    kwargs = {"organization_code": organization.code}
-    url = reverse("scan_profile_detail", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
+    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
     member = OrganizationMember.objects.get(user=my_user)
     member.acknowledged_clearance_level = -1
     member.save()
 
-    setup_request(request, my_user)
-
-    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
-
-    response = ScanProfileDetailView.as_view()(request, **kwargs)
+    request = setup_request(rf.get("scan_profile_detail", {"ooi_id": "Network|testnetwork"}), my_user)
+    response = ScanProfileDetailView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().get_tree.call_count == 2
@@ -87,22 +72,15 @@ def test_scan_profile_no_permissions_acknowledged(
 def test_scan_profile_no_permissions_trusted(
     rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, mocker
 ):
+    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
     mocker.patch("katalogus.utils.get_katalogus")
-
-    kwargs = {"organization_code": organization.code}
-    url = reverse("scan_profile_detail", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
 
     member = OrganizationMember.objects.get(user=my_user)
     member.trusted_clearance_level = -1
     member.save()
 
-    setup_request(request, my_user)
-
-    mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
-
-    response = ScanProfileDetailView.as_view()(request, **kwargs)
+    request = setup_request(rf.get("scan_profile_detail", {"ooi_id": "Network|testnetwork"}), my_user)
+    response = ScanProfileDetailView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().get_tree.call_count == 2

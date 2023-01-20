@@ -28,16 +28,11 @@ TREE_DATA = {
 
 
 def test_ooi_graph(rf, my_user, organization, mock_organization_view_octopoes):
-    kwargs = {"organization_code": organization.code}
-    url = reverse("ooi_graph", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
-
-    setup_request(request, my_user)
-
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
-    response = OOIGraphView.as_view()(request, **kwargs)
+    request = setup_request(rf.get("ooi_graph", {"ooi_id": "Network|testnetwork"}), my_user)
+    request.resolver_match = resolve(reverse("ooi_graph", kwargs={"organization_code": organization.code}))
+    response = OOIGraphView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().get_tree.call_count == 1

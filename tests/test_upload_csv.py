@@ -1,11 +1,7 @@
 from io import BytesIO
 
 import pytest
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.urls import reverse
-from django_otp import DEVICE_ID_SESSION_KEY
-from django_otp.middleware import OTPMiddleware
+from pytest_django.asserts import assertContains
 
 from rocky.views.upload_csv import UploadCSV
 from tests.conftest import setup_request
@@ -36,25 +32,16 @@ EXPECTED_OOI_COUNTS = [2, 2, 6, 4, 4, 2]
 
 
 def test_upload_csv_page(rf, my_user, organization):
-    kwargs = {"organization_code": organization.code}
-    request = rf.get(reverse("upload_csv", kwargs=kwargs))
-    request.user = my_user
-    request.organization = organization
+    request = setup_request(rf.get("upload_csv"), my_user)
 
-    response = UploadCSV.as_view()(request, **kwargs)
+    response = UploadCSV.as_view()(request, organization_code=organization.code)
     assert response.status_code == 200
+    assertContains(response, "Upload CSV")
 
 
 def test_upload_csv_simple(rf, my_user, organization):
-    kwargs = {"organization_code": organization.code}
-    request = rf.get(reverse("upload_csv", kwargs=kwargs))
-    request.user = my_user
-    request.organization = organization
-
-    request = SessionMiddleware(lambda r: r)(request)
-    request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
-    request = OTPMiddleware(lambda r: r)(request)
-    response = UploadCSV.as_view()(request, **kwargs)
+    request = setup_request(rf.get("upload_csv"), my_user)
+    response = UploadCSV.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
 
@@ -63,15 +50,8 @@ def test_upload_bad_input(rf, my_user, organization, mock_organization_view_octo
     example_file = BytesIO(b"invalid|'\n4\bcsv|format")
     example_file.name = "networks.csv"
 
-    kwargs = {"organization_code": organization.code}
-    request = rf.post(
-        reverse("upload_csv", kwargs=kwargs),
-        {"object_type": "Hostname", "csv_file": example_file},
-    )
-
-    setup_request(request, my_user)
-
-    response = UploadCSV.as_view()(request, **kwargs)
+    request = setup_request(rf.post("upload_csv", {"object_type": "Hostname", "csv_file": example_file}), my_user)
+    response = UploadCSV.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 302
 
@@ -89,19 +69,8 @@ def test_upload_csv(
     example_file = BytesIO(example_input)
     example_file.name = f"{input_type}.csv"
 
-    kwargs = {"organization_code": organization.code}
-    request = rf.post(
-        reverse("upload_csv", kwargs=kwargs),
-        {"object_type": input_type, "csv_file": example_file},
-    )
-    request.user = my_user
-    request.organization = organization
-
-    request = SessionMiddleware(lambda r: r)(request)
-    request.session[DEVICE_ID_SESSION_KEY] = my_user.staticdevice_set.get().persistent_id
-    request = OTPMiddleware(lambda r: r)(request)
-    request = MessageMiddleware(lambda r: r)(request)
-    response = UploadCSV.as_view()(request, **kwargs)
+    request = setup_request(rf.post("upload_csv", {"object_type": input_type, "csv_file": example_file}), my_user)
+    response = UploadCSV.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 302
     assert mock_organization_view_octopoes().save_declaration.call_count == expected_ooi_counts

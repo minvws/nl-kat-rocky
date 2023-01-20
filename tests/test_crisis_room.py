@@ -10,11 +10,8 @@ from tests.conftest import setup_request
 
 
 def test_crisis_room(rf, my_user, organization, mock_crisis_room_octopoes):
-    url = reverse("crisis_room")
-    request = rf.get(url)
-    request.resolver_match = resolve(url)
-
-    setup_request(request, my_user)
+    request = setup_request(rf.get("crisis_room"), my_user)
+    request.resolver_match = resolve(reverse("crisis_room"))
 
     mock_crisis_room_octopoes().list.return_value = Paginated[OOIType](
         count=150,

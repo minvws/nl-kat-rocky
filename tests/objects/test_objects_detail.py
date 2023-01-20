@@ -32,17 +32,13 @@ def test_ooi_detail(
 ):
     mocker.patch("katalogus.utils.get_katalogus")
 
-    kwargs = {"organization_code": organization.code}
-    url = reverse("ooi_detail", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
-
+    request = setup_request(rf.get("ooi_detail", {"ooi_id": "Network|testnetwork"}), my_user)
     setup_request(request, my_user)
 
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
     mock_scheduler.get_lazy_task_list.return_value = lazy_task_list_with_boefje
 
-    response = OOIDetailView.as_view()(request, **kwargs)
+    response = OOIDetailView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().get_tree.call_count == 2

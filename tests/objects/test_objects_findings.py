@@ -27,17 +27,11 @@ TREE_DATA = {
 }
 
 
-def test_ooi_finding_list(rf, my_user, organization, mock_organization_view_octopoes, network):
-    kwargs = {"organization_code": organization.code}
-    url = reverse("finding_list", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
-
-    setup_request(request, my_user)
-
+def test_ooi_finding_list(rf, my_user, organization, mock_organization_view_octopoes):
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
 
-    response = OOIFindingListView.as_view()(request, **kwargs)
+    request = setup_request(rf.get("finding_list", {"ooi_id": "Network|testnetwork"}), my_user)
+    response = OOIFindingListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assert mock_organization_view_octopoes().get_tree.call_count == 1

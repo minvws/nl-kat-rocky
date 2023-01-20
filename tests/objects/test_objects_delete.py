@@ -1,4 +1,3 @@
-from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains
 
 from rocky.views.ooi_delete import OOIDeleteView
@@ -6,16 +5,9 @@ from tests.conftest import setup_request
 
 
 def test_ooi_delete(rf, my_user, organization, mock_organization_view_octopoes, network):
-    kwargs = {"organization_code": organization.code}
-    url = reverse("ooi_delete", kwargs=kwargs)
-    request = rf.get(url, {"ooi_id": "Network|testnetwork"})
-    request.resolver_match = resolve(url)
-
-    setup_request(request, my_user)
-
     mock_organization_view_octopoes().get.return_value = network
-
-    response = OOIDeleteView.as_view()(request, **kwargs)
+    request = setup_request(rf.get("ooi_delete", {"ooi_id": "Network|testnetwork"}), my_user)
+    response = OOIDeleteView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
     assertContains(response, "testnetwork")
