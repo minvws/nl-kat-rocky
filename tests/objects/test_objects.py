@@ -263,3 +263,41 @@ def test_update_scan_profiles_object_not_found(rf, my_user, organization, mock_o
     response = OOIListView.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 404
+
+
+def test_delete_octopoes_down(rf, my_user, organization, mock_organization_view_octopoes):
+    mock_organization_view_octopoes().delete.side_effect = ConnectionError
+
+    request = rf.post(
+        "ooi_list",
+        data={
+            "ooi": ["Network|internet", "Hostname|internet|scanme.org."],
+            "scan-profile": "L2",
+            "action": "delete",
+        },
+    )
+
+    setup_request(request, my_user)
+
+    response = OOIListView.as_view()(request, organization_code=organization.code)
+
+    assert response.status_code == 500
+
+
+def test_delete_object_not_found(rf, my_user, organization, mock_organization_view_octopoes):
+    mock_organization_view_octopoes().delete.side_effect = ObjectNotFoundException("gone")
+
+    request = rf.post(
+        "ooi_list",
+        data={
+            "ooi": ["Network|internet", "Hostname|internet|scanme.org."],
+            "scan-profile": "L2",
+            "action": "delete",
+        },
+    )
+
+    setup_request(request, my_user)
+
+    response = OOIListView.as_view()(request, organization_code=organization.code)
+
+    assert response.status_code == 404
