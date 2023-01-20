@@ -1,13 +1,55 @@
-from pytest_django.asserts import assertContains
+import json
+from pathlib import Path
 
+from pytest_django.asserts import assertContains, assertNotContains
+import requests
+
+from katalogus.client import KATalogusClientV1
 from katalogus.views import KATalogusView
+from rocky.health import ServiceHealth
 from tests.conftest import setup_request
 
 
 def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
-    mocker.patch("katalogus.client.KATalogusClientV1")
+    mock_requests = mocker.patch("katalogus.client.requests")
+    mock_response = mocker.MagicMock()
+    mock_requests.get.return_value = mock_response
+    mock_response.json.return_value = json.loads(
+        (Path(__file__).parent / "stubs" / "katalogus_boefjes.json").read_text()
+    )
 
     request = setup_request(rf.get("katalogus"), my_user)
     response = KATalogusView.as_view()(request, organization_code=organization.code)
 
     assertContains(response, "KAT-alogus")
+    assertContains(response, "Enable")
+    assertContains(response, "BinaryEdge")
+    assertContains(response, "WPScantest")
+    assertNotContains(response, "test_binary_edge_normalizer")
+
+
+def test_katalogus_client_organization_exists(mocker):
+    mock_requests = mocker.patch("katalogus.client.requests")
+    mock_requests.get.side_effect = requests.exceptions.HTTPError
+
+    client = KATalogusClientV1("test", "test")
+
+    assert client.organization_exists() is False
+
+
+def test_katalogus_client(mocker):
+    mock_requests = mocker.patch("katalogus.client.requests")
+
+    mock_response = mocker.MagicMock()
+    mock_requests.get.return_value = mock_response
+    mock_response.json.return_value = {
+        "service": "test",
+        "healthy": False,
+        "version": None,
+        "additional": 2,
+        "results": [],
+    }
+
+    client = KATalogusClientV1("test", "test")
+
+    assert isinstance(client.health(), ServiceHealth)
