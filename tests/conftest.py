@@ -89,6 +89,11 @@ def mock_organization_view_octopoes(mocker):
 
 
 @pytest.fixture
+def mock_onboarding_view_octopoes(mocker):
+    return mocker.patch("onboarding.views.OctopoesAPIConnector")
+
+
+@pytest.fixture
 def mock_crisis_room_octopoes(mocker):
     return mocker.patch("crisis_room.views.OctopoesAPIConnector")
 

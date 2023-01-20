@@ -1,4 +1,4 @@
-from django.urls import reverse, resolve
+from django.urls import reverse
 from pytest_django.asserts import assertContains
 from requests import HTTPError
 

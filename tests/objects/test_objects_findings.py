@@ -1,4 +1,3 @@
-from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains
 
 from octopoes.models.tree import ReferenceTree

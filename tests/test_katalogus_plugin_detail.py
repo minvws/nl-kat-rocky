@@ -1,5 +1,4 @@
 import pytest
-from django.urls import reverse, resolve
 from pytest_django.asserts import assertContains
 
 from katalogus.views.plugin_detail import PluginDetailView
@@ -33,7 +32,9 @@ def test_plugin_detail(
     mock_mixins_katalogus().get_plugin_schema.return_value = plugin_schema
 
     request = setup_request(rf.post("step_organization_setup"), my_user)
-    response = PluginDetailView.as_view()(request, organization_code=organization.code, plugin_type="boefje", plugin_id="test-plugin")
+    response = PluginDetailView.as_view()(
+        request, organization_code=organization.code, plugin_type="boefje", plugin_id="test-plugin"
+    )
 
     assertContains(response, "TestBoefje")
     assertContains(response, "Meows to the moon")
