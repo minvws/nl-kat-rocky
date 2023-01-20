@@ -93,7 +93,7 @@ def test_onboarding_set_clearance_level(
 
 
 def test_onboarding_select_plugins(
-    rf, my_red_teamer, organization, mock_models_katalogus, mock_organization_view_octopoes, network
+    rf, my_red_teamer, organization, mock_views_katalogus, mock_organization_view_octopoes, network
 ):
     mock_organization_view_octopoes().get.return_value = network
 

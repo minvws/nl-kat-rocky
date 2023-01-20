@@ -7,7 +7,6 @@ from octopoes.models.ooi.network import Network
 from octopoes.models.pagination import Paginated
 from octopoes.models.types import OOIType
 
-from rocky.exceptions import IndemnificationNotPresentException
 from rocky.views.ooi_list import OOIListView
 from tests.conftest import setup_request
 from tools.models import OrganizationMember, Indemnification
