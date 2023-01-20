@@ -5,18 +5,7 @@ from rocky.views.ooi_delete import OOIDeleteView
 from tests.conftest import setup_request
 
 
-def test_ooi_delete(
-    rf,
-    my_user,
-    organization,
-    mock_scheduler,
-    mock_organization_view_octopoes,
-    lazy_task_list_with_boefje,
-    mocker,
-    network,
-):
-    mocker.patch("katalogus.utils.get_katalogus")
-
+def test_ooi_delete(rf, my_user, organization, mock_organization_view_octopoes, network):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_delete", kwargs=kwargs)
     request = rf.get(url, {"ooi_id": "Network|testnetwork"})

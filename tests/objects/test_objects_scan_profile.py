@@ -38,9 +38,7 @@ TREE_DATA = {
 }
 
 
-def test_scan_profile(
-    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje, mocker
-):
+def test_scan_profile(rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, mocker):
     mocker.patch("katalogus.utils.get_katalogus")
 
     kwargs = {"organization_code": organization.code}
@@ -61,7 +59,7 @@ def test_scan_profile(
 
 
 def test_scan_profile_no_permissions_acknowledged(
-    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje, mocker
+    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, mocker
 ):
     mocker.patch("katalogus.utils.get_katalogus")
 
@@ -87,7 +85,7 @@ def test_scan_profile_no_permissions_acknowledged(
 
 
 def test_scan_profile_no_permissions_trusted(
-    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje, mocker
+    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, mocker
 ):
     mocker.patch("katalogus.utils.get_katalogus")
 

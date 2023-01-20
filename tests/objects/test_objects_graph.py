@@ -27,11 +27,7 @@ TREE_DATA = {
 }
 
 
-def test_ooi_graph(
-    rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje, mocker
-):
-    mocker.patch("katalogus.utils.get_katalogus")
-
+def test_ooi_graph(rf, my_user, organization, mock_organization_view_octopoes):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_graph", kwargs=kwargs)
     request = rf.get(url, {"ooi_id": "Network|testnetwork"})
