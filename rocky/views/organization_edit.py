@@ -1,5 +1,3 @@
-from typing import List, Tuple, Optional
-
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import redirect
@@ -10,8 +8,6 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 
 from account.forms import OrganizationForm
-from rocky.settings import MIAUW_API_ENABLED
-from tools.miauw_helpers import get_registered_usernames
 from tools.models import Organization
 
 
@@ -21,36 +17,6 @@ class OrganizationEditView(PermissionRequiredMixin, UpdateView):
     model = Organization
     template_name = "organizations/organization_edit.html"
     permission_required = "tools.change_organization"
-
-    def get(self, request, *args, **kwargs):
-        if not MIAUW_API_ENABLED:
-            messages.add_message(request, messages.WARNING, "Miauw API is not enabled.")
-            self.object = self.get_object()
-            return redirect(self.get_success_url())
-
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if not MIAUW_API_ENABLED:
-            self.get(request, *args, **kwargs)
-
-        return super().post(request, *args, **kwargs)
-
-    def get_usernames_input_values(self) -> Optional[List[Tuple[str, str]]]:
-        try:
-            registered_usernames = get_registered_usernames()
-            if registered_usernames is not None:
-                return [(username, username) for username in registered_usernames]
-        except Exception as e:
-            messages.add_message(self.request, messages.WARNING, str(e))
-
-        return None
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({"signal_username_choices": self.get_usernames_input_values()})
-
-        return kwargs
 
     def get_success_url(self):
         return reverse("organization_detail", kwargs={"pk": self.object.id})
