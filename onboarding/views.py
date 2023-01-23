@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from typing import Type, List, Dict, Any
 
 from django.contrib import messages
@@ -14,7 +13,6 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from django_otp.decorators import otp_required
 from octopoes.connector.octopoes import OctopoesAPIConnector
-from octopoes.models import DeclaredScanProfile
 from octopoes.models import OOI
 from octopoes.models.ooi.network import Network
 from octopoes.models.types import type_by_name
@@ -35,6 +33,7 @@ from onboarding.view_helpers import (
     KatIntroductionAdminStepsMixin,
     KatIntroductionRegistrationStepsMixin,
 )
+from rocky.exceptions import IndemnificationNotPresentException, ClearanceLevelTooLowException
 from rocky.views.indemnification_add import IndemnificationAddView
 from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
 from rocky.views.ooi_view import BaseOOIFormView, SingleOOITreeMixin, BaseOOIDetailView
@@ -261,19 +260,16 @@ class OnboardingSetupScanOOIDetailView(
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if not self.verify_may_update_scan_profile():
+
+        ooi = self.get_ooi()
+        level = int(self.request.session["clearance_level"])
+        try:
+            self.raise_clearance_level(ooi.reference, level)
+        except (IndemnificationNotPresentException, ClearanceLevelTooLowException):
             return self.get(request, *args, **kwargs)
 
-        self.set_clearance_level()
         self.enable_selected_boefjes()
         return redirect(get_ooi_url("step_report", self.get_ooi_id(), self.organization.code))
-
-    def set_clearance_level(self):
-        ooi = self.get_ooi()
-        self.octopoes_api_connector.save_scan_profile(
-            DeclaredScanProfile(reference=ooi.reference, level=self.request.session["clearance_level"]),
-            valid_time=datetime.now(timezone.utc),
-        )
 
     def enable_selected_boefjes(self) -> None:
         if not self.request.session.get("selected_boefjes"):
@@ -308,7 +304,7 @@ class OnboardingSetClearanceLevelView(
         return get_ooi_url("step_setup_scan_select_plugins", self.request.GET.get("ooi_id"), self.organization.code)
 
     def form_valid(self, form):
-        self.request.session["clearance_level"] = form.data["level"]
+        self.request.session["clearance_level"] = form.cleaned_data["level"]
         self.add_success_notification()
         return super().form_valid(form)
 
