@@ -39,15 +39,15 @@ class OOIDetailView(
             messages.add_message(
                 request, messages.ERROR, "Indemnification not present at organization %s." % self.organization
             )
-            return self.get_with_status_code(request, status_code=403, *args, **kwargs)
+            return self.get(request, status_code=403, *args, **kwargs)
 
         if "action" not in self.request.POST:
-            return self.get_with_status_code(request, status_code=404, *args, **kwargs)
+            return self.get(request, status_code=404, *args, **kwargs)
 
         self.ooi = self.get_ooi()
 
         if not self.handle_page_action(request.POST.get("action")):
-            return self.get_with_status_code(request, status_code=500, *args, **kwargs)
+            return self.get(request, status_code=500, *args, **kwargs)
 
         success_message = (
             "Your scan is running successfully in the background. \n "
@@ -57,12 +57,6 @@ class OOIDetailView(
         messages.add_message(request, messages.SUCCESS, success_message)
 
         return redirect("task_list", organization_code=self.organization.code)
-
-    def get_with_status_code(self, request, status_code: int, *args, **kwargs):
-        response = self.get(request, *args, **kwargs)
-        response.status_code = status_code
-
-        return response
 
     def handle_page_action(self, action: str) -> bool:
         try:

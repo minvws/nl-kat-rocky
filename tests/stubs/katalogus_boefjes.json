@@ -11,7 +11,7 @@
       "BINARYEDGE_API"
     ],
     "related": null,
-    "enabled": false,
+    "enabled": true,
     "type": "boefje",
     "scan_level": 2,
     "consumes": [
