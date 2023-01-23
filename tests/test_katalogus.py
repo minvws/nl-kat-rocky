@@ -52,3 +52,7 @@ def test_katalogus_client(mocker):
     client = KATalogusClientV1("test", "test")
 
     assert isinstance(client.health(), ServiceHealth)
+    assert client.health().service == "test"
+    assert not client.health().healthy
+    assert client.health().additional == 2
+    assert client.health().results == []
