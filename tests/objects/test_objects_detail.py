@@ -4,8 +4,11 @@ from django.http import HttpResponseRedirect
 from pytest_django.asserts import assertContains
 
 from octopoes.models.tree import ReferenceTree
+
+from katalogus.client import Plugin
 from rocky.views.ooi_detail import OOIDetailView
 from tests.conftest import setup_request
+from tools.enums import SCAN_LEVEL
 from tools.models import Indemnification
 
 TREE_DATA = {
@@ -32,7 +35,7 @@ TREE_DATA = {
 def test_ooi_detail(
     rf, my_user, organization, mock_scheduler, mock_organization_view_octopoes, lazy_task_list_with_boefje, mocker
 ):
-    mocker.patch("katalogus.utils.get_katalogus")
+    mocker.patch("katalogus.client.KATalogusClientV1")
 
     request = setup_request(rf.get("ooi_detail", {"ooi_id": "Network|testnetwork"}), my_user)
 
@@ -57,10 +60,22 @@ def test_ooi_detail_start_scan(
     mocker,
     network,
 ):
-    mocker.patch("katalogus.utils.get_katalogus")
+    mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
+    mocker.patch("katalogus.views.mixins.client")
 
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
     mock_organization_view_octopoes().get.return_value = network
+    mock_katalogus().get_boefje.return_value = Plugin(
+        id="nmap",
+        repository_id="",
+        name="",
+        description="",
+        environment_keys=[],
+        type="boefje",
+        scan_level=SCAN_LEVEL.L2,
+        consumes=[],
+        produces=[],
+    )
 
     # Passing query params in POST requests is not well-supported for RequestFactory it seems, hence the absolute path
     query_string = urlencode({"ooi_id": network.reference}, doseq=True)
@@ -93,7 +108,7 @@ def test_ooi_detail_start_scan_no_indemnification(
     mocker,
     network,
 ):
-    mocker.patch("katalogus.utils.get_katalogus")
+    mocker.patch("katalogus.client.KATalogusClientV1")
 
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
     mock_organization_view_octopoes().get.return_value = network
@@ -129,7 +144,7 @@ def test_ooi_detail_start_scan_no_action(
     mocker,
     network,
 ):
-    mocker.patch("katalogus.utils.get_katalogus")
+    mocker.patch("katalogus.client.KATalogusClientV1")
 
     mock_organization_view_octopoes().get_tree.return_value = ReferenceTree.parse_obj(TREE_DATA)
     mock_organization_view_octopoes().get.return_value = network
