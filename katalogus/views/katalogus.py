@@ -1,9 +1,9 @@
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, FormView
+from django.shortcuts import redirect
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
-
 from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
 from katalogus.forms import KATalogusFilter
@@ -28,7 +28,8 @@ class KATalogusView(ListView, OrganizationView, FormView):
             self.view = kwargs["view"]
 
     def get_all_boefjes(self):
-        return [plugin for plugin in self.all_plugins if plugin["type"] == "boefje"]
+        plugins = [plugin for plugin in self.all_plugins if plugin["type"] == "boefje"]
+        return plugins
 
     def get_all_normalizers(self):
         return [plugin for plugin in self.all_plugins if plugin["type"] == "normalizer"]
@@ -65,4 +66,13 @@ class KATalogusView(ListView, OrganizationView, FormView):
             },
         ]
         context["view"] = self.view
+        context["multiple_enabled"] = True
+        context["form_handler_name"] = "select-plugin-form"
         return context
+
+
+class KATalogusBulkActions(OrganizationView):
+    def post(self, request, *args, **kwargs):
+        selected_plugins = self.request.GET.get("plugin")
+        print(selected_plugins)
+        return redirect(reverse("katalogus", kwargs={"organization_code": self.organization.code}))

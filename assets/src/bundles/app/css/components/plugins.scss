@@ -12,7 +12,7 @@ $normalizer-bg: #e17000;
   }
 
   /* Tile */
-  > div {
+  >div {
     position: relative;
     margin-top: 1.75rem;
 
@@ -20,23 +20,28 @@ $normalizer-bg: #e17000;
     &.required {
       .nota-bene {
         display: inline;
-        position: absolute; /* Removed form the flow to keep the flex stretch option on the plugins so they stay the same height */
+        position: absolute;
+        /* Removed form the flow to keep the flex stretch option on the plugins so they stay the same height */
         top: -1.75rem;
         margin: 0;
       }
     }
 
     /* interaction */
-    > .nota-bene {
+    >.nota-bene {
       display: none;
     }
 
     /* Checkbox */
-    > input[type="checkbox"] {
+    >input[type="checkbox"] {
       left: 1rem;
       margin-top: 0;
       position: absolute;
       top: 1rem;
+      width: var(--form-checkbox-width);
+      height: var(--form-checkbox-height);
+      min-height: 0;
+      accent-color: var(--form-accent-color-color, initial);
     }
 
     .tile-label {

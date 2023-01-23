@@ -16,6 +16,11 @@ urlpatterns = [
         name="katalogus_settings",
     ),
     path(
+        "bulk-actions/",
+        views.KATalogusBulkActions.as_view(),
+        name="katalogus_list_bulk_actions",
+    ),
+    path(
         "plugins/<plugin_type>/<plugin_id>/",
         PluginDetailView.as_view(),
         name="plugin_detail",

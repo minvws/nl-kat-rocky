@@ -37,6 +37,9 @@
               <caption>{% translate 'Boefjes overview:' %}</caption>
               <thead>
                 <tr>
+                  <th>
+                    <input class="toggle-all" data-toggle-target="plugin" type="checkbox">
+                  </th>
                   <th>{% translate 'Boefje name' %}</th>
                   <th>{% translate 'Boefje description' %}</th>
                   <th colspan="2">{% translate 'Actions' %}</th>
@@ -45,6 +48,7 @@
               <tbody>
                 {% for plugin in object_list %}
                   <tr>
+                    <td>{% include "partials/plugin_select_form.html" %}</td>
                     <td scope="row">{{ plugin.name }}</td>
                     <td>{{ plugin.description }}</td>
                     <td>{% include 'partials/enable_disable_plugin.html' with plugin=plugin %}</td>
@@ -65,9 +69,20 @@
           {% include 'partials/katalogus_toolbar.html' with view=view %}
           <div class="column-4 tiles plugins images-cover">
             {% for plugin in object_list %}
-              {% include "partials/plugin_tile.html" with plugin=plugin %}
+              {% include "partials/plugin_tile.html" %}
             {% endfor %}
           </div>
+        </div>
+      </section>
+      <section>
+        <div>
+          <form id="{{ form_handler_name }}"
+                action="{% url 'katalogus_list_bulk_actions' organization.code %}"
+                class="inline"
+                method="post">
+            {% csrf_token %}
+            <button type="submit">{% translate 'Enable' %}</button>
+          </form>
         </div>
       </section>
     {% endif %}

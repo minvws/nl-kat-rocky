@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% if not plugin.environment_keys and multiple_enabled %}
+  <input type="checkbox"
+         name="plugin"
+         value="{{ plugin.id }}"
+         form="{{ form_handler_name }}"/>
+{% endif %}
