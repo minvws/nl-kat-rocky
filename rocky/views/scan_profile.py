@@ -1,14 +1,18 @@
 from datetime import datetime, timezone
 from typing import Dict, Any, List
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django_otp.decorators import otp_required
-from octopoes.models import InheritedScanProfile, EmptyScanProfile, DeclaredScanProfile
 from two_factor.views.utils import class_view_decorator
-from rocky.views import OOIDetailView
-from tools.forms import SetClearanceLevelForm
+
+from octopoes.models import InheritedScanProfile, EmptyScanProfile
+from rocky.exceptions import IndemnificationNotPresentException, ClearanceLevelTooLowException
+from rocky.views.ooi_detail import OOIDetailView
+from tools.forms.ooi import SetClearanceLevelForm
+from tools.models import Indemnification, OrganizationMember
 from tools.view_helpers import (
     get_mandatory_fields,
     get_ooi_url,
@@ -25,7 +29,7 @@ class ScanProfileDetailView(OOIDetailView, FormView):
         breadcrumbs = super().build_breadcrumbs()
         breadcrumbs.append(
             {
-                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key),
+                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code),
                 "text": _("Scan profile"),
             }
         )
@@ -34,27 +38,32 @@ class ScanProfileDetailView(OOIDetailView, FormView):
     def get_context_data(self, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["mandatory_fields"] = get_mandatory_fields(self.request)
-        context["organization_indemnification"] = self.get_organization_indemnification()
+        context["user"] = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
+        context["organization_indemnification"] = Indemnification.objects.filter(
+            organization=self.organization
+        ).exists()
         return context
 
     def post(self, request, *args, **kwargs):
+        if not self.indemnification_present:
+            return self.get(request, *args, **kwargs)
+
         super().post(request, *args, **kwargs)
         form = self.get_form()
         if form.is_valid():
-            self.api_connector.save_scan_profile(
-                DeclaredScanProfile(
-                    reference=self.ooi.reference,
-                    level=form.cleaned_data["level"],
-                ),
-                valid_time=datetime.now(timezone.utc),
-            )
+
+            level = form.cleaned_data["level"]
+            try:
+                self.raise_clearance_level(self.ooi.reference, level)
+            except (IndemnificationNotPresentException, ClearanceLevelTooLowException):
+                return self.get(request, status=403, *args, **kwargs)
         else:
             messages.add_message(
                 self.request,
                 messages.WARNING,
                 _("Choose a valid level").format(ooi_name=self.ooi.human_readable),
             )
-        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code))
 
     def get_initial(self):
         initial = super().get_initial()
@@ -78,7 +87,7 @@ class ScanProfileResetView(OOIDetailView):
                     ooi_name=self.ooi.human_readable
                 ),
             )
-            return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+            return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code))
 
         return super().get(request, *args, **kwargs)
 
@@ -88,13 +97,13 @@ class ScanProfileResetView(OOIDetailView):
             EmptyScanProfile(reference=self.ooi.reference),
             valid_time=datetime.now(timezone.utc),
         )
-        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key))
+        return redirect(get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code))
 
     def build_breadcrumbs(self) -> List[Breadcrumb]:
         breadcrumbs = super().build_breadcrumbs()
         breadcrumbs.append(
             {
-                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key),
+                "url": get_ooi_url("scan_profile_detail", self.ooi.primary_key, self.organization.code),
                 "text": _("Reset"),
             }
         )

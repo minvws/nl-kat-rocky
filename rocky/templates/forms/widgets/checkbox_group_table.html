@@ -7,7 +7,8 @@
       <thead>
         <tr>
           <th>
-            {% if widget.options|length > 1 %}<input name="toggle-all" type="checkbox"/>{% endif %}
+            {# TODO: data-toggle-target is not model-agnostic like the rest of the table #}
+            {% if widget.options|length > 1 %}<input class="toggle-all" data-toggle-target="ooi" type="checkbox">{% endif %}
           </th>
           {% for column_name in widget.column_names %}<th>{{ column_name }}</th>{% endfor %}
         </tr>
@@ -26,7 +27,7 @@
                 <label {% if option.attrs.id %} for="{{ option.attrs.id }}"{% endif %}>
                   {% with cell_template=widget.column_templates|index:forloop.counter0 %}
                     {% if cell_template %}
-                      {% include cell_template with value=cell %}
+                      {% include cell_template with value=cell organization_code=widget.attrs.organization_code %}
                     {% else %}
                       {{ cell }}
                     {% endif %}

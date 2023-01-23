@@ -1,22 +1,42 @@
-import json
 import csv
-from django.http import HttpResponse, Http404
-from django.utils.translation import gettext_lazy as _
+import json
+from datetime import datetime, timezone
+from enum import Enum
+from typing import List
+
+from django.contrib import messages
+from django.http import HttpResponse, Http404, HttpRequest
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django_otp.decorators import otp_required
+from requests import RequestException
+from two_factor.views.utils import class_view_decorator
+
+from octopoes.connector import RemoteException
+from octopoes.models import Reference
+from octopoes.models.exception import ObjectNotFoundException
 from octopoes.models.ooi.findings import Finding, FindingType
 from octopoes.models.types import get_collapsed_types, type_by_name
-from rocky.views import BaseOOIListView
-from tools.view_helpers import BreadcrumbsMixin
+from rocky.exceptions import IndemnificationNotPresentException, ClearanceLevelTooLowException
+from rocky.views.ooi_view import BaseOOIListView
+from tools.forms.ooi import SelectOOIForm
+from tools.models import Indemnification
+from tools.models import SCAN_LEVEL
 
 
-class OOIListView(BreadcrumbsMixin, BaseOOIListView):
+class PageActions(Enum):
+    DELETE = "delete"
+    UPDATE_SCAN_PROFILE = "update-scan-profile"
+
+
+@class_view_decorator(otp_required)
+class OOIListView(BaseOOIListView):
     breadcrumbs = [{"url": reverse_lazy("ooi_list"), "text": _("Objects")}]
     template_name = "oois/ooi_list.html"
     ooi_types = get_collapsed_types().difference({Finding, FindingType})
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-
         self.filtered_ooi_types = self.get_filtered_ooi_types()
 
     def get_context_data(self, **kwargs):
@@ -24,8 +44,127 @@ class OOIListView(BreadcrumbsMixin, BaseOOIListView):
 
         context["types_display"] = self.get_ooi_types_display()
         context["object_type_filters"] = self.get_ooi_type_filters()
+        context["select_oois_form"] = SelectOOIForm(
+            context.get("ooi_list", []), organization_code=self.organization.code
+        )
+        context["member"] = self.organization_member
+        context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
+        context["organization_indemnification"] = self.get_organization_indemnification
 
         return context
+
+    def get(self, request: HttpRequest, status=200, *args, **kwargs) -> HttpResponse:
+        """Override the response status in case submitting a form returns an error message"""
+        response = super().get(request, *args, **kwargs)
+        response.status_code = status
+
+        return response
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """Perform bulk action on selected oois."""
+        selected_oois = request.POST.getlist("ooi")
+        if not selected_oois:
+            messages.add_message(request, messages.ERROR, _("No OOIs selected."))
+            return self.get(request, status=422, *args, **kwargs)
+
+        action = request.POST.get("action")
+
+        if action == PageActions.DELETE.value:
+            return self._delete_oois(selected_oois, request, *args, **kwargs)
+
+        if action == PageActions.UPDATE_SCAN_PROFILE.value:
+
+            return self._set_scan_profiles(selected_oois, request, *args, **kwargs)
+
+        messages.add_message(request, messages.ERROR, _("Unknown action."))
+        return self.get(request, status=404, *args, **kwargs)
+
+    def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
+
+        scan_profile = request.POST.get("scan-profile")
+
+        level = SCAN_LEVEL[scan_profile]
+
+        try:
+            self.verify_raise_clearance_level(level.value)
+        except IndemnificationNotPresentException:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                _(
+                    "Could not raise clearance level to L%s. \
+                    Indemnification not present at organization %s."
+                )
+                % (
+                    level,
+                    self.organization.name,
+                ),
+            )
+            return self.get(request, status=403, *args, **kwargs)
+        except ClearanceLevelTooLowException:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                _(
+                    "Could not raise clearance level to L%s. \
+                    You acknowledged a clearance level of %s."
+                )
+                % (
+                    level,
+                    self.organization_member.acknowledged_clearance_level,
+                ),
+            )
+            return self.get(request, status=403, *args, **kwargs)
+
+        for ooi_reference in selected_oois:
+            try:
+                self.raise_clearance_level(ooi_reference, level.value)
+            except (RequestException, RemoteException, ConnectionError):
+                messages.add_message(
+                    request, messages.ERROR, _("An error occurred while saving clearance level for %s.") % ooi_reference
+                )
+                return self.get(request, status=500, *args, **kwargs)
+            except ObjectNotFoundException:
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    _("An error occurred while saving clearance level for %s.") % ooi_reference
+                    + _("OOI doesn't exist"),
+                )
+                return self.get(request, status=404, *args, **kwargs)
+
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            _("Successfully set scan profile to %s for %d oois.") % (level.name, len(selected_oois)),
+        )
+        return self.get(request, *args, **kwargs)
+
+    def _delete_oois(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        connector = self.octopoes_api_connector
+
+        for ooi in selected_oois:
+            try:
+                connector.delete(ooi, valid_time=datetime.now(timezone.utc))
+            except (RequestException, RemoteException, ConnectionError):
+                messages.add_message(request, messages.ERROR, _("An error occurred deleting %s.") % ooi)
+                return self.get(request, status=500, *args, **kwargs)
+            except ObjectNotFoundException:
+                messages.add_message(
+                    request, messages.ERROR, _("An error occurred deleting %s.") % ooi + _("OOI doesn't exist")
+                )
+                return self.get(request, status=404, *args, **kwargs)
+
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            _("Successfully deleted %d ooi(s). Note: Bits can recreate objects automatically.") % len(selected_oois),
+        )
+
+        return self.get(request, *args, **kwargs)
+
+    def get_organization_indemnification(self):
+        return Indemnification.objects.filter(organization=self.organization).exists()
 
 
 class OOIListExportView(OOIListView):
@@ -40,7 +179,7 @@ class OOIListExportView(OOIListView):
         if self.filtered_ooi_types:
             ooi_types = {type_by_name(t) for t in self.filtered_ooi_types}
 
-        ooi_list = self.get_api_connector().list(ooi_types, observed_at).items
+        ooi_list = self.octopoes_api_connector.list(ooi_types, observed_at).items
         exports = [
             {
                 "observed_at": str(observed_at),
