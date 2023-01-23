@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 
 from pytest_django.asserts import assertContains, assertNotContains
-import requests
 
 from katalogus.client import KATalogusClientV1
 from katalogus.views import KATalogusView
@@ -30,7 +29,7 @@ def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
 
 def test_katalogus_client_organization_exists(mocker):
     mock_requests = mocker.patch("katalogus.client.requests")
-    mock_requests.get.side_effect = requests.exceptions.HTTPError
+    mock_requests.get().status_code = 404
 
     client = KATalogusClientV1("test", "test")
 
