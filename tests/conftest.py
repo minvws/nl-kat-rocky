@@ -11,7 +11,7 @@ from octopoes.models import DeclaredScanProfile, ScanLevel, Reference
 from octopoes.models.ooi.network import Network
 from rocky.scheduler import Task
 from tools.models import Organization, OrganizationMember, OOIInformation, Indemnification
-from tools.models import GROUP_CLIENT, GROUP_REDTEAM, GROUP_ADMIN
+from tools.models import GROUP_REDTEAM, GROUP_ADMIN
 
 
 @pytest.fixture
@@ -62,9 +62,6 @@ def my_user(user, organization):
 @pytest.fixture
 def my_red_teamer(my_user, organization):
     group = Group.objects.create(name=GROUP_ADMIN)
-    group.user_set.add(my_user)
-
-    group = Group.objects.create(name=GROUP_CLIENT)
     group.user_set.add(my_user)
 
     group = Group.objects.create(name=GROUP_REDTEAM)

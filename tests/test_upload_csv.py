@@ -59,6 +59,28 @@ def test_upload_bad_input(rf, my_user, organization, mock_organization_view_octo
     assert "could not be created for row number" in messages[0].message
 
 
+def test_upload_bad_name(rf, my_user, organization, mock_organization_view_octopoes):
+    example_file = BytesIO(b"name,network\n\xa0\xa1,internet")
+    example_file.name = "networks.cvs"
+
+    request = setup_request(rf.post("upload_csv", {"object_type": "Hostname", "csv_file": example_file}), my_user)
+    response = UploadCSV.as_view()(request, organization_code=organization.code)
+
+    assert response.status_code == 200
+    assertContains(response, "Only CSV file supported")
+
+
+def test_upload_bad_decoding(rf, my_user, organization, mock_organization_view_octopoes):
+    example_file = BytesIO(b"name,network\n\xa0\xa1,internet")
+    example_file.name = "networks.csv"
+
+    request = setup_request(rf.post("upload_csv", {"object_type": "Hostname", "csv_file": example_file}), my_user)
+    response = UploadCSV.as_view()(request, organization_code=organization.code)
+
+    assert response.status_code == 200
+    assertContains(response, "File could not be decoded")
+
+
 @pytest.mark.parametrize(
     "example_input, input_type, expected_ooi_counts",
     zip(CSV_EXAMPLES, INPUT_TYPES, EXPECTED_OOI_COUNTS),
