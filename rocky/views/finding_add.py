@@ -47,6 +47,7 @@ class FindingAddView(BaseOOIFormView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
+        self.api_connector = self.octopoes_api_connector
         self.initial = {"ooi_id": request.GET.get("ooi_id")}
 
     def get_context_data(self, **kwargs):
