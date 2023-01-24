@@ -37,7 +37,6 @@ class BoefjeMixin(OctopoesView):
     """
 
     def run_boefje(self, katalogus_boefje: Plugin, ooi: Optional[OOI]) -> None:
-
         boefje_queue_name = f"boefje-{self.organization.code}"
 
         boefje = Boefje(
