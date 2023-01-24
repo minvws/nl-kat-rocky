@@ -3,14 +3,11 @@ from logging import getLogger
 from typing import List, Optional
 from uuid import uuid4
 
-from django.contrib import messages
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from octopoes.connector.octopoes import OctopoesAPIConnector
 from octopoes.models import OOI, DeclaredScanProfile
-from requests import HTTPError
 
-from katalogus.client import get_katalogus
+from katalogus.client import get_katalogus, Plugin
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
 from rocky.views.mixins import OctopoesMixin
 from tools.models import Organization
@@ -45,7 +42,7 @@ class BoefjeMixin(OctopoesMixin):
         super().setup(request, *args, **kwargs)
         self.api_connector = self.get_api_connector()
 
-    def run_boefje(self, katalogus_boefje: Boefje, ooi: Optional[OOI], organization: Organization) -> None:
+    def run_boefje(self, katalogus_boefje: Plugin, ooi: Optional[OOI], organization: Organization) -> None:
 
         boefje_queue_name = f"boefje-{organization.code}"
 
@@ -73,16 +70,15 @@ class BoefjeMixin(OctopoesMixin):
 
     def run_boefje_for_oois(
         self,
-        boefje: Boefje,
-        oois: List[Optional[OOI]],
+        boefje: Plugin,
+        oois: List[OOI],
         organization: Organization,
         api_connector: OctopoesAPIConnector,
     ) -> None:
+        if not oois and not boefje.consumes:
+            self.run_boefje(boefje, None, organization)
 
         for ooi in oois:
-            if not ooi:
-                self.run_boefje(boefje, None, organization)
-                continue
 
             if ooi.scan_profile.level < boefje.scan_level:
                 api_connector.save_scan_profile(
@@ -93,37 +89,3 @@ class BoefjeMixin(OctopoesMixin):
                     datetime.now(timezone.utc),
                 )
             self.run_boefje(boefje, ooi, organization)
-
-    def scan(self, view_args) -> None:
-        if "ooi" not in view_args:
-            return
-
-        if "boefje_id" not in view_args:
-            return
-
-        boefje_id = view_args.get("boefje_id")
-        boefje = self.get_boefje(boefje_id)
-
-        if not boefje.enabled:
-            messages.add_message(
-                self.request,
-                messages.WARNING,
-                _("Trying to run disabled boefje '{boefje_id}'.").format(boefje_id=boefje_id),
-            )
-            return
-
-        ooi_ids = view_args.getlist("ooi")
-        oois = [self.get_single_ooi(ooi_id) for ooi_id in ooi_ids]
-
-        try:
-            self.run_boefje_for_oois(boefje, oois, self.request.active_organization, self.api_connector)
-        except HTTPError:
-            return
-
-        success_message = _(
-            "Your scan is running successfully in the background. \n "
-            "Results will be added to the object list when they are in. "
-            "It may take some time, a refresh of the page may be needed to show the results."
-        )
-        messages.add_message(self.request, messages.SUCCESS, success_message)
-        return
