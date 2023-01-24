@@ -81,6 +81,11 @@ def mock_views_katalogus(mocker):
 
 
 @pytest.fixture
+def mock_bytes(mocker):
+    return mocker.patch("rocky.bytes_client.BytesClient")
+
+
+@pytest.fixture
 def mock_models_octopoes(mocker):
     return mocker.patch("tools.models.OctopoesAPIConnector")
 

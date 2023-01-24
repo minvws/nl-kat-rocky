@@ -30,7 +30,7 @@ class BoefjeMeta(BaseModel):
 
     id: str
     boefje: Boefje
-    input_ooi: str
+    input_ooi: Optional[str]
     arguments: Dict[str, Any]
     organization: str
     started_at: Optional[datetime.datetime]
@@ -51,6 +51,14 @@ class Normalizer(BaseModel):
     id: Optional[str]
     name: Optional[str]
     version: Optional[str] = Field(default=None)
+
+
+class NormalizerMeta(BaseModel):
+    id: str
+    raw_file_id: str
+    normalizer: Normalizer
+    started_at: datetime.datetime
+    ended_at: datetime.datetime
 
 
 class NormalizerTask(BaseModel):
