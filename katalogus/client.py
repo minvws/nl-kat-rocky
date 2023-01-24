@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from octopoes.models import OOI
 from octopoes.models.types import type_by_name
+
 from rocky.health import ServiceHealth
 from rocky.settings import KATALOGUS_API
 from tools.enums import SCAN_LEVEL
@@ -30,13 +31,10 @@ class KATalogusClientV1:
         self.organization = organization
         self.organization_uri = f"{base_uri}/v1/organisations/{organization}"
 
-    def organization_exists(self):
-        try:
-            response = requests.get(f"{self.organization_uri}")
-            response.raise_for_status()
-            return True
-        except requests.exceptions.HTTPError:
-            return False
+    def organization_exists(self) -> bool:
+        response = requests.get(f"{self.organization_uri}")
+
+        return response.status_code != 404
 
     def create_organization(self, name: str):
         response = requests.post(f"{self.base_uri}/v1/organisations/", json={"id": self.organization, "name": name})
