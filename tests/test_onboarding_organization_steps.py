@@ -18,7 +18,7 @@ def test_onboarding_introduction(rf, my_red_teamer, organization, mock_models_ka
     request = setup_request(rf.get("step_introduction"), my_red_teamer)
     response = OnboardingIntroductionView.as_view()(request, organization_code=organization.code)
     assert response.status_code == 200
-    assertContains(response, "Welcome to KAT")
+    assertContains(response, "Welcome to OpenKAT")
     assertContains(response, "Skip onboarding")
     assertContains(response, "Let's get started")
 
@@ -53,7 +53,7 @@ def test_onboarding_setup_scan(rf, my_red_teamer, organization, mock_models_kata
     assert response.status_code == 200
     assertContains(response, "KAT introduction")
     assertContains(response, "Setup scan")
-    assertContains(response, "Let KAT know what object to scan")
+    assertContains(response, "Let OpenKAT know what object to scan")
     assertContains(response, "Understanding objects")
     assertContains(response, "Skip onboarding")
     assertContains(response, "Add URL")
