@@ -1,8 +1,22 @@
 {% load i18n %}
 
-<div class="horizontal-view horizontal-scroll toolbar">
-   <a href="{% url 'katalogus' organization.code %}"
-      class="button icon ti-layout-grid {% if view == 'table' %}ghost{% endif %}">{% translate 'Gridview' %}</a>
-   <a href="{% url 'katalogus' organization_code=organization.code view='table' %}"
-      class="button icon ti-menu-2 {% if view != 'table' %}ghost{% endif %}">{% translate 'Tableview' %}</a>
+<div class="column-2">
+  <div>
+    {% if bulk_action %}
+      <div class="horizontal-view">
+        <input class="toggle-all" data-toggle-target="plugin" type="checkbox"/>
+        <label>{% translate 'Toggle all' %}</label>
+      </div>
+    {% endif %}
+  </div>
+  <div class="horizontal-view horizontal-scroll toolbar">
+    <a href="{% url 'katalogus' organization.code %}{% if view %}?view={{ view }}&{% else %}?{% endif %}bulk-action=enable"
+       class="button {% if bulk_action != 'enable' %}ghost{% endif %}">{% translate 'Enable multiple' %}</a>
+    <a href="{% url 'katalogus' organization.code %}{% if view %}?view={{ view }}&{% else %}?{% endif %}bulk-action=disable"
+       class="button {% if bulk_action != 'disable' %}ghost{% endif %}">{% translate 'Disable multiple' %}</a>
+    <a href="{% url 'katalogus' organization.code %}?view=grid{% if bulk_action %}&bulk-action={{ bulk_action }}{% endif %}"
+       class="button icon ti-layout-grid {% if view == 'table' %}ghost{% endif %}">{% translate 'Gridview' %}</a>
+    <a href="{% url 'katalogus' organization_code=organization.code %}?view=table{% if bulk_action %}&bulk-action={{ bulk_action }}{% endif %}"
+       class="button icon ti-menu-2 {% if view != 'table' %}ghost{% endif %}">{% translate 'Tableview' %}</a>
+  </div>
 </div>

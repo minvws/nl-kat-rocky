@@ -9,14 +9,13 @@ from katalogus.views.plugin_settings_edit import PluginSettingsUpdateView
 
 urlpatterns = [
     path("", views.KATalogusView.as_view(), name="katalogus"),
-    path("view/<view>/", views.KATalogusView.as_view(), name="katalogus"),
     path(
         "settings/",
         views.KATalogusSettingsListView.as_view(),
         name="katalogus_settings",
     ),
     path(
-        "bulk-actions/",
+        "bulk-action/",
         views.KATalogusBulkActions.as_view(),
         name="katalogus_list_bulk_actions",
     ),

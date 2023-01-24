@@ -2,7 +2,9 @@
 {% load static %}
 
 <div role="group">
-  {% include "partials/plugin_select_form.html" %}
+  {% if bulk_action %}
+    {% include "partials/plugin_select_form.html" %}
+  {% endif %}
   <img src="{% url 'plugin_cover' organization_code=organization.code plugin_id=plugin.id %}"
        alt="boefje placeholder image"/>
   <div class="horizontal-view scan-intensity">
@@ -19,7 +21,7 @@
   </p>
   <span class="de-emphasized">{% translate 'Publisher:' %} OpenKAT</span>
   <a href="{% url 'plugin_detail' organization_code=organization.code plugin_type=plugin.type plugin_id=plugin.id %}">{% translate 'See details' %}</a>
-  {% if not multiple_enabled %}
+  {% if not bulk_action %}
     <div class="action-buttons">{% include 'partials/enable_disable_plugin.html' with plugin=plugin %}</div>
   {% endif %}
 </div>

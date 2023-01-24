@@ -38,10 +38,6 @@ $normalizer-bg: #e17000;
       margin-top: 0;
       position: absolute;
       top: 1rem;
-      width: var(--form-checkbox-width);
-      height: var(--form-checkbox-height);
-      min-height: 0;
-      accent-color: var(--form-accent-color-color, initial);
     }
 
     .tile-label {

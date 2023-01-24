@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<section>
+  <div>
+    <form id="{{ form_handler_name }}"
+          action="{% url 'katalogus_list_bulk_actions' organization.code %}"
+          class="inline"
+          method="post">
+      {% csrf_token %}
+      {% if bulk_action == 'enable' %}
+        <button name="enable" type="submit">{% translate 'Enable selected plugins' %}</button>
+      {% else %}
+        <button name="disable" type="submit">{% translate 'Disable selected plugins' %}</button>
+      {% endif %}
+    </form>
+  </div>
+</section>

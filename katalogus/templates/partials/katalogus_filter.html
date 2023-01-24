@@ -13,7 +13,6 @@
         </button>
       </div>
       <form novalidate method="get" class="help">
-        {% csrf_token %}
         {% include 'partials/form/fieldset.html' with fields=form %}
         <fieldset>
           <button type="submit">{% translate 'Update List' %}</button>

@@ -29,44 +29,11 @@
     </section>
     {% include 'partials/katalogus_filter.html' with total_plugins=object_list|length form=form %}
     {% if view == 'table' %}
-      <section>
-        <div>
-          {% include 'partials/katalogus_toolbar.html' with view=view %}
-          <div class="horizontal-scroll">
-            <table>
-              <caption>{% translate 'Boefjes overview:' %}</caption>
-              <thead>
-                <tr>
-                  <th>
-                    <input class="toggle-all" data-toggle-target="plugin" type="checkbox">
-                  </th>
-                  <th>{% translate 'Boefje name' %}</th>
-                  <th>{% translate 'Boefje description' %}</th>
-                  <th colspan="2">{% translate 'Actions' %}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for plugin in object_list %}
-                  <tr>
-                    <td>{% include "partials/plugin_select_form.html" %}</td>
-                    <td scope="row">{{ plugin.name }}</td>
-                    <td>{{ plugin.description }}</td>
-                    <td>{% include 'partials/enable_disable_plugin.html' with plugin=plugin %}</td>
-                    <td>
-                      <a href="{% url 'plugin_detail' organization_code=organization.code plugin_type=plugin.type plugin_id=plugin.id %}"
-                         class="nowrap">{% translate 'See details' %}</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+      {% include 'katalogus-table-view.html' %}
     {% else %}
       <section>
         <div>
-          {% include 'partials/katalogus_toolbar.html' with view=view %}
+          {% include 'partials/katalogus_toolbar.html' %}
           <div class="column-4 tiles plugins images-cover">
             {% for plugin in object_list %}
               {% include "partials/plugin_tile.html" %}
@@ -74,17 +41,9 @@
           </div>
         </div>
       </section>
-      <section>
-        <div>
-          <form id="{{ form_handler_name }}"
-                action="{% url 'katalogus_list_bulk_actions' organization.code %}"
-                class="inline"
-                method="post">
-            {% csrf_token %}
-            <button type="submit">{% translate 'Enable' %}</button>
-          </form>
-        </div>
-      </section>
+      {% if bulk_action %}
+        {% include 'partials/bulk_action_form.html' %}
+      {% endif %}
     {% endif %}
   </main>
 {% endblock %}

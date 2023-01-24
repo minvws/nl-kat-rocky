@@ -1,0 +1,43 @@
+{% load i18n %}
+
+<section>
+  <div>
+    {% include 'partials/katalogus_toolbar.html' with view=view %}
+    <div class="horizontal-scroll">
+      <table>
+        <caption>{% translate 'Boefjes overview:' %}</caption>
+        <thead>
+          <tr>
+            {% if bulk_action %}
+              <th>
+                <div>
+                  <input class="toggle-all" data-toggle-target="plugin" type="checkbox">
+                </div>
+              </th>
+            {% endif %}
+            <th>{% translate 'Boefje name' %}</th>
+            <th>{% translate 'Boefje description' %}</th>
+            <th colspan="2">{% translate 'Actions' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plugin in object_list %}
+            <tr>
+              {% if bulk_action %}
+                <td>{% include "partials/plugin_select_form.html" %}</td>
+              {% endif %}
+              <td scope="row">{{ plugin.name }}</td>
+              <td>{{ plugin.description }}</td>
+              <td>{% include 'partials/enable_disable_plugin.html' with plugin=plugin %}</td>
+              <td>
+                <a href="{% url 'plugin_detail' organization_code=organization.code plugin_type=plugin.type plugin_id=plugin.id %}"
+                   class="nowrap">{% translate 'See details' %}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% include 'partials/bulk_action_form.html' %}
