@@ -2,12 +2,15 @@ from typing import List, Tuple, Any
 
 from django.utils.translation import gettext_lazy as _
 
+from tools.enums import SCAN_LEVEL
+
 Choice = Tuple[Any, str]
 Choices = List[Choice]
 ChoicesGroup = Tuple[str, Choices]
 ChoicesGroups = List[ChoicesGroup]
 
 BLANK_CHOICE = ("", _("--- Please select one of the available options ----"))
+FILTER_BLANK_CHOICE = ("", _("--- Show all ----"))
 
 RISK_RATING_CHOICES: Choices = [
     BLANK_CHOICE,
@@ -34,13 +37,12 @@ PIE_SCALE_CHOICES: Choices = [
     ("high", _("high")),
 ]
 
-SCAN_LEVEL_CHOICES: Choices = [
-    BLANK_CHOICE,
-    (1, "L1"),
-    (2, "L2"),
-    (3, "L3"),
-    (4, "L4"),
+CLEARANCE_TYPE_CHOICES = [
+    ("declared", _("Declared")),
+    ("inherited", _("Inherited")),
+    ("empty", _("Empty")),
 ]
+SCAN_LEVEL_CHOICES = [BLANK_CHOICE] + SCAN_LEVEL.choices
 
 MANUAL_FINDING_ID_PREFIX = "KAT-"
 

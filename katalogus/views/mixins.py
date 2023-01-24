@@ -1,21 +1,20 @@
-from datetime import datetime, timezone
 from logging import getLogger
 from typing import List, Optional
 from uuid import uuid4
 
 from django.urls import reverse
-from octopoes.connector.octopoes import OctopoesAPIConnector
-from octopoes.models import OOI, DeclaredScanProfile
 
+from account.mixins import OrganizationView
 from katalogus.client import get_katalogus, Plugin
+from octopoes.models import OOI
+from rocky.exceptions import IndemnificationNotPresentException, ClearanceLevelTooLowException
 from rocky.scheduler import Boefje, BoefjeTask, QueuePrioritizedItem, client
-from rocky.views.mixins import OctopoesMixin
-from tools.models import Organization
+from rocky.views.mixins import OctopoesView
 
 logger = getLogger(__name__)
 
 
-class KATalogusMixin:
+class KATalogusMixin(OrganizationView):
     def setup(self, request, *args, **kwargs):
         """
         Prepare organization info and KAT-alogus API client.
@@ -24,7 +23,6 @@ class KATalogusMixin:
         if request.user.is_anonymous:
             return reverse("login")
         else:
-            self.organization = request.user.organizationmember.organization
             self.katalogus_client = get_katalogus(self.organization.code)
             if "plugin_id" in kwargs:
                 self.plugin_id = kwargs["plugin_id"]
@@ -32,19 +30,15 @@ class KATalogusMixin:
                 self.plugin_schema = self.katalogus_client.get_plugin_schema(self.plugin_id)
 
 
-class BoefjeMixin(OctopoesMixin):
+class BoefjeMixin(OctopoesView):
     """
     When a user wants to scan one or multiple OOI's,
     this mixin provides the methods to construct the boefjes for the OOI's and run them.
     """
 
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        self.api_connector = self.get_api_connector()
+    def run_boefje(self, katalogus_boefje: Plugin, ooi: Optional[OOI]) -> None:
 
-    def run_boefje(self, katalogus_boefje: Plugin, ooi: Optional[OOI], organization: Organization) -> None:
-
-        boefje_queue_name = f"boefje-{organization.code}"
+        boefje_queue_name = f"boefje-{self.organization.code}"
 
         boefje = Boefje(
             id=katalogus_boefje.id,
@@ -61,7 +55,7 @@ class BoefjeMixin(OctopoesMixin):
             id=uuid4().hex,
             boefje=boefje,
             input_ooi=ooi.reference if ooi else None,
-            organization=organization.code,
+            organization=self.organization.code,
         )
 
         item = QueuePrioritizedItem(id=boefje_task.id, priority=1, data=boefje_task)
@@ -72,20 +66,14 @@ class BoefjeMixin(OctopoesMixin):
         self,
         boefje: Plugin,
         oois: List[OOI],
-        organization: Organization,
-        api_connector: OctopoesAPIConnector,
     ) -> None:
         if not oois and not boefje.consumes:
-            self.run_boefje(boefje, None, organization)
+            self.run_boefje(boefje, None)
 
         for ooi in oois:
-
             if ooi.scan_profile.level < boefje.scan_level:
-                api_connector.save_scan_profile(
-                    DeclaredScanProfile(
-                        reference=ooi.reference,
-                        level=boefje.scan_level,
-                    ),
-                    datetime.now(timezone.utc),
-                )
-            self.run_boefje(boefje, ooi, organization)
+                try:
+                    self.raise_clearance_level(ooi.reference, boefje.scan_level)
+                except (IndemnificationNotPresentException, ClearanceLevelTooLowException):
+                    continue
+            self.run_boefje(boefje, ooi)

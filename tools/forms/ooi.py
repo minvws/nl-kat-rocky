@@ -1,19 +1,22 @@
 from typing import List, Tuple, Any
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 from octopoes.models import OOI
-from tools.forms import (
+from tools.forms.settings import (
+    DEPTH_DEFAULT,
+    DEPTH_HELP_TEXT,
+    DEPTH_MAX,
+    SCAN_LEVEL_CHOICES,
+)
+from tools.forms.base import (
     BaseRockyForm,
     ObservedAtForm,
     CheckboxGroup,
     CheckboxTable,
-    DEPTH_DEFAULT,
-    DEPTH_HELP_TEXT,
-    DEPTH_MAX,
-    BLANK_CHOICE,
     LabeledCheckboxInput,
 )
-from tools.models import SCAN_LEVEL
 
 
 class OOIReportSettingsForm(ObservedAtForm):
@@ -47,21 +50,28 @@ class OoiTreeSettingsForm(OOIReportSettingsForm):
 
 
 class SelectOOIForm(BaseRockyForm):
+
     ooi = forms.MultipleChoiceField(
         label=_("Objects"),
         widget=CheckboxTable(
-            column_names=(_("Type"), "OOI", _("Clearance Level")),
-            column_templates=(None, None, "partials/scan_level_indicator.html"),
+            column_names=("OOI", _("Type"), _("Clearance Level")),
+            column_templates=(
+                "partials/hyperlink_ooi_id.html",
+                "partials/hyperlink_ooi_type.html",
+                "partials/scan_level_indicator.html",
+            ),
         ),
     )
 
     def __init__(
         self,
         oois: List[OOI],
+        organization_code: str,
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
+        self.fields["ooi"].widget.attrs["organization_code"] = organization_code
         self.set_choices_for_field("ooi", [self._to_choice(ooi) for ooi in oois])
         if len(self.fields["ooi"].choices) == 1:
             self.fields["ooi"].initial = self.fields["ooi"].choices[0][0]
@@ -69,17 +79,17 @@ class SelectOOIForm(BaseRockyForm):
     @staticmethod
     def _to_choice(ooi: OOI) -> Tuple[str, Any]:
         return str(ooi), (
-            ooi.get_ooi_type(),
-            ooi.human_readable,
-            ooi.scan_profile.level,
+            ooi,
+            ooi,
+            ooi.scan_profile.level if ooi.scan_profile else 0,
         )
 
 
 class SelectOOIFilterForm(BaseRockyForm):
     show_all = forms.NullBooleanField(
-        widget=LabeledCheckboxInput(
-            label=_("Show objects that don't meet the Boefjes scan level"),
-            autosubmit=True,
+        label=_("Show objects that don't meet the Boefjes scan level"),
+        widget=forms.CheckboxInput(
+            attrs={"class": "submit-on-click"},
         ),
     )
 
@@ -106,7 +116,7 @@ class SetClearanceLevelForm(forms.Form):
             },
         },
         widget=forms.Select(
-            choices=[BLANK_CHOICE] + SCAN_LEVEL.choices,
+            choices=SCAN_LEVEL_CHOICES,
             attrs={
                 "aria-describedby": _("explanation-clearance-level"),
             },

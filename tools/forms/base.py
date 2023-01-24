@@ -1,14 +1,15 @@
 import datetime
+from typing import Dict, List, Union, Any, Optional
+
 import pytz
 from django import forms
 from django.forms import Widget
 from django.utils.translation import gettext_lazy as _
-from typing import Dict, List, Union, Any, Optional
-from tools.forms import (
+
+from tools.forms.settings import (
     Choices,
     ChoicesGroups,
     OBSERVED_AT_HELP_TEXT,
-    SCAN_LEVEL_CHOICES,
 )
 
 
@@ -56,14 +57,6 @@ class DataListInput(forms.Select):
         if value is None:
             return ""
         return str(value)
-
-
-class DeclaredScanProfileForm(BaseRockyForm):
-    scan_profile = forms.CharField(
-        label=_("Scan profile"),
-        widget=forms.Select(choices=SCAN_LEVEL_CHOICES),
-        required=True,
-    )
 
 
 class ObservedAtForm(BaseRockyForm):

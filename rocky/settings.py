@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -99,6 +100,9 @@ INSTALLED_APPS = [
     "katalogus",
     "django_password_validators",
     "django_password_validators.password_history",
+    "rest_framework",
+    "tagulous",
+    # "drf_standardized_errors",
 ]
 
 MIDDLEWARE = [
@@ -111,8 +115,6 @@ MIDDLEWARE = [
     "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "rocky.middleware.active_organization_middleware.ActiveOrganizationMiddleware",
-    "rocky.middleware.active_organization_middleware.OctopoesConnectorMiddleware",
     "rocky.middleware.onboarding.OnboardingMiddleware",
 ]
 
@@ -226,7 +228,7 @@ STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "assets"),)
 
 LOGIN_URL = "two_factor:login"
-LOGIN_REDIRECT_URL = "landing_page"
+LOGIN_REDIRECT_URL = "crisis_room"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -321,3 +323,58 @@ MARKDOWNIFY = {
         },
     }
 }
+
+DEFAULT_RENDERER_CLASSES = ["rest_framework.renderers.JSONRenderer"]
+
+# Turn on the browsable API by default if DEBUG is True, but disable by default in production
+BROWSABLE_API = os.getenv("BROWSABLE_API", "True" if DEBUG else "False") == "True"
+
+if BROWSABLE_API:
+    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + ["rest_framework.renderers.BrowsableAPIRenderer"]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        # For now this will provide a safe default, but non-admin users will
+        # need to be able to use the API in the future..
+        "rest_framework.permissions.IsAdminUser",
+    ],
+    "DEFAULT_RENDERER_CLASSES": DEFAULT_RENDERER_CLASSES,
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
+}
+
+
+SERIALIZATION_MODULES = {
+    "xml": "tagulous.serializers.xml_serializer",
+    "json": "tagulous.serializers.json",
+    "python": "tagulous.serializers.python",
+    "yaml": "tagulous.serializers.pyyaml",
+}
+TAGULOUS_SLUG_ALLOW_UNICODE = True
+
+TAG_COLORS = [
+    ("blue-light", _("Blue light")),
+    ("blue-medium", _("Blue medium")),
+    ("blue-dark", _("Blue dark")),
+    ("green-light", _("Green light")),
+    ("green-medium", _("Green medium")),
+    ("green-dark", _("Green dark")),
+    ("yellow-light", _("Yellow light")),
+    ("yellow-medium", _("Yellow medium")),
+    ("yellow-dark", _("Yellow dark")),
+    ("orange-light", _("Orange light")),
+    ("orange-medium", _("Orange medium")),
+    ("orange-dark", _("Orange dark")),
+    ("red-light", _("Red light")),
+    ("red-medium", _("Red medium")),
+    ("red-dark", _("Red dark")),
+    ("violet-light", _("Violet light")),
+    ("violet-medium", _("Violet medium")),
+    ("violet-dark", _("Violet dark")),
+]
+
+TAG_BORDER_TYPES = [
+    ("plain", _("Plain")),
+    ("solid", _("Solid")),
+    ("dashed", _("Dashed")),
+    ("dotted", _("Dotted")),
+]
