@@ -1,3 +1,5 @@
+import csv
+import io
 import json
 
 from django.urls import reverse, resolve
@@ -305,7 +307,7 @@ def test_delete_object_not_found(rf, my_user, organization, mock_organization_vi
     assert response.status_code == 404
 
 
-def test_ooi_list_export(rf, my_user, organization, mock_organization_view_octopoes):
+def test_ooi_list_export_json(rf, my_user, organization, mock_organization_view_octopoes):
     kwargs = {"organization_code": organization.code}
     url = reverse("ooi_list_export", kwargs=kwargs)
     request = rf.get(url, {"file_type": "json"})
@@ -330,3 +332,28 @@ def test_ooi_list_export(rf, my_user, organization, mock_organization_view_octop
 
     assert exported_objects[1] == {"key": "Network|testnetwork", "name": "testnetwork", "ooi_type": "Network"}
     assert exported_objects[2] == {"key": "Network|testnetwork", "name": "testnetwork", "ooi_type": "Network"}
+
+
+def test_ooi_list_export_csv(rf, my_user, organization, mock_organization_view_octopoes):
+    kwargs = {"organization_code": organization.code}
+    url = reverse("ooi_list_export", kwargs=kwargs)
+    request = rf.get(url, {"file_type": "csv"})
+    request.resolver_match = resolve(url)
+
+    setup_request(request, my_user)
+
+    mock_organization_view_octopoes().list.return_value = Paginated[OOIType](
+        count=200, items=[Network(name="testnetwork")] * 150
+    )
+
+    response = OOIListExportView.as_view()(request, organization_code=organization.code)
+
+    assert response.status_code == 200
+    assert response.headers["Content-Type"] == "text/csv"
+    assert mock_organization_view_octopoes().list.call_count == 3
+
+    exported_objects = list(csv.DictReader(io.StringIO(response.content.decode()), delimiter=",", quotechar='"'))
+
+    assert len(exported_objects) == 152
+    assert "observed_at" in exported_objects[0]
+    assert "filters" in exported_objects[0]
