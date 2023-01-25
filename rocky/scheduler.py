@@ -74,7 +74,7 @@ class BoefjeTask(BaseModel):
 
     id: Optional[str]
     boefje: Boefje
-    input_ooi: str
+    input_ooi: Optional[str]
     organization: str
 
 
