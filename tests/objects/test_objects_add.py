@@ -1,5 +1,7 @@
 import json
 
+from pytest_django.asserts import assertContains
+
 from rocky.views.ooi_add import OOIAddView
 from tests.conftest import setup_request
 
@@ -23,3 +25,13 @@ def test_add_ooi(rf, my_user, organization, mock_organization_view_octopoes, moc
     assert json.loads(only_call_arg.decode("utf-8"))
 
     assert mock_organization_view_octopoes().save_declaration.call_count == 1
+
+
+def test_add_bad_schema(rf, my_user, organization, mock_organization_view_octopoes, mock_bytes):
+    request = setup_request(rf.post("ooi_add", {"ooi_type": "Network", "testnamewrong": "testnetwork"}), my_user)
+
+    response = OOIAddView.as_view()(request, organization_code=organization.code, ooi_type="Network")
+
+    assert response.status_code == 200
+    assertContains(response, "Error:")
+    assertContains(response, "This field is required.")

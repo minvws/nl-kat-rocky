@@ -105,3 +105,29 @@ def test_organization_member_give_and_revoke_clearance(
         OrganizationDetailView.as_view()(request, organization_code=organization.code)
 
     assert exc_info.exconly() == "Exception: Unhandled allowed action: wrong_test"
+
+
+def test_organization_member_give_and_revoke_clearance_no_action_reloads_page(
+    rf, my_user, organization, mock_models_katalogus, mock_models_octopoes
+):
+    member = OrganizationMember.objects.get(user=my_user)
+
+    # No action in the POST means we simply reload the page
+    request = setup_request(
+        rf.post(
+            "organization_detail",
+            {
+                "wrong": "withdraw_clearance",
+                "member_id": member.id,
+            },
+        ),
+        my_user,
+    )
+    response = OrganizationDetailView.as_view()(request, organization_code=organization.code)
+    assertContains(response, "Organization details")
+    assertContains(response, organization.name)
+    assertContains(response, "Members")
+    assertContains(response, "Add new member")
+    assertContains(response, my_user.email)
+    assertContains(response, "Grant")
+    assertContains(response, "active")
