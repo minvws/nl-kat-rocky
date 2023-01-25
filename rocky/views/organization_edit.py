@@ -19,7 +19,7 @@ class OrganizationEditView(PermissionRequiredMixin, UpdateView):
     permission_required = "tools.change_organization"
 
     def get_success_url(self):
-        return reverse("organization_detail", kwargs={"pk": self.object.id})
+        return reverse("organization_detail", kwargs={"organization_code": self.object.code})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
