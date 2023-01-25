@@ -57,7 +57,7 @@ class OnboardingBreadcrumbsMixin(BreadcrumbsMixin, OrganizationView):
         return [
             {
                 "url": reverse_lazy("step_introduction", kwargs={"organization_code": self.organization.code}),
-                "text": _("KAT introduction"),
+                "text": _("OpenKAT introduction"),
             },
         ]
 
@@ -203,7 +203,7 @@ class OnboardingSetupScanOOIAddView(
                 messages.success(
                     self.request,
                     _(
-                        "KAT added the following required object to your object list to complete your request: {}"
+                        "OpenKAT added the following required object to your object list to complete your request: {}"
                     ).format(str(ooi)),
                 )
         return hidden_fields
@@ -401,7 +401,7 @@ class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView):
 
 class RegistrationBreadcrumbsMixin(BreadcrumbsMixin):
     breadcrumbs = [
-        {"url": reverse_lazy("step_introduction_registration"), "text": _("KAT Setup")},
+        {"url": reverse_lazy("step_introduction_registration"), "text": _("OpenKAT Setup")},
     ]
 
 
