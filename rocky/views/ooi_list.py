@@ -55,7 +55,6 @@ class OOIListView(BaseOOIListView):
             {"url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}), "text": _("Objects")},
         ]
 
-
         return context
 
     def get(self, request: HttpRequest, status=200, *args, **kwargs) -> HttpResponse:
