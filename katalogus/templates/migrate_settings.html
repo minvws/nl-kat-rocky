@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<section>
+  <div>
+    <h2>{% translate 'Migrate settings' %}</h2>
+    <p>
+      {% translate 'Use the form below to copy and overwrite the settings from one organization into this one.' %}
+    </p>
+    <form novalidate method="post" class="horizontal-view help">
+      {% csrf_token %}
+      {% include 'partials/form/fieldset.html' with legend=name fields=organizations_form %}
+      <button class="button" type="submit">{% translate 'Migrate settings' %}</button>
+    </form>
+  </div>
+</section>

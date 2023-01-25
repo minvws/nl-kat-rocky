@@ -71,6 +71,9 @@
         </div>
       </section>
     {% endif %}
+    {% if organizations_form %}
+      {% include 'migrate_settings.html' %}
+    {% endif %}
   </main>
 {% endblock %}
 
