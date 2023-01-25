@@ -22,7 +22,7 @@ class PluginDetailScanOOI(BoefjeMixin, TemplateView):
             return self.get(request, *args, **kwargs)
 
         if "boefje_id" not in request.POST:
-            raise BadRequest("No plugin_id provided")
+            raise BadRequest("No boefje_id provided")
 
         selected_oois = request.POST.getlist("ooi")
         plugin_id = request.POST["boefje_id"]
