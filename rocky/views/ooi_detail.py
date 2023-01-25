@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from requests.exceptions import RequestException
 
 from katalogus.client import get_katalogus
@@ -13,12 +15,14 @@ from katalogus.utils import get_enabled_boefjes_for_ooi_class
 from katalogus.views.mixins import BoefjeMixin
 from octopoes.models import OOI
 from rocky import scheduler
+from rocky.views.mixins import OOIBreadcrumbsMixin
 from rocky.views.ooi_detail_related_object import OOIRelatedObjectAddView
 from rocky.views.ooi_view import BaseOOIDetailView
 from tools.forms.base import ObservedAtForm
 from tools.forms.ooi import PossibleBoefjesFilterForm
 from tools.models import Indemnification, OrganizationMember
 from tools.ooi_helpers import format_display
+from tools.view_helpers import get_ooi_url
 
 
 class PageActions(Enum):
@@ -29,6 +33,7 @@ class OOIDetailView(
     BoefjeMixin,
     OOIRelatedObjectAddView,
     BaseOOIDetailView,
+    OOIBreadcrumbsMixin,
 ):
     template_name = "oois/ooi_detail.html"
     connector_form_class = ObservedAtForm
@@ -170,7 +175,6 @@ class OOIDetailView(
         context["severity_summary_totals"] = self.get_findings_severity_totals()
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = self.get_organization_indemnification()
-
         context["scan_history"] = self.get_scan_history()
         context["scan_history_form_fields"] = [
             "scan_history_from",
