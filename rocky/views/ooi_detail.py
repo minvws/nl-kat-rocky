@@ -6,8 +6,6 @@ from django.contrib import messages
 from django.core.paginator import Paginator, Page
 from django.http import Http404
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from requests.exceptions import RequestException
 
 from katalogus.client import get_katalogus
@@ -22,7 +20,6 @@ from tools.forms.base import ObservedAtForm
 from tools.forms.ooi import PossibleBoefjesFilterForm
 from tools.models import Indemnification, OrganizationMember
 from tools.ooi_helpers import format_display
-from tools.view_helpers import get_ooi_url
 
 
 class PageActions(Enum):
