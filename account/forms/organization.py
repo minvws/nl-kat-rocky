@@ -34,8 +34,8 @@ class OrganizationListForm(forms.Form):
             props = {
                 "required": True,
                 "label": _("Organizations"),
-                "help_text": _("The organization from which to migrate the settings."),
+                "help_text": _("The organization from which to clone settings."),
                 "error_messages": self.error_messages,
             }
-            self.fields["organizations"] = forms.ChoiceField(**props)
-            self.fields["organizations"].choices = [BLANK_CHOICE] + organizations
+            self.fields["organization"] = forms.ChoiceField(**props)
+            self.fields["organization"].choices = [BLANK_CHOICE] + organizations

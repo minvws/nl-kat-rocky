@@ -1,12 +1,13 @@
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import redirect
 from django.views.generic import ListView, FormView
+from django.views.generic.edit import FormMixin
 from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
 from katalogus.forms import KATalogusFilter
-from account.forms.organization import OrganizationListForm
 
 
 @class_view_decorator(otp_required)
@@ -65,8 +66,4 @@ class KATalogusView(ListView, OrganizationView, FormView):
             },
         ]
         context["view"] = self.view
-        if OrganizationListForm(user=self.request.user, exclude_organization=self.organization).fields:
-            context["organizations_form"] = OrganizationListForm(
-                user=self.request.user, exclude_organization=self.organization
-            )
         return context

@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<section>
+  <div>
+    <h2>{% translate 'Clone settings' %}</h2>
+    <p>
+      {% translate 'Use the form below to clone settings from the selected organization into the current one.' %}
+    </p>
+    <form action="{% url 'katalogus_clone_settings' organization.code %}"
+          method="post"
+          class="horizontal-view help"
+          novalidate>
+      {% csrf_token %}
+      {% include 'partials/form/fieldset.html' with legend=name fields=form %}
+      <button class="button" type="submit">{% translate 'Clone settings' %}</button>
+    </form>
+  </div>
+</section>

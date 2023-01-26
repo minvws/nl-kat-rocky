@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  {% include 'header.html' %}
+  <main id="main-content">
+    <section>
+      <div>
+        <h1>{% translate 'Clone settings' %}</h1>
+        <p>
+          {% blocktranslate with to_organization=organization.name%}Are you sure you want to clone all settings from organization {{from_organization}} into organization {{to_organization}}?{% endblocktranslate %}
+        </p>
+        <form class="inline" method="post">
+          {% csrf_token %}
+          <fieldset>
+            <a href="{% url 'katalogus_settings' organization.code %}"
+               class="button ghost">{% translate 'Cancel' %}</a>
+            <button type="submit">{% translate 'Clone' %}</button>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+  </main>
+{% endblock %}
