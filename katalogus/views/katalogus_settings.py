@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -10,12 +11,16 @@ from two_factor.views.utils import class_view_decorator
 from account.forms.organization import OrganizationListForm
 from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
-from tools.models import Organization
+from tools.models import Organization, OrganizationMember
 
 
 @class_view_decorator(otp_required)
-class ConfirmCloneSettingsView(OrganizationView, TemplateView):
+class ConfirmCloneSettingsView(OrganizationView, UserPassesTestMixin, TemplateView):
     template_name = "confirmation_clone_settings.html"
+
+    def test_func(self):
+        from_organization = Organization.objects.get(code=self.kwargs["from_organization"])
+        return OrganizationMember.objects.filter(user=self.request.user, organization=from_organization).exists()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,10 +51,9 @@ class CloneSettingsView(OrganizationView, FormView):
     template_name = "katalogus_settings.html"
 
     def get_form(self):
-        if OrganizationListForm(user=self.request.user, exclude_organization=self.organization).fields:
-            return OrganizationListForm(
-                user=self.request.user, exclude_organization=self.organization, **self.get_form_kwargs()
-            )
+        return OrganizationListForm(
+            user=self.request.user, exclude_organization=self.organization, **self.get_form_kwargs()
+        )
 
     def form_valid(self, form):
         from_organization = form.cleaned_data["organization"]

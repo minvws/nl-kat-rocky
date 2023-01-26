@@ -4,7 +4,9 @@
   <div>
     <h2>{% translate 'Clone settings' %}</h2>
     <p>
-      {% translate 'Use the form below to clone settings from the selected organization into the current one.' %}
+      {% blocktranslate with current_organization=organization.name%}
+        Use the form below to clone settings from the organization selected into {{current_organization}}.
+      {% endblocktranslate %}
     </p>
     <form action="{% url 'katalogus_clone_settings' organization.code %}"
           method="post"

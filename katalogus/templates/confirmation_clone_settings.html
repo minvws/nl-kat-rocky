@@ -8,8 +8,15 @@
     <section>
       <div>
         <h1>{% translate 'Clone settings' %}</h1>
+        <p class="emphasized">
+          {% blocktranslate with to_organization=organization.name%}
+            Override KAT-alogus settings and settings credentials of organization {{to_organization}}.
+          {% endblocktranslate %}
+        </p>
         <p>
-          {% blocktranslate with to_organization=organization.name%}Are you sure you want to clone all settings from organization {{from_organization}} into organization {{to_organization}}?{% endblocktranslate %}
+          {% blocktranslate with to_organization=organization.name%}
+            Are you sure you want to clone all KAT-alogus settings from organization {{from_organization}} into organization {{to_organization}}?
+          {% endblocktranslate %}
         </p>
         <form class="inline" method="post">
           {% csrf_token %}
