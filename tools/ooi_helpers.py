@@ -17,6 +17,7 @@ from octopoes.models.ooi.findings import (
     CWEFindingType,
     RetireJSFindingType,
     SnykFindingType,
+    NessusFindingType,
 )
 from octopoes.models.tree import ReferenceNode
 from octopoes.models.types import get_relations, OOI_TYPES
@@ -99,9 +100,21 @@ def risk_level_calculate(ooi: FindingType, ooi_info: OOIInformation) -> RiskLeve
         return get_risk_level_score_for_retirejs(ooi_info.data)
     if isinstance(ooi, SnykFindingType):
         return get_risk_level_score_for_snyk(ooi_info.data)
+    if isinstance(ooi, NessusFindingType):
+        return get_risk_level_score_for_nessus(ooi_info.data)
 
     return get_risk_level_score(ooi_info.data)
 
+
+def get_risk_level_score_for_nessus(data: Dict) -> RiskLevelScore:
+    source = data.get("source")
+    score = data.get("cvss", 0.0)
+    score = float(score)
+    return {
+        "risk_level_source": source,
+        "risk_level_score": score,
+        "risk_level_severity": risk_level_severity(score),
+    }
 
 def get_risk_level_score_for_cve(data: Dict) -> RiskLevelScore:
     source = data.get("source")
@@ -340,6 +353,7 @@ def get_finding_type_from_finding(finding: Finding) -> FindingType:
             CWEFindingType,
             RetireJSFindingType,
             SnykFindingType,
+            NessusFindingType,
         ],
         {
             "object_type": finding.finding_type.class_,

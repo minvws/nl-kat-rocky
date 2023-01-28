@@ -104,6 +104,33 @@ def retirejs_info(retirejs_id: str) -> dict:
     return {"description": "Not found"}
 
 
+def nessus_info(nessus_id: str) -> dict:
+    url = f"https://www.tenable.com/plugins/nessus/{nessus_id}"
+
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    elements = soup.findAll(['h4', 'span', 'strong'])
+    results = {}
+    for idx, node in enumerate(elements):
+        if node.name == 'h4':
+            if node.text == "Synopsis" or node.text == "Description" or node.text == "Solution":
+                results[node.text.lower()] = elements[idx + 1].text
+
+        if node.name == "strong":
+            if node.text == "Updated: ":
+                results["Updated"] = elements[idx + 1].text
+            if node.text == "Base Score: ":
+                results["cvss"] = float(elements[idx + 1].text)
+                break
+
+    if results:
+        results["source"] = url
+    else:
+        results = {"Description": "Not found"}
+    return results
+
+
 def _hash_identifiers(identifiers: Dict[str, Union[str, List[str]]]) -> str:
     pre_hash = ""
     for identifier in identifiers.values():
@@ -329,4 +356,6 @@ def get_info(ooi_type: str, natural_key: str) -> dict:
         return retirejs_info(natural_key)
     if ooi_type == "SnykFindingType":
         return snyk_info(natural_key)
+    if ooi_type == "NessusFindingType":
+        return nessus_info(natural_key)
     return {"description": ""}
