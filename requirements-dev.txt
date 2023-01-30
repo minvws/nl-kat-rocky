@@ -18,7 +18,7 @@ pydantic==1.8.2
 python-dotenv>=0.19.0
 pytz==2022.6
 qrcode==7.3.1
-requests==2.28.1
+requests==2.28.2
 six==1.16.0
 soupsieve==2.3.2.post1
 sqlparse==0.4.3
