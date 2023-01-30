@@ -76,7 +76,7 @@ def mock_views_katalogus(mocker):
 
 
 @pytest.fixture
-def mock_bytes(mocker):
+def mock_bytes_client(mocker):
     return mocker.patch("rocky.bytes_client.BytesClient")
 
 
