@@ -3,6 +3,7 @@ from typing import Type, List, Dict, Any
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.core.exceptions import BadRequest
 from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -11,15 +12,15 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from django_otp.decorators import otp_required
+from octopoes.connector.octopoes import OctopoesAPIConnector
+from octopoes.models import OOI
+from octopoes.models.ooi.network import Network
+from octopoes.models.types import type_by_name
 from two_factor.views.utils import class_view_decorator
 
 from account.forms import OrganizationForm, OrganizationUpdateForm
 from account.mixins import OrganizationView
 from katalogus.client import get_katalogus
-from octopoes.connector.octopoes import OctopoesAPIConnector
-from octopoes.models import OOI
-from octopoes.models.ooi.network import Network
-from octopoes.models.types import type_by_name
 from onboarding.forms import (
     OnboardingCreateUserAdminForm,
     OnboardingCreateUserRedTeamerForm,
@@ -32,6 +33,7 @@ from onboarding.view_helpers import (
     KatIntroductionAdminStepsMixin,
     KatIntroductionRegistrationStepsMixin,
 )
+from rocky.bytes_client import get_bytes_client
 from rocky.exceptions import IndemnificationNotPresentException, ClearanceLevelTooLowException
 from rocky.views.indemnification_add import IndemnificationAddView
 from rocky.views.ooi_report import Report, DNSReport, build_findings_list_from_store
@@ -56,7 +58,7 @@ class OnboardingBreadcrumbsMixin(BreadcrumbsMixin, OrganizationView):
         return [
             {
                 "url": reverse_lazy("step_introduction", kwargs={"organization_code": self.organization.code}),
-                "text": _("KAT introduction"),
+                "text": _("OpenKAT introduction"),
             },
         ]
 
@@ -130,14 +132,16 @@ class OnboardingSetupScanSelectPluginsView(
         return SelectBoefjeForm(boefjes=boefjes, organization=self.organization, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        if "ooi_id" not in request.GET:
+            raise BadRequest("No OOI ID provided")
+        ooi_id = request.GET["ooi_id"]
+
         form = self.get_form()
         if form.is_valid():
             if "boefje" in request.POST:
                 data = form.cleaned_data
                 request.session["selected_boefjes"] = data
-            return redirect(
-                get_ooi_url("step_setup_scan_ooi_detail", self.request.GET.get("ooi_id"), self.organization.code)
-            )
+            return redirect(get_ooi_url("step_setup_scan_ooi_detail", ooi_id, self.organization.code))
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -192,15 +196,17 @@ class OnboardingSetupScanOOIAddView(
 
     def get_hidden_form_fields(self):
         hidden_fields = {}
+        bytes_client = get_bytes_client(self.organization.code)
+
         for field_name, params in self.hidden_form_fields.items():
-            ooi, created = get_or_create_ooi(self.octopoes_api_connector, params["ooi"])
+            ooi, created = get_or_create_ooi(self.octopoes_api_connector, bytes_client, params["ooi"])
             hidden_fields[field_name] = ooi.primary_key
 
             if created:
                 messages.success(
                     self.request,
                     _(
-                        "KAT added the following required object to your object list to complete your request: {}"
+                        "OpenKAT added the following required object to your object list to complete your request: {}"
                     ).format(str(ooi)),
                 )
         return hidden_fields
@@ -340,8 +346,12 @@ class OnboardingReportView(
     current_step = 4
 
     def post(self, request, *args, **kwargs):
+        if "ooi_id" not in request.GET:
+            raise BadRequest("No OOI ID provided")
+        ooi_id = request.GET["ooi_id"]
+
         self.set_member_onboarded()
-        return redirect(get_ooi_url("dns_report", self.request.GET.get("ooi_id"), self.organization.code))
+        return redirect(get_ooi_url("dns_report", ooi_id, self.organization.code))
 
     def set_member_onboarded(self):
         member = OrganizationMember.objects.get(user=self.request.user, organization=self.organization)
@@ -394,7 +404,7 @@ class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView):
 
 class RegistrationBreadcrumbsMixin(BreadcrumbsMixin):
     breadcrumbs = [
-        {"url": reverse_lazy("step_introduction_registration"), "text": _("KAT Setup")},
+        {"url": reverse_lazy("step_introduction_registration"), "text": _("OpenKAT Setup")},
     ]
 
 

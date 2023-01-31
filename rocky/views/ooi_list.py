@@ -9,6 +9,7 @@ from django.http import HttpResponse, Http404, HttpRequest
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django_otp.decorators import otp_required
+from django.urls import reverse
 from requests import RequestException
 from two_factor.views.utils import class_view_decorator
 
@@ -50,6 +51,9 @@ class OOIListView(BaseOOIListView):
         context["member"] = self.organization_member
         context["scan_levels"] = [alias for level, alias in SCAN_LEVEL.choices]
         context["organization_indemnification"] = self.get_organization_indemnification
+        context["breadcrumbs"] = [
+            {"url": reverse("ooi_list", kwargs={"organization_code": self.organization.code}), "text": _("Objects")},
+        ]
 
         return context
 
@@ -80,7 +84,6 @@ class OOIListView(BaseOOIListView):
         return self.get(request, status=404, *args, **kwargs)
 
     def _set_scan_profiles(self, selected_oois: List[Reference], request: HttpRequest, *args, **kwargs) -> HttpResponse:
-
         scan_profile = request.POST.get("scan-profile")
 
         level = SCAN_LEVEL[scan_profile]
@@ -118,7 +121,7 @@ class OOIListView(BaseOOIListView):
 
         for ooi_reference in selected_oois:
             try:
-                self.raise_clearance_level(ooi_reference, level.value)
+                self.raise_clearance_level(Reference.from_str(ooi_reference), level.value)
             except (RequestException, RemoteException, ConnectionError):
                 messages.add_message(
                     request, messages.ERROR, _("An error occurred while saving clearance level for %s.") % ooi_reference

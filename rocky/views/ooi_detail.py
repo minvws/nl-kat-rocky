@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from enum import Enum
+from typing import Optional
 
 from django.contrib import messages
 from django.core.paginator import Paginator, Page
@@ -12,6 +13,7 @@ from katalogus.utils import get_enabled_boefjes_for_ooi_class
 from katalogus.views.mixins import BoefjeMixin
 from octopoes.models import OOI
 from rocky import scheduler
+from rocky.views.mixins import OOIBreadcrumbsMixin
 from rocky.views.ooi_detail_related_object import OOIRelatedObjectAddView
 from rocky.views.ooi_view import BaseOOIDetailView
 from tools.forms.base import ObservedAtForm
@@ -28,6 +30,7 @@ class OOIDetailView(
     BoefjeMixin,
     OOIRelatedObjectAddView,
     BaseOOIDetailView,
+    OOIBreadcrumbsMixin,
 ):
     template_name = "oois/ooi_detail.html"
     connector_form_class = ObservedAtForm
@@ -35,14 +38,18 @@ class OOIDetailView(
 
     def post(self, request, *args, **kwargs):
         if not self.indemnification_present:
-            return self.get(request, *args, **kwargs)
+            messages.add_message(
+                request, messages.ERROR, "Indemnification not present at organization %s." % self.organization
+            )
+            return self.get(request, status_code=403, *args, **kwargs)
 
         if "action" not in self.request.POST:
-            return self.get(request, *args, **kwargs)
+            return self.get(request, status_code=404, *args, **kwargs)
+
         self.ooi = self.get_ooi()
-        action_success = self.handle_page_action(request.POST.get("action"))
-        if not action_success:
-            return self.get(request, *args, **kwargs)
+
+        if not self.handle_page_action(request.POST.get("action")):
+            return self.get(request, status_code=500, *args, **kwargs)
 
         success_message = (
             "Your scan is running successfully in the background. \n "
@@ -67,7 +74,7 @@ class OOIDetailView(
         except RequestException as exception:
             messages.add_message(self.request, messages.ERROR, f"{action} failed: '{exception}'")
 
-    def get_current_ooi(self) -> OOI:
+    def get_current_ooi(self) -> Optional[OOI]:
         # self.ooi is already the current state of the OOI
         if self.get_observed_at().date() == datetime.utcnow().date():
             return self.ooi
@@ -165,7 +172,6 @@ class OOIDetailView(
         context["severity_summary_totals"] = self.get_findings_severity_totals()
         context["possible_boefjes_filter_form"] = filter_form
         context["organization_indemnification"] = self.get_organization_indemnification()
-
         context["scan_history"] = self.get_scan_history()
         context["scan_history_form_fields"] = [
             "scan_history_from",

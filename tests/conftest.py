@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 import pytest
-from django.contrib.auth.models import Permission, ContentType
+from django.contrib.auth.models import Permission, Group
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django_otp import DEVICE_ID_SESSION_KEY
@@ -11,6 +11,7 @@ from octopoes.models import DeclaredScanProfile, ScanLevel, Reference
 from octopoes.models.ooi.network import Network
 from rocky.scheduler import Task
 from tools.models import Organization, OrganizationMember, OOIInformation, Indemnification
+from tools.models import GROUP_REDTEAM, GROUP_ADMIN
 
 
 @pytest.fixture
@@ -44,23 +45,39 @@ def my_user(user, organization):
         trusted_clearance_level=4,
         acknowledged_clearance_level=4,
     )
-    content_type = ContentType.objects.get_by_natural_key("tools", "organizationmember")
-    permission, _ = Permission.objects.get_or_create(
-        content_type=content_type,
-        codename="can_scan_organization",
-    )
     Indemnification.objects.create(
         organization=organization,
         user=user,
     )
-    user.user_permissions.add(permission)
+    user.user_permissions.add(Permission.objects.get(codename="can_scan_organization"))
 
     return user
 
 
 @pytest.fixture
+def my_red_teamer(my_user, organization):
+    group = Group.objects.create(name=GROUP_ADMIN)
+    group.user_set.add(my_user)
+
+    group = Group.objects.create(name=GROUP_REDTEAM)
+    group.user_set.add(my_user)
+
+    return my_user
+
+
+@pytest.fixture
 def mock_models_katalogus(mocker):
     return mocker.patch("tools.models.get_katalogus")
+
+
+@pytest.fixture
+def mock_views_katalogus(mocker):
+    return mocker.patch("rocky.views.ooi_report.get_katalogus")
+
+
+@pytest.fixture
+def mock_bytes_client(mocker):
+    return mocker.patch("rocky.bytes_client.BytesClient")
 
 
 @pytest.fixture
