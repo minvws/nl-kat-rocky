@@ -50,28 +50,10 @@ class ConfirmCloneSettingsView(OrganizationView, UserPassesTestMixin, TemplateVi
 
 
 @class_view_decorator(otp_required)
-class CloneSettingsView(OrganizationView, FormView):
-    template_name = "katalogus_settings.html"
-
-    def get_form(self, form_class=None):
-        return OrganizationListForm(
-            user=self.request.user, exclude_organization=self.organization, **self.get_form_kwargs()
-        )
-
-    def form_valid(self, form):
-        return HttpResponseRedirect(self.get_success_url(to_organization=form.cleaned_data["organization"]))
-
-    def get_success_url(self, **kwargs):
-        return reverse_lazy(
-            "confirm_clone_settings",
-            kwargs={"organization_code": self.organization.code, "to_organization": kwargs["to_organization"]},
-        )
-
-
-@class_view_decorator(otp_required)
-class KATalogusSettingsListView(PermissionRequiredMixin, CloneSettingsView, ListView):
+class KATalogusSettingsListView(PermissionRequiredMixin, OrganizationView, FormView, ListView):
     """View that gives an overview of all plugins settings"""
 
+    template_name = "katalogus_settings.html"
     paginate_by = 10
     permission_required = "tools.can_scan_organization"
     plugin_type = "boefjes"
@@ -106,3 +88,17 @@ class KATalogusSettingsListView(PermissionRequiredMixin, CloneSettingsView, List
                     plugin_settings["value"] = value
                 all_plugins_settings.append(plugin_settings)
         return all_plugins_settings
+
+    def get_form(self, form_class=None):
+        return OrganizationListForm(
+            user=self.request.user, exclude_organization=self.organization, **self.get_form_kwargs()
+        )
+
+    def form_valid(self, form):
+        return HttpResponseRedirect(self.get_success_url(to_organization=form.cleaned_data["organization"]))
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy(
+            "confirm_clone_settings",
+            kwargs={"organization_code": self.organization.code, "to_organization": kwargs["to_organization"]},
+        )

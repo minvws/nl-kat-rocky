@@ -17,7 +17,7 @@ urlpatterns = [
     ),
     path(
         "settings/migrate/",
-        views.CloneSettingsView.as_view(),
+        views.KATalogusSettingsListView.as_view(),
         name="katalogus_clone_settings",
     ),
     path(
