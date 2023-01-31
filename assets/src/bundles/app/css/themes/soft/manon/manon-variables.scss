@@ -16,18 +16,13 @@
 @import "navigation";
 @import "button-icon"; /* Icon button */
 @import "button-ghost"; /* Ghost button */
+@import "breadcrumb-bar";
 
 :root {
   --accordion-button-icon-after-open-content: "\ea5f";
   --accordion-button-icon-after-close-content: "\ea62";
   --accordion-content-gap: 1.5rem;
   --accordion-content-text-color: #000;
-  --breadcrumb-bar-content-block-icon: "\ea61";
-  --breadcrumb-bar-padding-right: 3%;
-  --breadcrumb-bar-padding-left: 3%;
-  --breadcrumb-bar-list-vertical-align: center;
-  --breadcrumb-bar-icon-font-family: var(--icon-base-font-family);
-  --breadcrumb-bar-icon: "\ea61";
   --critical-informational-labels-min-width: 8rem;
   --de-emphasized-text-color: #000;
   --filter-intro-text-color: var(--application-base-text-color);
