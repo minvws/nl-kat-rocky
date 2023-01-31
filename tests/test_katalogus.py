@@ -98,7 +98,9 @@ def test_katalogus_confirm_clone_settings(my_user, rf, organization):
     )
 
     request = setup_request(rf.get("confirm_clone_settings"), my_user)
-    response = ConfirmCloneSettingsView.as_view()(request, organization_code=organization.code, to_organization=second_organization.code)
+    response = ConfirmCloneSettingsView.as_view()(
+        request, organization_code=organization.code, to_organization=second_organization.code
+    )
     assert response.status_code == 200
 
     assertContains(response, "Clone settings")
@@ -127,7 +129,9 @@ def test_katalogus_clone_settings(my_user, rf, organization, mocker):
     )
 
     request = setup_request(rf.post("confirm_clone_settings"), my_user)
-    response = ConfirmCloneSettingsView.as_view()(request, organization_code=organization.code, to_organization=second_organization.code)
+    response = ConfirmCloneSettingsView.as_view()(
+        request, organization_code=organization.code, to_organization=second_organization.code
+    )
     assert response.status_code == 302
 
     mock_katalogus().clone_all_configuration_to_organization.assert_called_once_with(second_organization.code)
