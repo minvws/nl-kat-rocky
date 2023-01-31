@@ -19,22 +19,25 @@ class ConfirmCloneSettingsView(OrganizationView, UserPassesTestMixin, TemplateVi
     template_name = "confirmation_clone_settings.html"
 
     def test_func(self):
-        from_organization = Organization.objects.get(code=self.kwargs["from_organization"])
-        return OrganizationMember.objects.filter(user=self.request.user, organization=from_organization).exists()
+        to_organization = Organization.objects.get(code=self.kwargs["to_organization"])
+
+        return OrganizationMember.objects.filter(user=self.request.user, organization=to_organization).exists()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["from_organization"] = Organization.objects.get(code=kwargs["from_organization"])
+        context["to_organization"] = Organization.objects.get(code=kwargs["to_organization"])
+
         return context
 
     def post(self, request, *args, **kwargs):
-        from_organization = Organization.objects.get(code=kwargs["from_organization"])
+        to_organization = Organization.objects.get(code=kwargs["to_organization"])
+        get_katalogus(self.organization.code).clone_all_configuration_to_organization(to_organization.code)
         messages.add_message(
             self.request,
             messages.SUCCESS,
             _("Settings from %s to %s successfully cloned.")
             % (
-                from_organization.name,
+                to_organization.name,
                 self.organization.name,
             ),
         )
@@ -50,19 +53,18 @@ class ConfirmCloneSettingsView(OrganizationView, UserPassesTestMixin, TemplateVi
 class CloneSettingsView(OrganizationView, FormView):
     template_name = "katalogus_settings.html"
 
-    def get_form(self):
+    def get_form(self, form_class=None):
         return OrganizationListForm(
             user=self.request.user, exclude_organization=self.organization, **self.get_form_kwargs()
         )
 
     def form_valid(self, form):
-        from_organization = form.cleaned_data["organization"]
-        return HttpResponseRedirect(self.get_success_url(from_organization))
+        return HttpResponseRedirect(self.get_success_url(to_organization=form.cleaned_data["organization"]))
 
-    def get_success_url(self, from_organization):
+    def get_success_url(self, **kwargs):
         return reverse_lazy(
             "confirm_clone_settings",
-            kwargs={"organization_code": self.organization.code, "from_organization": from_organization},
+            kwargs={"organization_code": self.organization.code, "to_organization": kwargs["to_organization"]},
         )
 
 

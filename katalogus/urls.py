@@ -21,7 +21,7 @@ urlpatterns = [
         name="katalogus_clone_settings",
     ),
     path(
-        "settings/migrate/confirmation/<from_organization>/",
+        "settings/migrate/confirmation/<to_organization>/",
         views.ConfirmCloneSettingsView.as_view(),
         name="confirm_clone_settings",
     ),
