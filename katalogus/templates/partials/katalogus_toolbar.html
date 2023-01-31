@@ -10,6 +10,8 @@
     {% endif %}
   </div>
   <div class="horizontal-view horizontal-scroll toolbar">
+    <a href="{% url 'katalogus' organization.code %}{% if view %}?view={{ view }}&{% else %}?{% endif %}"
+       class="button {% if bulk_action == 'enable' or bulk_action == 'disable' %}ghost{% endif %}">{% translate 'Show all' %}</a>
     <a href="{% url 'katalogus' organization.code %}{% if view %}?view={{ view }}&{% else %}?{% endif %}bulk-action=enable"
        class="button {% if bulk_action != 'enable' %}ghost{% endif %}">{% translate 'Enable multiple' %}</a>
     <a href="{% url 'katalogus' organization.code %}{% if view %}?view={{ view }}&{% else %}?{% endif %}bulk-action=disable"
