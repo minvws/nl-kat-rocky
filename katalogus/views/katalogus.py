@@ -80,7 +80,7 @@ class KATalogusBulkActions(OrganizationView):
     def post(self, request, *args, **kwargs):
         katalogus_client = get_katalogus(self.organization.code)
         selected_plugin_ids = request.POST.getlist("plugin")
-        print(request.POST)
+
         for plugin_id in selected_plugin_ids:
             katalogus_client.enable_boefje(plugin_id)
         messages.add_message(self.request, messages.SUCCESS, _("Plugins successfuly enabled."))
