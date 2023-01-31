@@ -85,7 +85,7 @@ def test_katalogus_settings_list_multiple_organization(my_user, rf, organization
 
 
 def test_katalogus_confirm_clone_settings(my_user, rf, organization, mock_models_octopoes, mocker):
-    mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
+    mocker.patch("katalogus.client.KATalogusClientV1")
 
     # Add another organization and organization member, since this view only shows for multiple organizations
     second_organization = Organization.objects.create(name="Second Test Organization", code="test2")
