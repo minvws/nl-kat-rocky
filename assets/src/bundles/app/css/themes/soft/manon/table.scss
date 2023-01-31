@@ -1,0 +1,15 @@
+/* Table - Variables */
+
+:root {
+	/* Table header */
+	--table-base-head-background-color: #fff;
+	--table-base-head-border-width: 0 0 2px 0;
+  	--table-base-head-border-style: solid;
+  	--table-base-head-border-color: var(--branding-color-1-darker);
+
+  	/* Table cell */
+  	--table-base-cell-border-width: 0 0 1px 0;
+  	--table-base-cell-border-style: solid;
+  	--table-base-cell-border-color: #ccc;
+  	--table-base-cell-padding: 0.5rem 1rem;
+}

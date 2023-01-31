@@ -1,5 +1,4 @@
 /* theme: Soft */
-
 /* Fonts */
 @import "fonts/fonts.scss"; /* Fonts */
 
@@ -8,3 +7,6 @@
 
 /* Manon variables */
 @import "manon/manon-variables.scss";
+
+/* Theme styling */
+@import "footer.scss";
