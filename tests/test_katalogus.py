@@ -50,7 +50,7 @@ def test_katalogus_settings_list_one_organization(my_user, rf, organization, moc
     assertNotContains(response, "Organizations:")
 
 
-def test_katalogus_settings_list_multiple_organization(my_user, rf, organization, mocker):
+def test_katalogus_settings_list_multiple_organization(my_user, rf, organization, mock_models_octopoes, mocker):
     # Mock katalogus calls: return right boefjes and settings
     mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
     boefjes_data = json.loads((Path(__file__).parent / "stubs" / "katalogus_boefjes.json").read_text())
@@ -84,7 +84,9 @@ def test_katalogus_settings_list_multiple_organization(my_user, rf, organization
     assertContains(response, second_organization.name)
 
 
-def test_katalogus_confirm_clone_settings(my_user, rf, organization):
+def test_katalogus_confirm_clone_settings(my_user, rf, organization, mock_models_octopoes, mocker):
+    mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
+
     # Add another organization and organization member, since this view only shows for multiple organizations
     second_organization = Organization.objects.create(name="Second Test Organization", code="test2")
     OrganizationMember.objects.create(
@@ -112,7 +114,7 @@ def test_katalogus_confirm_clone_settings(my_user, rf, organization):
     assertContains(response, second_organization.name)
 
 
-def test_katalogus_clone_settings(my_user, rf, organization, mocker):
+def test_katalogus_clone_settings(my_user, rf, organization, mocker, mock_models_octopoes):
     # Mock katalogus calls: return right boefjes and settings
     mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
 
