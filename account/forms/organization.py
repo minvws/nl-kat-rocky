@@ -22,13 +22,12 @@ class OrganizationListForm(forms.Form):
         organizations = []
 
         members = OrganizationMember.objects.filter(user=user)
-        if members.exists():
-            for member in members:
-                organization = Organization.objects.get(name=member.organization)
-                if not self.exclude_organization:
-                    organizations.append([organization.code, organization.name])
-                elif organization != self.exclude_organization:
-                    organizations.append([organization.code, organization.name])
+
+        for member in members:
+            organization = Organization.objects.get(name=member.organization)
+
+            if not self.exclude_organization or organization != self.exclude_organization:
+                organizations.append([organization.code, organization.name])
 
         if organizations:
             props = {

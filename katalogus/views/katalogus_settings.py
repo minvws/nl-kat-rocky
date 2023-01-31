@@ -72,7 +72,6 @@ class CloneSettingsView(OrganizationView, FormView):
 class KATalogusSettingsListView(PermissionRequiredMixin, CloneSettingsView, ListView):
     """View that gives an overview of all plugins settings"""
 
-    template_name = "katalogus_settings.html"
     paginate_by = 10
     permission_required = "tools.can_scan_organization"
     plugin_type = "boefjes"

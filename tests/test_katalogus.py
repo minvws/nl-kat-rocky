@@ -1,12 +1,9 @@
-import json
-from pathlib import Path
-
 from pytest_django.asserts import assertContains, assertNotContains
 
 from katalogus.client import KATalogusClientV1, parse_plugin
 from katalogus.views import KATalogusView, KATalogusSettingsListView, ConfirmCloneSettingsView
 from rocky.health import ServiceHealth
-from tests.conftest import setup_request
+from tests.conftest import setup_request, get_boefjes_data
 from tools.models import Organization, OrganizationMember
 
 
@@ -14,9 +11,7 @@ def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
     mock_requests = mocker.patch("katalogus.client.requests")
     mock_response = mocker.MagicMock()
     mock_requests.get.return_value = mock_response
-    mock_response.json.return_value = json.loads(
-        (Path(__file__).parent / "stubs" / "katalogus_boefjes.json").read_text()
-    )
+    mock_response.json.return_value = get_boefjes_data()
 
     request = setup_request(rf.get("katalogus"), my_user)
     response = KATalogusView.as_view()(request, organization_code=organization.code)
@@ -32,7 +27,7 @@ def test_katalogus_plugin_listing(my_user, rf, organization, mocker):
 def test_katalogus_settings_list_one_organization(my_user, rf, organization, mocker):
     # Mock katalogus calls: return right boefjes and settings
     mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
-    boefjes_data = json.loads((Path(__file__).parent / "stubs" / "katalogus_boefjes.json").read_text())
+    boefjes_data = get_boefjes_data()
     mock_katalogus().get_boefjes.return_value = [parse_plugin(b) for b in boefjes_data if b["type"] == "boefje"]
     mock_katalogus().get_plugin_settings.return_value = {"BINARYEDGE_API": "test"}
 
@@ -53,7 +48,7 @@ def test_katalogus_settings_list_one_organization(my_user, rf, organization, moc
 def test_katalogus_settings_list_multiple_organization(my_user, rf, organization, mock_models_octopoes, mocker):
     # Mock katalogus calls: return right boefjes and settings
     mock_katalogus = mocker.patch("katalogus.client.KATalogusClientV1")
-    boefjes_data = json.loads((Path(__file__).parent / "stubs" / "katalogus_boefjes.json").read_text())
+    boefjes_data = get_boefjes_data()
     mock_katalogus().get_boefjes.return_value = [parse_plugin(b) for b in boefjes_data if b["type"] == "boefje"]
     mock_katalogus().get_plugin_settings.return_value = {"BINARYEDGE_API": "test"}
 
