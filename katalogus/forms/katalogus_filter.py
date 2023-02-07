@@ -20,17 +20,11 @@ class KATalogusFilter(BaseRockyForm):
     """Filter options for plugins listing in KAT-alogus."""
 
     filter_options = forms.ChoiceField(
-        required=False,
-        label=_("Filter options"),
-        choices=FILTER_OPTIONS,
-        widget=forms.RadioSelect()
+        required=False, label=_("Filter options"), choices=FILTER_OPTIONS, widget=forms.RadioSelect()
     )
 
     sorting_options = forms.ChoiceField(
-        required=False,
-        label=_("Sorting options"),
-        choices=SORTING_OPTIONS,
-        widget=forms.RadioSelect()
+        required=False, label=_("Sorting options"), choices=SORTING_OPTIONS, widget=forms.RadioSelect()
     )
 
     def __init__(self, *args, **kwargs):

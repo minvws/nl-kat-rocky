@@ -19,8 +19,8 @@ class KATalogusView(ListView, OrganizationView, FormView):
     def get_initial(self) -> Dict[str, Any]:
         initial = super().get_initial()
 
-        initial['sorting_options'] = self.request.GET.get('sorting_options')
-        initial['filter_options'] = self.request.GET.get("filter_options")
+        initial["sorting_options"] = self.request.GET.get("sorting_options")
+        initial["filter_options"] = self.request.GET.get("filter_options")
 
         return initial
 
