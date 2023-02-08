@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand, call_command
 from django_otp.plugins.otp_totp.models import TOTPDevice
 
-from tools.models import (OrganizationMember)
+from tools.models import OrganizationMember
 
 User = get_user_model()
 
@@ -11,11 +11,11 @@ class Command(BaseCommand):
     help = "Helper command for testing and development purposes only"
 
     def handle(self, **options):
-        try:
-            first_user = User.objects.get(id=1)
-        except:
+        if not User.objects.filter(id=1).exists():
             print("No first user present")
             return
+
+        first_user = User.objects.get(id=1)
 
         member = None
         organization = None
@@ -41,4 +41,3 @@ class Command(BaseCommand):
         if member and organization:
             organization.save()
             member.save()
-
