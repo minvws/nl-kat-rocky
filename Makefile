@@ -12,14 +12,17 @@ build-rocky:
 	docker-compose run --rm rocky make build-rocky-native
 
 build-rocky-native:
-		python3 manage.py migrate;
-		python3 manage.py createsuperuser;
-		python3 manage.py loaddata OOI_database_seed.json;
-		python3 manage.py setup_dev_account;
-		python3 manage.py compilemessages;
+	python3 manage.py migrate;
+	python3 manage.py createsuperuser;
+	python3 manage.py loaddata OOI_database_seed.json;
+	python3 manage.py setup_dev_account;
+	python3 manage.py compilemessages;
 
 build-rocky-frontend:
 	docker run --rm -v $$PWD:/app/rocky node:18-bullseye sh -c "cd /app/rocky && yarn --ignore-engine && yarn build && chown -R $$(id -u) .parcel-cache node_modules assets/dist"
+
+almost-flush:
+	docker-compose run --rm rocky python manage.py almost_flush
 
 run:
 	python3 manage.py runserver
