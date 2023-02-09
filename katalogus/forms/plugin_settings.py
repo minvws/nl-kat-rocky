@@ -1,4 +1,7 @@
 from django import forms
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -40,7 +43,7 @@ class PluginSchemaForm(forms.Form):
 
 
 class PluginSettingAddEditForm(forms.Form):
-    """Form for adding a single setting, use setting name to populate schema field propertis into form field."""
+    """Form for adding a single setting or multiple settings, use setting name to populate schema field propertis into form field."""
 
     error_messages = {
         "required": _("This field is required."),
@@ -52,6 +55,7 @@ class PluginSettingAddEditForm(forms.Form):
         self.setting_name = setting_name
         self.setting_value = setting_value
         self.populate_field()
+
 
     def populate_field(self):
         field = self.plugin_schema["properties"][self.setting_name]

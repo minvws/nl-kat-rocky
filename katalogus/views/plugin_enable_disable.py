@@ -41,14 +41,14 @@ class PluginEnableDisableView(OrganizationView):
                 self.katalogus_client.enable_boefje(plugin_id)
                 self.add_success_message(_("Boefje '{boefje_id}' enabled.").format(boefje_id=plugin_id))
             else:
-                self.add_error_message(
+                self.add_info_message(
                     _("Before enabling, please set the required settings for boefje '{boefje_id}'.").format(
                         boefje_id=plugin_id
                     )
                 )
                 return redirect(
                     reverse(
-                        "plugin_detail",
+                        "plugin_settings_add",
                         kwargs={
                             "organization_code": self.organization.code,
                             "plugin_id": plugin_id,
@@ -57,6 +57,9 @@ class PluginEnableDisableView(OrganizationView):
                     )
                 )
         return HttpResponseRedirect(request.POST.get("current_url"))
+
+    def add_info_message(self, message):
+        messages.add_message(self.request, messages.INFO, message)
 
     def add_warning_message(self, message):
         messages.add_message(self.request, messages.WARNING, message)

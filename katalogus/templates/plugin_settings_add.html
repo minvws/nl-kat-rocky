@@ -7,15 +7,40 @@
   <main id="main-content">
     <section>
       <div>
-        <h1>{% translate 'Add setting - ' %}{{ setting_name }}</h1>
+        <h1>
+          {% if form.fields|length == 1%}
+            {% translate 'Add setting' %} {{ setting_name }}
+          {% else %}
+            {% translate 'Add settings' %}
+          {% endif %}
+        </h1>
         <p class="emphasized">
+          {% if form.fields|length == 1%}
           {% translate 'Setting' %}
+          {% else %}
+            {% translate 'Settings' %}
+          {% endif %}
         </p>
         <div class="form-view">
           <form novalidate method="post" class="horizontal-view help">
             {% csrf_token %}
             {% include 'partials/form/fieldset.html' with legend=name fields=form %}
-            <button type="submit">{% translate 'Add setting' %}</button>
+            <div class="horizontal-view">
+              <button type="submit" class="ghost" name="add">
+                {% if form.fields|length == 1%}
+                  {% translate 'Add setting' %}
+                {% else %}
+                  {% translate 'Add settings' %}
+                {% endif %}
+              </button>
+              <button type="submit" name="add-enable">
+              {% if form.fields|length == 1%}
+                {% translate 'Add setting and enable boefje' %}
+              {% else %}
+                {% translate 'Add settings and enable boefje' %}
+              {% endif %}
+            </button>
+            </div>
           </form>
         </div>
       </div>

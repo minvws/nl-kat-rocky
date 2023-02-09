@@ -106,6 +106,14 @@ class PluginSingleSettingAddView(PluginSettingsAddView):
             form = PluginSettingAddEditForm(self.plugin_schema, self.setting_name, **self.get_form_kwargs())
             return form
 
+    def form_valid(self, form):
+        if 'add-enable' in self.request.POST:
+          self.katalogus_client.enable_boefje(self.plugin_id)
+          messages.add_message(self.request, messages.SUCCESS, _("Boefje '{boefje_id}' enabled.").format(boefje_id=self.plugin_id))
+
+        return super().form_valid(form)
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["setting_name"] = self.setting_name
