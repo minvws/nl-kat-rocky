@@ -12,15 +12,12 @@ from octopoes.models.exception import ObjectNotFoundException
 from octopoes.models.ooi.findings import (
     Finding,
     FindingType,
-    KATFindingType,
     CVEFindingType,
-    CWEFindingType,
     RetireJSFindingType,
     SnykFindingType,
 )
 from octopoes.models.tree import ReferenceNode
-from octopoes.models.types import get_relations, OOI_TYPES
-
+from octopoes.models.types import get_relations, OOI_TYPES, FindingTypeType
 from rocky.bytes_client import BytesClient
 from tools.models import OOIInformation
 
@@ -336,13 +333,7 @@ def filter_ooi_tree_item(ooi_node, show_types, hide_types, self_excluded_from_fi
 
 def get_finding_type_from_finding(finding: Finding) -> FindingType:
     return parse_obj_as(
-        Union[
-            KATFindingType,
-            CVEFindingType,
-            CWEFindingType,
-            RetireJSFindingType,
-            SnykFindingType,
-        ],
+        FindingTypeType,
         {
             "object_type": finding.finding_type.class_,
             "id": finding.finding_type.natural_key,
