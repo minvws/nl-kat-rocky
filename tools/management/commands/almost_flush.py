@@ -8,7 +8,10 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = "Helper command for testing and development purposes only"
+    help = (
+        "Helper command for testing and development purposes only: "
+        "flushes the db but adds the first User, Organization and OrganizationMember again (including OTP setup)"
+    )
 
     def handle(self, **options):
         if not User.objects.filter(id=1).exists():
