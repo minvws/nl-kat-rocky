@@ -27,6 +27,3 @@ class KATalogusFilter(BaseRockyForm):
         required=False, label=_("Sorting options"), choices=SORTING_OPTIONS, widget=forms.RadioSelect()
     )
 
-    def __init__(self, *args, **kwargs):
-        print(args, kwargs)
-        super().__init__(*args, **kwargs)

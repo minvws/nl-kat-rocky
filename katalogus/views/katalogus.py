@@ -47,7 +47,7 @@ class KATalogusView(ListView, OrganizationView, FormView):
             filter_options = self.request.GET.get("filter_options")
             queryset = self.filter_queryset(queryset, filter_options)
         if "sorting_options" in self.request.GET:
-            sorting_options = self.request.GET.get("sorting_options")
+            sorting_options = self.request.GET["sorting_options"]
             queryset = self.sort_queryset(queryset, sorting_options)
         return queryset
 
