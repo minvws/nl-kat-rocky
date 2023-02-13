@@ -13,7 +13,7 @@ from octopoes.models.ooi.findings import (
     Finding,
     RetireJSFindingType,
     SnykFindingType,
-    FindingType,
+    FindingType, CWEFindingType,
 )
 from octopoes.models.types import OOI_TYPES
 
@@ -37,6 +37,8 @@ def get_finding_type_from_id(
     elif finding_type_id.upper().startswith("SNYK"):
         # Fetch RetireJS info
         finding_type = SnykFindingType(id=finding_type_id)
+    elif finding_type_id.upper().startswith("CWE"):
+        finding_type = CWEFindingType(id=finding_type_id)
     else:
         finding_type = KATFindingType(id=finding_type_id)
 

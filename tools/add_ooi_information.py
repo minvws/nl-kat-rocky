@@ -12,10 +12,13 @@ from bs4 import BeautifulSoup
 from cwe import Database
 from django.conf import settings
 from itertools import product
+import logging
 
 RETIREJS_SOURCE = "https://github.com/RetireJS/retire.js/blob/master/repository/jsrepository.json"
 
 SEPARATOR = "|"
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -133,10 +136,11 @@ def cwe_info(cwe_id: str) -> dict:
     if weakness:
         return {
             "description": weakness.description,
-            "source": "https://cwe.mitre.org/index.html",
+            "source": f'https://cwe.mitre.org/data/definitions/{cwe_id.split("-")[1]}.html',
             "information updated": datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+            "risk": "Very low",
         }
-    return {"description": "Not found"}
+    return {"description": "Not found", "risk": "Very low"}
 
 
 def iana_service_table(search_query: str) -> List[_Service]:
@@ -303,8 +307,18 @@ def port_info(number: str, protocol: str) -> Tuple[str, str]:
     return ". ".join(descriptions), source
 
 
+def capec_inf(cpaec_id: str) -> dict:
+    return {
+        "description": "Capec findingtype",
+        "source": f'https://https://capec.mitre.org/data/definitions/{cpaec_id.split("-")[1]}.html',
+        "information updated": datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+        "risk": "Very low",
+    }
+
+
 def get_info(ooi_type: str, natural_key: str) -> dict:
     """Adds OOI information to the OOI Information table"""
+    logger.info(f"Getting OOI information for {ooi_type} {natural_key}")
     if ooi_type == "IPPort":
         protocol, port = natural_key.split(SEPARATOR)
         description, source = port_info(port, protocol)
@@ -324,6 +338,8 @@ def get_info(ooi_type: str, natural_key: str) -> dict:
         return cve_info(natural_key)
     if ooi_type == "CWEFindingType":
         return cwe_info(natural_key)
+    if ooi_type == "CAPECFindingType":
+        return capec_info(natural_key)
     if ooi_type == "RetireJSFindingType":
         return retirejs_info(natural_key)
     if ooi_type == "SnykFindingType":
