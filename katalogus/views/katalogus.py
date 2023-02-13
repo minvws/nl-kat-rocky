@@ -63,7 +63,7 @@ class KATalogusView(ListView, OrganizationView, FormView):
         if sort_options == "a-z":
             return queryset
         if sort_options == "z-a":
-            return list(reversed(queryset))
+            return reversed(queryset)
         enabled = [plugin for plugin in queryset if plugin["enabled"]]
         disabled = [plugin for plugin in queryset if not plugin["enabled"]]
         if sort_options == "enabled-disabled":
