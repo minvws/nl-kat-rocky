@@ -7,6 +7,14 @@
 @import "helpers/is-hidden.scss";
 @import "helpers/uc-first.scss";
 
+/* Vendors */
+@import "vendors/manon.scss";
+@import "vendors/graph-override.scss";
+@import "vendors/two-factor.scss";
+
+/* Theme */
+@import "themes/soft/soft.scss";
+
 /* Components */
 @import "components/action-buttons.scss";
 @import "components/block-indented.scss";
@@ -41,11 +49,3 @@
 @import "components/tree-tables.scss";
 @import "components/two-thirds-one-third.scss";
 @import "components/wait-text.scss";
-
-/* Vendors */
-@import "vendors/manon.scss";
-@import "vendors/graph-override.scss";
-@import "vendors/two-factor.scss";
-
-/* Theme */
-@import "themes/soft/soft.scss";
