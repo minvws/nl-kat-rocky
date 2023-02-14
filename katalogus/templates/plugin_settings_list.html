@@ -42,6 +42,7 @@
                   <td>
                     <a href="{% url 'plugin_settings_add_single' organization_code=organization.code plugin_type=plugin.type plugin_id=plugin.id setting_name=setting.name %}">{% translate 'Add' %}</a>
                   </td>
+                  <td></td>
                 {% else %}
                   <td>
                     <a href="{% url 'plugin_settings_edit' organization_code=organization.code plugin_type=plugin.type plugin_id=plugin.id setting_name=setting.name %}">{% translate 'Edit' %}</a>
