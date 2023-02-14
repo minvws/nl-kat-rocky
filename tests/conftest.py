@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -8,6 +10,7 @@ from django_otp import DEVICE_ID_SESSION_KEY
 from django_otp.middleware import OTPMiddleware
 
 from octopoes.models import DeclaredScanProfile, ScanLevel, Reference
+from octopoes.models.ooi.findings import Finding
 from octopoes.models.ooi.network import Network
 from rocky.scheduler import Task
 from tools.models import Organization, OrganizationMember, OOIInformation, Indemnification
@@ -166,6 +169,17 @@ def network():
 
 
 @pytest.fixture
+def finding():
+    return Finding(
+        finding_type=Reference.from_str("KATFindingType|KAT-0001"),
+        ooi=Reference.from_str("Network|testnetwork"),
+        proof="proof",
+        description="description",
+        reproduce="reproduce",
+    )
+
+
+@pytest.fixture
 def plugin_details():
     return {
         "id": "test-boefje",
@@ -218,3 +232,7 @@ def setup_request(request, user):
 @pytest.fixture
 def mock_scheduler(mocker):
     return mocker.patch("rocky.views.ooi_detail.scheduler.client")
+
+
+def get_boefjes_data():
+    return json.loads((Path(__file__).parent / "stubs" / "katalogus_boefjes.json").read_text())
