@@ -27,4 +27,3 @@ class KATalogusFilter(BaseRockyForm):
     sorting_options = forms.ChoiceField(
         required=False, label=_("Sorting options"), choices=SORTING_OPTIONS, widget=forms.RadioSelect()
     )
-
