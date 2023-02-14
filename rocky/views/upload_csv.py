@@ -148,7 +148,7 @@ class UploadCSV(PermissionRequiredMixin, OrganizationView, FormView):
         csv_file = form.cleaned_data["csv_file"]
 
         csv_raw_data = csv_file.read()
-        get_bytes_client(self.organization.code).add_manual_proof(csv_raw_data, manual_mime_type="manual/csv")
+        get_bytes_client(self.organization.code).add_manual_proof(csv_raw_data, manual_mime_types={"manual/csv"})
 
         csv_data = io.StringIO(csv_raw_data.decode("UTF-8"))
         rows_with_error = []

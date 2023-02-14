@@ -2,7 +2,7 @@ import json
 import logging
 import uuid
 from datetime import datetime, timezone
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Optional
 
 from django.conf import settings
 import requests
@@ -36,8 +36,12 @@ class BytesClient:
 
         return json_string.encode("utf-8")
 
-    def add_manual_proof(self, raw: bytes, manual_mime_type: str = "manual/ooi"):
+    def add_manual_proof(self, raw: bytes, manual_mime_types: Optional[Set[str]] = None):
         """Per convention for a generic normalizer, we add a raw list of declarations, not a single declaration"""
+
+        if manual_mime_types is None:
+            manual_mime_types = {"manual/ooi"}
+
         self.login()
 
         boefje_meta = BoefjeMeta(
@@ -51,7 +55,7 @@ class BytesClient:
         )
 
         self.save_boefje_meta(boefje_meta)
-        raw_id = self.save_raw(boefje_meta.id, raw, {"manual", "boefje/manual", manual_mime_type})
+        raw_id = self.save_raw(boefje_meta.id, raw, {"manual", "boefje/manual"}.union(manual_mime_types))
 
         self.save_normalizer_meta(
             boefje_meta,
