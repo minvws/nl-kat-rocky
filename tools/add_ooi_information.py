@@ -307,10 +307,18 @@ def port_info(number: str, protocol: str) -> Tuple[str, str]:
     return ". ".join(descriptions), source
 
 
-def capec_inf(cpaec_id: str) -> dict:
+def capec_info(capec_id: str) -> dict:
+    response = requests.get(f'https://capec.mitre.org/data/definitions/{capec_id.split("-")[1]}.html')
+    soup = BeautifulSoup(response.text, "html.parser")
+    title = soup.select("h2")[0].text
+    if not title.startswith("CAPEC-"):
+        return {
+            "description": title,
+            "risk": "Very low",
+        }
     return {
-        "description": "Capec findingtype",
-        "source": f'https://https://capec.mitre.org/data/definitions/{cpaec_id.split("-")[1]}.html',
+        "description": title.split(": ")[1],
+        "source": f'https://https://capec.mitre.org/data/definitions/{capec_id.split("-")[1]}.html',
         "information updated": datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
         "risk": "Very low",
     }
