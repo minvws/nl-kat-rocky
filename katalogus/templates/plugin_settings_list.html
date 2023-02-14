@@ -17,11 +17,7 @@
               <th scope="col">{% translate 'Value' %}</th>
               <th scope="col">{% translate 'Required' %}</th>
               <th scope="col">{% translate 'Action' %}</th>
-              {% for setting in object_list %}
-                {% if setting.value %}
-                  <th scope="col">{% translate 'Delete' %}</th>
-                {% endif %}
-              {% endfor %}
+              <th scope="col">{% translate 'Delete' %}</th>
             </tr>
           </thead>
           <tbody>
