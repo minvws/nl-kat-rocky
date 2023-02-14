@@ -52,24 +52,22 @@ class KATalogusView(ListView, OrganizationView, FormView):
         return queryset
 
     def filter_queryset(self, queryset, filter_options):
-        enabled = [plugin for plugin in queryset if plugin["enabled"]]
-        disabled = [plugin for plugin in queryset if not plugin["enabled"]]
+        if filter_options == "all":
+            return queryset
         if filter_options == "enabled":
-            return enabled
+            return [plugin for plugin in queryset if plugin["enabled"]]
         if filter_options == "disabled":
-            return disabled
+            return [plugin for plugin in queryset if not plugin["enabled"]]
 
     def sort_queryset(self, queryset, sort_options):
         if sort_options == "a-z":
             return queryset
         if sort_options == "z-a":
             return reversed(queryset)
-        enabled = [plugin for plugin in queryset if plugin["enabled"]]
-        disabled = [plugin for plugin in queryset if not plugin["enabled"]]
         if sort_options == "enabled-disabled":
-            return enabled + disabled
+            return sorted(queryset, key=lambda item: not item["enabled"])
         if sort_options == "disabled-enabled":
-            return disabled + enabled
+            return sorted(queryset, key=lambda item: item["enabled"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
