@@ -1,4 +1,4 @@
-from typing import List, Set
+from typing import Set
 
 from django import forms
 from django.utils.safestring import mark_safe
@@ -14,18 +14,19 @@ RAW_ERRORS = {
 class UploadRawForm(forms.Form):
     mime_types = forms.CharField(
         label=_("Mime types"),
-        help_text=mark_safe(_(
-            "<p>Add a set of mime types, separated by commas, for example:</p><p><i>\"text/html, image/jpeg\"</i> or "
-            "<i>\"boefje/dns-records\"</i>.</p><p>Mime types are used to match the correct normalizer to a raw file. "
-            "When the mime type \"boefje/dns-records\" is added, the normalizer expects the raw file to contain dns "
-            "scan information.</p>"
-        )),
+        help_text=mark_safe(
+            _(
+                '<p>Add a set of mime types, separated by commas, for example:</p><p><i>"text/html, image/jpeg"</i> or '
+                '<i>"boefje/dns-records"</i>.</p><p>Mime types are used to match the correct normalizer to a raw file. '
+                'When the mime type "boefje/dns-records" is added, the normalizer expects the raw file to contain dns '
+                "scan information.</p>"
+            )
+        ),
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'text/html, image/jpeg, ...'})
+        widget=forms.TextInput(attrs={"placeholder": "text/html, image/jpeg, ..."}),
     )
     raw_file = forms.FileField(
         label=_("Upload raw file"),
-        # help_text=_("Add a raw file that can be parsed to create objects."),
         allow_empty_file=False,
     )
 
