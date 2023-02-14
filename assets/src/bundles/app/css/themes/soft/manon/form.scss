@@ -1,0 +1,13 @@
+/* Form - Variables */
+
+:root {
+  --form-base-input-text-color: #000;
+  --form-help-button-icon-content: "\ec9d";
+  --form-help-button-icon-font-family: var(--icon-base-font-family);
+  --form-input-border-width: 1px;
+  --form-input-border-style: solid;
+  --form-input-border-color: #ccc;
+  --form-textarea-text-color: var(--form-base-input-text-color);
+  --form-textarea-border-color: #ccc;
+  --form-fieldset-legend-font-weight: 600;
+}
