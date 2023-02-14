@@ -1,24 +1,4 @@
 /* theme: KAT Soft based on manon components */
-
-/* Styling sets. E.g color sets */
-@import "spot-large"; /* Branding colors */
-@import "headings-base-set"; /* Defining available heading styles */
-
-/* Base - Top level styling */
-@import "application-base"; /* Styling on the highest level */
-
-/* Base components */
-@import "button";
-@import "table";
-@import "footer";
-
-/* Components */
-@import "navigation";
-@import "button-icon"; /* Icon button */
-@import "button-ghost"; /* Ghost button */
-@import "breadcrumb-bar";
-@import "tabs";
-
 :root {
   --critical-informational-labels-min-width: 8rem;
   --de-emphasized-text-color: #000;
