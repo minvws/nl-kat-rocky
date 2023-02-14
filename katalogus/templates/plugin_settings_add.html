@@ -8,18 +8,18 @@
     <section>
       <div>
         <h1>
-          {% if form.fields|length == 1%}
-            {% translate 'Add setting' %} {{ setting_name }}
-          {% else %}
-            {% translate 'Add settings' %}
-          {% endif %}
+          {% blocktrans count form.fields|length as count %}
+            Add setting
+          {% plural %}
+            Add settings
+          {% endblocktrans %}
         </h1>
         <p class="emphasized">
-          {% if form.fields|length == 1%}
-          {% translate 'Setting' %}
-          {% else %}
-            {% translate 'Settings' %}
-          {% endif %}
+          {% blocktrans count form.fields|length as count %}
+            Setting
+          {% plural %}
+            Settings
+          {% endblocktrans %}
         </p>
         <div class="form-view">
           <form novalidate method="post" class="horizontal-view help">
@@ -27,19 +27,19 @@
             {% include 'partials/form/fieldset.html' with legend=name fields=form %}
             <div class="horizontal-view">
               <button type="submit" class="ghost" name="add">
-                {% if form.fields|length == 1%}
-                  {% translate 'Add setting' %}
-                {% else %}
-                  {% translate 'Add settings' %}
-                {% endif %}
+                {% blocktrans count form.fields|length as count %}
+                  Add setting
+                {% plural %}
+                  Add settings
+                {% endblocktrans %}
               </button>
               <button type="submit" name="add-enable">
-              {% if form.fields|length == 1%}
-                {% translate 'Add setting and enable boefje' %}
-              {% else %}
-                {% translate 'Add settings and enable boefje' %}
-              {% endif %}
-            </button>
+                {% blocktrans count form.fields|length as count %}
+                  Add setting and enable boefje
+                {% plural %}
+                  Add settings and enable boefje
+                {% endblocktrans %}
+              </button>
             </div>
           </form>
         </div>
