@@ -12,6 +12,6 @@ class OrganizationDetailView(OrganizationMemberListView, OrganizationView):
     template_name = "organizations/organization_detail.html"
 
     def setup(self, request, *args, **kwargs):
-      super().setup(request, *args, **kwargs)
-      if not self.indemnification_present:
-        messages.add_message(self.request, messages.ERROR, _("Indemnification is not set for this organization."))
+        super().setup(request, *args, **kwargs)
+        if not self.indemnification_present:
+            messages.add_message(self.request, messages.ERROR, _("Indemnification is not set for this organization."))
