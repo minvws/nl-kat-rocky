@@ -78,7 +78,7 @@ class OOIListView(BaseOOIListView):
         if action == PageActions.UPDATE_SCAN_PROFILE.value:
             scan_profile = request.POST.get("scan-profile")
             level = CUSTOM_SCAN_LEVEL[scan_profile]
-            if level.value == "Inherit":
+            if isinstance(level.value, str) and level.value.lower() == "inherit":
                 return self._set_oois_to_inherit(selected_oois, request, *args, **kwargs)
             return self._set_scan_profiles(selected_oois, level, request, *args, **kwargs)
 
