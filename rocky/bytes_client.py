@@ -36,7 +36,7 @@ class BytesClient:
 
         return json_string.encode("utf-8")
 
-    def add_manual_proof(self, raw: bytes, manual_mime_types: Optional[Set[str]] = None):
+    def add_manual_proof(self, normalizer_id: uuid.UUID, raw: bytes, manual_mime_types: Optional[Set[str]] = None):
         """Per convention for a generic normalizer, we add a raw list of declarations, not a single declaration"""
 
         if manual_mime_types is None:
@@ -54,13 +54,13 @@ class BytesClient:
             ended_at=datetime.now(timezone.utc),
         )
 
-        self.save_boefje_meta(boefje_meta)
-        raw_id = self.save_raw(boefje_meta.id, raw, {"manual", "boefje/manual"}.union(manual_mime_types))
+        self._save_boefje_meta(boefje_meta)
+        raw_id = self._save_raw(boefje_meta.id, raw, {"manual", "boefje/manual"}.union(manual_mime_types))
 
-        self.save_normalizer_meta(
+        self._save_normalizer_meta(
             boefje_meta,
             NormalizerMeta(
-                id=str(uuid.uuid4()),
+                id=str(normalizer_id),
                 raw_file_id=raw_id,
                 normalizer=Normalizer(id="normalizer/manual"),
                 started_at=datetime.now(timezone.utc),
@@ -68,11 +68,27 @@ class BytesClient:
             ),
         )
 
-    def save_boefje_meta(self, boefje_meta: BoefjeMeta) -> None:
+    def upload_raw(self, raw: bytes, manual_mime_types: Set[str]):
+        self.login()
+
+        boefje_meta = BoefjeMeta(
+            id=str(uuid.uuid4()),
+            boefje=Boefje(id="manual"),
+            input_ooi=None,
+            arguments={},
+            organization=self.organization,
+            started_at=datetime.now(timezone.utc),
+            ended_at=datetime.now(timezone.utc),
+        )
+
+        self._save_boefje_meta(boefje_meta)
+        self._save_raw(boefje_meta.id, raw, {"manual", "boefje/manual"}.union(manual_mime_types))
+
+    def _save_boefje_meta(self, boefje_meta: BoefjeMeta) -> None:
         response = self.session.post(f"{self.base_url}/bytes/boefje_meta", data=boefje_meta.json())
         response.raise_for_status()
 
-    def save_normalizer_meta(self, boefje_meta: BoefjeMeta, normalizer_meta: NormalizerMeta) -> None:
+    def _save_normalizer_meta(self, boefje_meta: BoefjeMeta, normalizer_meta: NormalizerMeta) -> None:
         dehydrated_normalizer_meta = json.loads(normalizer_meta.json(exclude={"raw_data"}))
         dehydrated_normalizer_meta["boefje_meta"] = json.loads(boefje_meta.json())
 
@@ -82,7 +98,7 @@ class BytesClient:
 
         response.raise_for_status()
 
-    def save_raw(self, boefje_meta_id: str, raw: bytes, mime_types: Set[str] = None) -> str:
+    def _save_raw(self, boefje_meta_id: str, raw: bytes, mime_types: Set[str] = None) -> str:
         if not mime_types:
             mime_types = set()
 

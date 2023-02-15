@@ -58,7 +58,7 @@ class UploadRaw(PermissionRequiredMixin, OrganizationView, FormView):
         mime_types = form.cleaned_data["mime_types"]
 
         try:
-            get_bytes_client(self.organization.code).add_manual_proof(raw_file.read(), mime_types)
+            get_bytes_client(self.organization.code).upload_raw(raw_file.read(), mime_types)
         except HTTPError as e:
             message = _("Raw file could not be uploaded to Bytes: status code %s") % e.response.status_code
 
