@@ -30,17 +30,6 @@ class UploadRawForm(forms.Form):
         allow_empty_file=False,
     )
 
-    def clean_raw_file(self):
-        raw_file = self.cleaned_data["raw_file"]
-
-        try:
-            raw_file.read().decode("UTF-8")
-            raw_file.seek(0)  # set cursor back at the beginning of line
-        except UnicodeDecodeError:
-            self.add_error("raw_file", RAW_ERRORS["decoding"])
-
-        return raw_file
-
     def clean_mime_types(self) -> Set[str]:
         mime_types = self.cleaned_data["mime_types"]
 

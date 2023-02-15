@@ -32,18 +32,6 @@ def test_upload_empty(rf, my_user, organization, mock_organization_view_octopoes
     assertContains(response, "This field is required")
 
 
-def test_upload_bad_decoding(rf, my_user, organization, mock_organization_view_octopoes, mock_bytes_client):
-    example_file = BytesIO(b"name,network\n\xa0\xa1,internet")
-    example_file.name = "bad.raw"
-
-    request = setup_request(rf.post("upload_raw", {"mime_types": "Hostname", "raw_file": example_file}), my_user)
-    response = UploadRaw.as_view()(request, organization_code=organization.code)
-
-    assert response.status_code == 200
-    mock_bytes_client().upload_raw.assert_not_called()
-    assertContains(response, "File could not be decoded")
-
-
 def test_upload_raw(rf, my_user, mock_organization_view_octopoes, organization, mock_bytes_client):
     example_file = BytesIO(b"abc")
     example_file.name = "test"
