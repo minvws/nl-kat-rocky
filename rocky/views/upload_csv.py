@@ -152,9 +152,7 @@ class UploadCSV(PermissionRequiredMixin, OrganizationView, FormView):
 
         task_id = uuid4()
         get_bytes_client(self.organization.code).add_manual_proof(
-            task_id,
-            csv_raw_data,
-            manual_mime_types={"manual/csv"}
+            task_id, csv_raw_data, manual_mime_types={"manual/csv"}
         )
 
         csv_data = io.StringIO(csv_raw_data.decode("UTF-8"))

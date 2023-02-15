@@ -127,8 +127,7 @@ class BaseOOIFormView(SingleOOIMixin, FormView):
         declaration = Declaration(ooi=new_ooi, valid_time=datetime.now(timezone.utc), task_id=str(task_id))
 
         get_bytes_client(self.organization.code).add_manual_proof(
-            task_id,
-            BytesClient.raw_from_declarations([declaration])
+            task_id, BytesClient.raw_from_declarations([declaration])
         )
 
         self.octopoes_api_connector.save_declaration(declaration)

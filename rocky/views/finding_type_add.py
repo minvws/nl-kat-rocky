@@ -63,8 +63,7 @@ class FindingTypeAddView(OctopoesView, FormView):
         declaration = Declaration(ooi=finding_type, valid_time=datetime.now(timezone.utc), task_id=str(task_id))
 
         get_bytes_client(self.organization.code).add_manual_proof(
-            task_id,
-            BytesClient.raw_from_declarations([declaration])
+            task_id, BytesClient.raw_from_declarations([declaration])
         )
         self.api_connector.save_declaration(declaration)
 

@@ -28,7 +28,7 @@ def test_upload_empty(rf, my_user, organization, mock_organization_view_octopoes
     response = UploadRaw.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
-    mock_bytes_client().add_manual_proof.assert_not_called()
+    mock_bytes_client().upload_raw.assert_not_called()
     assertContains(response, "This field is required")
 
 
@@ -40,7 +40,7 @@ def test_upload_bad_decoding(rf, my_user, organization, mock_organization_view_o
     response = UploadRaw.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 200
-    mock_bytes_client().add_manual_proof.assert_not_called()
+    mock_bytes_client().upload_raw.assert_not_called()
     assertContains(response, "File could not be decoded")
 
 
@@ -52,7 +52,8 @@ def test_upload_raw(rf, my_user, mock_organization_view_octopoes, organization, 
     response = UploadRaw.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 302
-    mock_bytes_client().add_manual_proof.assert_called_once_with(b"abc", {"abc/def", "ghi"})
+
+    mock_bytes_client().upload_raw.assert_called_once_with(b"abc", {"abc/def", "ghi"})
 
     messages = list(request._messages)
     assert "successfully added" in messages[0].message
@@ -66,7 +67,7 @@ def test_upload_raw_empty_mime_types(rf, my_user, mock_organization_view_octopoe
     response = UploadRaw.as_view()(request, organization_code=organization.code)
 
     assert response.status_code == 302
-    mock_bytes_client().add_manual_proof.assert_called_once_with(b"abc", {"abc"})
+    mock_bytes_client().upload_raw.assert_called_once_with(b"abc", {"abc"})
 
     messages = list(request._messages)
     assert "successfully added" in messages[0].message
