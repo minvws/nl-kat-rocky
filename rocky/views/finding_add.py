@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timezone
 from typing import List, Dict
 
@@ -14,6 +15,8 @@ from octopoes.models.ooi.findings import (
     RetireJSFindingType,
     SnykFindingType,
     FindingType,
+    CWEFindingType,
+    CAPECFindingType,
 )
 from octopoes.models.types import OOI_TYPES
 
@@ -27,7 +30,6 @@ def get_finding_type_from_id(
     finding_type_id: str,
 ) -> FindingType:
     finding_type_id = finding_type_id.upper()
-
     if finding_type_id.upper().startswith("CVE"):
         # Fetch CVE info
         finding_type = CVEFindingType(id=finding_type_id)
@@ -37,6 +39,10 @@ def get_finding_type_from_id(
     elif finding_type_id.upper().startswith("SNYK"):
         # Fetch RetireJS info
         finding_type = SnykFindingType(id=finding_type_id)
+    elif finding_type_id.upper().startswith("CWE"):
+        finding_type = CWEFindingType(id=finding_type_id)
+    elif finding_type_id.upper().startswith("CAPEC"):
+        finding_type = CAPECFindingType(id=finding_type_id)
     else:
         finding_type = KATFindingType(id=finding_type_id)
 
@@ -89,7 +95,9 @@ class FindingAddView(BaseOOIFormView):
 
         s: str = form_data["finding_type_ids"]
         finding_type_ids = s.replace(",", "\n").splitlines()
-        finding_type_ids = [x.strip() for x in finding_type_ids if x.strip().startswith(("KAT-", "CVE-", "CWE-"))]
+        finding_type_ids = [
+            x.strip() for x in finding_type_ids if x.strip().startswith(("KAT-", "CVE-", "CWE-", "CAPEC-"))
+        ]
 
         observed_at = datetime.combine(form_data.get("date"), datetime.min.time(), tzinfo=timezone.utc)
 

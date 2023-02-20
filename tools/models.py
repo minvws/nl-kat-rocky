@@ -174,6 +174,7 @@ class OOIInformation(models.Model):
     @property
     def description(self):
         if self.data["description"] == "":
+            logger.info(f"Description for {self.id} is empty, trying to get it from the internet")
             self.get_internet_description()
         return self.data["description"]
 
