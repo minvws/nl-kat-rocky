@@ -1,7 +1,6 @@
 /* Color sets */
 @use "@minvws/manon/colors/critical-informational";
 @use "@minvws/manon/tag-colors-soft";
-@use "@minvws/manon/spot-large";
 
 /* Labels */
 @use "@minvws/manon/critical-informational-labels";
@@ -30,7 +29,6 @@
 @use "@minvws/manon/centered-view";
 @use "@minvws/manon/focus-only";
 @use "@minvws/manon/nowrap";
-@use "@minvws/manon/visually-hidden";
 
 /* Layout */
 @use "@minvws/manon/layout-base-variables";

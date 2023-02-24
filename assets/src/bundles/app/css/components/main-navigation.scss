@@ -30,38 +30,33 @@ body>header {
 
     a.logo {
       border: 0;
-      background-color: #000;
-      border-radius: 50%;
-      width: 2.5rem;
-      height: 2.5rem;
+    }
 
-
-      img {
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        padding:0.25rem;
-        box-sizing: border-box;
-      }
+    .menu_toggle {
+      min-height: 4rem;
     }
 
     .dropdown {
-      > ul {
-        top: 100%;
-        background-color: #fff;
-        padding-top: 0.25rem;
-        border-radius: 0.25rem;
 
-        > li {
+
+      &-button {
+        min-height: 4rem;
+      }
+
+      >ul {
+        top: 100%;
+
+        >li {
           width: 100%;
 
-          > a {
+          >a {
             color: black;
             width: 100%;
             padding-top: var(--button-base-padding-top);
             padding-right: var(--button-base-padding-right);
             padding-bottom: var(--button-base-padding-bottom);
             padding-left: var(--button-base-padding-left);
+
           }
         }
       }
@@ -98,12 +93,12 @@ body>header {
     }
 
     a {
-      border-bottom: 4px solid transparent;
+      border-bottom: 1px solid transparent;
     }
 
     a[aria-current="page"],
     a:hover {
-      border-bottom: 4px solid var(--branding-color-1-darker);
+      border-bottom: 1px solid white;
     }
 
     .secondary-menu {
