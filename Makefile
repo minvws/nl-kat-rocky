@@ -116,15 +116,15 @@ reset-database:
 
 test-rf-onboarding: # Usage: `make test-rf-onboarding headless=<bool>`
 	# Test fresh login while fully skipping onboarding
-	docker exec -it nl-kat_rocky_1 make test-prepare
+	docker exec -it nl-kat-coordination_rocky_1 make test-prepare
 	robot -d tests/robot/results-skip_onboarding_no_report -v headless:$(headless) tests/robot/skip_onboarding_no_report
 
 	# Test fresh login while generating a report but not creating more user accounts
-	docker exec -it nl-kat_rocky_1 make test-prepare
+	docker exec -it nl-kat-coordination_rocky_1 make test-prepare
 	robot -d tests/robot/results-skip_onboarding_with_report -v headless:$(headless) tests/robot/skip_onboarding_with_report
 
 	# Test fresh login while creating all users and running report generation as the redteamer
-	docker exec -it nl-kat_rocky_1 make test-prepare
+	docker exec -it nl-kat-coordination_rocky_1 make test-prepare
 	robot -d tests/robot/results-complete_onboarding -v headless:$(headless) tests/robot/complete_onboarding
 
 	# You can run `make reset-database` manually after running tests to reset the database and create a new superuser account
@@ -133,5 +133,5 @@ test-rf-functional: # Usage: `make test-rf-functional headless=<bool>`
 	# Test fresh login while fully skipping onboarding and running some functional tests
 	# These tests require clean databases
 	cd ../ && make kat
-	docker exec -it nl-kat_rocky_1 make test-prepare
+	docker exec -it nl-kat-coordination_rocky_1 make test-prepare
 	robot -d tests/robot/results-skip_onboarding_with_functional_tests -v headless:$(headless) tests/robot/skip_onboarding_with_functional_tests
